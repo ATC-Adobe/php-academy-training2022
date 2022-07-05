@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pl">
+    <head>
+        <title>Room reservation</title>
+
+        <meta charset="UTF-8">
+        <link rel="stylesheet" type="text/css" href="./css/style.css" />
+    </head>
+    <body>
+
+        <div id="main">
+
+            <div id="content">
+
+                <div id="reservation">
+
+                    <h2>Zarezerwuj pokój</h2>
+
+                    <form action="./reservation-list.html" class="form-default">
+                        <div class="form-label">
+                            <label>Imie </label>
+                        </div>
+                        <div class="form-input">
+                            <input type="text" name="firstname" placeholder="Jan"/>
+                        </div>
+                        <div class="form-label">
+                            <label>Nazwisko </label>
+                        </div>
+                        <div class="form-input">
+                            <input type="text" name="lastname" placeholder="Kowalski" />
+                        </div>
+                        <div class="form-label">
+                            <label>E-mail </label>
+                        </div>
+                        <div class="form-input">
+                            <input type="email" name="email" placeholder="jan.kowalski@domena.pl" />
+                        </div>
+                        <div class="form-label">
+                            <label>Od </label>
+                        </div>
+                        <div class="form-input">
+                            <input type="datetime-local" name="start_date" />
+                        </div>
+                        <div class="form-label">
+                            <label>Do </label>
+                        </div>
+                        <div class="form-input">
+                            <input type="datetime-local" name="end_date" />
+                        </div>
+                        <div class="form-label">
+                            <label></label>
+                        </div>
+                        <div class="form-checkbox">
+                            <input type="checkbox" name="policy" /><span class="checkbox-text">Rezerwując akceptuję <a href="#">regulamin</a> rezerwacji.</span>
+                        </div>
+                        <div class="form-label">
+                            <label></label>
+                        </div>
+                        <div class="form-button">
+                            <button type="submit" class="btn-submit">Zapisz</button>
+                        </div>
+                    </form>
+
+                    </div>
+
+                </div>
+
+                <div id="footer">
+                    <p>&copy; Norbert Grudzień - 2022</p>
+                </div>
+
+            </div>
+
+
+    </body>
+</html>
