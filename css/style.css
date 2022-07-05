@@ -23,15 +23,6 @@ body {
     min-height: 94vh;
 }
 
-#footer {
-    width: 100%;
-    text-align: center;
-    background-color: #242E38;
-    color: #fff;
-    height: 2.5rem;
-    line-height: 2.5rem;
-}
-
 #reservation {
     width: 50%;
     margin-left: auto;
@@ -42,6 +33,15 @@ body {
     padding: 5vh;
     margin-top: 1vh;
     margin-bottom: 1vh;
+}
+
+#footer {
+    width: 100%;
+    text-align: center;
+    background-color: #242E38;
+    color: #fff;
+    height: 2.5rem;
+    line-height: 2.5rem;
 }
 
 .table-list {
