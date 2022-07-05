@@ -1,0 +1,136 @@
+:root {
+    --fg1: #fff9f9;
+    --fg2: #E3D0D8;
+    --bg1: #65456b;
+    --bg2: #262626;
+    --ut: #403450;
+
+    transition: all 0.2s linear;
+}
+
+body {
+    background-color: var(--bg2);
+    margin: 0;
+    border: 0;
+    color: white;
+    font-family: Arial;
+
+    transition: all 5s;
+}
+
+.selector-for-some-widget {
+    box-sizing: content-box;
+}
+
+.header {
+    margin-top: 20px;
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 3em;
+    text-align: center;
+    padding-top: 1em;
+    padding-bottom: 1em;
+    background-color: var(--bg1);
+    color: var(--fg1);
+    border-radius: 10px;
+}
+
+.main {
+    font-size: 0.4em;
+    margin-top: 10px;
+    padding-top: 1em;
+    padding-bottom: 1em;
+    width: 90%;
+    border-radius: 5px;
+    color: var(--fg2);
+    background-color: var(--ut);
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+table {
+    border-collapse: collapse;
+    border: 3px solid var(--fg2);
+    border-radius: 10px;
+    padding: 0.5em;
+
+    width: 70%;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+th {
+    border-bottom: 3px solid var(--fg2);
+    margin-bottom: 0.5em;
+    background-color: var(--bg1);
+}
+
+td {
+    border-left: 1px solid var(--fg2);
+    border-right: 1px solid var(--fg2);
+}
+
+tr {
+    height: 1.2em;
+}
+
+tr:hover {
+    background-color: var(--bg1);
+}
+
+input {
+    font-family: Arial;
+    font-size: inherit;
+    border:none;
+    border-bottom: 1px solid var(--fg1);
+    background-color: inherit;
+    color: inherit;
+    cursor: pointer;
+}
+
+input:hover {
+    cursor:pointer;
+    color: var(--fg1);
+    border-bottom: 1px solid var(--fg1);
+    border-radius: 2px;
+}
+
+.float {
+    float: left;
+}
+
+.clear {
+    clear: both;
+}
+
+.ltable {
+    width: 30%;
+    text-align: right;
+    padding-left: 1em;
+    line-height: 1.5em;
+}
+
+.rtable {
+    line-height: 1.5em;
+    width: 60%;
+    text-align: left;
+    padding-left: 1em;
+}
+
+.row {
+    margin-left:auto;
+    margin-right: auto;
+    border-radius: 0px 20px 20px 0px;
+    border-left: 2px solid var(--fg2);
+    width: 90%;
+    margin-bottom:30px;
+
+}
+
+.row:hover {
+    background-color: var(--bg1);
+    border-left: 2px solid var(--fg1);
+    color: var(--fg1);
+}
