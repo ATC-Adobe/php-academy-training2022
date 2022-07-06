@@ -1,0 +1,6 @@
+td, th {text-align: center}
+label {
+    padding: 12px 12px 12px 0;
+    display: inline-block;
+}
+form{display: inline-block; width: 80%;}
