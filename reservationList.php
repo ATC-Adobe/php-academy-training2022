@@ -23,6 +23,12 @@
         $reservation['start_date'] = htmlentities($_POST['start_date']);
         $reservation['end_date'] = htmlentities($_POST['end_date']);
 
+        $start = strtotime($reservation['start_date']);
+        $end = strtotime($reservation['end_date']);
+        if($end < $start) {
+            echo "End date must be after start date!";
+            exit();
+        }
         if(! $reservationService->saveReservationsCsv($reservation)) {
             echo "Something went wrong! Try again";
             exit();
