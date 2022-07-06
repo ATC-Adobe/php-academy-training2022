@@ -1,3 +1,16 @@
+<?php
+
+$roomsFile = 'data/rooms.csv';
+$handle = fopen($roomsFile, 'r');
+$data = fgetcsv($handle, 50, ",");
+$rooms = [];
+while (($data = fgetcsv($handle, 50, ",")) !== FALSE) {
+    $rooms[] = $data;
+}
+fclose($handle)
+
+?>
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -38,77 +51,29 @@
                     <table class="table table-striped table-hover table-borderless">
                         <thead>
                         <tr>
-                            <th scope="col">Id</th>
-                            <th scope="col">Room name</th>
-                            <th scope="col">Floor</th>
-                            <th scope="col">Actions</th>
+                            <th>Id</th>
+                            <th>Room name</th>
+                            <th>Floor</th>
+                            <th>Actions</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Room_1</td>
-                            <td>1</td>
-                            <td>
-                                <a class="btn btn-sm btn-outline-success" href="reservation_form.php">Book</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>Room_2</td>
-                            <td>2</td>
-                            <td>
-                                <a class="btn btn-sm btn-outline-success" href="reservation_form.php">Book</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>Room_3</td>
-                            <td>2</td>
-                            <td>
-                                <a class="btn btn-sm btn-outline-success" href="reservation_form.php">Book</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">4</th>
-                            <td>Room_4</td>
-                            <td>2</td>
-                            <td>
-                                <a class="btn btn-sm btn-outline-success" href="reservation_form.php">Book</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">5</th>
-                            <td>Room_5</td>
-                            <td>2</td>
-                            <td>
-                                <a class="btn btn-sm btn-outline-success" href="reservation_form.php">Book</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">6</th>
-                            <td>Room_6</td>
-                            <td>3</td>
-                            <td>
-                                <a class="btn btn-sm btn-outline-success" href="reservation_form.php">Book</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">7</th>
-                            <td>Room_7</td>
-                            <td>3</td>
-                            <td>
-                                <a class="btn btn-sm btn-outline-success" href="reservation_form.php">Book</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">8</th>
-                            <td>Room_8</td>
-                            <td>3</td>
-                            <td>
-                                <a class="btn btn-sm btn-outline-success" href="reservation_form.php">Book</a>
-                            </td>
-                        </tr>
+                        <?php
+                        foreach ($rooms as $room):
+                            ?>
+                            <tr>
+                                <th><?= $room[0]; ?></th>
+                                <td><?= $room[1]; ?></td>
+                                <td><?= $room[2]; ?></td>
+                                <td>
+                                    <a class="btn btn-sm btn-outline-success" href="reservation_form.php">Book</a>
+                                </td>
+                            </tr>
+
+                        <?php
+                        endforeach;
+                        ?>
+
                         </tbody>
                     </table>
                 </div>
