@@ -20,8 +20,17 @@ class ReservationService
         $ok = $file->fputcsv($reservation);
         return $ok;
     }
-    //Last item in doc is the latest
+    //Last item in csv is the latest
     public function readReservations() : array {
         return array_reverse(CsvHandler::readFile($this->filename, $this->columns));
+    }
+    public function checkReservationCollision(int $startTime, int $endTime): bool {
+        $reservations = $this->readReservations();
+        foreach ($reservations as $reservation) {
+            if ($startTime < $reservation['end_time'] && $endTime > $reservation['start_time']) {
+                return false;
+            }
+        }
+        return true;
     }
 }

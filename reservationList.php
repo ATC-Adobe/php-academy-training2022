@@ -29,6 +29,10 @@
             echo "End date must be after start date!";
             exit();
         }
+        if(!$reservationService->checkReservationCollision($start, $end)) {
+            echo "Already occupied";
+            exit();
+        }
         if(! $reservationService->saveReservationsCsv($reservation)) {
             echo "Something went wrong! Try again";
             exit();
