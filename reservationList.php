@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All Reservations</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body class="background">
+<div class="container my-3">
+    <?php
+
+    require_once "ReservationService.php";
+    $reservationService = new ReservationService();
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $reservation = [];
+        $reservation['room_id'] = htmlentities($_POST['room_id']);
+//        $reservation['room_name'] = htmlentities($_POST['room_name']);
+        $reservation['first_name'] = htmlentities($_POST['first_name']);
+        $reservation['last_name'] = htmlentities($_POST['last_name']);
+        $reservation['email'] = htmlentities($_POST['email']);
+        $reservation['start_date'] = htmlentities($_POST['start_date']);
+        $reservation['end_date'] = htmlentities($_POST['end_date']);
+
+        if(! $reservationService->saveReservationsCsv($reservation)) {
+            echo "Something went wrong! Try again";
+            exit();
+        };
+    }
+
+    ?>
+            <h1 class="text-center">All reservations</h1>
+    <?php
+    $reservations = $reservationService->readReservations();
+        foreach ($reservations as $i => $reservation) {
+            if(!($i % 2)) echo '<div class="row">';
+            echo     '<div class="col col-md-6 listItem pt-3">';
+            echo        '<h6>Reservation id: '. $reservation['reservation_id'] .'</h6>';
+                echo     '<ul class="w-100">';
+                echo         '<li>room id: '. $reservation['room_id'] .'</li>';
+                echo         '<li>first name: '. $reservation['first_name'] .'</li>';
+                echo         '<li>last name: '. $reservation['last_name'] .'</li>';
+                echo          '<li>email: '. $reservation['email'] .'</li>';
+                echo         '<li>start_date: '. $reservation['start_date'] .' </li>';
+                echo         '<li>end_date: '. $reservation['end_date'] .' </li>';
+                echo     '</ul>';
+            echo        '</div>';
+            if($i % 2) echo '</div>';
+        }
+    ?>
+
+
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+</body>
+</html>
