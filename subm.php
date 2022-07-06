@@ -18,14 +18,29 @@
 
 <?php
 $istream = new CSVreader("reservations.csv");
-$file = $istream->ParseFileToArray();
-$istream->CloseStream();
+$file = $istream->parseFileToArray();
+$istream->closeStream();
 ?>
 
 <div class="header">
     Room reservation service
     <br><br>
     <div class="main">
+        <br><br>
+        <?php
+            if(isset($_GET['status'])) {
+                echo match ($_GET['status']) {
+                    '1' => "<div class='s'>
+                                Room reserved successfully! 
+                            </div>",
+                    '2' => "<div class='s'>
+                                An error occurred while reserving new room! 
+                            </div>",
+                    default => "How did we get there?",
+                };
+            }
+        ?>
+        <br><br>
         <span style="font-size: 1.5em">Active reservations:</span> <br><br><br><br>
 
         <?php

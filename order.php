@@ -1,4 +1,29 @@
 <?php declare(strict_types = 1); include_once "fileManipulator.php"; ?>
+<?php
+
+    if(isset($_POST['room_id'])) {
+        [ $room_id, $name, $surname, $email, $from, $to, ]
+            = [ $_POST['room_id'],  $_POST['name'],     $_POST['surname'],
+                $_POST['email'],    $_POST['from'],     $_POST['to']];
+
+
+        $from = date("d/m/y H:i:s", strtotime($from));
+        $to   = date("d/m/y H:i:s", strtotime($to));
+
+        $serv = new ReservationService();
+        $res = $serv->insertRequest($room_id, $name, $surname, $email, $from, $to);
+
+        if( $res  ) { // success
+            header('Location: subm.php?status=1');
+        }
+        else {
+            header('Location: subm.php?status=2');
+        }
+
+        die();
+    }
+
+?>
 
 <!DOCTYPE html>
 <html>
@@ -35,14 +60,21 @@
         <div class="float rtable">
 
             <?php
-                if(!isset($_GET['id'])) {
-                    die( "No room specified" );
+                $id = 0;
+
+                // we dont want to loose room id information
+                if(isset($_GET['id'])) {
+                    $id = $_GET['id'];
+                }
+                /*elseif(isset($_POST['room_id'])) {
+                    $id = $_POST['room_id'];
+                }*/
+                else {
+                    die('Critical error -> no room specified');
                 }
 
-                $id = $_GET['id'];
-
-                echo '<input type="hidden" name="room_id" value="$id">';
-                echo "$id<br>";
+                echo '<input type="hidden" name="room_id" value="'.$id.'">';
+                echo $id.'<br>';
             ?>
             <br>
             <input type="text" name="name" ><br>

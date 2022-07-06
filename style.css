@@ -4,6 +4,8 @@
     --bg1: #65456b;
     --bg2: #262626;
     --ut: #403450;
+    --succ: #2cd91a;
+    --err: #d23439;
 
     transition: all 0.2s linear;
 }
@@ -18,10 +20,14 @@ body {
     transition: all 5s;
 }
 
-.selector-for-some-widget {
-    box-sizing: content-box;
+.s {
+    background-color: #2cd91a;
 }
 
+.errorr {
+    color: var(--err);
+    /*border: 2px solid var(--err);*/
+}
 .header {
     margin-top: 20px;
     width: 70%;
@@ -126,11 +132,13 @@ input:hover {
     border-left: 2px solid var(--fg2);
     width: 90%;
     margin-bottom:30px;
-
+    transition: all 0.3s ease-in-out;
 }
 
 .row:hover {
     background-color: var(--bg1);
     border-left: 2px solid var(--fg1);
     color: var(--fg1);
+    transition: all 0.3s ease-in-out;
 }
+

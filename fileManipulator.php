@@ -8,7 +8,7 @@ class CSVreader {
         $this->spl = new SplFileObject($filename);
     }
 
-    public function ParseFileToArray() : ?array {
+    public function parseFileToArray() : ?array {
         if($this->spl == null)
             return null;
 
@@ -22,7 +22,7 @@ class CSVreader {
         return $res;
     }
 
-    public function CloseStream() : void {
+    public function closeStream() : void {
         $this->spl = null;
     }
 }
@@ -35,7 +35,7 @@ class CSVwriter {
         $this->spl = new SplFileObject($filename, 'a');
     }
 
-    public function PutLineToCSV(array $input) : void {
+    public function putLinesToCSV(array $input) : void {
         if($this->spl == null)
             return;
 
@@ -44,7 +44,7 @@ class CSVwriter {
         }
     }
 
-    public function CloseStream() : void {
+    public function closeStream() : void {
         $this->spl = null;
     }
 }
@@ -55,13 +55,13 @@ class ReservationService {
     // checks if given time interval does not overlap with other reservations
     // if so return null
     // otherwise returns valid reservation id
-    public function ValidateReservation(
+    public function validateReservation(
         string $room_id, string $from, string $to
     ) : ?int {
 
         $file = new CSVreader('reservations.csv');
-        $lines = $file->ParseFileToArray();
-        $file->CloseStream();
+        $lines = $file->parseFileToArray();
+        $file->closeStream();
 
         $nid = 0;
 
@@ -89,7 +89,7 @@ class ReservationService {
     }
 
     // validates input and inserts them into "database" iff it's correct
-    public function InsertRequest(
+    public function insertRequest(
         $room_id, $name, $surname, $email, $from, $to
     ) : bool {
         $room_nid = intval($room_id);
@@ -101,13 +101,17 @@ class ReservationService {
         if($surname == '' || $name == '' || $email == '')
             return false;
 
-        $id = $this->ValidateReservation($room_id, $from, $to);
 
-        $spl = new CSVwriter('reservation.csv');
-        $spl->PutLineToCSV(array(array(
+        $id = $this->validateReservation($room_id, $from, $to);
+
+        if($id == null)
+            return false;
+
+        $spl = new CSVwriter('reservations.csv');
+        $spl->putLinesToCSV(array(array(
             $id, $room_id, $name, $surname, $email, $from, $to,
         )));
-        $spl->CloseStream();
+        $spl->closeStream();
 
         return true;
     }
