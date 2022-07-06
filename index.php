@@ -35,7 +35,7 @@
                     echo "<td> Room $i </td>";
                     $floor = ceil(($i + 1) / 3);
                     echo "<td> $floor </td>";
-                    echo "<td><form method='POST' action='order.php'>
+                    echo "<td><form method='GET' action='order.php'>
                             <input type='hidden' name='id' value='$i'>
                             <input type='submit' value='Reserve'>
                           </form></td>";

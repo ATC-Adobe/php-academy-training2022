@@ -1,3 +1,5 @@
+<?php declare(strict_types = 1); include_once "fileManipulator.php"; ?>
+
 <!DOCTYPE html>
 <html>
 
@@ -18,9 +20,11 @@
     Room reservation service
     <br><br>
     <div class="main">
-        <form method="post" action="subm.php">
+        <form method="post" action="order.php">
 
         <div class="float ltable">
+            Room Id:<br>
+            <br>
             Name:<br>
             Surname:<br>
             E-mail:<br>
@@ -29,6 +33,18 @@
             To: <br>
         </div>
         <div class="float rtable">
+
+            <?php
+                if(!isset($_GET['id'])) {
+                    die( "No room specified" );
+                }
+
+                $id = $_GET['id'];
+
+                echo '<input type="hidden" name="room_id" value="$id">';
+                echo "$id<br>";
+            ?>
+            <br>
             <input type="text" name="name" ><br>
             <input type="text" name="surname" > <br>
             <input type="text" name="email" ><br>

@@ -60,7 +60,7 @@ function lcs(string $a, string $b) : string {
     return $res;
 }
 
-echo lcs("abaaaacgghj", "baaabckkkh");
+//echo lcs("abaaaacgghj", "baaabckkkh");
 
 // given array $arr find $i-th smallest element
 function selection($arr, $i) : int {
@@ -97,6 +97,11 @@ function selection($arr, $i) : int {
     }
 }
 
+include_once "fileManipulator.php";
+
+$obj = new ReservationService();
+
+echo $obj->ValidateReservation('3', '02/06/23 8:30:00', '02/06/23 9:00:00');
 
 
 ?>
