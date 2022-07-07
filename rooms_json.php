@@ -1,14 +1,15 @@
 <?php
 
-$roomsFile = 'data/rooms.csv';
-$handle = fopen($roomsFile, 'r');
-$data = fgetcsv($handle, 50, ",");
-$rooms = [];
-while (($data = fgetcsv($handle, 50, ",")) !== FALSE) {
-    $rooms[] = $data;
+if (file_exists('data/rooms.json')) {
+    $filename = 'data/rooms.json';
+    $data = file_get_contents($filename);
+    $rooms = json_decode($data);
+} else {
+    $message = "<h3 class='text-danger'>JSON file not found</h3>";
 }
-fclose($handle)
-
+if (isset($message)) {
+    echo $message;
+}
 ?>
 
 <!doctype html>
@@ -66,11 +67,11 @@ fclose($handle)
                             ?>
 
                             <tr>
-                                <th><?php echo $room[0]; ?></th>
-                                <td><?php echo $room[1]; ?></td>
-                                <td><?php echo $room[2]; ?></td>
+                                <th><?php echo $room->room_id; ?></th>
+                                <td><?php echo $room->name; ?></td>
+                                <td><?php echo $room->floor; ?></td>
                                 <td>
-                                    <?php echo "<a class=\"btn btn-sm btn-outline-success\" href=\"/reservation_form.php?room_id={$room[0]}&name={$room[1]}\">Book</a>"; ?>
+                                    <?php echo "<a class=\"btn btn-sm btn-outline-success\">Book</a>"; ?>
                                 </td>
                             </tr>
 
