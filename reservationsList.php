@@ -1,3 +1,45 @@
+<?php
+class ReservationService {
+    public $name;
+    public $surname;
+    public $email;
+    public $datetimeFrom;
+    public $datetimeTo;
+    private $formFields;
+
+ /*   function __construct($name, $surname, $email, $datetimeFrom, $datetimeTo) {
+        $this->name = $name;
+        $this->surname = $surname;
+        $this->email = $email;
+        $this->datetimeFrom = $datetimeFrom;
+        $this->datetimeTo = $datetimeTo;
+    }
+*/
+    function __construct($requestArray)
+    {
+        $this->formFields=$requestArray;
+        /*
+         $this->name=$requestArray["name"];
+        $this->surname=$requestArray["surname"];
+        $this->email=$requestArray["email"];
+        $this->datetimeFrom=$requestArray["datetimeFrom"];
+        $this->datetimeTo=$requestArray["datetimeTo"];
+
+         */
+    }
+    public function saveData($fname){
+        $myFile = new SplFileObject($fname, "a");
+        $myFile->fputcsv($this->formFields);
+    }
+
+}
+
+$myReservation = new ReservationService($_POST);
+$myReservation->saveData("file");
+
+
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -43,7 +85,7 @@
             <td>Chang</td>
             <td>eget.odio.Aliquam@FuscemollisDuis.edu</td>
             <td>22/01/24 12:30:00</td>
-            <td>22/01/24 12:30:00</td>
+            <td>22/01/24 13:45:00</td>
         </tr>
         <tr>
             <td>4</td>

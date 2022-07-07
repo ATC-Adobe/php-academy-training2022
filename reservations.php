@@ -7,7 +7,8 @@
 </head>
 <body>
 <div class="container">
-<form class="bg-dark text-light" action="reservationsList.html">
+<form class="bg-dark text-light" method="post" action="reservationsList.php">
+    <h2><?php echo $_GET["room"] ?></h2>
     <label for="name">Imię:</label>
     <input type="text" id="name"  name="name"><br>
     <label for="surname">Nazwisko:</label>
