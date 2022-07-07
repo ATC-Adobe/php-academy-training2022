@@ -9,7 +9,10 @@ class CsvHandler
         foreach ($file as $row) {
             $result[] = $row;
         }
-        array_pop($result);
+        // check if last element is blank line
+        if(count($result[array_key_last($result)]) <= 1) {
+            array_pop($result);
+        }
         return $result;
     }
     static public function readFile(string $filename, array $columns) {
