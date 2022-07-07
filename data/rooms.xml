@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <room>
+        <floor>1</floor>
+        <id>1</id>
+        <name>Room_1</name>
+    </room>
+    <room>
+        <floor>1</floor>
+        <id>2</id>
+        <name>Room_2</name>
+    </room>
+    <room>
+        <floor>2</floor>
+        <id>3</id>
+        <name>Room_3</name>
+    </room>
+    <room>
+        <floor>2</floor>
+        <id>4</id>
+        <name>Room_4</name>
+    </room>
+    <room>
+        <floor>2</floor>
+        <id>5</id>
+        <name>Room_5</name>
+    </room>
+</root>

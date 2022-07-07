@@ -2,11 +2,6 @@
     box-sizing: border-box;
 }
 
-table {
-    width: 100%;
-    border: 2px solid black;
-    border-radius: 1rem;
-}
 td, th {
     padding: 5px;
     text-align: left;
@@ -17,6 +12,12 @@ tr {
 }
 .background {
     background-color: #c4cfe9;
+}
+.myTable {
+    width: 100%;
+    max-width: 800px;
+    border: 2px solid black;
+    border-radius: 1rem;
 }
 .myInput {
     border-radius: 0.75rem;

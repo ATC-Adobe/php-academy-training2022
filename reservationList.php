@@ -27,9 +27,11 @@
     <div class="container my-3">
     <?php
 
-    require_once "ReservationService.php";
-    $reservationService = new ReservationService();
+    include_once "./services/ReservationService.php";
 
+    $reservationService = new ReservationService();
+    $error = "";
+    $ok = true;
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $reservation = [];
         $reservation['room_id'] = htmlentities($_POST['room_id']);
@@ -42,38 +44,43 @@
 
         $start = strtotime($reservation['start_date']);
         $end = strtotime($reservation['end_date']);
+
         if($end < $start) {
-            echo "End date must be after start date!";
-            exit();
+            $error = "End date must be after start date!";
+            $ok = false;
         }
-        if(!$reservationService->checkReservationCollision($start, $end)) {
-            echo "Already occupied";
-            exit();
+//        if($ok && !$reservationService->checkReservationCollision($reservation)) {
+//            $error = "Already occupied";
+//            $ok = false;
+//        }
+        if($ok && ! $reservationService->saveReservation($reservation)) {
+            $error = "Something went wrong! Try again";
+            $ok = false;
         }
-        if(! $reservationService->saveReservationsCsv($reservation)) {
-            echo "Something went wrong! Try again";
-            exit();
-        };
     }
 
     ?>
             <h1 class="text-center">All reservations</h1>
     <?php
+        if(!$ok) {
+            echo '<div class="alert alert-danger text-center">'. $error .'</div>';
+        }
+
     $reservations = $reservationService->readReservations();
-        foreach ($reservations as $i => $reservation) {
-            if(!($i % 2)) echo '<div class="row">';
+        for($i=count($reservations)-1; $i>=0;$i--) {
+            if($i % 2) echo '<div class="row">';
             echo     '<div class="col col-md-6 listItem pt-3">';
-            echo        '<h6>Reservation id: '. $reservation['reservation_id'] .'</h6>';
+            echo        '<h6>Reservation id: '. $reservations[$i]->reservation_id .'</h6>';
                 echo     '<ul class="w-100">';
-                echo         '<li>room id: '. $reservation['room_id'] .'</li>';
-                echo         '<li>first name: '. $reservation['first_name'] .'</li>';
-                echo         '<li>last name: '. $reservation['last_name'] .'</li>';
-                echo          '<li>email: '. $reservation['email'] .'</li>';
-                echo         '<li>start_date: '. $reservation['start_date'] .' </li>';
-                echo         '<li>end_date: '. $reservation['end_date'] .' </li>';
+                echo         '<li>room id: '. $reservations[$i]->room_id .'</li>';
+                echo         '<li>first name: '. $reservations[$i]->first_name .'</li>';
+                echo         '<li>last name: '. $reservations[$i]->last_name .'</li>';
+                echo          '<li>email: '. $reservations[$i]->email .'</li>';
+                echo         '<li>start_date: '. $reservations[$i]->start_date .' </li>';
+                echo         '<li>end_date: '. $reservations[$i]->end_date .' </li>';
                 echo     '</ul>';
-            echo        '</div>';
-            if($i % 2) echo '</div>';
+                echo        '</div>';
+            if(!($i % 2)) echo '</div>';
         }
     ?>
 

@@ -24,21 +24,21 @@
     </nav>
     <div class="container mt-2 ">
     <h2 class="text-center">Avaible rooms: </h2>
-    <table>
+    <table class="myTable mx-auto">
         <tr>
-            <th><p>id</p></th>
-            <th><p>name</p></th>
-            <th class="w-25"><p>floor</p></th>
+            <th ><p class="text-center">id</p></th>
+            <th ><p class="text-center">name</p></th>
+            <th class="w-25"><p class="text-center">floor</p></th>
         </tr>
         <?php
-            include_once "./RoomService.php";
+            include_once "./services/RoomService.php";
             $rooms = (new RoomService())->readRooms();
 
             foreach ($rooms as $i => $room) {
                 echo '<tr>';
-                echo "<td><p>{$room['id']}</p></td>";
-                echo "<td><p>{$room['name']}</p></td>";
-                echo "<td class=\"floor\"><p>{$room['floor']}</p> <a href=\"/reserveForm.php?name={$room['name']}&id={$room['id']}\"><button class=\"btn btn-primary px-3\">Reserve</button> </a> </td>";
+                echo "<td><p>{$room->id}</p></td>";
+                echo "<td><p>{$room->name}</p></td>";
+                echo "<td class=\"floor\"><p>{$room->floor}</p> <a href=\"/reserveForm.php?name={$room->name}&id={$room->floor}\"><button class=\"btn btn-primary px-3\">Reserve</button> </a> </td>";
                 echo "</tr>";
             }
         ?>
