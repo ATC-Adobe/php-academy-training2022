@@ -7,11 +7,11 @@ class RoomService extends BasicService
     protected $columns = ["id", "name", "floor"];
     public function __construct(string $filename = "./data/rooms.json")
     {
-        parent::__construct($filename);
+        parent::__construct($filename, $this->columns, "room");
     }
 
     /**
-     * @return bool|SimpleXMLElement|Room[]
+     * @return SimpleXMLElement|Room[]
      */
     public function readRooms(): array|SimpleXMLElement
     {
@@ -24,7 +24,6 @@ class RoomService extends BasicService
         }
         if($this->extension !== "xml") {
             $results = Util::mapResultsToObjects($results);
-
         }
 
         if(!$results) {

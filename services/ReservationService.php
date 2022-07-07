@@ -7,7 +7,7 @@ class ReservationService extends BasicService
     protected $columns = ['reservation_id', 'room_id', 'first_name', 'last_name', 'email', 'start_date', 'end_date'];
     public function __construct(protected string $filename = "./data/reservations.json")
     {
-        parent::__construct($filename);
+        parent::__construct($filename, $this->columns, "reservation");
     }
 
     private function reorderColumns(array $reservation) {
@@ -22,22 +22,12 @@ class ReservationService extends BasicService
         return $result;
     }
 
-//    protected function saveReservationsCsv(array $reservation) : bool {
-//        $reservationToSave = $this->reorderColumns($reservation);
-//        //generate reservation id
-//        array_unshift($reservationToSave, $this->reader->getRowNumCsv());
-//        return $this->reader->AppendToFile($reservationToSave);
-//    }
-
+    /**
+     * @return Reservation[]|SimpleXMLElement
+     */
     public function readReservations() : array|SimpleXMLElement {
         //Last item in csv is the latest
-        $result = null;
-        if($this->extension === "csv") {
-            $result = $this->reader->readFile($this->columns);
-        }
-        else {
-            $result = $this->reader->readFile();
-        }
+        $result = $this->reader->readFile();
         if($this->extension !== "xml") {
             $result = Util::mapResultsToObjects($result);
         }
@@ -56,27 +46,26 @@ class ReservationService extends BasicService
         return true;
     }
 
-    public function saveReservation(array $reservation) {
-        $ok = false;
+    public function saveReservation(array $reservation): bool {
         //generate id by reading file
         if($this->extension === "csv") {
             $reservationToSave = $this->reorderColumns($reservation);
             //generate reservation id
-            array_unshift($reservationToSave, $this->reader->getRowNumCsv());
-            $ok = $this->reader->AppendToFile($reservationToSave);
+            array_unshift($reservationToSave, $this->generateId());
+        }
+        else {
+            $reservation['reservation_id']= $this->generateId();
+        }
+        return $this->reader->AppendToFile($reservation);
+
+    }
+    protected function generateId(): int {
+        if($this->extension === "csv") {
+            return $this->reader->getRowNumCsv();
         }
         else {
             $data = $this->reader->readFile();
-            $id = count($data) + 1;
-            $reservation['reservation_id']= $id;
-            if($this->extension === "xml") {
-                $ok = $this->reader->AppendToFile($reservation, "reservation");
-            }
-            //json
-            else {
-                $ok = $this->reader->AppendToFile($reservation);
-            }
+            return count($data) + 1;
         }
-        return $ok;
     }
 }

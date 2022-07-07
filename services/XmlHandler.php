@@ -3,7 +3,7 @@
 include_once "./types.php";
 class XmlHandler implements FileHandler
 {
-    public function __construct(protected string $filename)
+    public function __construct(protected string $filename, protected string $tag)
     {
     }
     public function readFile(): SimpleXMLElement|false {
@@ -14,13 +14,13 @@ class XmlHandler implements FileHandler
         return $xml->children();
     }
 
-    public function AppendToFile(array $keyValuePairs, string $tag = "tag",  ?string $where = null) : bool {
+    public function AppendToFile(array $keyValuePairs,  ?string $where = null) : bool {
         $xml = simplexml_load_file($this->filename);
         if($where) {
             $xml = $xml->{$where};
         }
 
-        $node = $xml->addChild($tag);
+        $node = $xml->addChild($this->tag);
         foreach ($keyValuePairs as $key => $value) {
             $node->addChild($key, $value);
         }

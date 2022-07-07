@@ -3,7 +3,7 @@
 include_once "./types.php";
 class CsvHandler implements FileHandler
 {
-    public function __construct(protected string $filename)
+    public function __construct(protected string $filename, protected array $columns)
     {
     }
 
@@ -20,15 +20,15 @@ class CsvHandler implements FileHandler
         }
         return $result;
     }
-    public function readFile(?array $columns = null): array {
+    public function readFile(): array {
         $results = [];
         $csvResults = $this->readWholeFile();
         // map array to key value pairs
-        if($columns !== null) {
+        if($this->columns !== null) {
             foreach ($csvResults as $i => $row) {
                 $results[]= [];
                 foreach ($row as $j => $value) {
-                    $results[$i][$columns[$j]] = $value;
+                    $results[$i][$this->columns[$j]] = $value;
                 }
             }
         }
