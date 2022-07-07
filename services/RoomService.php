@@ -29,7 +29,7 @@ class RoomService extends BasicService
 
         if(!$results) {
             echo "Something went wrong!";
-            exit();
+            exit(); //Not here
         }
         return $results;
     }

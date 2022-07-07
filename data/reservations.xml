@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <reservation>
+        <email>tak@tak.com</email>
+        <end_date>2022-07-07T14:49</end_date>
+        <first_name>daniel</first_name>
+        <last_name>paszek</last_name>
+        <reservation_id>1</reservation_id>
+        <room_id>1</room_id>
+        <start_date>2022-07-07T13:49</start_date>
+    </reservation>
+    <reservation>
+        <email>tak@tak.com</email>
+        <end_date>2022-07-06T16:04</end_date>
+        <first_name>daniel</first_name>
+        <last_name>paszek</last_name>
+        <reservation_id>2</reservation_id>
+        <room_id>1</room_id>
+        <start_date>2022-07-06T14:04</start_date>
+    </reservation>
+<reservation><room_id>3</room_id><first_name>daniel</first_name><last_name>paszek</last_name><email>tak@tak.com</email><start_date>2022-07-07T14:51</start_date><end_date>2022-07-08T14:51</end_date><reservation_id>3</reservation_id></reservation></root>

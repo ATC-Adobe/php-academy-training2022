@@ -67,8 +67,8 @@
         }
 
     $reservations = $reservationService->readReservations();
-        for($i=count($reservations)-1; $i>=0;$i--) {
-            if($i % 2) echo '<div class="row">';
+        for($i=0; $i<count($reservations); $i++) {
+            if(!($i % 2)) echo '<div class="row">';
             echo     '<div class="col col-md-6 listItem pt-3">';
             echo        '<h6>Reservation id: '. $reservations[$i]->reservation_id .'</h6>';
                 echo     '<ul class="w-100">';
@@ -80,7 +80,7 @@
                 echo         '<li>end_date: '. $reservations[$i]->end_date .' </li>';
                 echo     '</ul>';
                 echo        '</div>';
-            if(!($i % 2)) echo '</div>';
+            if(($i % 2)) echo '</div>';
         }
     ?>
 

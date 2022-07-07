@@ -5,7 +5,7 @@ include_once './Util.php';
 class ReservationService extends BasicService
 {
     protected $columns = ['reservation_id', 'room_id', 'first_name', 'last_name', 'email', 'start_date', 'end_date'];
-    public function __construct(protected string $filename = "./data/reservations.csv")
+    public function __construct(protected string $filename = "./data/reservations.json")
     {
         parent::__construct($filename);
     }
@@ -22,12 +22,12 @@ class ReservationService extends BasicService
         return $result;
     }
 
-    protected function saveReservationsCsv(array $reservation) : bool {
-        $reservationToSave = $this->reorderColumns($reservation);
-        //generate reservation id
-        array_unshift($reservationToSave, $this->reader->getRowNumCsv());
-        return $this->reader->AppendToFile($reservationToSave);
-    }
+//    protected function saveReservationsCsv(array $reservation) : bool {
+//        $reservationToSave = $this->reorderColumns($reservation);
+//        //generate reservation id
+//        array_unshift($reservationToSave, $this->reader->getRowNumCsv());
+//        return $this->reader->AppendToFile($reservationToSave);
+//    }
 
     public function readReservations() : array|SimpleXMLElement {
         //Last item in csv is the latest

@@ -22,7 +22,7 @@ class CsvHandler implements FileHandler
     }
     public function readFile(?array $columns = null): array {
         $results = [];
-        $csvResults = CsvHandler::readWholeFile($this->filename);
+        $csvResults = $this->readWholeFile();
         // map array to key value pairs
         if($columns !== null) {
             foreach ($csvResults as $i => $row) {
