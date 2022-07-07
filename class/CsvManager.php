@@ -4,13 +4,14 @@
     use SplFileObject;
 
     abstract class CsvManager {
-        //to edit for releasing file
+        protected object $file;
+
         public function releaseFile(): void {
+            unset($this->file);
         }
     }
 
     class CsvReader extends CsvManager {
-        private object $file;
 
         public function __construct(string $filename) {
             $this->file = new SplFileObject($filename);
@@ -21,7 +22,7 @@
                 return null;
             }
 
-            $this->file->setFlags(SplFileObject::READ_CSV);
+            $this->file->setFlags(SplFileObject::READ_CSV | SplFileObject::READ_AHEAD | SplFileObject::SKIP_EMPTY);
 
             $count = 0;
             $data = [];
@@ -30,15 +31,13 @@
                 $data[] = $row;
             }
 
-            //$this->releaseFile($this->file);
+            $this->releaseFile();
 
             return $data;
         }
     }
 
     class CsvWriter extends CsvManager {
-
-        private object $file;
 
         public function __construct(string $filename)
         {
@@ -55,6 +54,6 @@
                 $this->file->fputcsv($rows);
             }
 
-            //$this->releaseFile($this->file);
+            $this->releaseFile();
         }
     }

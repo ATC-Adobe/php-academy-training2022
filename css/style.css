@@ -6,10 +6,9 @@
 }
 
 body {
-    font-family: 'Roboto', sans-serif;
     min-height: 100vh;
     margin: 0;
-    background-color: #3e4d5e;
+    background-color: #3e4d5e!important;
 }
 
 #main {
@@ -20,7 +19,7 @@ body {
 
 #content {
     text-align: center;
-    min-height: 94vh;
+    margin: 5vh 0;
 }
 
 #reservation {
@@ -39,6 +38,8 @@ body {
     color: #fff;
     height: 2.5rem;
     line-height: 2.5rem;
+    position: fixed;
+    bottom: 0;
 }
 
 .table-list {
@@ -159,6 +160,10 @@ body {
 .confirm {
     margin: 2vh;
     color: #fff;
+}
+
+.bg-darkcustom {
+    background-color: #242E38;
 }
 
 ::-webkit-calendar-picker-indicator {

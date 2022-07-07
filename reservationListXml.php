@@ -1,10 +1,13 @@
 <?php
     declare(strict_types = 1);
-    require_once "./class/CsvManager.php";
-    use PHPCourse\CsvReader;
 
-    $read = new CsvReader("./data/reservations.csv");
-    $reservations = $read->getArrayFromFile();
+    $file = "./data/reservations.xml";
+
+    if (file_exists($file)) {
+        $xml = simplexml_load_file($file);
+    } else {
+        die('[ERROR] Failed to open XML file.');
+    }
 ?>
 
 <!DOCTYPE html>
@@ -33,10 +36,10 @@
                                 <a class="nav-link" aria-current="page" href="./index.php">Home</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link active" href="./reservationList.php">Reservations CSV</a>
+                                <a class="nav-link" href="./reservationList.php">Reservations CSV</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="./reservationListXml.php">Reservations XML</a>
+                                <a class="nav-link active" href="./reservationListXml.php">Reservations XML</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="./reservationListJson.php">Reservations JSON</a>
@@ -74,19 +77,17 @@
                 </tr>
 
                 <?php
-                foreach($reservations as $reservation) {
-                    [ $reservationId, $roomId, $firstName, $lastName, $email, $startDate, $endDate ] = $reservation;
-
-                    echo "<tr>";
-                    echo "<td>".$reservationId."</td>";
-                    echo "<td>".$roomId."</td>";
-                    echo "<td>".$firstName."</td>";
-                    echo "<td>".$lastName."</td>";
-                    echo "<td>".$email."</td>";
-                    echo "<td>".$startDate."</td>";
-                    echo "<td>".$endDate."</td>";
-                    echo "</tr>";
-                }
+                    foreach ($xml as $r) {
+                        echo "<tr>";
+                        echo "<td>".$r->reservationId."</td>";
+                        echo "<td>".$r->roomId."</td>";
+                        echo "<td>".$r->firstName."</td>";
+                        echo "<td>".$r->lastName."</td>";
+                        echo "<td>".$r->email."</td>";
+                        echo "<td>".$r->startDate."</td>";
+                        echo "<td>".$r->endDate."</td>";
+                        echo "</tr>";
+                    }
                 ?>
 
                 <tr>

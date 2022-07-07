@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<reservationList>
+    <reservation>
+        <reservationId>1</reservationId>
+        <roomId> 5</roomId>
+        <firstName> Sierra</firstName>
+        <lastName> Ray</lastName>
+        <email> facilisis@risusDonec.com</email>
+        <startDate> 07/03/22 09:00:00</startDate>
+        <endDate> 07/03/22 10:00:00</endDate>
+    </reservation>
+    <reservation>
+        <reservationId>2</reservationId>
+        <roomId> 2</roomId>
+        <firstName> Risa</firstName>
+        <lastName> Whitaker</lastName>
+        <email> orci.adipiscing.non@Morbisitamet.edu</email>
+        <startDate> 20/08/22 07:30:00</startDate>
+        <endDate> 20/08/22 08:30:00</endDate>
+    </reservation>
+    <reservation>
+        <reservationId>3</reservationId>
+        <roomId> 6</roomId>
+        <firstName> Sopoline</firstName>
+        <lastName> Chang</lastName>
+        <email> eget.odio.Aliquam@FuscemollisDuis.edu</email>
+        <startDate> 22/01/24 12:30:00</startDate>
+        <endDate> 22/01/24 13:45:00</endDate>
+    </reservation>
+    <reservation>
+        <reservationId>4</reservationId>
+        <roomId> 5</roomId>
+        <firstName> Beck</firstName>
+        <lastName> Herman</lastName>
+        <email> metus@Nuncpulvinararcu.com</email>
+        <startDate> 03/01/23 11:40:00</startDate>
+        <endDate> 03/01/23 13:30:00</endDate>
+    </reservation>
+    <reservation>
+        <reservationId>5</reservationId>
+        <roomId> 6</roomId>
+        <firstName> Rhiannon</firstName>
+        <lastName> Fletcher</lastName>
+        <email> id@porttitorscelerisque.com</email>
+        <startDate> 03/11/23 10:15:00</startDate>
+        <endDate> 03/11/23 15:15:00</endDate>
+    </reservation>
+    <reservation>
+        <reservationId>6</reservationId>
+        <roomId> 2</roomId>
+        <firstName> Georgia</firstName>
+        <lastName> Casey</lastName>
+        <email> dictum.cursus@placerateget.ca</email>
+        <startDate> 28/02/22 10:00:00</startDate>
+        <endDate> 28/02/22 10:55:00</endDate>
+    </reservation>
+    <reservation>
+        <reservationId>7</reservationId>
+        <roomId> 3</roomId>
+        <firstName> Vladimir</firstName>
+        <lastName> Mcmillan</lastName>
+        <email> fringilla.mi@porttitortellusnon.com</email>
+        <startDate> 14/09/23 08:15:00</startDate>
+        <endDate> 14/09/23 18:15:00</endDate>
+    </reservation>
+    <reservation>
+        <reservationId>8</reservationId>
+        <roomId> 8</roomId>
+        <firstName> Zachary</firstName>
+        <lastName> Gaines</lastName>
+        <email> aliquam.iaculis@tinciduntnibh.org</email>
+        <startDate> 30/11/22 09:15:00</startDate>
+        <endDate> 30/11/22 11:30:00</endDate>
+    </reservation>
+    <reservation>
+        <reservationId>9</reservationId>
+        <roomId> 2</roomId>
+        <firstName> Cassandra</firstName>
+        <lastName> May</lastName>
+        <email> ipsum.cursus@magnamalesuadavel.ca</email>
+        <startDate> 14/09/22 10:25:00</startDate>
+        <endDate>  14/09/22 10:45:00</endDate>
+    </reservation>
+    <reservation>
+        <reservationId>10</reservationId>
+        <roomId> 3</roomId>
+        <firstName> Aimee</firstName>
+        <lastName> Hendricks</lastName>
+        <email> scelerisque.lorem@Proin.ca</email>
+        <startDate> 02/06/23 10:30:00</startDate>
+        <endDate> 02/06/23 16:00:00</endDate>
+    </reservation>
+    <reservation>
+        <reservationId>11</reservationId>
+        <roomId>6</roomId>
+        <firstName>john</firstName>
+        <lastName>smith</lastName>
+        <email>john.smith@gmail.com</email>
+        <startDate>07/07/22 08:58:00</startDate>
+        <endDate>08/07/22 08:58:00</endDate>
+    </reservation>
+    <reservation>
+        <reservationId>12</reservationId>
+        <roomId>5</roomId>
+        <firstName>john</firstName>
+        <lastName>smith</lastName>
+        <email>john.smith@gmail.com</email>
+        <startDate>07/07/22 09:07:00</startDate>
+        <endDate>09/07/22 09:07:00</endDate>
+    </reservation>
+    <reservation>
+        <reservationId>13</reservationId>
+        <roomId>8</roomId>
+        <firstName>John</firstName>
+        <lastName>Smith</lastName>
+        <email>test@gmail.com</email>
+        <startDate>07/07/22 11:49:00</startDate>
+        <endDate>07/07/22 12:49:00</endDate>
+    </reservation>
+    <reservation>
+        <reservationId>13</reservationId>
+        <roomId>4</roomId>
+        <firstName>Test</firstName>
+        <lastName>Room</lastName>
+        <email>Room.4@test.com</email>
+        <startDate>07/07/22 11:56:00</startDate>
+        <endDate>07/07/22 12:59:00</endDate>
+    </reservation>
+    <reservation>
+        <reservationId>14</reservationId>
+        <roomId>4</roomId>
+        <firstName>test</firstName>
+        <lastName>test</lastName>
+        <email>test@gmail.com</email>
+        <startDate>07/07/22 10:01:00</startDate>
+        <endDate>07/07/22 11:01:00</endDate>
+    </reservation>
+</reservationList>
