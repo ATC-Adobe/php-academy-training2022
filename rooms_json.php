@@ -71,7 +71,7 @@ if (isset($message)) {
                                 <td><?php echo $room->name; ?></td>
                                 <td><?php echo $room->floor; ?></td>
                                 <td>
-                                    <?php echo "<a class=\"btn btn-sm btn-outline-success\">Book</a>"; ?>
+                                    <?php echo "<a class=\"btn btn-sm btn-outline-success\" href=\"/reservation_form.php?room_id={$room->room_id}&name={$room->name}\">Book</a>"; ?>
                                 </td>
                             </tr>
 
