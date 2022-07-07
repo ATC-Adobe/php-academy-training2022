@@ -24,7 +24,7 @@
             <!-- Contact form-->
             <div class="bg-light rounded-3 py-5 px-4 px-md-5 mb-5">
                 <div class="text-center mb-5">
-                    <h1 class="fw-bolder">Fill this form to reserve your room</h1>
+                    <h1 class="fw-bolder">Your room id is <? echo $_GET['room_id']; ?>. Fill in this form to reserve it </h1>
                     <p class="lead fw-normal text-muted mb-0">We need some information from you</p>
                 </div>
                 <div class="row gx-5 justify-content-center">
@@ -36,24 +36,26 @@
                         <!-- To make this form functional, sign up at-->
                         <!-- https://startbootstrap.com/solution/contact-forms-->
                         <!-- to get an API token!-->
-                        <form id="contactForm" data-sb-form-api-token="API_TOKEN">
+                        <form method="post" action="reservations.php" enctype="multipart/form-data">
                             <!-- Name input-->
                             <div class="form-floating mb-3">
-                                <input class="form-control" id="name" type="text" placeholder="Enter your name..."
+                                <input type="hidden" name="reservation_id" value="11">
+                                <input type="hidden" name="room_id" value="<?= $_GET['room_id'] ?>">
+                                <input class="form-control" name="firstname" type="text" placeholder="Enter your name..."
                                        data-sb-validations="required"/>
-                                <label for="name">Name</label>
+                                <label for="name">First Name</label>
                                 <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
                             </div>
                             <!-- Surname input-->
                             <div class="form-floating mb-3">
-                                <input class="form-control" id="surname" type="text" placeholder="Enter your surname..."
+                                <input class="form-control" name="lastname" type="text" placeholder="Enter your surname..."
                                        data-sb-validations="required"/>
-                                <label for="name">Surname</label>
+                                <label for="name">Last Name</label>
                                 <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
                             </div>
                             <!-- Email address input-->
                             <div class="form-floating mb-3">
-                                <input class="form-control" id="email" type="email" placeholder="name@example.com"
+                                <input class="form-control" name="email" type="email" placeholder="name@example.com"
                                        data-sb-validations="required,email"/>
                                 <label for="email">Email address</label>
                                 <div class="invalid-feedback" data-sb-feedback="email:required">An email is required.
@@ -62,21 +64,21 @@
                             </div>
                             <!-- From input-->
                             <div class="form-floating mb-3">
-                                <input class="form-control" id="from" type="datetime-local" placeholder="From..."
+                                <input class="form-control" name="start_date" type="datetime-local" placeholder="From..."
                                        data-sb-validations="required"/>
                                 <label for="name">From</label>
                                 <div class="invalid-feedback" data-sb-feedback="name:required">A date is required.</div>
                             </div>
                             <!-- Till input-->
                             <div class="form-floating mb-3">
-                                <input class="form-control" id="till" type="datetime-local" placeholder="Till..."
+                                <input class="form-control" name="end_date" type="datetime-local" placeholder="Till..."
                                        data-sb-validations="required"/>
-                                <label for="name">Till</label>
+                                <label for="name">To</label>
                                 <div class="invalid-feedback" data-sb-feedback="name:required">A date is required.</div>
                             </div>
                             <!-- Submit Button-->
                             <div class="text-center">
-                                <a class="btn btn-primary" href="reservations.php">Reserve</a>
+                                <input class="btn btn-primary" type="submit" value="Reserve"/>
                             </div>
                         </form>
                     </div>
