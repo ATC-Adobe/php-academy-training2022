@@ -1,5 +1,5 @@
 <?xml version='1.0' standalone='yes'?>
-<romms>
+<rooms>
     <room>
         <room_id>1</room_id>
         <name>Room_1</name>
@@ -40,4 +40,4 @@
         <name>Room_8</name>
         <floor>3</floor>
     </room>
-</romms>
+</rooms>

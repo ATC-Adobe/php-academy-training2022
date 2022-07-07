@@ -21,8 +21,10 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="/">Rooms</a>
+            <li class="nav-item row">
+                <a class="nav-link" href="/">Rooms with csv</a>
+                <a class="nav-link" href="rooms_json.php">Rooms with Json</a>
+                <a class="nav-link" href="rooms_xml.php">Rooms with XML</a>
             </li>
         </ul>
     </div>
