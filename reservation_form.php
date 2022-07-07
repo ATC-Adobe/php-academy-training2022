@@ -1,3 +1,53 @@
+<?php
+
+require "ReservationService.php";
+
+$error = '';
+$message = '';
+$room_id = '';
+$firstname = '';
+$lastname = '';
+$email = '';
+$start_date = '';
+$end_date = '';
+
+if (isset($_POST['submit'])) {
+    if (empty($_POST['room_id'])) {
+        $error .= '<p class="text-danger">Room id is required.</p>';
+    } else {
+        $room_id = $_POST['room_id'];
+    }
+    if (empty($_POST['firstname'])) {
+        $error .= '<p class="text-danger">Firstname is required.</p>';
+    } else {
+        $firstname = $_POST["firstname"];
+    }
+    if (empty($_POST['lastname'])) {
+        $error .= '<p class="text-danger">Lastname is required.</p>';
+    } else {
+        $lastname = $_POST["lastname"];
+    }
+    if (empty($_POST['email'])) {
+        $error .= '<p class="text-danger">Email is required.</p>';
+    } else {
+        $email = $_POST["email"];
+    }
+    if (empty($_POST['start_date'])) {
+        $error .= '<p class="text-danger">Date from is required.</p>';
+    } else {
+        $start_date = $_POST["start_date"];
+    }
+    if (empty($_POST['end_date'])) {
+        $error .= '<p class="text-danger">Date to is required.</p>';
+    } else {
+        $end_date = $_POST["end_date"];
+    }
+    if ($error == '') {
+        ReservationService::booking();
+    }
+}
+?>
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -35,33 +85,46 @@
             <div class="card">
                 <div class="card-header"><h4>Book a Room</h4></div>
                 <div class="card-body">
-                    <form>
+                    <form action="" method="post">
+                        <?php echo $error; ?>
                         <div class="form-group">
-                            <label for="name">Name</label>
-                            <input type="text" class="form-control" name="name">
+                            <?php
+                            $name = $_GET['name'];
+                            $room_id = $_GET['room_id'];
+                            ?>
+                            <label for="roomId">Room Name</label>
+                            <input type="hidden" class="form-control" name="room_id" value="<?php echo $room_id ?>">
+                            <input type="text" class="form-control" name="roomName" disabled
+                                   value="<?php echo $name ?>">
                         </div>
                         <div class="form-group">
-                            <label for="surname">Surname</label>
-                            <input type="text" class="form-control" name="surname">
+                            <label for="firstname">Firstname</label>
+                            <input type="text" class="form-control" name="firstname" value="<?php echo $firstname; ?>">
+                        </div>
+                        <div class="form-group">
+                            <label for="lastname">Lastname</label>
+                            <input type="text" class="form-control" name="lastname" value="<?php echo $lastname; ?>">
                         </div>
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input type="email" class="form-control" name="email">
+                            <input type="email" class="form-control" name="email" value="<?php echo $email; ?>">
                         </div>
                         <div class="form-group">
-                            <label for="dateFrom">From</label>
-                            <input type="datetime-local" class="form-control" name="dateFrom">
+                            <label for="start_date">Date from</label>
+                            <input type="datetime-local" class="form-control" name="start_date"
+                                   value="<?php echo $start_date; ?>">
                         </div>
                         <div class="form-group">
-                            <label for="dateTo">To</label>
-                            <input type="datetime-local" class="form-control" name="dateTo">
+                            <label for="end_date">Date to</label>
+                            <input type="datetime-local" class="form-control" name="end_date"
+                                   value="<?php echo $end_date; ?>">
                         </div>
-                    </form>
                 </div>
                 <div class="modal-footer">
                     <a type="button" href="/" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</a>
-                    <a type="button" href="reservations.php" class="btn btn-outline-success">Save</a>
+                    <button type="submit" name="submit" class="btn btn-outline-success">Save</button>
                 </div>
+                </form>
             </div>
         </div>
     </div>

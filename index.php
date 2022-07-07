@@ -58,21 +58,24 @@ fclose($handle)
                         </tr>
                         </thead>
                         <tbody>
+
                         <?php
                         foreach ($rooms as $room):
                             ?>
+
                             <tr>
-                                <th><?= $room[0]; ?></th>
-                                <td><?= $room[1]; ?></td>
-                                <td><?= $room[2]; ?></td>
+                                <th><?php echo $room[0]; ?></th>
+                                <td><?php echo $room[1]; ?></td>
+                                <td><?php echo $room[2]; ?></td>
                                 <td>
-                                    <a class="btn btn-sm btn-outline-success" href="reservation_form.php">Book</a>
+                                    <?php echo "<a class=\"btn btn-sm btn-outline-success\" href=\"/reservation_form.php?room_id={$room[0]}&name={$room[1]}\">Book</a>"; ?>
                                 </td>
                             </tr>
 
                         <?php
                         endforeach;
                         ?>
+
 
                         </tbody>
                     </table>

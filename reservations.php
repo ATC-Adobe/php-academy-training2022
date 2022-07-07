@@ -35,109 +35,47 @@
             <div class="card">
                 <div class="card-header"><h4>Reservations</h4></div>
                 <div class="card-body">
+
+                    <?php
+                    $message = 'Your booking is confirmed.';
+                    include "helpers/message-add.php";
+                    include 'ReservationList.php';
+                    $reservationList = new ReservationList();
+                    $reservations = $reservationList->getList();
+                    ?>
+
                     <table class="table table-striped table-hover table-borderless">
                         <thead>
                         <tr>
-                            <th scope="col">Reservation Id</th>
-                            <th scope="col">Room id</th>
-                            <th scope="col">First name</th>
-                            <th scope="col">Last name</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Start date</th>
-                            <th scope="col">End date</th>
+                            <th>Reservation Id</th>
+                            <th>Room id</th>
+                            <th>First name</th>
+                            <th>Last name</th>
+                            <th>Email</th>
+                            <th>Start date</th>
+                            <th>End date</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>5</td>
-                            <td>Sierra</td>
-                            <td>Ray</td>
-                            <td>facilisis@risusDonec.com</td>
-                            <td>07/03/22 09:00:00</td>
-                            <td>07/03/22 10:00:00</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>2</td>
-                            <td>Risa</td>
-                            <td>Whitaker</td>
-                            <td>orci.adipiscing.non@Morbisitamet.edu</td>
-                            <td>20/08/22 07:30:00</td>
-                            <td>20/08/22 08:30:00</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>6</td>
-                            <td>Sopoline</td>
-                            <td>Chang</td>
-                            <td>eget.odio.Aliquam@FuscemollisDuis.edu</td>
-                            <td>22/01/24 12:30:00</td>
-                            <td>22/01/24 13:45:00</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">4</th>
-                            <td>5</td>
-                            <td>Beck</td>
-                            <td>Herman</td>
-                            <td>metus@Nuncpulvinararcu.com</td>
-                            <td>03/01/23 11:40:00</td>
-                            <td>03/01/23 13:30:00</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">5</th>
-                            <td>6</td>
-                            <td>Rhiannon</td>
-                            <td>Fletcher</td>
-                            <td>id@porttitorscelerisque.com</td>
-                            <td>03/11/23 10:15:00</td>
-                            <td>03/11/23 15:15:00</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">6</th>
-                            <td>2</td>
-                            <td>Georgia</td>
-                            <td>Casey</td>
-                            <td>dictum.cursus@placerateget.ca</td>
-                            <td>28/02/22 10:00:00</td>
-                            <td>28/02/22 10:55:00</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">7</th>
-                            <td>3</td>
-                            <td>Vladimir</td>
-                            <td>Mcmillan</td>
-                            <td>fringilla.mi@porttitortellusnon.com</td>
-                            <td>14/09/23 08:15:00</td>
-                            <td>14/09/23 18:15:00</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">8</th>
-                            <td>8</td>
-                            <td>Zachary</td>
-                            <td>Gaines</td>
-                            <td>aliquam.iaculis@tinciduntnibh.org</td>
-                            <td>30/11/22 09:15:00</td>
-                            <td>30/11/22 11:30:00</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">9</th>
-                            <td>2</td>
-                            <td>Cassandra</td>
-                            <td>May</td>
-                            <td>aliquam.iaculis@tinciduntnibh.org</td>
-                            <td>30/11/22 09:15:00</td>
-                            <td>30/11/22 11:30:00</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">10</th>
-                            <td>3</td>
-                            <td>Aimee</td>
-                            <td>Hendricks</td>
-                            <td>scelerisque.lorem@Proin.ca</td>
-                            <td>02/06/23 10:30:00</td>
-                            <td>02/06/23 16:00:00</td>
-                        </tr>
+
+                        <?php
+                        foreach ($reservations as $res):
+                            ?>
+
+                            <tr>
+                                <th><?php echo $res['reservation_id']; ?></th>
+                                <td><?php echo $res['room_id']; ?></td>
+                                <td><?php echo $res['firstname']; ?></td>
+                                <td><?php echo $res['lastname']; ?></td>
+                                <td><?php echo $res['email']; ?></td>
+                                <td><?php echo $res['start_date']; ?></td>
+                                <td><?php echo $res['end_date']; ?></td>
+                            </tr>
+
+                        <?php
+                        endforeach;
+                        ?>
+
                         </tbody>
                     </table>
                 </div>
@@ -156,4 +94,11 @@
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
 </body>
+<script type="text/javascript">
+    $(document).ready(function () {
+        setTimeout(function () {
+            $("#bookSaved").remove();
+        }, 5000);
+    });
+</script>
 </html>
