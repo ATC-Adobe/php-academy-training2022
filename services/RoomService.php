@@ -11,25 +11,11 @@ class RoomService extends BasicService
     }
 
     /**
-     * @return SimpleXMLElement|Room[]
+     * @return iterable<Room>|false
      */
-    public function readRooms(): array|SimpleXMLElement
+    public function readRooms(): mixed
     {
-        $results = null;
-        if($this->extension === "csv") {
-            $results = $this->fileHandler->readFile($this->columns);
-        }
-        else {
-            $results = $this->fileHandler->readFile();
-        }
-        if($this->extension !== "xml") {
-            $results = Util::mapResultsToObjects($results);
-        }
-//        if(!$results) {
-//            echo "Something went wrong!";
-//            exit(); //Not here
-//        }
-        return $results;
+        return $this->fileHandler->readFile();
     }
 
     public function addRoom(array $room) {
