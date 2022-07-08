@@ -17,10 +17,10 @@ class RoomService extends BasicService
     {
         $results = null;
         if($this->extension === "csv") {
-            $results = $this->reader->readFile($this->columns);
+            $results = $this->fileHandler->readFile($this->columns);
         }
         else {
-            $results = $this->reader->readFile();
+            $results = $this->fileHandler->readFile();
         }
         if($this->extension !== "xml") {
             $results = Util::mapResultsToObjects($results);

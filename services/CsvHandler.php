@@ -1,7 +1,7 @@
 <?php
 
 include_once "./types.php";
-class CsvHandler implements FileHandler
+class CsvHandler implements FileHandlerInterface
 {
     public function __construct(protected string $filename, protected array $columns)
     {

@@ -1,6 +1,6 @@
 <?php
 
-interface FileHandler {
+interface FileHandlerInterface {
     /**
      * @return iterable<Reservation>|false
      */

@@ -1,7 +1,7 @@
 <?php
 
 include_once "./types.php";
-class JsonHandler implements FileHandler
+class JsonHandler implements FileHandlerInterface
 {
     public function __construct(protected string $filename)
     {

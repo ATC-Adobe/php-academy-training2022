@@ -1,7 +1,7 @@
 <?php
 
 include_once "./types.php";
-class XmlHandler implements FileHandler
+class XmlHandler implements FileHandlerInterface
 {
     public function __construct(protected string $filename, protected string $tag)
     {

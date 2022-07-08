@@ -26,7 +26,7 @@ class ReservationService extends BasicService
      * @return iterable<Reservation>|false
      */
     public function readReservations() : iterable|false {
-        return  $this->reader->readFile();
+        return  $this->fileHandler->readFile();
     }
 
     public function checkReservationCollision(array $newReservation): bool {
@@ -46,15 +46,15 @@ class ReservationService extends BasicService
         if($this->extension === "csv") {
             $reservation = $this->reorderColumns($reservation);
         }
-        return $this->reader->appendToFile($reservation);
+        return $this->fileHandler->appendToFile($reservation);
     }
 
     protected function generateId(): int {
         if($this->extension === "csv") {
-            return $this->reader->getRowNumCsv();
+            return $this->fileHandler->getRowNumCsv();
         }
         else {
-            $data = $this->reader->readFile();
+            $data = $this->fileHandler->readFile();
             return count($data) + 1;
         }
     }
