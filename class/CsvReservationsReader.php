@@ -1,13 +1,14 @@
 <?php
+require_once "const/constants.php";
 
-// The class ReservationReader is used to load data from the csv file
-class ReservationReader
+// The class CsvReservationsReader is used to load data from the csv file
+class CsvReservationsReader
 {
     private $splRead;
 
     public function __construct()
     {
-        $this->splRead = new SplFileObject('reservations.csv', 'r');
+        $this->splRead = new SplFileObject(CSV_FILE, 'r');
     }
 
     public function readReservations()
@@ -20,14 +21,14 @@ class ReservationReader
                 continue;
             }
             $reservations[] = [
-                'room_id' => $row[0],
-                'firstname' => $row[1],
-                'lastname' => $row[2],
+                'roomId' => $row[0],
+                'firstName' => $row[1],
+                'lastName' => $row[2],
                 'email' => $row[3],
-                'startday' => $row[4],
-                'endday' => $row[5],
-                'starthour' => $row[6],
-                'endhour' => $row[7],
+                'startDay' => $row[4],
+                'endDay' => $row[5],
+                'startHour' => $row[6],
+                'endHour' => $row[7]
             ];
         }
         return $reservations;

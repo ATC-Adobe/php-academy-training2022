@@ -1,3 +1,11 @@
+#room-name {
+    font-size: 50px;
+    font-family: Verdana;
+    text-align: center;
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
 .table {
     background: darkslategray;
 }
@@ -16,6 +24,7 @@
 
 .check {
     background: antiquewhite;
+    margin-bottom: 2%;
 }
 
 #form-body {
@@ -54,7 +63,7 @@ h4 {
     margin-bottom: 2%;
 }
 
-#list-body {
+.index-list-body {
     background: cadetblue;
 }
 
@@ -76,4 +85,11 @@ h4 {
     font-size: 20px;
     font-weight: bold;
     text-align: center;
+}
+#footer{
+    background-color: rgb(126, 120, 120);
+    font-size: 20px;
+    font-family: Verdana;
+    font-weight: bold;
+    margin:auto;
 }
