@@ -1,15 +1,15 @@
 <?php
-
-if (file_exists('data/rooms.xml')) {
-    $filename = 'data/rooms.xml';
-    $rooms = simplexml_load_file($filename);
-} else {
-    $message = "<h3 class='text-danger'>XML file not found</h3>";
-}
-if (isset($message)) {
-    echo $message;
-}
-?>
+//
+//if (file_exists('data/rooms.xml')) {
+//    $filename = 'data/rooms.xml';
+//    $rooms = simplexml_load_file($filename);
+//} else {
+//    $message = "<h3 class='text-danger'>XML file not found</h3>";
+//}
+//if (isset($message)) {
+//    echo $message;
+//}
+//?>
 
 <!doctype html>
 <html lang="en">
@@ -50,6 +50,12 @@ if (isset($message)) {
             <div class="card">
                 <div class="card-header"><h4>Rooms</h4></div>
                 <div class="card-body">
+
+                    <?php
+                        include_once 'services/RoomListXml.php';
+                        $rooms = (new RoomListXml())->getRoomListXml();
+                    ?>
+
                     <table class="table table-striped table-hover table-borderless">
                         <thead>
                         <tr>
@@ -62,22 +68,21 @@ if (isset($message)) {
                         <tbody>
 
                         <?php
-                        foreach ($rooms->room as $room):
+                        foreach ($rooms as $room):
                             ?>
 
                             <tr>
-                                <th><?php echo $room->room_id; ?></th>
-                                <td><?php echo $room->name; ?></td>
-                                <td><?php echo $room->floor; ?></td>
+                                <th><?php echo $room['room_id']; ?></th>
+                                <td><?php echo $room['name']; ?></td>
+                                <td><?php echo $room['floor']; ?></td>
                                 <td>
-                                    <?php echo "<a class=\"btn btn-sm btn-outline-success\" href=\"/reservation_form.php?room_id={$room->room_id}&name={$room->name}\">Book</a>"; ?>
+                                    <?php echo "<a class=\"btn btn-sm btn-outline-success\" href=\"/reservation_form.php?room_id={$room['room_id']}&name={$room['name']}\">Book</a>"; ?>
                                 </td>
                             </tr>
 
                         <?php
                         endforeach;
                         ?>
-
 
                         </tbody>
                     </table>

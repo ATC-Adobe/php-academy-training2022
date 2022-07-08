@@ -40,10 +40,9 @@
 
                     <?php
                     $message = 'Your booking is confirmed.';
-                    include "helpers/message-add.php";
-                    include 'services/ReservationList.php';
-                    $reservationList = new ReservationList();
-                    $reservations = $reservationList->getList();
+                    include_once "helpers/message-add.php";
+                    include_once 'services/ReservationList.php';
+                    $reservations = (new ReservationList())->getList();
                     ?>
 
                     <table class="table table-striped table-hover table-borderless">

@@ -1,15 +1,15 @@
 <?php
-
-if (file_exists('data/rooms.json')) {
-    $filename = 'data/rooms.json';
-    $data = file_get_contents($filename);
-    $rooms = json_decode($data);
-} else {
-    $message = "<h3 class='text-danger'>JSON file not found</h3>";
-}
-if (isset($message)) {
-    echo $message;
-}
+//
+//if (file_exists('data/rooms.json')) {
+//    $filename = 'data/rooms.json';
+//    $data = file_get_contents($filename);
+//    $rooms = json_decode($data);
+//} else {
+//    $message = "<h3 class='text-danger'>JSON file not found</h3>";
+//}
+//if (isset($message)) {
+//    echo $message;
+//}
 ?>
 
 <!doctype html>
@@ -51,6 +51,12 @@ if (isset($message)) {
             <div class="card">
                 <div class="card-header"><h4>Rooms</h4></div>
                 <div class="card-body">
+
+                    <?php
+                    include_once 'services/RoomListJson.php';
+                    $rooms = (new RoomListJson())->getRoomListJson();
+                    ?>
+
                     <table class="table table-striped table-hover table-borderless">
                         <thead>
                         <tr>
@@ -67,11 +73,12 @@ if (isset($message)) {
                             ?>
 
                             <tr>
-                                <th><?php echo $room->room_id; ?></th>
-                                <td><?php echo $room->name; ?></td>
-                                <td><?php echo $room->floor; ?></td>
+                                <th><?php echo $room['room_id']; ?></th>
+                                <td><?php echo $room['name']; ?></td>
+                                <td><?php echo $room['floor']; ?></td>
                                 <td>
-                                    <?php echo "<a class=\"btn btn-sm btn-outline-success\" href=\"/reservation_form.php?room_id={$room->room_id}&name={$room->name}\">Book</a>"; ?>
+                                    <?php
+                                    echo "<a class=\"btn btn-sm btn-outline-success\" href=\"/reservation_form.php?room_id={$room['room_id']}&name={$room['name']}\">Book</a>"; ?>
                                 </td>
                             </tr>
 

@@ -1,16 +1,3 @@
-<?php
-
-$roomsFile = 'data/rooms.csv';
-$handle = fopen($roomsFile, 'r');
-$data = fgetcsv($handle, 50, ",");
-$rooms = [];
-while (($data = fgetcsv($handle, 50, ",")) !== FALSE) {
-    $rooms[] = $data;
-}
-fclose($handle)
-
-?>
-
 <!doctype html>
 <html lang="en">
 <head>
@@ -50,6 +37,12 @@ fclose($handle)
             <div class="card">
                 <div class="card-header"><h4>Rooms</h4></div>
                 <div class="card-body">
+
+                    <?php
+                        include_once 'services/RoomList.php';
+                        $rooms = (new RoomList())->getRoomsList();
+                    ?>
+
                     <table class="table table-striped table-hover table-borderless">
                         <thead>
                         <tr>
@@ -66,11 +59,11 @@ fclose($handle)
                             ?>
 
                             <tr>
-                                <th><?php echo $room[0]; ?></th>
-                                <td><?php echo $room[1]; ?></td>
-                                <td><?php echo $room[2]; ?></td>
+                                <th><?php echo $room['room_id']; ?></th>
+                                <td><?php echo $room['name']; ?></td>
+                                <td><?php echo $room['floor']; ?></td>
                                 <td>
-                                    <?php echo "<a class=\"btn btn-sm btn-outline-success\" href=\"/reservation_form.php?room_id={$room[0]}&name={$room[1]}\">Book</a>"; ?>
+                                    <?php echo "<a class=\"btn btn-sm btn-outline-success\" href=\"/reservation_form.php?room_id={$room['room_id']}&name={$room['name']}\">Book</a>"; ?>
                                 </td>
                             </tr>
 
