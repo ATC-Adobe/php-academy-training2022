@@ -6,8 +6,7 @@ class CsvHandler implements FileHandlerInterface
     public function __construct(protected string $filename, protected array $columns)
     {
     }
-
-    protected function readWholeFile() {
+    protected function readWholeFile(): array {
         $result = [];
         $file = new SplFileObject($this->filename, 'r');
         $file->setFlags(SplFileObject::READ_CSV);
@@ -40,12 +39,12 @@ class CsvHandler implements FileHandlerInterface
         return $file->fputcsv($keyValuePairs);
     }
 
-    public function getRowNumCsv() {
+    public function getRowNumCsv(): int {
         $file = new SplFileObject($this->filename, 'r');
         $file->seek(PHP_INT_MAX);
         return $file->key() + 1;
     }
-    private function reorderColumns(array $reservation) {
+    private function reorderColumns(array $reservation): array {
         $result = [];
         foreach ($this->columns as $col) {
             foreach ($reservation as $key => $value) {

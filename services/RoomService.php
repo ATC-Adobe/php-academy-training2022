@@ -4,7 +4,7 @@ include_once "./services/BasicService.php";
 include_once './Util.php';
 class RoomService extends BasicService
 {
-    protected $columns = ["id", "name", "floor"];
+    protected array $columns = ["id", "name", "floor"];
     public function __construct(string $filename = "./data/rooms.json")
     {
         parent::__construct($filename, $this->columns, "room");

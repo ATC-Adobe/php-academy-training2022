@@ -5,7 +5,7 @@ interface FileHandlerInterface {
      * @return iterable<Reservation>|false
      */
     public function readFile(): iterable|false;
-    public function appendToFile(array $values): bool;
+    public function appendToFile(array $keyValuePairs): bool;
 }
 
 /**

@@ -4,7 +4,7 @@ include_once "./services/BasicService.php";
 include_once './Util.php';
 class ReservationService extends BasicService
 {
-    protected $columns = ['reservation_id', 'room_id', 'first_name', 'last_name', 'email', 'start_date', 'end_date'];
+    protected array $columns = ['reservation_id', 'room_id', 'first_name', 'last_name', 'email', 'start_date', 'end_date'];
     public function __construct(protected string $filename = "./data/reservations.xml")
     {
         parent::__construct($filename, $this->columns, "reservation");
