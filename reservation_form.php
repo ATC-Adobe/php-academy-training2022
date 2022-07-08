@@ -1,6 +1,7 @@
 <?php
 
 require_once "services/ReservationService.php";
+require_once "services/ReservationFormValidation.php";
 
 $error = '';
 $message = '';
@@ -12,36 +13,15 @@ $startDate = '';
 $endDate = '';
 
 if (isset($_POST['submit'])) {
-    if (empty($_POST['room_id'])) {
-        $error .= '<p class="text-danger">Room id is required.</p>';
-    } else {
-        $roomId = $_POST['room_id'];
-    }
-    if (empty($_POST['firstname'])) {
-        $error .= '<p class="text-danger">Firstname is required.</p>';
-    } else {
-        $firstName = $_POST["firstname"];
-    }
-    if (empty($_POST['lastname'])) {
-        $error .= '<p class="text-danger">Lastname is required.</p>';
-    } else {
-        $lastName = $_POST["lastname"];
-    }
-    if (empty($_POST['email'])) {
-        $error .= '<p class="text-danger">Email is required.</p>';
-    } else {
-        $email = $_POST["email"];
-    }
-    if (empty($_POST['start_date'])) {
-        $error .= '<p class="text-danger">Date from is required.</p>';
-    } else {
-        $startDate = $_POST["start_date"];
-    }
-    if (empty($_POST['end_date'])) {
-        $error .= '<p class="text-danger">Date to is required.</p>';
-    } else {
-        $endDate = $_POST["end_date"];
-    }
+    list($error, $roomId, $firstName, $lastName, $email, $startDate, $endDate) = (new ReservationFormValidation())->validated(
+        $error,
+        $roomId,
+        $firstName,
+        $lastName,
+        $email,
+        $startDate,
+        $endDate
+    );
     if ($error == '') {
         (new ReservationService())->addReservation($roomId, $firstName, $lastName, $email, $startDate, $endDate);
     }
@@ -114,7 +94,7 @@ if (isset($_POST['submit'])) {
                         </div>
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input type="email" class="form-control" name="email" value="<?php
+                            <input type="text" class="form-control" name="email" value="<?php
                             echo $email; ?>">
                         </div>
                         <div class="form-group">
