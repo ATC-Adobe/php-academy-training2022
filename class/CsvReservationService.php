@@ -1,5 +1,6 @@
 <?php
 require_once "const/constants.php";
+require_once "class/ReservationServiceInterface.php";
 
 // The class CsvReservationService is used to save data from the form to a csv file
 

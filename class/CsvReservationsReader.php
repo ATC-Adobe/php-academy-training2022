@@ -1,8 +1,9 @@
 <?php
 require_once "const/constants.php";
+require_once "class/ReservationsReaderInterface.php";
 
 // The class CsvReservationsReader is used to load data from the csv file
-class CsvReservationsReader
+class CsvReservationsReader implements ReservationsReaderInterface
 {
     private $splRead;
 

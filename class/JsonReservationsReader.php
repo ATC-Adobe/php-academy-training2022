@@ -1,9 +1,10 @@
 <?php
 
 require_once "const/constants.php";
+require_once "class/ReservationsReaderInterface.php";
 
 // The class JsonReservationsReader is used to load data from the json file
-class JsonReservationsReader
+class JsonReservationsReader implements ReservationsReaderInterface
 {
     private $jsonFile;
 

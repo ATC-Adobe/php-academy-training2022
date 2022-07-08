@@ -1,8 +1,9 @@
 <?php
 require_once "const/constants.php";
+require_once "class/ReservationsReaderInterface.php";
 
 // The class XmlReservationsReader is used to load data from the xml file
-class XmlReservationsReader
+class XmlReservationsReader implements ReservationsReaderInterface
 {
     private $xmlFile;
 
