@@ -11,11 +11,11 @@ class ReservationService
         $this->reservation = new SplFileObject('data/reservations.csv', 'a');
     }
 
-    public function addReservation($room_id, $firstname, $lastname, $email, $start_date, $end_date)
+    public function addReservation($roomId, $firstName, $lastName, $email, $startDate, $endDate)
     {
         $rows = (new ApplicationService())->getRows();
-        $reservation_id = $rows;
-        $this->reservation->fputcsv([$reservation_id, $room_id, $firstname, $lastname, $email, $start_date, $end_date]);
+        $reservationId = $rows;
+        $this->reservation->fputcsv([$reservationId, $roomId, $firstName, $lastName, $email, $startDate, $endDate]);
         (new ApplicationService())->getReservationListHeader();
     }
 }

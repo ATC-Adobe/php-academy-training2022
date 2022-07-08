@@ -4,28 +4,28 @@ require_once "services/ReservationService.php";
 
 $error = '';
 $message = '';
-$room_id = '';
-$firstname = '';
-$lastname = '';
+$roomId = '';
+$firstName = '';
+$lastName = '';
 $email = '';
-$start_date = '';
-$end_date = '';
+$startDate = '';
+$endDate = '';
 
 if (isset($_POST['submit'])) {
     if (empty($_POST['room_id'])) {
         $error .= '<p class="text-danger">Room id is required.</p>';
     } else {
-        $room_id = $_POST['room_id'];
+        $roomId = $_POST['room_id'];
     }
     if (empty($_POST['firstname'])) {
         $error .= '<p class="text-danger">Firstname is required.</p>';
     } else {
-        $firstname = $_POST["firstname"];
+        $firstName = $_POST["firstname"];
     }
     if (empty($_POST['lastname'])) {
         $error .= '<p class="text-danger">Lastname is required.</p>';
     } else {
-        $lastname = $_POST["lastname"];
+        $lastName = $_POST["lastname"];
     }
     if (empty($_POST['email'])) {
         $error .= '<p class="text-danger">Email is required.</p>';
@@ -35,15 +35,15 @@ if (isset($_POST['submit'])) {
     if (empty($_POST['start_date'])) {
         $error .= '<p class="text-danger">Date from is required.</p>';
     } else {
-        $start_date = $_POST["start_date"];
+        $startDate = $_POST["start_date"];
     }
     if (empty($_POST['end_date'])) {
         $error .= '<p class="text-danger">Date to is required.</p>';
     } else {
-        $end_date = $_POST["end_date"];
+        $endDate = $_POST["end_date"];
     }
     if ($error == '') {
-        (new ReservationService())->addReservation($room_id, $firstname, $lastname, $email, $start_date, $end_date);
+        (new ReservationService())->addReservation($roomId, $firstName, $lastName, $email, $startDate, $endDate);
     }
 }
 ?>
@@ -93,11 +93,11 @@ if (isset($_POST['submit'])) {
                         <div class="form-group">
                             <?php
                             $name = $_GET['name'];
-                            $room_id = $_GET['room_id'];
+                            $roomId = $_GET['room_id'];
                             ?>
                             <label for="roomId">Room Name</label>
                             <input type="hidden" class="form-control" name="room_id" value="<?php
-                            echo $room_id ?>">
+                            echo $roomId ?>">
                             <input type="text" class="form-control" name="roomName" disabled
                                    value="<?php
                                    echo $name ?>">
@@ -105,12 +105,12 @@ if (isset($_POST['submit'])) {
                         <div class="form-group">
                             <label for="firstname">Firstname</label>
                             <input type="text" class="form-control" name="firstname" value="<?php
-                            echo $firstname; ?>">
+                            echo $firstName; ?>">
                         </div>
                         <div class="form-group">
                             <label for="lastname">Lastname</label>
                             <input type="text" class="form-control" name="lastname" value="<?php
-                            echo $lastname; ?>">
+                            echo $lastName; ?>">
                         </div>
                         <div class="form-group">
                             <label for="email">Email</label>
@@ -121,13 +121,13 @@ if (isset($_POST['submit'])) {
                             <label for="start_date">Date from</label>
                             <input type="datetime-local" class="form-control" name="start_date"
                                    value="<?php
-                                   echo $start_date; ?>">
+                                   echo $startDate; ?>">
                         </div>
                         <div class="form-group">
                             <label for="end_date">Date to</label>
                             <input type="datetime-local" class="form-control" name="end_date"
                                    value="<?php
-                                   echo $end_date; ?>">
+                                   echo $endDate; ?>">
                         </div>
                 </div>
                 <div class="modal-footer">
