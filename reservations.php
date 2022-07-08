@@ -1,8 +1,9 @@
 <?php
 require_once 'classes.php';
-print_r($_POST);
-$reservation = new ReservationService('reservations.csv');
-$reservation->addReservation();
+$reservation = new ReservationService();
+$id = $reservation->generateId();
+$reservations = $reservation->readReservations();
+$reservation->addReservation($id, $reservations);
 ?>
 <!DOCTYPE html>
 <html lang="en">
