@@ -6,6 +6,18 @@
     <title>Rooms</title>
 </head>
 <body>
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" href="index.php">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="reservationsList.php">Reservations List</a>
+        </li>
+
+    </ul>
+
+</nav>
 <div class="container">
 <table class="table table-sm table-striped table-dark">
     <tr>

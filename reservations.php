@@ -6,9 +6,23 @@
     <title>Reservation Form</title>
 </head>
 <body>
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" href="index.php">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="reservationsList.php">Reservations List</a>
+        </li>
+
+    </ul>
+
+</nav>
 <div class="container">
 <form class="bg-dark text-light" method="post" action="reservationsList.php">
-    <h2><?php echo $_GET["room"] ?></h2>
+    <?php $room = $_GET["room"];
+    $roomNumber = substr($room, -1);
+    echo "<input type='hidden' name='roomNumber' value='$roomNumber' /><h2>$room</h2>"?>
     <label for="name">Imię:</label>
     <input type="text" id="name"  name="name"><br>
     <label for="surname">Nazwisko:</label>

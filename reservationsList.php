@@ -30,12 +30,36 @@ class ReservationService {
     public function saveData($fname){
         $myFile = new SplFileObject($fname, "a");
         $myFile->fputcsv($this->formFields);
+        $myFile = null;
+    }
+
+    public function readData(){
+        $file = fopen('file.csv', 'r');
+        $i=1;
+        while (($line = fgetcsv($file)) !== FALSE) {
+            //$line is an array of the csv elements
+            //$value = implode(' ',$line);
+            //print_r("<p>$value</p>");
+         echo "<tr>
+            <td>$i</td>
+            <td>$line[0]</td>
+            <td>$line[1]</td>
+            <td>$line[2]</td>
+            <td>$line[3]</td>
+            <td>$line[4]</td>
+            <td>$line[5]</td>
+</tr>";
+         $i++;
+        }
+        fclose($file);
+
     }
 
 }
 
 $myReservation = new ReservationService($_POST);
-$myReservation->saveData("file");
+$myReservation->saveData("file.csv");
+
 
 
 ?>
@@ -48,6 +72,18 @@ $myReservation->saveData("file");
     <title>Reservations List</title>
 </head>
 <body>
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" href="index.php">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="reservationsList.php">Reservations List</a>
+        </li>
+
+    </ul>
+
+</nav>
 <div class="container">
     <table class="table table-striped table-dark">
         <tr>
@@ -150,7 +186,7 @@ $myReservation->saveData("file");
             <td>02/06/23 10:30:00</td>
             <td>02/06/23 16:00:00</td>
         </tr>
-
+<?php $myReservation->readData();?>
 
     </table>
 </div>
