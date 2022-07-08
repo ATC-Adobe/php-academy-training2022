@@ -26,55 +26,41 @@
         <th>floor</th>
         <th></th>
     </tr>
+<?php
+//xml
+/*
+ if (file_exists('rooms.xml')) {
+    $rooms = simplexml_load_file('rooms.xml');
+foreach ($rooms->room as $room) {
+    echo "<tr><td>$room->room_id</td>
+<td>$room->name</td>
+<td>$room->value</td>
+<td><form method='get' action='reservations.php'><input type='hidden' name='room' value=$room->name /><input type='submit' value='Zarezerwuj'></form> </td>
+</tr>";
+   // print_r(rooms);
+} }else {
+    exit('Failed to open rooms.xml.');
+}
+ */
 
-    <tr>
-        <td>1</td>
-        <td>Room_1</td>
-        <td>1</td>
-        <td><form method="get" action="reservations.php"><input type="hidden" name="room" value="Room_1" /><input type="submit" value="Zarezerwuj"></form></td>
-    </tr>
-    <tr>
-        <td>2</td>
-        <td>Room_2</td>
-        <td>1</td>
-        <td><form method="get" action="reservations.php"><input type="hidden" name="room" value="Room_2" /><input type="submit" value="Zarezerwuj"></form></td>
-    </tr>
-    <tr>
-        <td>3</td>
-        <td>Room_3</td>
-        <td>2</td>
-        <td><form method="get" action="reservations.php"><input type="hidden" name="room" value="Room_3" /><input type="submit" value="Zarezerwuj"></form></td>
-    </tr>
-    <tr>
-        <td>4</td>
-        <td>Room_4</td>
-        <td>2 </td>
-        <td><form method="get" action="reservations.php"><input type="hidden" name="room" value="Room_4" /><input type="submit" value="Zarezerwuj"></form></td>
-    </tr>
-    <tr>
-        <td>5</td>
-        <td>Room_5</td>
-        <td>2</td>
-        <td><form method="get" action="reservations.php"><input type="hidden" name="room" value="Room_5" /><input type="submit" value="Zarezerwuj"></form></td>
-    </tr>
-    <tr>
-        <td>6</td>
-        <td>Room_6</td>
-        <td>3</td>
-        <td><form method="get" action="reservations.php"><input type="hidden" name="room" value="Room_6" /><input type="submit" value="Zarezerwuj"></form></td>
-    </tr>
-    <tr>
-        <td>7</td>
-        <td>Room_7</td>
-        <td>3</td>
-        <td><form method="get" action="reservations.php"><input type="hidden" name="room" value="Room_7" /><input type="submit" value="Zarezerwuj"></form></td>
-    </tr>
-    <tr>
-        <td>8</td>
-        <td>Room_8</td>
-        <td>3</td>
-        <td><form method="get" action="reservations.php"><input type="hidden" name="room" value="Room_8" /><input type="submit" value="Zarezerwuj"></form></td>
-    </tr>
+//json
+$json = file_get_contents('rooms.json');
+
+// Decode the JSON file
+$json_data = json_decode($json,true);
+
+
+foreach ($json_data as $room) {
+    echo "<tr><td>$room[room_id]</td>
+<td>$room[name]</td>
+<td>$room[floor]</td>
+<td><form method='get' action='reservations.php'><input type='hidden' name='room' value=$room[name] /><input type='submit' value='Zarezerwuj'></form> </td>
+</tr>";
+   // print_r(rooms);
+}
+
+
+?>
 
 
 </table>
