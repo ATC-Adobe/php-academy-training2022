@@ -2,30 +2,26 @@
 
 class ReservationService
 {
-    public static function booking()
+    private $reservation;
+
+    public function __construct()
     {
-        $room_id = '';
-        $firstname = '';
-        $lastname = '';
-        $email = '';
-        $start_date = '';
-        $end_date = '';
-        $file = fopen("data/reservations.csv", "a");
+        $this->reservation = new SplFileObject('data/reservations.csv', 'a');
+    }
+
+    public function addReservation($room_id, $firstname, $lastname, $email, $start_date, $end_date)
+    {
+        $rows = $this->getRows();
+        $reservation_id = $rows;
+        $this->reservation->fputcsv([$reservation_id, $room_id, $firstname, $lastname, $email, $start_date, $end_date]);
+    }
+
+    public function getRows(): int
+    {
         $rows = count(file("data/reservations.csv"));
         if ($rows > 1) {
             $rows = ($rows - 1) + 1;
         }
-        $form_data = array(
-            'reservation_id' => $rows,
-            'room_id' => $room_id,
-            'firstname' => $firstname,
-            'lastname' => $lastname,
-            'email' => $email,
-            'start_date' => $start_date,
-            'end_date' => $end_date,
-        );
-        fputcsv($file, $form_data);
-        header('location:reservations.php?msg=add');
+        return $rows;
     }
-
 }

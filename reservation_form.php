@@ -1,15 +1,9 @@
 <?php
 
-require "ReservationService.php";
+require_once "ReservationService.php";
 
 $error = '';
 $message = '';
-$room_id = '';
-$firstname = '';
-$lastname = '';
-$email = '';
-$start_date = '';
-$end_date = '';
 
 if (isset($_POST['submit'])) {
     if (empty($_POST['room_id'])) {
@@ -43,7 +37,7 @@ if (isset($_POST['submit'])) {
         $end_date = $_POST["end_date"];
     }
     if ($error == '') {
-        ReservationService::booking();
+         (new ReservationService())->addReservation($room_id, $firstname, $lastname, $email, $start_date, $end_date);
     }
 }
 ?>
@@ -88,38 +82,46 @@ if (isset($_POST['submit'])) {
                 <div class="card-header"><h4>Book a Room</h4></div>
                 <div class="card-body">
                     <form action="" method="post">
-                        <?php echo $error; ?>
+                        <?php
+                        echo $error; ?>
                         <div class="form-group">
                             <?php
                             $name = $_GET['name'];
                             $room_id = $_GET['room_id'];
                             ?>
                             <label for="roomId">Room Name</label>
-                            <input type="hidden" class="form-control" name="room_id" value="<?php echo $room_id ?>">
+                            <input type="hidden" class="form-control" name="room_id" value="<?php
+                            echo $room_id ?>">
                             <input type="text" class="form-control" name="roomName" disabled
-                                   value="<?php echo $name ?>">
+                                   value="<?php
+                                   echo $name ?>">
                         </div>
                         <div class="form-group">
                             <label for="firstname">Firstname</label>
-                            <input type="text" class="form-control" name="firstname" value="<?php echo $firstname; ?>">
+                            <input type="text" class="form-control" name="firstname" value="<?php
+                            echo $firstname; ?>">
                         </div>
                         <div class="form-group">
                             <label for="lastname">Lastname</label>
-                            <input type="text" class="form-control" name="lastname" value="<?php echo $lastname; ?>">
+                            <input type="text" class="form-control" name="lastname" value="<?php
+                            echo $lastname; ?>">
                         </div>
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input type="email" class="form-control" name="email" value="<?php echo $email; ?>">
+                            <input type="email" class="form-control" name="email" value="<?php
+                            echo $email; ?>">
                         </div>
                         <div class="form-group">
                             <label for="start_date">Date from</label>
                             <input type="datetime-local" class="form-control" name="start_date"
-                                   value="<?php echo $start_date; ?>">
+                                   value="<?php
+                                   echo $start_date; ?>">
                         </div>
                         <div class="form-group">
                             <label for="end_date">Date to</label>
                             <input type="datetime-local" class="form-control" name="end_date"
-                                   value="<?php echo $end_date; ?>">
+                                   value="<?php
+                                   echo $end_date; ?>">
                         </div>
                 </div>
                 <div class="modal-footer">
