@@ -7,7 +7,7 @@ class ReservationService
 
     }
 
-    public function generateId()
+    public function generateReservationId()
     {
         $rows = count(file("reservations.csv"));
         $id = $rows + 1; // well named or less code?
@@ -22,6 +22,13 @@ class ReservationService
             $row = $file->fgetcsv();
             $reservations[] = $row;
         }
+        foreach ($reservations as $reservation){
+            if(empty(array_filter($reservation))){
+                $key = array_search($reservation, $reservations);
+                unset($reservations[$key]);
+            }
+        }
+
         return $reservations;
     }
 
@@ -34,7 +41,7 @@ class ReservationService
         $reservations = array_merge($reservations, $list);
         $updatedFile = new SplFileObject("reservations.csv", 'w');
         foreach ($reservations as $fields) {
-            $updatedFile->fputcsv($fields);
+            $updatedFile->fputcsv($fields, ',');
         }
     }
 }
