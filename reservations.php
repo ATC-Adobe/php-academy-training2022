@@ -26,7 +26,19 @@ if (count($_POST) > 0) {
 </head>
 <body class="d-flex flex-column h-100">
 <main class="flex-shrink-0">
-
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container px-5">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="reservations.php">Wszystkie rezerwacje</a></li>
+                </ul>
+                </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
     <!-- Header-->
     <header class="bg-dark py-5">
         <div class="container px-5">
@@ -46,16 +58,16 @@ if (count($_POST) > 0) {
                                     <th>start_date</th>
                                     <th>end_date</th>
                                 </tr>
-                                <?php foreach ($reservations as $reservation){ ?>
-                                <tr>
-                                    <td><?= $reservation[0]; ?></td>
-                                    <td><?= $reservation[1]; ?></td>
-                                    <td><?= $reservation[2]; ?></td>
-                                    <td><?= $reservation[3]; ?></td>
-                                    <td><?= $reservation[4]; ?></td>
-                                    <td><?= $reservation[5]; ?></td>
-                                    <td><?= $reservation[6]; ?></td>
-                                </tr>
+                                <?php foreach ($reservations as $reservation) { ?>
+                                    <tr>
+                                        <td><?= $reservation[0]; ?></td>
+                                        <td><?= $reservation[1]; ?></td>
+                                        <td><?= $reservation[2]; ?></td>
+                                        <td><?= $reservation[3]; ?></td>
+                                        <td><?= $reservation[4]; ?></td>
+                                        <td><?= $reservation[5]; ?></td>
+                                        <td><?= $reservation[6]; ?></td>
+                                    </tr>
                                 <?php } ?>
                             </table>
                         </div>
