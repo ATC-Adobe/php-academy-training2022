@@ -7,7 +7,7 @@ class JsonHandler implements FileHandler
     {
     }
 
-    public function readFile(): mixed {
+    public function readFile(): array|false {
         $str = file_get_contents($this->filename);
         if($str === false) {
             return false;
@@ -16,9 +16,10 @@ class JsonHandler implements FileHandler
         if($data === null) {
             return false;
         }
+        $data = Util::mapResultsToObjects($data);
         return $data;
     }
-    public function AppendToFile(array $keyValuePairs): bool {
+    public function appendToFile(array $keyValuePairs): bool {
         $str = file_get_contents($this->filename);
         $temp = json_decode($str);
         $temp[]= $keyValuePairs;

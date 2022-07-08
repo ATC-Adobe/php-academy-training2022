@@ -32,12 +32,14 @@ class CsvHandler implements FileHandler
                 }
             }
         }
+        //map to array of objects
+        $results = Util::mapResultsToObjects($results);
 //        echo '<pre>';
 //        var_dump($results);
 //        echo '</pre>';
         return $results;
     }
-    public function AppendToFile(array $values): bool {
+    public function appendToFile(array $values): bool {
         $file = new SplFileObject($this->filename, 'a');
         $ok = $file->fputcsv($values);
         return $ok;

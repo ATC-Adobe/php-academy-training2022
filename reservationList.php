@@ -36,11 +36,12 @@
         $reservation = [];
         $reservation['room_id'] = htmlentities($_POST['room_id']);
 //        $reservation['room_name'] = htmlentities($_POST['room_name']);
-        $reservation['first_name'] = htmlentities($_POST['first_name']);
-        $reservation['last_name'] = htmlentities($_POST['last_name']);
         $reservation['email'] = htmlentities($_POST['email']);
         $reservation['start_date'] = htmlentities($_POST['start_date']);
         $reservation['end_date'] = htmlentities($_POST['end_date']);
+        $reservation['first_name'] = htmlentities($_POST['first_name']);
+        $reservation['last_name'] = htmlentities($_POST['last_name']);
+
 
         $start = strtotime($reservation['start_date']);
         $end = strtotime($reservation['end_date']);
@@ -49,10 +50,10 @@
             $error = "End date must be after start date!";
             $ok = false;
         }
-//        if($ok && !$reservationService->checkReservationCollision($reservation)) {
-//            $error = "Already occupied";
-//            $ok = false;
-//        }
+        if($ok && !$reservationService->checkReservationCollision($reservation)) {
+            $error = "Already occupied";
+            $ok = false;
+        }
         if($ok && ! $reservationService->saveReservation($reservation)) {
             $error = "Something went wrong! Try again";
             $ok = false;

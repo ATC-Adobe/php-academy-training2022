@@ -1,8 +1,11 @@
 <?php
 
 interface FileHandler {
-    public function readFile(): mixed;
-    public function AppendToFile(array $values): bool;
+    /**
+     * @return iterable<Reservation>|false
+     */
+    public function readFile(): iterable|false;
+    public function appendToFile(array $values): bool;
 }
 
 /**
@@ -23,5 +26,4 @@ interface Room {
  * @property string end_date
  */
 interface Reservation {
-
 }

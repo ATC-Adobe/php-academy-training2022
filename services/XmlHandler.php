@@ -14,7 +14,7 @@ class XmlHandler implements FileHandler
         return $xml->children();
     }
 
-    public function AppendToFile(array $keyValuePairs,  ?string $where = null) : bool {
+    public function appendToFile(array $keyValuePairs, ?string $where = null) : bool {
         $xml = simplexml_load_file($this->filename);
         if($where) {
             $xml = $xml->{$where};

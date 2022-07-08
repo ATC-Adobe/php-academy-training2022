@@ -5,7 +5,7 @@ include_once './Util.php';
 class ReservationService extends BasicService
 {
     protected $columns = ['reservation_id', 'room_id', 'first_name', 'last_name', 'email', 'start_date', 'end_date'];
-    public function __construct(protected string $filename = "./data/reservations.json")
+    public function __construct(protected string $filename = "./data/reservations.csv")
     {
         parent::__construct($filename, $this->columns, "reservation");
     }
@@ -23,22 +23,17 @@ class ReservationService extends BasicService
     }
 
     /**
-     * @return Reservation[]|SimpleXMLElement
+     * @return iterable<Reservation>|false
      */
-    public function readReservations() : array|SimpleXMLElement {
-        //Last item in csv is the latest
-        $result = $this->reader->readFile();
-        if($this->extension !== "xml") {
-            $result = Util::mapResultsToObjects($result);
-        }
-        return $result;
+    public function readReservations() : iterable|false {
+        return  $this->reader->readFile();
     }
 
     public function checkReservationCollision(array $newReservation): bool {
         $reservations = $this->readReservations();
         foreach ($reservations as $reservation) {
-            if($newReservation['room_id'] == $reservation['room_id']) {
-                if ($newReservation['start_date'] < $reservation['end_date'] && $newReservation['end_date'] > $reservation['start_date']) {
+            if($newReservation['room_id'] == $reservation->room_id) {
+                if ($newReservation['start_date'] < $reservation->end_date && $newReservation['end_date'] > $reservation->start_date) {
                     return false;
                 }
             }
@@ -47,18 +42,13 @@ class ReservationService extends BasicService
     }
 
     public function saveReservation(array $reservation): bool {
-        //generate id by reading file
+        $reservation['reservation_id']= $this->generateId();
         if($this->extension === "csv") {
-            $reservationToSave = $this->reorderColumns($reservation);
-            //generate reservation id
-            array_unshift($reservationToSave, $this->generateId());
+            $reservation = $this->reorderColumns($reservation);
         }
-        else {
-            $reservation['reservation_id']= $this->generateId();
-        }
-        return $this->reader->AppendToFile($reservation);
-
+        return $this->reader->appendToFile($reservation);
     }
+
     protected function generateId(): int {
         if($this->extension === "csv") {
             return $this->reader->getRowNumCsv();
