@@ -35,13 +35,13 @@
     <div class="row justify-content-center" style="margin-top: 30px;">
         <div class="col-md-auto">
             <div class="card">
-                <div class="card-header"><h4>Reservations</h4></div>
+                <div class="card-header"><h4>Reservation</h4></div>
                 <div class="card-body">
 
                     <?php
                     $message = 'Your booking is confirmed.';
                     include "helpers/message-add.php";
-                    include 'ReservationList.php';
+                    include 'services/ReservationList.php';
                     $reservationList = new ReservationList();
                     $reservations = $reservationList->getList();
                     ?>

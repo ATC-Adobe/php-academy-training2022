@@ -1,9 +1,15 @@
 <?php
 
-require_once "ReservationService.php";
+require_once "services/ReservationService.php";
 
 $error = '';
 $message = '';
+$room_id = '';
+$firstname = '';
+$lastname = '';
+$email = '';
+$start_date = '';
+$end_date = '';
 
 if (isset($_POST['submit'])) {
     if (empty($_POST['room_id'])) {
@@ -37,7 +43,7 @@ if (isset($_POST['submit'])) {
         $end_date = $_POST["end_date"];
     }
     if ($error == '') {
-         (new ReservationService())->addReservation($room_id, $firstname, $lastname, $email, $start_date, $end_date);
+        (new ReservationService())->addReservation($room_id, $firstname, $lastname, $email, $start_date, $end_date);
     }
 }
 ?>

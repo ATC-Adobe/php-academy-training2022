@@ -1,5 +1,7 @@
 <?php
 
+include_once 'services/ApplicationService.php';
+
 class ReservationService
 {
     private $reservation;
@@ -11,17 +13,9 @@ class ReservationService
 
     public function addReservation($room_id, $firstname, $lastname, $email, $start_date, $end_date)
     {
-        $rows = $this->getRows();
+        $rows = (new ApplicationService())->getRows();
         $reservation_id = $rows;
         $this->reservation->fputcsv([$reservation_id, $room_id, $firstname, $lastname, $email, $start_date, $end_date]);
-    }
-
-    public function getRows(): int
-    {
-        $rows = count(file("data/reservations.csv"));
-        if ($rows > 1) {
-            $rows = ($rows - 1) + 1;
-        }
-        return $rows;
+        (new ApplicationService())->getReservationListHeader();
     }
 }
