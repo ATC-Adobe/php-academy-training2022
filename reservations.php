@@ -5,7 +5,7 @@ $reservations = $reservation->readReservations();
 if (count($_POST) > 0) {
     $id = $reservation->generateReservationId();
     $reservation->addReservation($id, $reservations);
-    $reservations = $reservation->readReservations();
+    $reservations = $reservation->readReservations(); // ? DRY ?
 }
 
 ?>
