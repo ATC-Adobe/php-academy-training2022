@@ -19,6 +19,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/reservationList.php">Current reservations</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/roomForm.php">Add room</a>
+                </li>
             </ul>
         </div>
     </nav>
@@ -38,7 +41,7 @@
                 echo '<tr>';
                 echo "<td><p>{$room->id}</p></td>";
                 echo "<td><p>{$room->name}</p></td>";
-                echo "<td class=\"floor\"><p>{$room->floor}</p> <a href=\"/reserveForm.php?name={$room->name}&id={$room->floor}\"><button class=\"btn btn-primary px-3\">Reserve</button> </a> </td>";
+                echo "<td class=\"floor\"><p>{$room->floor}</p> <a href=\"/reserveForm.php?name={$room->name}&id={$room->id}\"><button class=\"btn btn-primary px-3\">Reserve</button> </a> </td>";
                 echo "</tr>";
             }
         ?>

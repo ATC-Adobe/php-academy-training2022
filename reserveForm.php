@@ -21,6 +21,9 @@
             <li class="nav-item">
                 <a class="nav-link" href="/reservationList.php">Current reservations</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/roomForm.php">Add room</a>
+            </li>
         </ul>
     </div>
 </nav>

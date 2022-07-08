@@ -21,4 +21,13 @@ class BasicService
             $this->fileHandler = new JsonHandler($this->filename);
         }
     }
+    protected function generateId(): int {
+        if($this->extension === "csv") {
+            return $this->fileHandler->getRowNumCsv();
+        }
+        else {
+            $data = $this->fileHandler->readFile();
+            return count($data) + 1;
+        }
+    }
 }

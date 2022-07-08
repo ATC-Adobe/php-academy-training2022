@@ -25,4 +25,4 @@
         <id>5</id>
         <name>Room_5</name>
     </room>
-</root>
+<room><name>room_10</name><floor>4</floor><id>6</id></room></root>

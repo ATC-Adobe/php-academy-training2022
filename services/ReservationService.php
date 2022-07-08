@@ -5,23 +5,10 @@ include_once './Util.php';
 class ReservationService extends BasicService
 {
     protected $columns = ['reservation_id', 'room_id', 'first_name', 'last_name', 'email', 'start_date', 'end_date'];
-    public function __construct(protected string $filename = "./data/reservations.csv")
+    public function __construct(protected string $filename = "./data/reservations.xml")
     {
         parent::__construct($filename, $this->columns, "reservation");
     }
-
-    private function reorderColumns(array $reservation) {
-        $result = [];
-        foreach ($this->columns as $col) {
-            foreach ($reservation as $key => $value) {
-                if($key == $col) {
-                    $result[] = $value;
-                }
-            }
-        }
-        return $result;
-    }
-
     /**
      * @return iterable<Reservation>|false
      */
@@ -43,19 +30,6 @@ class ReservationService extends BasicService
 
     public function saveReservation(array $reservation): bool {
         $reservation['reservation_id']= $this->generateId();
-        if($this->extension === "csv") {
-            $reservation = $this->reorderColumns($reservation);
-        }
         return $this->fileHandler->appendToFile($reservation);
-    }
-
-    protected function generateId(): int {
-        if($this->extension === "csv") {
-            return $this->fileHandler->getRowNumCsv();
-        }
-        else {
-            $data = $this->fileHandler->readFile();
-            return count($data) + 1;
-        }
     }
 }

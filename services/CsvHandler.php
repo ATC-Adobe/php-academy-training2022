@@ -32,22 +32,28 @@ class CsvHandler implements FileHandlerInterface
                 }
             }
         }
-        //map to array of objects
-        $results = Util::mapResultsToObjects($results);
-//        echo '<pre>';
-//        var_dump($results);
-//        echo '</pre>';
-        return $results;
+        return Util::mapResultsToObjects($results);
     }
-    public function appendToFile(array $values): bool {
+    public function appendToFile(array $keyValuePairs): bool {
+        $keyValuePairs = $this->reorderColumns($keyValuePairs);
         $file = new SplFileObject($this->filename, 'a');
-        $ok = $file->fputcsv($values);
-        return $ok;
+        return $file->fputcsv($keyValuePairs);
     }
 
     public function getRowNumCsv() {
         $file = new SplFileObject($this->filename, 'r');
         $file->seek(PHP_INT_MAX);
         return $file->key() + 1;
+    }
+    private function reorderColumns(array $reservation) {
+        $result = [];
+        foreach ($this->columns as $col) {
+            foreach ($reservation as $key => $value) {
+                if($key == $col) {
+                    $result[] = $value;
+                }
+            }
+        }
+        return $result;
     }
 }

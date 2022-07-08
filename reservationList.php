@@ -20,6 +20,9 @@
             <li class="nav-item">
                 <a class="nav-link active" href="/reservationList.php">Current reservations</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/roomForm.php">Add room</a>
+            </li>
         </ul>
     </div>
 </nav>

@@ -25,17 +25,15 @@ class RoomService extends BasicService
         if($this->extension !== "xml") {
             $results = Util::mapResultsToObjects($results);
         }
-
-        if(!$results) {
-            echo "Something went wrong!";
-            exit(); //Not here
-        }
+//        if(!$results) {
+//            echo "Something went wrong!";
+//            exit(); //Not here
+//        }
         return $results;
     }
 
-    public function addRoom() {
-    //
+    public function addRoom(array $room) {
+        $room['id']= $this->generateId();
+        return $this->fileHandler->appendToFile($room);
     }
-
-
 }

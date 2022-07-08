@@ -16,8 +16,7 @@ class JsonHandler implements FileHandlerInterface
         if($data === null) {
             return false;
         }
-        $data = Util::mapResultsToObjects($data);
-        return $data;
+        return Util::mapResultsToObjects($data);
     }
     public function appendToFile(array $keyValuePairs): bool {
         $str = file_get_contents($this->filename);
