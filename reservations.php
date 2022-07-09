@@ -1,12 +1,24 @@
 <?php
-require_once 'classes.php';
-$reservation = new ReservationService();
-$reservations = $reservation->readReservations();
-if (count($_POST) > 0) {
-    $id = $reservation->generateReservationId();
-    $reservation->addReservation($id, $reservations);
-    $reservations = $reservation->readReservations(); // ? DRY ?
-}
+// CSV
+
+//require_once 'classes.php';
+//$reservation = new ReservationService();
+//$reservations = $reservation->readReservations();
+//if (count($_POST) > 0) {
+//    $id = $reservation->generateReservationId();
+//    $reservation->addReservation($id, $reservations);
+//    $reservations = $reservation->readReservations(); // ? DRY ?
+//}
+
+// XML
+require_once 'reservations_xml.php';
+$reservations = new SimpleXMLElement($xmlstr);
+
+// JSON
+$filename = 'reservations.json';
+
+$data = file_get_contents($filename);
+$reservations = json_decode($data);
 
 ?>
 <!DOCTYPE html>
@@ -58,15 +70,27 @@ if (count($_POST) > 0) {
                                     <th>start_date</th>
                                     <th>end_date</th>
                                 </tr>
+<!--                                --><?php //foreach ($reservations as $reservation) { ?>
+<!--                                    <tr>-->
+<!--                                        <td>--><?//= $reservation[0]; ?><!--</td>-->
+<!--                                        <td>--><?//= $reservation[1]; ?><!--</td>-->
+<!--                                        <td>--><?//= $reservation[2]; ?><!--</td>-->
+<!--                                        <td>--><?//= $reservation[3]; ?><!--</td>-->
+<!--                                        <td>--><?//= $reservation[4]; ?><!--</td>-->
+<!--                                        <td>--><?//= $reservation[5]; ?><!--</td>-->
+<!--                                        <td>--><?//= $reservation[6]; ?><!--</td>-->
+<!--                                    </tr>-->
+<!--                                --><?php //} ?>
+<!--                                -->
                                 <?php foreach ($reservations as $reservation) { ?>
                                     <tr>
-                                        <td><?= $reservation[0]; ?></td>
-                                        <td><?= $reservation[1]; ?></td>
-                                        <td><?= $reservation[2]; ?></td>
-                                        <td><?= $reservation[3]; ?></td>
-                                        <td><?= $reservation[4]; ?></td>
-                                        <td><?= $reservation[5]; ?></td>
-                                        <td><?= $reservation[6]; ?></td>
+                                        <td><?= $reservation->reservationid; ?></td>
+                                        <td><?= $reservation->roomid; ?></td>
+                                        <td><?= $reservation->firstname; ?></td>
+                                        <td><?= $reservation->lastname; ?></td>
+                                        <td><?= $reservation->email; ?></td>
+                                        <td><?= $reservation->startdate; ?></td>
+                                        <td><?= $reservation->enddate; ?></td>
                                     </tr>
                                 <?php } ?>
                             </table>

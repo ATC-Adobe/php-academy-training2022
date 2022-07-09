@@ -1,6 +1,7 @@
 <?php
-        $xmlstr = <<<XML
-        <?xml version='1.0' standalone='yes'?>
+
+$xmlstr = <<<XML
+
 <reservations>
     <reservation>
         <reservationid>1</reservationid>
@@ -93,3 +94,8 @@
         <enddate>02/06/23 16:00:00</enddate>
     </reservation>
 </reservations>
+
+XML;
+
+?>
+

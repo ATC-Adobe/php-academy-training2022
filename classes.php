@@ -22,8 +22,8 @@ class ReservationService
             $row = $file->fgetcsv();
             $reservations[] = $row;
         }
-        foreach ($reservations as $reservation){
-            if(empty(array_filter($reservation))){
+        foreach ($reservations as $reservation) {
+            if (empty(array_filter($reservation))) {
                 $key = array_search($reservation, $reservations);
                 unset($reservations[$key]);
             }
@@ -46,3 +46,31 @@ class ReservationService
     }
 }
 
+
+class ReservationServiceXml
+{
+
+    public function __construct()
+    {
+
+    }
+
+    public function readReservations()
+    {
+        $reservations = [];
+        $file = new SplFileObject("reservations.csv");
+        while (!$file->eof()) {
+            $row = $file->fgetcsv();
+            $reservations[] = $row;
+        }
+        foreach ($reservations as $reservation) {
+            if (empty(array_filter($reservation))) {
+                $key = array_search($reservation, $reservations);
+                unset($reservations[$key]);
+            }
+        }
+
+        return $reservations;
+    }
+
+}
