@@ -1,16 +1,35 @@
 <?php declare(strict_types = 1);
 
+abstract class CsvManipulator {
+    protected ?object $spl;
+
+    public function __construct(
+        string $filename, string $mode
+    ) {
+        $this->spl = new SplFileObject($filename, $mode);
+    }
+
+    public function isOpen() : bool {
+        return $this->spl !== null;
+    }
+
+    public function closeStream() : void {
+        $this->spl = null;
+    }
+}
+
+
 // Class used for reading data from .csv file
-class CSVreader {
-    private ?object $spl;
+class CsvReader extends CsvManipulator {
 
     public function __construct(string $filename) {
-        $this->spl = new SplFileObject($filename);
+        parent::__construct($filename,'r');
     }
 
     public function parseFileToArray() : ?array {
-        if($this->spl == null)
+        if(!$this->isOpen()) {
             return null;
+        }
 
         $this->spl->setFlags(SplFileObject::READ_CSV);
 
@@ -21,31 +40,23 @@ class CSVreader {
         }
         return $res;
     }
-
-    public function closeStream() : void {
-        $this->spl = null;
-    }
 }
 
 // simple line-appending utility
-class CSVwriter {
-    private ?object $spl;
+class CsvWriter extends CsvManipulator {
 
     public function __construct(string $filename) {
-        $this->spl = new SplFileObject($filename, 'a');
+        parent::__construct($filename,'a');
     }
 
     public function putLinesToCSV(array $input) : void {
-        if($this->spl == null)
+        if (!$this->isOpen()) {
             return;
+        }
 
         foreach ($input as $fields) {
             $this->spl->fputcsv($fields);
         }
-    }
-
-    public function closeStream() : void {
-        $this->spl = null;
     }
 }
 
@@ -59,7 +70,7 @@ class ReservationService {
         string $room_id, string $from, string $to
     ) : ?int {
 
-        $file = new CSVreader('reservations.csv');
+        $file = new CsvReader('reservations.csv');
         $lines = $file->parseFileToArray();
         $file->closeStream();
 
@@ -107,10 +118,10 @@ class ReservationService {
         if($id == null)
             return false;
 
-        $spl = new CSVwriter('reservations.csv');
-        $spl->putLinesToCSV(array(array(
+        $spl = new CsvWriter('reservations.csv');
+        $spl->putLinesToCSV([[
             $id, $room_id, $name, $surname, $email, $from, $to,
-        )));
+        ]]);
         $spl->closeStream();
 
         return true;

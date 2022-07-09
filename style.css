@@ -142,3 +142,13 @@ input:hover {
     transition: all 0.3s ease-in-out;
 }
 
+a {
+    color: inherit;
+    text-underline: none;
+}
+
+a:hover {
+    color: var(--succ);
+    transition: all 0.2s ease-in-out;
+}
+

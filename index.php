@@ -17,40 +17,14 @@
 </head>
 <body>
 
-    <div class="header">
-        Room reservation service
-        <br><br>
-
+<div class="header">
+    Room Reservation Service
+    <br><br>
     <div class="main">
-        <table>
-            <tr>
-                <th style="width:10%">ID</th>
-                <th style="width:40%">Name</th>
-                <th style="width:10%">Floor</th>
-                <th> </th>
-            </tr>
-            <tr>&#8203;</tr>
-            <?php
-                for($i = 1; $i <= 8; $i-=-1) {
-                    echo "<tr>";
-                    echo "<td> $i </td>";
-                    echo "<td> Room $i </td>";
-                    $floor = ceil(($i + 1) / 3);
-                    echo "<td> $floor </td>";
-                    echo "<td><form method='GET' action='order.php'>
-                            <input type='hidden' name='id' value='$i'>
-                            <input type='submit' value='Reserve'>
-                          </form></td>";
-                    echo "</tr>";
-                }
-            ?>
-            <tr>&#8203;</tr>
-        </table>
+        Navigation Menu:<br>
+        <a href="roomListing.php">Available Rooms</a><br>
+        <a href="roomReservationListing.php">Active Reservations</a><br>
     </div>
-    </div>
+</div>
+
 </body>
-<?php
-?>
-
-</html>
-
