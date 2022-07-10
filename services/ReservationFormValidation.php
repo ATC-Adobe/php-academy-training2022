@@ -2,7 +2,7 @@
 
 class ReservationFormValidation
 {
-    function validated(
+    public function validated(
         string $error,
         mixed $roomId,
         mixed $firstName,

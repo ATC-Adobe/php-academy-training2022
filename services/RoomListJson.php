@@ -7,12 +7,12 @@ class RoomListJson
 {
     private $jsonList;
 
-    function __construct()
+    public function __construct()
     {
         $this->jsonList = file_get_contents((new ApplicationService())->getJsonRoomUrl());
     }
 
-    public function getRoomListJson()
+    public function getRoomListJson(): array
     {
         $rooms = [];
         $jsonRooms = json_decode($this->jsonList);

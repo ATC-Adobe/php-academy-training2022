@@ -26,39 +26,13 @@ if (isset($_POST['submit'])) {
         (new ReservationService())->addReservation($roomId, $firstName, $lastName, $email, $startDate, $endDate);
     }
 }
+
+include "views/layouts/head.php";
+include "views/layouts/navbar.php";
+
 ?>
 
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <title>BookMyRoom | Conference room reservation system</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
-          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-</head>
 <body>
-
-<!--Navbar-->
-<nav class="navbar navbar-expand-lg navbar-light bg-info">
-    <a class="navbar-brand" href="/">BookMyRoom</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item row">
-                <a class="nav-link" href="reservations.php">Reservations</a>
-                <a class="nav-link" href="rooms_json.php">Rooms with Json</a>
-                <a class="nav-link" href="rooms_xml.php">Rooms with XML</a>
-            </li>
-        </ul>
-    </div>
-</nav>
 
 <!--Booking form-->
 <div class="container">

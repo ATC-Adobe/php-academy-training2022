@@ -6,10 +6,10 @@ class RoomList
 
     public function __construct()
     {
-        $this->list = new SplFileObject('data/rooms.csv','r');
+        $this->list = new SplFileObject('data/rooms.csv', 'r');
     }
 
-    public function getRoomsList()
+    public function getRoomsList(): array
     {
         $this->list->setFlags(SplFileObject::READ_CSV | SplFileObject::SKIP_EMPTY | SplFileObject::READ_AHEAD);
         $rooms = [];

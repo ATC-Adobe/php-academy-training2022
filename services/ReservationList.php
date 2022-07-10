@@ -11,7 +11,7 @@ class ReservationList
         $this->list = new SplFileObject((new ApplicationService())->getCsvReservationUrl(), 'r');
     }
 
-    public function getList()
+    public function getList(): array
     {
         $this->list->setFlags(SplFileObject::READ_CSV | SplFileObject::SKIP_EMPTY | SplFileObject::READ_AHEAD);
         $reservations = [];

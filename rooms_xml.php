@@ -1,47 +1,11 @@
 <?php
-//
-//if (file_exists('data/rooms.xml')) {
-//    $filename = 'data/rooms.xml';
-//    $rooms = simplexml_load_file($filename);
-//} else {
-//    $message = "<h3 class='text-danger'>XML file not found</h3>";
-//}
-//if (isset($message)) {
-//    echo $message;
-//}
-//?>
 
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <title>BookMyRoom | Conference room reservation system</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
-          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-</head>
+include "views/layouts/head.php";
+include "views/layouts/navbar.php";
+
+?>
+
 <body>
-
-<!--Navbar-->
-<nav class="navbar navbar-expand-lg navbar-light bg-info">
-    <a class="navbar-brand" href="/">BookMyRoom (csv)</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item row">
-                <a class="nav-link" href="reservations.php">Reservations</a>
-                <a class="nav-link" href="rooms_json.php">Rooms with Json</a>
-                <a class="nav-link" href="rooms_xml.php">Rooms with XML</a>
-            </li>
-        </ul>
-    </div>
-</nav>
 
 <!--Conference rooms list-->
 <div class="container">
