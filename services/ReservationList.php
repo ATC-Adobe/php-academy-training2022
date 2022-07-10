@@ -1,12 +1,14 @@
 <?php
 
+include_once 'services/ApplicationService.php';
+
 class ReservationList
 {
     private $list;
 
     public function __construct()
     {
-        $this->list = new SplFileObject('data/reservations.csv', 'r');
+        $this->list = new SplFileObject((new ApplicationService())->getCsvReservationUrl(), 'r');
     }
 
     public function getList()

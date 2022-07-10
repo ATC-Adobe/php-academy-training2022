@@ -1,12 +1,14 @@
 <?php
 
+require_once 'services/ApplicationService.php';
+
 class RoomListXml
 {
     private $xmlList;
 
     public function __construct()
     {
-        $this->xmlList = new SimpleXMLElement('data/rooms.xml',0, TRUE);
+        $this->xmlList = new SimpleXMLElement((new ApplicationService())->getXmlRoomUrl(),0, TRUE);
     }
 
     public function getRoomListXml()

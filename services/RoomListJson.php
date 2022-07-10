@@ -1,5 +1,7 @@
 <?php
 
+require_once 'services/ApplicationService.php';
+
 class RoomListJson
 
 {
@@ -7,7 +9,7 @@ class RoomListJson
 
     function __construct()
     {
-        $this->jsonList = file_get_contents('data/rooms.json');
+        $this->jsonList = file_get_contents((new ApplicationService())->getJsonRoomUrl());
     }
 
     public function getRoomListJson()

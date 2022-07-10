@@ -8,7 +8,7 @@ class ReservationService
 
     public function __construct()
     {
-        $this->reservation = new SplFileObject('data/reservations.csv', 'a');
+        $this->reservation = new SplFileObject((new ApplicationService())->getCsvReservationUrl(), 'a');
     }
 
     public function addReservation($roomId, $firstName, $lastName, $email, $startDate, $endDate)
@@ -18,4 +18,5 @@ class ReservationService
         $this->reservation->fputcsv([$reservationId, $roomId, $firstName, $lastName, $email, $startDate, $endDate]);
         (new ApplicationService())->getReservationListHeader();
     }
+
 }

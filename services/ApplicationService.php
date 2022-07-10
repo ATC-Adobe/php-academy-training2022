@@ -15,4 +15,19 @@ class ApplicationService
         }
         return $rows;
     }
+
+    public function getCsvReservationUrl(): string
+    {
+        return 'data/reservations.csv';
+    }
+
+    public function getXmlRoomUrl(): string
+    {
+        return 'data/rooms.xml';
+    }
+
+    public function getJsonRoomUrl(): string
+    {
+        return 'data/rooms.json';
+    }
 }
