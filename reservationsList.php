@@ -1,68 +1,62 @@
 <?php
-class ReservationService {
-    public $name;
-    public $surname;
-    public $email;
-    public $datetimeFrom;
-    public $datetimeTo;
-    private $formFields;
+//
+//include_once "./Singleton.php";
+//
+//?>
+<?php
+//class ReservationService {
+//    public $name;
+//    public $surname;
+//    public $email;
+//    public $datetimeFrom;
+//    public $datetimeTo;
+//    private $formFields;
+//
+//    function __construct($requestArray)
+//    {
+//        $this->formFields=$requestArray;
+//
+//    }
+//    public function saveData($fname){
+//        $myFile = new SplFileObject($fname, "a");
+//        $myFile->fputcsv($this->formFields);
+//        $myFile = null;
+//    }
+//
+//    public function readData(){
+//        $file = fopen('file.csv', 'r');
+//        $i=1;
+//        while (($line = fgetcsv($file)) !== FALSE) {
+//            //$line is an array of the csv elements
+//            //$value = implode(' ',$line);
+//            //print_r("<p>$value</p>");
+//            $from = date('d/m/y H:i:s',strtotime($line[4]));
+//            $to = date('d/m/y H:i:s',strtotime($line[5]));
+//
+//         echo "<tr>
+//            <td>$i</td>
+//            <td>$line[0]</td>
+//            <td>$line[1]</td>
+//            <td>$line[2]</td>
+//            <td>$line[3]</td>
+//            <td>$from</td>
+//            <td>$to</td>
+//</tr>";
+//         $i++;
+//        }
+//        fclose($file);
+//
+//    }
+//
+//}
+//
+//$myReservation = new ReservationService($_POST);
+//$myReservation->saveData("file.csv");
+//
+//
+//
+//?>
 
- /*   function __construct($name, $surname, $email, $datetimeFrom, $datetimeTo) {
-        $this->name = $name;
-        $this->surname = $surname;
-        $this->email = $email;
-        $this->datetimeFrom = $datetimeFrom;
-        $this->datetimeTo = $datetimeTo;
-    }
-*/
-    function __construct($requestArray)
-    {
-        $this->formFields=$requestArray;
-        /*
-         $this->name=$requestArray["name"];
-        $this->surname=$requestArray["surname"];
-        $this->email=$requestArray["email"];
-        $this->datetimeFrom=$requestArray["datetimeFrom"];
-        $this->datetimeTo=$requestArray["datetimeTo"];
-
-         */
-    }
-    public function saveData($fname){
-        $myFile = new SplFileObject($fname, "a");
-        $myFile->fputcsv($this->formFields);
-        $myFile = null;
-    }
-
-    public function readData(){
-        $file = fopen('file.csv', 'r');
-        $i=1;
-        while (($line = fgetcsv($file)) !== FALSE) {
-            //$line is an array of the csv elements
-            //$value = implode(' ',$line);
-            //print_r("<p>$value</p>");
-         echo "<tr>
-            <td>$i</td>
-            <td>$line[0]</td>
-            <td>$line[1]</td>
-            <td>$line[2]</td>
-            <td>$line[3]</td>
-            <td>$line[4]</td>
-            <td>$line[5]</td>
-</tr>";
-         $i++;
-        }
-        fclose($file);
-
-    }
-
-}
-
-$myReservation = new ReservationService($_POST);
-$myReservation->saveData("file.csv");
-
-
-
-?>
 
 <!DOCTYPE html>
 <html>
@@ -186,7 +180,39 @@ $myReservation->saveData("file.csv");
             <td>02/06/23 10:30:00</td>
             <td>02/06/23 16:00:00</td>
         </tr>
-<?php $myReservation->readData();?>
+        <?php
+        include_once "./Connection.php";
+
+        $conn = MysqlConnection::getInstance();
+        $roomNumber = $_POST['roomNumber'];
+        $name = $_POST['name'];
+        $surname = $_POST['surname'];
+        $email = $_POST['email'];
+           $dateTimeFrom = date('d/m/y H:i:s',strtotime($_POST['datetimeFrom']));
+           $dateTimeTo = date('d/m/y H:i:s',strtotime($_POST['datetimeTo']));
+
+        $addQuery = $conn->query("INSERT INTO reservations (room_id, firstname, lastname, email, start_date, end_date)
+VALUES ($roomNumber,'$name','$surname','$email',
+        STR_TO_DATE(\"$dateTimeFrom\", \"%d/%m/%y %H:%i:%s\"),
+        STR_TO_DATE(\"$dateTimeTo\", \"%d/%m/%y %H:%i:%s\")
+);");
+
+
+        $reservations = $conn->query("SELECT * FROM reservations")->fetchAll();
+
+        foreach ($reservations as $row){
+
+            echo "<tr>
+            <td>{$row['reservation_id']}</td>
+            <td>{$row['room_id']}</td>
+            <td>{$row['firstname']}</td>
+            <td>{$row['lastname']}</td>
+            <td>{$row['email']}</td>
+            <td>{$row['start_date']}</td>
+            <td>{$row['end_date']}</td>
+            </tr>";
+        }
+        ?>
 
     </table>
 </div>
