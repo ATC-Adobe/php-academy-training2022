@@ -18,7 +18,7 @@ interface Room {
 
 /**
  * @property string|int room_id
- * @property string|int reservation_id
+ * @property ?string|int id
  * @property string first_name
  * @property string last_name
  * @property string email

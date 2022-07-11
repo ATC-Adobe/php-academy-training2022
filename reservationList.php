@@ -71,10 +71,13 @@
         }
 
     $reservations = $reservationService->readReservations();
+        if(!$reservations) {
+            echo '<div class="alert alert-danger text-center">Something went wrong. Try again</div>';
+        }
         for($i=0; $i<count($reservations); $i++) {
             if(!($i % 2)) echo '<div class="row">';
             echo     '<div class="col col-md-6 listItem pt-3">';
-            echo        '<h6>Reservation id: '. $reservations[$i]->reservation_id .'</h6>';
+            echo        '<h6>Reservation id: '. $reservations[$i]->id .'</h6>';
                 echo     '<ul class="w-100">';
                 echo         '<li>room id: '. $reservations[$i]->room_id .'</li>';
                 echo         '<li>first name: '. $reservations[$i]->first_name .'</li>';
