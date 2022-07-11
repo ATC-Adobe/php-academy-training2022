@@ -18,8 +18,11 @@ include "views/layouts/navbar.php";
                     <?php
                     $message = 'Your booking is confirmed.';
                     include_once "helpers/message-add.php";
-                    include_once 'services/ReservationList.php';
-                    $reservations = (new ReservationList())->getList();
+                    require_once 'db/Connection.php';
+                    require_once 'services/ApplicationService.php';
+                    $dbConnection = Connection::getConnection();
+                    $reservations = (new ApplicationService())->getReservations($dbConnection);
+
                     ?>
 
                     <table class="table table-striped table-hover table-borderless">
@@ -28,6 +31,7 @@ include "views/layouts/navbar.php";
                             <th>Reservation Id</th>
                             <th>Room id</th>
                             <th>First name</th>
+
                             <th>Last name</th>
                             <th>Email</th>
                             <th>Start date</th>

@@ -1,4 +1,5 @@
 <?php
+include_once "db/Connection.php";
 
 class ApplicationService
 {
@@ -29,5 +30,12 @@ class ApplicationService
     public function getJsonRoomUrl(): string
     {
         return 'data/rooms.json';
+    }
+    function getReservations(Connection $dbConnection): array|false
+    {
+        $reservations = $dbConnection->query(
+            "SELECT * FROM reservations ORDER BY reservation_id ASC"
+        )->fetchAll();
+        return $reservations;
     }
 }
