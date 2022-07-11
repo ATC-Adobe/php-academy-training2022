@@ -17,6 +17,20 @@ class BTree {
     }
 
     public function insert(mixed $key, mixed $value) : void {
+        if($this->root->n == 4) {
+            $s = new node();
+            $s->isLeaf = false;
+            $s->pointers[0] = $this->root;
+            $this->root = $s;
+
+            $s->describe(0);
+
+            $this->root->pointers[0]->splitChild(0, $this->root);
+            echo "<br>kadjasjdj<br>";
+            $s->describe(0);
+
+        }
+
         $this->root->insertNonFull($key, $value);
     }
 
@@ -57,21 +71,25 @@ class node {
     }
 
     public function describe(int $intend) : void {
-        $x = '';
-        for($i = 0; $i < $intend; $i++, $x = $x . ' ');
+        $x = str_repeat('-', $intend);
 
         for($i = 0; $i < $this->n; $i++) {
             echo $x . '('.$this->keys[$i].' => '.$this->values[$i].')<br>';
         }
 
+        echo $x.'==<br>';
+
         if(!$this->isLeaf) {
             for ($i = 0; $i <= $this->n; $i++) {
                 $this->pointers[$i]->describe($intend + 4);
+                echo $x.'==<br>';
             }
         }
     }
 
     public function insertNonFull(mixed $key, mixed $value) : void {
+        echo "Insert $key $value <br>";
+
         $i = $this->n - 1;
 
         if($this->isLeaf) {
@@ -81,35 +99,88 @@ class node {
                 $i--;
             }
 
-            $this->keys[$i + 1] = $key;
+            $this->keys[$i + 1]   = $key;
             $this->values[$i + 1] = $value;
             $this->n++;
+        }
+        else {
+            while ($i >= 0 && $key < $this->keys[$i]) {
+                $i--;
+            }
+            echo "$i <br>";
 
-            return;
+            $i++;
+
+            // disk read
+
+            if($this->pointers[$i]->n == 4) {
+                $this->pointers[$i]->splitChild($i, $this);
+                if($key > $this->keys[$i]) {
+                    $i++;
+                }
+            }
+
+            $this->pointers[$i]->insertNonFull($key, $value);
         }
     }
 
     public function splitChild(int $i, node $parent) : void {
         $nn = new node();
         $nn->isLeaf = $this->isLeaf;
+        $nn->n = 2;
 
+        for($j = 0; $j < 2; $j++) {
+            $nn->keys[$j]   = $this->keys[$j + 2];
+            $nn->values[$j] = $this->values[$j + 2];
+        }
+
+        if(!$this->isLeaf) {
+            for($j = 0; $j <= 2; $j++) {
+                $nn->pointers[$j] = $this->pointers[$j + 2];
+            }
+        }
+
+        $this->n = 1;
+
+        for($j = $parent->n; $j >= $i; $j--) {
+            $parent->pointers[$j + 1] = $parent->pointers[$j];
+        }
+
+        $parent->pointers[$i] = $nn;
+
+        for($j = $parent->n - 1; $j >= $i; $j--) {
+            $parent->keys[$j + 1]   = $parent->keys[$j];
+            $parent->values[$j + 1] = $parent->values[$j];
+        }
+
+        $parent->keys[$i] = $this->keys[2];
+        $parent->n++;
+
+        // disk-writes
     }
-
 }
 
 $dict = new BTree();
-$dict->describe();
+//$dict->describe();
+//echo '<br><br>';
 
-echo '<br><br>';
 $dict->insert(1, 4);
-$dict->describe();
+//$dict->describe();
+//echo '<br><br>';
 
-echo '<br><br>';
 $dict->insert(7, 6);
-$dict->describe();
+//$dict->describe();
+//echo '<br><br>';
 
-echo '<br><br>';
 $dict->insert(0, 6);
+//$dict->describe();
+//echo '<br><br>';
+
+$dict->insert(5, 6);
+//$dict->describe();
+//echo '<br><br>';
+
+$dict->insert(9, 6);
 $dict->describe();
 echo '<br><br>';
 
