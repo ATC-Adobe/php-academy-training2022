@@ -14,9 +14,9 @@ require_once "layouts/navbar.html"; ?>
     ?>
 </div>
 
-<form action="CsvReservationsList.php" method="post" enctype="multipart/form-data" id="form">
+<form action="create.php" method="POST" enctype="multipart/form-data" id="form">
 
-    <!--    Transfer Room Id from the form to a csv file by php echo command-->
+    <!--    Transfer Room Id from the form to a MySQL by php echo command-->
     <input type="hidden" name="roomId" value="<?php
     echo $_GET['roomId'] ?>">
     <div class="input-group f-input">
@@ -59,7 +59,7 @@ require_once "layouts/navbar.html"; ?>
 
     <h4>Sale można rezerwować od 8:00 do 16:00</h4>
 
-    <button type="submit" class="btn btn-info">Zapisz</button>
+    <button type="submit" class="btn btn-info submit">Zapisz</button>
 </form>
 <?php
 require_once "layouts/footer.html" ?>

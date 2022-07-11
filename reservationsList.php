@@ -1,47 +1,18 @@
 <?php
 
-require_once "class/CsvReservationService.php";
-require_once "class/CsvReservationsReader.php";
-require_once "class/Validations.php";
-
-// The class CsvReservationService is used to save data from the form to a csv file
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $reservationService = new CsvReservationService();
-    $reservationService->createReservation(
-        $_POST['roomId'],
-        $_POST['firstName'],
-        $_POST['lastName'],
-        $_POST['email'],
-        $_POST['startDay'],
-        $_POST['endDay'],
-        $_POST['startHour'],
-        $_POST['endHour']
-    );
-
-    $roomId = $_POST['roomId'];
-}
-?>
-
-<?php
 require_once "layouts/header.html"; ?>
 <body class="index-list-body">
 <?php
 require_once "layouts/navbar.html"; ?>
 
-<div id="success-message">
-    <?php
-
-    if (!empty($_POST)) {
-        $successMessage = new Validations();
-        $successMessage->successMessage($roomId);
-    }
-    ?>
-</div>
-
 <?php
-// The class CsvReservationsReader is used to load data from the csv file
-$reservationReader = new CsvReservationsReader();
-$reservations = $reservationReader->readReservations();
+require_once "class/MysqlConnection.php";
+
+// The class MysqlConnection is used to load data from the database
+$connection = MysqlConnection::getInstance();
+$selectQuery = "SELECT * FROM rooms;";
+$reservations = $connection->query($selectQuery)->fetchAll();
+
 ?>
 
 <table class="table">
@@ -53,9 +24,10 @@ $reservations = $reservationReader->readReservations();
         <th scope="col">Nazwisko</th>
         <th scope="col">Adres E-mail</th>
         <th scope="col">Data rozpoczęcia rezerwacji</th>
-        <th scope="col">Godzina rozpoczęcia rezerwacji</th>
-        <th scope="col">Data zakończeniaia rezerwacji</th>
+        <th scope="col">Data zakończenia rezerwacji</th>
+        <th scope="col">Godzina Rozpoczęcia rezerwacji</th>
         <th scope="col">Godzina zakończenia rezerwacji</th>
+        <th scope="col">Możliwa czynność</th>
     </tr>
     </thead>
     <tbody>
@@ -82,6 +54,15 @@ $reservations = $reservationReader->readReservations();
             echo $reservation['startHour']; ?></td>
         <td><?php
             echo $reservation['endHour']; ?></td>
+        <td>
+            <a href="update.php?id=<?php
+            echo $reservation['id'] ?>" class="btn btn-sm btn-info">Edytuj</a>
+            <form style="display: inline-block" method="POST" action="delete.php">
+                <input type="hidden" name="id" value="<?php
+                echo $reservation['id'] ?>">
+                <button type="submit" class="btn btn-sm btn-danger">Usuń</button>
+        </td>
+        </form>
     </tr>
     </tbody>
     <?php
