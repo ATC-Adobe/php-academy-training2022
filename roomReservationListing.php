@@ -1,4 +1,7 @@
-<?php declare(strict_types = 1); include_once "fileManipulator.php" ?>
+<?php
+declare(strict_types = 1);
+include_once "pdo.php";
+?>
 
 <!DOCTYPE html>
 <html>
@@ -15,12 +18,6 @@
     -->
 </head>
 <body>
-
-<?php
-$istream = new CsvReader("reservations.csv");
-$file = $istream->parseFileToArray();
-$istream->closeStream();
-?>
 
 <div class="header">
     Room reservation service
@@ -46,10 +43,15 @@ $istream->closeStream();
 
         <?php
 
-        foreach($file as $entry) {
+        $conn = MySqlConnection::getInstance();
+        $entries = $conn->query("SELECT * FROM Reservations")
+            ->fetchAll();
+
+        foreach($entries as $entry) {
 
             [ $id, $room, $name, $surname, $email, $from, $to, ]
-                = $entry;
+                = [$entry['id'], $entry['room_id'], $entry['name'], $entry['surname'],
+                    $entry['email'], $entry['from_date'], $entry['to_date']];
 
             echo "<div class='row'>
                 <div class='float ltable' style = 'line-height: 1.2em;' >

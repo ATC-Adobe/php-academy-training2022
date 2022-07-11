@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1); include_once "fileManipulator.php"; ?>
+<?php declare(strict_types = 1);
+include_once "pdo.php"; ?>
 <?php
 
     if(isset($_POST['room_id'])) {
@@ -6,12 +7,12 @@
             = [ $_POST['room_id'],  $_POST['name'],     $_POST['surname'],
                 $_POST['email'],    $_POST['from'],     $_POST['to']];
 
-        // datetime -> zachowanie spójności
+
         $from = date("d/m/y H:i:s", strtotime($from));
         $to   = date("d/m/y H:i:s", strtotime($to));
 
         $serv = new ReservationService();
-        $res = $serv->insertRequest($room_id, $name, $surname, $email, $from, $to);
+        $res = $serv->makeRequest($room_id, $name, $surname, $email, $from, $to);
 
         if( $res  ) { // success
             header('Location: roomReservationListing.php?status=1');

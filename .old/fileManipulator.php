@@ -60,7 +60,7 @@ class CsvWriter extends CsvManipulator {
     }
 }
 
-class ReservationService {
+class ReservationService__ {
     public function __construct() { }
 
     // checks if given time interval does not overlap with other reservations

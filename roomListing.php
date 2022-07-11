@@ -1,4 +1,7 @@
-<?php declare(strict_types = 1) ?>
+<?php
+declare(strict_types = 1);
+require_once "pdo.php";
+?>
 
 <!DOCTYPE html>
 <html>
@@ -32,45 +35,26 @@
             </tr>
             <tr>&#8203;</tr>
             <?php
-                $rooms = simplexml_load_file('rooms.xml')
-                    or die('An error occurred while loading rooms.xml!');
+                $conn = MySqlConnection::getInstance();
 
-                foreach($rooms->room as $room) {
+                $entries = $conn->query("SELECT * FROM Rooms")->fetchAll();
+
+                foreach($entries as $entry) {
+
+                    $id     = $entry['id'];
+                    $name   = $entry['name'];
+                    $floor  = $entry['floor'];
+
                     echo "<tr>";
-                    echo "<td> $room->id </td>";
-                    echo "<td> XML $room->name </td>";
-                    echo "<td> $room->floor </td>";
+                    echo "<td> $id </td>";
+                    echo "<td> $name </td>";
+                    echo "<td> $floor </td>";
                     echo "<td><form method='GET' action='roomReservationForm.php'>
-                            <input type='hidden' name='id' value='$room->id'>
-                            <input type='submit' value='Reserve'>
-                          </form></td>";
+                                <input type='hidden' name='id' value='$id'>
+                                <input type='submit' value='Reserve'>
+                              </form></td>";
                     echo "</tr>";
                 }
-            ?>
-
-            <?php
-
-            $rooms = json_decode(
-                    file_get_contents('rooms.json'),
-                    true
-            );
-
-            foreach($rooms['rooms'] as $room) {
-
-                $id     = $room['id'];
-                $name   = $room['name'];
-                $floor  = $room['floor'];
-
-                echo "<tr>";
-                echo "<td> $id </td>";
-                echo "<td> JSON $name </td>";
-                echo "<td> $floor </td>";
-                echo "<td><form method='GET' action='roomReservationForm.php'>
-                            <input type='hidden' name='id' value='$id'>
-                            <input type='submit' value='Reserve'>
-                          </form></td>";
-                echo "</tr>";
-            }
             ?>
             <tr>&#8203;</tr>
         </table>
