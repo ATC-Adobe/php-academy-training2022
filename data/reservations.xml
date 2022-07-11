@@ -118,7 +118,7 @@
         <endDate>07/07/22 12:49:00</endDate>
     </reservation>
     <reservation>
-        <reservationId>13</reservationId>
+        <reservationId>14</reservationId>
         <roomId>4</roomId>
         <firstName>Test</firstName>
         <lastName>Room</lastName>
@@ -127,7 +127,7 @@
         <endDate>07/07/22 12:59:00</endDate>
     </reservation>
     <reservation>
-        <reservationId>14</reservationId>
+        <reservationId>15</reservationId>
         <roomId>4</roomId>
         <firstName>test</firstName>
         <lastName>test</lastName>

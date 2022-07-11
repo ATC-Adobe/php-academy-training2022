@@ -3,6 +3,14 @@
 
     $file = file_get_contents("./data/reservations.json", true);
     $json = json_decode($file, true);
+
+    //testing space
+    /*
+    require_once "./class/FileManager.php";
+    use PHPCourse\FileManager;
+
+    $read = new FileManager("./data/reservations.csv");
+    */
 ?>
 
 <!DOCTYPE html>
@@ -38,6 +46,9 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link active" href="./reservationListJson.php">Reservations JSON</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="./reservationListSql.php">Reservations SQL</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link disabled">Test</a>

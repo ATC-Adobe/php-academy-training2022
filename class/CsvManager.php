@@ -3,7 +3,7 @@
     namespace PHPCourse;
     use SplFileObject;
 
-    abstract class CsvManager {
+    abstract class AbstractCsvManager {
         protected object $file;
 
         public function releaseFile(): void {
@@ -11,13 +11,13 @@
         }
     }
 
-    class CsvReader extends CsvManager {
+    class CsvReader extends AbstractCsvManager {
 
         public function __construct(string $filename) {
             $this->file = new SplFileObject($filename);
         }
 
-        public function getArrayFromFile(): ?array {
+        public function readCsv(): ?array {
             if ($this->file == null) {
                 return null;
             }
@@ -37,7 +37,7 @@
         }
     }
 
-    class CsvWriter extends CsvManager {
+    class CsvWriter extends AbstractCsvManager {
 
         public function __construct(string $filename)
         {

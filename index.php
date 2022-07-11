@@ -3,9 +3,8 @@
     require_once "./class/CsvManager.php";
     use PHPCourse\CsvReader;
 
-    $read = new CsvReader("./data/rooms.csv");
-    $rooms = $read->getArrayFromFile();
-
+    $handler = new CsvReader("./data/rooms.csv");
+    $rooms = $handler->readCsv();
 ?>
 
 <!DOCTYPE html>
@@ -43,6 +42,9 @@
                             <a class="nav-link" href="./reservationListJson.php">Reservations JSON</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="./reservationListSql.php">Reservations SQL</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link disabled">Test</a>
                         </li>
                     </ul>
@@ -61,7 +63,7 @@
 
                 <?php
 
-                    foreach($rooms as $room) {
+                    foreach ($rooms as $room) {
                         [ $roomId, $name, $floor ] = $room;
 
                         echo "<tr>";

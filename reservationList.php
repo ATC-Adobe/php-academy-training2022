@@ -3,8 +3,8 @@
     require_once "./class/CsvManager.php";
     use PHPCourse\CsvReader;
 
-    $read = new CsvReader("./data/reservations.csv");
-    $reservations = $read->getArrayFromFile();
+    $handler = new CsvReader("./data/reservations.csv");
+    $reservations = $handler->readCsv();
 ?>
 
 <!DOCTYPE html>
@@ -40,6 +40,9 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="./reservationListJson.php">Reservations JSON</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="./reservationListSql.php">Reservations SQL</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link disabled">Test</a>
