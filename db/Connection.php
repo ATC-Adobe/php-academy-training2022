@@ -17,9 +17,10 @@ class Connection extends PDO
             self::PASSWORD
         );
     }
+
     public static function getConnection(): Connection
     {
-        if(self::$connection === null){
+        if (self::$connection === null) {
             self::$connection = new Connection();
         }
         return self::$connection;

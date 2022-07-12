@@ -7,6 +7,10 @@ class ApplicationService
     {
         header('location:reservations.php?msg=add');
     }
+    public function getRoomsListHeader(): void
+    {
+        header('location:index.php?msg=add');
+    }
 
     public function getRows(): int
     {
@@ -30,12 +34,5 @@ class ApplicationService
     public function getJsonRoomUrl(): string
     {
         return 'data/rooms.json';
-    }
-    function getReservations(Connection $dbConnection): array|false
-    {
-        $reservations = $dbConnection->query(
-            "SELECT * FROM reservations ORDER BY reservation_id ASC"
-        )->fetchAll();
-        return $reservations;
     }
 }

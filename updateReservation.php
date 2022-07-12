@@ -1,63 +1,38 @@
 <?php
 
-require_once "services/ReservationService.php";
-require_once "services/ReservationFormValidation.php";
-
-$error = '';
-$message = '';
-$roomId = '';
-$firstName = '';
-$lastName = '';
-$email = '';
-$startDate = '';
-$endDate = '';
-
-if (isset($_POST['submit'])) {
-    list($error, $roomId, $firstName, $lastName, $email, $startDate, $endDate) = (new ReservationFormValidation())->validated(
-        $error,
-        $roomId,
-        $firstName,
-        $lastName,
-        $email,
-        $startDate,
-        $endDate
-    );
-    if ($error == '') {
-        (new ReservationService())->addDbReservation($roomId, $firstName, $lastName, $email, $startDate, $endDate);
-    }
-}
-
 include "views/layouts/head.php";
 include "views/layouts/navbar.php";
 
 ?>
 
-<body>
-
-<!--Booking form-->
 <div class="container">
     <div class="row justify-content-center" style="margin-top: 30px;">
         <div class="col-md-6">
             <div class="card">
-                <div class="card-header"><h4>Book a Room</h4></div>
+                <div class="card-header"><h4>Delete reservation</h4></div>
                 <div class="card-body">
+                    <?php
+                    $reservation_id = $_GET['reservation_id'];
+                    $roomId = $_GET['room_id'];
+                    $email = $_GET['email'];
+                    $firstName = $_GET['firstname'];
+                    $lastName = $_GET['lastname'];
+                    $startDate = $_GET['start_date'];
+                    $endDate = $_GET['end_date'];
+                    ?>
                     <form action="" method="post">
-                        <?php
-                        echo $error; ?>
                         <div class="form-group">
-                            <?php
-                            $name = $_GET['name'];
-                            $roomId = $_GET['room_id'];
-                            ?>
-                            <label for="roomId">Room Name</label>
-                            <input type="hidden" class="form-control" name="room_id" value="<?php
-                            echo $roomId ?>">
-                            <input type="text" class="form-control" name="roomName" disabled
-                                   value="<?php
-                                   echo $name ?>">
+                            <label for="reservation_id">Reservation ID</label>
+                            <input type="" class="form-control" name="reservation_id" value="<?php
+                            echo $reservation_id ?>">
                         </div>
                         <div class="form-group">
-                            <label for="firstname">Firstname</label>
+                            <label for="roomId">Room Id</label>
+                            <input type="" class="form-control" name="room_id" value="<?php
+                            echo $roomId ?>">
+                        </div>
+                        <div class="form-group">
+                            <label for="firstname">Lastname</label>
                             <input type="text" class="form-control" name="firstname" value="<?php
                             echo $firstName; ?>">
                         </div>
@@ -73,13 +48,13 @@ include "views/layouts/navbar.php";
                         </div>
                         <div class="form-group">
                             <label for="start_date">Date from</label>
-                            <input type="datetime-local" class="form-control" name="start_date"
+                            <input type="" class="form-control" name="start_date"
                                    value="<?php
                                    echo $startDate; ?>">
                         </div>
                         <div class="form-group">
                             <label for="end_date">Date to</label>
-                            <input type="datetime-local" class="form-control" name="end_date"
+                            <input type="" class="form-control" name="end_date"
                                    value="<?php
                                    echo $endDate; ?>">
                         </div>
@@ -104,4 +79,3 @@ include "views/layouts/navbar.php";
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
 </body>
-</html>

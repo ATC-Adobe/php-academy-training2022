@@ -24,12 +24,12 @@ class ReservationFormValidation
         )) {
             $error .= '<p class="text-danger">Firstname is required. First name cannot be longer than 50 characters. Only letters and white spaces are allowed. </p>';
         } else {
-            $firstName = $_POST["firstname"];
+            $firstName = $_POST['firstname'];
         }
         if (empty(
-            $_POST['lastname'] && strlen($_POST['firstname']) < 50 && preg_match(
+            $_POST['lastname'] && strlen($_POST['lastname']) < 50 && preg_match(
                 "/^[a-zA-Z ]*$/",
-                $_POST['firstname']
+                $_POST['lastname']
             )
         )) {
             $error .= '<p class="text-danger">Last name is required. Last name cannot be longer than 50 characters. Only letters and white spaces are allowed.</p>';
@@ -39,17 +39,17 @@ class ReservationFormValidation
         if (empty($_POST['email'] && filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))) {
             $error .= '<p class="text-danger">Email is required. Remember about email format: ex@example.com .</p>';
         } else {
-            $email = $_POST["email"];
+            $email = $_POST['email'];
         }
         if (empty($_POST['start_date'])) {
             $error .= '<p class="text-danger">Date from is required.</p>';
         } else {
-            $startDate = $_POST["start_date"];
+            $startDate = $_POST['start_date'];
         }
         if (empty($_POST['end_date'])) {
             $error .= '<p class="text-danger">Date to is required.</p>';
         } else {
-            $endDate = $_POST["end_date"];
+            $endDate = $_POST['end_date'];
         }
         return array($error, $roomId, $firstName, $lastName, $email, $startDate, $endDate);
     }

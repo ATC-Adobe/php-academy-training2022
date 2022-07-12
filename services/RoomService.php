@@ -1,6 +1,9 @@
 <?php
 
-class RoomList
+require_once 'db/Connection.php';
+require_once 'services/ApplicationService.php';
+
+class RoomService
 {
     private $list;
 
@@ -21,5 +24,19 @@ class RoomList
             ];
         }
         return $rooms;
+    }
+
+    public function getRooms(Connection $dbConnection): array|false
+    {
+        $rooms = $dbConnection->query("SELECT * FROM rooms ORDER BY room_id ASC")->fetchAll();
+        return $rooms;
+    }
+
+    public function addDbRoom($name, $floor)
+    {
+        $dbConnection = Connection::getConnection();
+        $addQuery = $dbConnection->query(
+            "INSERT INTO rooms(name, floor) VALUES('$name', '$floor')"
+        );
     }
 }

@@ -12,12 +12,22 @@ include "views/layouts/navbar.php";
     <div class="row justify-content-center" style="margin-top: 30px;">
         <div class="col-md-6">
             <div class="card">
-                <div class="card-header"><h4>Rooms</h4></div>
+                <div class="card-header"><h4>Rooms</h4><a href="createRoom.php" class="btn btn-sm btn-outline-primary">Add</a></div>
                 <div class="card-body">
 
                     <?php
-                    include_once 'services/RoomList.php';
-                    $rooms = (new RoomList())->getRoomsList();
+                    include_once 'services/RoomService.php';
+                    require_once 'db/Connection.php';
+                    require_once 'services/RoomService.php';
+                    $dbConnection = Connection::getConnection();
+                    $rooms = (new RoomService())->getRooms($dbConnection);
+
+                    if (isset($_GET['room_id'])) {
+                        $roomId = $_GET['room_id'];
+                        $destroy = $dbConnection->query(
+                            "DELETE FROM rooms WHERE room_id='$roomId'"
+                        );
+                    }
                     ?>
 
                     <table class="table table-striped table-hover table-borderless">
@@ -44,7 +54,8 @@ include "views/layouts/navbar.php";
                                     echo $room['floor']; ?></td>
                                 <td>
                                     <?php
-                                    echo "<a class=\"btn btn-sm btn-outline-success\" href=\"/reservation_form.php?room_id={$room['room_id']}&name={$room['name']}\">Book</a>"; ?>
+                                    echo "<a class=\"btn btn-sm btn-outline-success\" href=\"/reservation_form.php?room_id={$room['room_id']}&name={$room['name']}\">Book</a>",
+                                    "<a class=\"btn btn-sm btn-outline-danger\" href=\"/index.php?room_id={$room['room_id']}\">Delete</a>"; ?>
                                 </td>
                             </tr>
 

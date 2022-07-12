@@ -19,9 +19,16 @@ include "views/layouts/navbar.php";
                     $message = 'Your booking is confirmed.';
                     include_once "helpers/message-add.php";
                     require_once 'db/Connection.php';
-                    require_once 'services/ApplicationService.php';
+                    require_once 'services/ReservationService.php';
                     $dbConnection = Connection::getConnection();
-                    $reservations = (new ApplicationService())->getReservations($dbConnection);
+                    $reservations = (new ReservationService())->getReservations($dbConnection);
+
+                    if (isset($_GET['reservation_id'])) {
+                        $reservationId = $_GET['reservation_id'];
+                        $destroy = $dbConnection->query(
+                            "DELETE FROM reservations WHERE reservation_id='$reservationId'"
+                        );
+                    }
 
                     ?>
 
@@ -31,11 +38,11 @@ include "views/layouts/navbar.php";
                             <th>Reservation Id</th>
                             <th>Room id</th>
                             <th>First name</th>
-
                             <th>Last name</th>
                             <th>Email</th>
                             <th>Start date</th>
                             <th>End date</th>
+                            <th>Actions</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -59,6 +66,11 @@ include "views/layouts/navbar.php";
                                     echo $res['start_date']; ?></td>
                                 <td><?php
                                     echo $res['end_date']; ?></td>
+                                <td>
+                                    <?php
+                                    echo "<a class=\"btn btn-sm btn-outline-warning\" href=\"/updateReservation.php?reservation_id={$res['reservation_id']}&room_id={$res['room_id']}&firstname={$res['firstname']}&lastname={$res['lastname']}&email={$res['email']}&start_date{$res['start_date']}&end_date{$res['end_date']}\">Update</a>",
+                                    "<a class=\"btn btn-sm btn-outline-danger\" href=\"/reservations.php?reservation_id={$res['reservation_id']}\">Delete</a>"; ?>
+                                </td>
                             </tr>
 
                         <?php
