@@ -1,8 +1,8 @@
 {
   "root" : [
     {
-      "name" : "Hello",
-      "path" : "model/test.php"
+      "name" : "MySqlConnection",
+      "path" : "System/Database/pdo.php"
     }
   ]
 }

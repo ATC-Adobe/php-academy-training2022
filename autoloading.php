@@ -34,7 +34,3 @@ class Autoloader {
 
 $autoloader = new Autoloader();
 $autoloader->loadConfig('autoloadingConfig.json');
-
-//$autoloader->registerClass('Hello', 'model/test.php');
-$obj = new Hello();
-$obj->a();

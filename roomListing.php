@@ -10,7 +10,7 @@ require_once "pdo.php";
 
     <title>Rooms</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="Layout/css/style.css">
 
 
     <!--
