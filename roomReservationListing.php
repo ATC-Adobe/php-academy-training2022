@@ -1,6 +1,6 @@
 <?php
 declare(strict_types = 1);
-include_once "MySqlConnection.php";
+require_once 'autoloading.php';
 ?>
 
 <!DOCTYPE html>
@@ -42,35 +42,7 @@ include_once "MySqlConnection.php";
         <span style="font-size: 1.5em">Active reservations:</span> <br><br><br><br>
 
         <?php
-
-        $conn = MySqlConnection::getInstance();
-        $entries = $conn->query("SELECT * FROM Reservations")
-            ->fetchAll();
-
-        foreach($entries as $entry) {
-
-            [ $id, $room, $name, $surname, $email, $from, $to, ]
-                = [$entry['id'], $entry['room_id'], $entry['name'], $entry['surname'],
-                    $entry['email'], $entry['from_date'], $entry['to_date']];
-
-            echo "<div class='row'>
-                <div class='float ltable' style = 'line-height: 1.2em;' >
-                    Reservation ID: <br>
-                    Room ID: <br >
-                    Name: <br >
-                    E - mail: <br >
-                    Time span: <br >
-                </div >
-                <div class='float rtable' style = 'line-height: 1.2em;' >
-                    $id <br>
-                    $room <br>
-                    $name $surname <br>
-                    $email <br>
-                    $from - $to <br>
-                </div >
-                <div class='clear' ></div >
-                </div>";
-        }
+            (new \View\ReservationView())->print();
         ?>
 
     </div>

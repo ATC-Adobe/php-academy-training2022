@@ -26,38 +26,11 @@ require_once 'autoloading.php';
 
     <div class="main">
         <a href="index.php">Return</a><br>
-        <table>
-            <tr>
-                <th style="width:10%">ID</th>
-                <th style="width:40%">Name</th>
-                <th style="width:10%">Floor</th>
-                <th> </th>
-            </tr>
-            <tr>&#8203;</tr>
+
             <?php
-                $conn = MySqlConnection::getInstance();
-
-                $entries = $conn->query("SELECT * FROM Rooms")->fetchAll();
-
-                foreach($entries as $entry) {
-
-                    $id     = $entry['id'];
-                    $name   = $entry['name'];
-                    $floor  = $entry['floor'];
-
-                    echo "<tr>";
-                    echo "<td> $id </td>";
-                    echo "<td> $name </td>";
-                    echo "<td> $floor </td>";
-                    echo "<td><form method='GET' action='roomReservationForm.php'>
-                                <input type='hidden' name='id' value='$id'>
-                                <input type='submit' value='Reserve'>
-                              </form></td>";
-                    echo "</tr>";
-                }
+                (new \View\RoomView())->print();
             ?>
-            <tr>&#8203;</tr>
-        </table>
+
     </div>
     </div>
 </body>
