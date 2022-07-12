@@ -184,7 +184,16 @@ $dict->insert(9, 6);
 $dict->describe();
 echo '<br><br>';
 
+echo json_encode($dict);
 
+$obj = [
+  "arr" => [
+      "xd" => "a"
+  ]
+];
+
+
+echo json_encode($obj);
 
 // longest common subsequence od 2 strings
 function lcs(string $a, string $b) : string {
