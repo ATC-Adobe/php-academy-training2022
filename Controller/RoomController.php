@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Model\RoomModel;
+use App\Model\Room;
 use App\Service\RoomService;
 use App\View\RoomForm;
 use App\View\RoomList;
@@ -18,7 +18,7 @@ class RoomController
         $roomService = new RoomService();
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $room = new RoomModel();
+            $room = new Room();
             $room->name = htmlentities($_POST["name"]);
             $room->floor = htmlentities($_POST["floor"]);
 

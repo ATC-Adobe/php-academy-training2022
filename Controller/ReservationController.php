@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Model\ReservationModel;
+use App\Model\Reservation;
 use App\Service\ReservationService;
 use App\View\ReservationForm;
 use App\View\ReservationList;
@@ -19,7 +19,7 @@ class ReservationController
         $msg = "";
         $ok = true;
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $reservation = new ReservationModel();
+            $reservation = new Reservation();
             $reservation->room_id = htmlentities($_POST['room_id']);
             $reservation->email = htmlentities($_POST['email']);
             $reservation->first_name = htmlentities($_POST['first_name']);

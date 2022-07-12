@@ -2,10 +2,9 @@
 
 namespace App\Model;
 
-use App\System\Database\Connection;
-use PDO;
+use ModelInterface;
 
-class ReservationModel
+class Reservation implements ModelInterface
 {
     public int $id;
     public int $room_id;

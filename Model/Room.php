@@ -2,7 +2,9 @@
 
 namespace App\Model;
 
-class RoomModel
+use ModelInterface;
+
+class Room implements ModelInterface
 {
     public int $id;
     public int $floor;

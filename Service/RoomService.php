@@ -2,7 +2,7 @@
 
 namespace App\Service;
 
-use App\Model\RoomModel;
+use App\Model\Room;
 use App\Repository\RoomRepository;
 
 class RoomService
@@ -20,7 +20,7 @@ class RoomService
         return $this->repo->readAll();
     }
 
-    public function addRoom(RoomModel $room): bool
+    public function addRoom(Room $room): bool
     {
         return $this->repo->save($room);
     }

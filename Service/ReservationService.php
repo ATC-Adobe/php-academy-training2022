@@ -2,7 +2,7 @@
 
 namespace App\Service;
 
-use App\Model\ReservationModel;
+use App\Model\Reservation;
 use App\Repository\ReservationRepository;
 
 class ReservationService
@@ -18,7 +18,7 @@ class ReservationService
         return $this->repo->readAll();
     }
 
-    public function checkReservationCollision(ReservationModel $newReservation): bool
+    public function checkReservationCollision(Reservation $newReservation): bool
     {
         $reservations = $this->readReservations();
         foreach ($reservations as $reservation) {
@@ -31,7 +31,7 @@ class ReservationService
         return true;
     }
 
-    public function addReservation(ReservationModel $room): bool
+    public function addReservation(Reservation $room): bool
     {
         return $this->repo->save($room);
     }

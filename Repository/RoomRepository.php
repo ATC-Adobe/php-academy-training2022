@@ -2,11 +2,12 @@
 
 namespace App\Repository;
 
-use App\Model\RoomModel;
+use App\Model\Room;
 use App\System\Database\Connection;
 use PDO;
+use RepositoryInterface;
 
-class RoomRepository
+class RoomRepository implements RepositoryInterface
 {
     protected ?Connection $connection = null;
     protected string $table = "room";
@@ -14,7 +15,12 @@ class RoomRepository
     {
         $this->connection = Connection::getInstance();
     }
-    public function save(RoomModel $room): bool
+
+    /**
+     * @param Room $room
+     * @return bool
+     */
+    public function save($room): bool
     {
         $statement = $this->connection->prepare(
             "
@@ -23,6 +29,10 @@ class RoomRepository
         );
         return $statement->execute((array) $room);
     }
+
+    /**
+     * @return bool|Room[]
+     */
     public function readAll(): bool|array
     {
         return $this->connection->query("SELECT * FROM $this->table")->fetchAll(PDO::FETCH_OBJ);
