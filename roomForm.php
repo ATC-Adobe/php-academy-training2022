@@ -2,7 +2,4 @@
 declare(strict_types = 1);
 require_once 'autoloading.php';
 
-include "src/View/ReservationView.php";
-
-
-
+include "src/View/ReservationForm.php";

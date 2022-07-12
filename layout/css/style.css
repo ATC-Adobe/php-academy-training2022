@@ -163,9 +163,11 @@ a:hover {
 
     background-color: var(--bg1);
 
-    position: relative;
+    position: sticky;
     top: 0;
     left: 0;
+
+    border-bottom: 3px solid var(--bg2) ;
 }
 
 .inner-sticky {

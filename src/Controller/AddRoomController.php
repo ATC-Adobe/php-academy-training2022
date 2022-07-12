@@ -9,13 +9,13 @@ class AddRoomController {
     public function __construct() { }
 
     public function makeRequst() : void {
-        if(isset($_POST['name'])) {
+        if(isset($_POST['room_name'])) {
 
             $roomRepository = new RoomConcreteRepository();
 
             $room = new RoomModel(
                 0,
-                $_POST['name'],
+                $_POST['room_name'],
                 intval($_POST['floor'])
             );
 

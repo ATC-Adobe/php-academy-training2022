@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+declare(strict_types = 1);
 require_once 'autoloading.php';
 
-include 'layout/index.php';
+include 'src/View/Index.php';

@@ -50,6 +50,6 @@ class RoomConcreteRepository {
 
         MySqlConnection::getInstance()
             ->query("INSERT INTO Rooms (name, floor)
-                                VALUES ($name, $floor);");
+                                VALUES ('$name', '$floor');");
     }
 }

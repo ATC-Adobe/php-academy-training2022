@@ -14,7 +14,7 @@ class AddReservationController {
         if(isset($_POST['room_id'])) {
             [ $room_id, $name, $surname, $email, $from, $to, ]
                 = [ $_POST['room_id'],  $_POST['name'],     $_POST['surname'],
-                $_POST['email'],    $_POST['from'],     $_POST['to']];
+                    $_POST['email'],    $_POST['from'],     $_POST['to']];
 
 
             $from = date("d/m/y H:i:s", strtotime($from));
@@ -24,11 +24,15 @@ class AddReservationController {
                 $room_id, $name, $surname, $email, $from, $to
             );
 
+            echo "WE THERE";
+
             if( $res  ) { // success
                 header('Location: roomReservationListing.php?status=1');
                 die();
             }
         }
+
+        echo "WE THERE";
 
         header('Location: roomReservationListing.php?status=2');
         die();
