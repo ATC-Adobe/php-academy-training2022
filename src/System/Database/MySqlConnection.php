@@ -30,52 +30,6 @@ class MySqlConnection extends PDO {
     }
 
 }
-/*
-class ReservationService {
-    public function __construct() { }
-
-    public function makeRequest(
-        string $room_id, string $name, string $surname,
-        string $email,   string $from, string $to
-    ) : bool {
-
-        $room_nid = intval($room_id);
-
-        // validation placeholder
-        if($room_nid < 0 || $room_nid > 8)
-            return false;
-
-        if($surname == '' || $name == '' || $email == '')
-            return false;
-
-        $conn = MySqlConnection::getInstance();
-
-        $res =
-        $conn->query(
-            "SELECT * FROM Reservations 
-                        WHERE room_id = ".$room_id."
-                        AND   from_date <= STR_TO_DATE('".$to."','%d/%m/%y %H:%i:%s')
-                        AND   to_date   >= STR_TO_DATE('".$from."','%d/%m/%y %H:%i:%s');
-               ")->fetchAll();
-
-        if( count ($res) != 0)
-            return false;
-
-        $conn->query(
-            "INSERT INTO Reservations (room_id, name, surname, email, from_date, to_date)
-                VALUES (
-                    '$room_id',
-                    '$name',
-                    '$surname',
-                    '$email',
-                    STR_TO_DATE('$from','%d/%m/%y %H:%i:%s'),
-                    STR_TO_DATE('$to','%d/%m/%y %H:%i:%s')
-                );");
-
-        return true;
-    }
-}
-*/
 
 
 
