@@ -2,7 +2,7 @@
 namespace App;
 class Util
 {
-    static public function mapResultsToObjects(array $data): array {
+    public static function mapResultsToObjects(array $data): array {
         $results = [];
         foreach ($data as $room) {
             $results[]= (object)$room;

@@ -9,10 +9,12 @@ use App\View\ReservationList;
 
 class ReservationController
 {
-    public function index(string $msg = "") {
+    public function index(string $msg = ""): void
+    {
         (new ReservationList())->render($msg);
     }
-    public function store() {
+    public function store(): void
+    {
         $reservationService = new ReservationService();
         $msg = "";
         $ok = true;
@@ -24,8 +26,8 @@ class ReservationController
             $reservation->last_name = htmlentities($_POST['last_name']);
 
 
-            $start = strtotime($_POST['start_date']);
-            $end = strtotime($_POST['end_date']);
+            $start = strtotime(htmlentities($_POST['start_date']));
+            $end = strtotime(htmlentities($_POST['end_date']));
 
             $reservation->start_date = date("Y-m-d H:i:s", $start);
             $reservation->end_date = date("Y-m-d H:i:s", $end);
@@ -35,7 +37,7 @@ class ReservationController
                 $ok = false;
             }
             if($ok && !$reservationService->checkReservationCollision($reservation)) {
-                $msg = "Already occupied";
+                $msg = "Already occupied!";
                 $ok = false;
             }
             if($ok && ! $reservationService->addReservation($reservation)) {
@@ -52,7 +54,8 @@ class ReservationController
         }
 
     }
-    public function create() {
+    public function create(): void
+    {
         (new ReservationForm())->render();
     }
 }

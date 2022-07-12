@@ -3,10 +3,7 @@
 namespace App\Service;
 
 use App\Model\ReservationModel;
-use App\Model\RoomModel;
 use App\Repository\ReservationRepository;
-use App\System\Database\Connection;
-use PDO;
 
 class ReservationService
 {

@@ -6,7 +6,8 @@ use App\Service\ReservationService;
 use App\View\Component\Navbar;
 
 class ReservationList {
-    public function render(string $msg = "") {
+    public function render(string $msg = ""): void
+    {
         echo '
         <!DOCTYPE html>
 <html lang="en">

@@ -1,27 +1,36 @@
 <?php
 
+namespace services;
+
+use FileHandlerInterface;
+use Util;
+
 include_once "./types.php";
+
 class JsonHandler implements FileHandlerInterface
 {
     public function __construct(protected string $filename)
     {
     }
 
-    public function readFile(): array|false {
+    public function readFile(): array|false
+    {
         $str = file_get_contents($this->filename);
-        if($str === false) {
+        if ($str === false) {
             return false;
         }
         $data = json_decode($str, true);
-        if($data === null) {
+        if ($data === null) {
             return false;
         }
         return Util::mapResultsToObjects($data);
     }
-    public function appendToFile(array $keyValuePairs): bool {
+
+    public function appendToFile(array $keyValuePairs): bool
+    {
         $str = file_get_contents($this->filename);
         $temp = json_decode($str);
-        $temp[]= $keyValuePairs;
+        $temp[] = $keyValuePairs;
         $data = json_encode($temp);
         return boolval(file_put_contents($this->filename, $data));
     }

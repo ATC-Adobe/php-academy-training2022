@@ -9,7 +9,7 @@ use PDO;
 class RoomRepository
 {
     protected ?Connection $connection = null;
-    protected $table = "room";
+    protected string $table = "room";
     public function __construct()
     {
         $this->connection = Connection::getInstance();

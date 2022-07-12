@@ -4,8 +4,6 @@ namespace App\Service;
 
 use App\Model\RoomModel;
 use App\Repository\RoomRepository;
-use App\System\Database\Connection;
-use PDO;
 
 class RoomService
 {

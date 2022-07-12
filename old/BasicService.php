@@ -1,5 +1,9 @@
 <?php
 
+use services\CsvHandler;
+use services\JsonHandler;
+use services\XmlHandler;
+
 include_once "./services/CsvHandler.php";
 include_once "./services/JsonHandler.php";
 include_once "./services/XmlHandler.php";

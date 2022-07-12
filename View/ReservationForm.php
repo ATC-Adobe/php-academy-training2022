@@ -6,7 +6,8 @@ use App\Service\ReservationService;
 use App\View\Component\Navbar;
 
 class ReservationForm {
-    public function render() {
+    public function render(): void
+    {
         echo '
         <!DOCTYPE html>
 <html lang="en">

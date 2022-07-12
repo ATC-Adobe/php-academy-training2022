@@ -9,10 +9,12 @@ use App\View\RoomList;
 
 class RoomController
 {
-    public function index(string $msg = '') {
+    public function index(string $msg = ''): void
+    {
         (new RoomList())->render($msg);
     }
-    public function store() {
+    public function store(): void
+    {
         $roomService = new RoomService();
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -31,7 +33,8 @@ class RoomController
             echo "Unknown Method";
         }
     }
-    public function create() {
+    public function create(): void
+    {
         (new RoomForm())->render();
     }
 }
