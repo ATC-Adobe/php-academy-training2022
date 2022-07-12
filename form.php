@@ -25,6 +25,7 @@
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="reservations.php">Wszystkie rezerwacje</a></li>
+                    <li class="nav-item"><a class="nav-link" href="room_form.php">Dodać pokój</a></li>
                 </ul>
                 </li>
                 </ul>

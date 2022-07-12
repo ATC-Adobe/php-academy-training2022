@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 // CSV
 
 //require_once 'classes.php';
@@ -11,14 +11,58 @@
 //}
 
 // XML
-require_once 'reservations_xml.php';
-$reservations = new SimpleXMLElement($xmlstr);
+//require_once 'reservations_xml.php';
+//require_once 'classes.php';
+//$reservations = new SimpleXMLElement($xmlstr);
+//if (count($_POST) > 0){
+//    $reservation = new ReservationServiceXml();
+//    $id = $reservation->generateReservationId();
+//    echo $id;
+//    $reservation->addReservation($id);
+//}
 
-// JSON
-$filename = 'reservations.json';
 
-$data = file_get_contents($filename);
-$reservations = json_decode($data);
+//$filename = 'reservations.json';
+//
+//$data = file_get_contents($filename);
+//$reservations = json_decode($data);
+
+// MySQL
+require_once 'my_sql_connection.php';
+$dbConnection = Connection::getInstance();
+
+$selectQuery = "
+    SELECT *
+    FROM reservations;
+";
+
+if(count($_POST) > 0){
+    $room_id = $_POST['room_id'];
+    $firstname = $_POST['firstname'];
+    $lastname = $_POST['lastname'];
+    $email = $_POST['email'];
+    $start_date = $_POST['start_date'];
+    $start_date = new DateTime($start_date);
+    $start_date = $start_date->format('Y-m-d H:i:s');
+    $end_date = $_POST['end_date'];
+    $end_date = new DateTime($end_date);
+    $end_date = $end_date->format('Y-m-d H:i:s');
+    $insertQuery = "
+    INSERT INTO reservations (room_id, firstname, lastname, email, start_date, end_date)
+    VALUES (
+            '$room_id',
+            '$firstname',
+            '$lastname',
+            '$email',
+            STR_TO_DATE('$start_date','%Y-%m-%d %H:%i:%s'),
+            STR_TO_DATE('$end_date','%Y-%m-%d %H:%i:%s')
+            );
+";
+    $dbConnection->query($insertQuery);
+
+}
+
+$selectResults = $dbConnection->query($selectQuery)->fetchAll();
 
 ?>
 <!DOCTYPE html>
@@ -45,6 +89,7 @@ $reservations = json_decode($data);
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="reservations.php">Wszystkie rezerwacje</a></li>
+                    <li class="nav-item"><a class="nav-link" href="room_form.php">Dodać pokój</a></li>
                 </ul>
                 </li>
                 </ul>
@@ -70,27 +115,15 @@ $reservations = json_decode($data);
                                     <th>start_date</th>
                                     <th>end_date</th>
                                 </tr>
-<!--                                --><?php //foreach ($reservations as $reservation) { ?>
-<!--                                    <tr>-->
-<!--                                        <td>--><?//= $reservation[0]; ?><!--</td>-->
-<!--                                        <td>--><?//= $reservation[1]; ?><!--</td>-->
-<!--                                        <td>--><?//= $reservation[2]; ?><!--</td>-->
-<!--                                        <td>--><?//= $reservation[3]; ?><!--</td>-->
-<!--                                        <td>--><?//= $reservation[4]; ?><!--</td>-->
-<!--                                        <td>--><?//= $reservation[5]; ?><!--</td>-->
-<!--                                        <td>--><?//= $reservation[6]; ?><!--</td>-->
-<!--                                    </tr>-->
-<!--                                --><?php //} ?>
-<!--                                -->
-                                <?php foreach ($reservations as $reservation) { ?>
+                                <?php foreach ($selectResults as $result) { ?>
                                     <tr>
-                                        <td><?= $reservation->reservationid; ?></td>
-                                        <td><?= $reservation->roomid; ?></td>
-                                        <td><?= $reservation->firstname; ?></td>
-                                        <td><?= $reservation->lastname; ?></td>
-                                        <td><?= $reservation->email; ?></td>
-                                        <td><?= $reservation->startdate; ?></td>
-                                        <td><?= $reservation->enddate; ?></td>
+                                        <td><?= $result['reservation_id']; ?></td>
+                                        <td><?= $result['room_id']; ?></td>
+                                        <td><?= $result['firstname']; ?></td>
+                                        <td><?= $result['lastname']; ?></td>
+                                        <td><?= $result['email']; ?></td>
+                                        <td><?= $result['start_date']; ?></td>
+                                        <td><?= $result['end_date'] ?></td>
                                     </tr>
                                 <?php } ?>
                             </table>

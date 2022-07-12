@@ -55,22 +55,21 @@ class ReservationServiceXml
 
     }
 
-    public function readReservations()
+    public function generateReservationId()
     {
-        $reservations = [];
-        $file = new SplFileObject("reservations.csv");
-        while (!$file->eof()) {
-            $row = $file->fgetcsv();
-            $reservations[] = $row;
-        }
-        foreach ($reservations as $reservation) {
-            if (empty(array_filter($reservation))) {
-                $key = array_search($reservation, $reservations);
-                unset($reservations[$key]);
-            }
-        }
+        $rows = count(file("reservations_xml.php"));
+        $id = ($rows - 1) / 10 + 1;
+        return $id;
+    }
 
-        return $reservations;
+    public function addReservation($id){
+        include 'reservations_xml.php';
+        $reservations = new SimpleXMLElement($xmlstr);
+        $reservation = $reservations->addChild('reservation');
+        $reservation->addChild('reservationid', $id);
+        $reservations->saveXML('reservations_xml.php');
+        echo $reservations->asXML();
+
     }
 
 }

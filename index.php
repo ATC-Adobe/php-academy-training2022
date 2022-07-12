@@ -18,12 +18,34 @@
 <body class="d-flex flex-column h-100">
 <main class="flex-shrink-0">
     <!-- Navigation-->
+    <?php
+    require_once 'my_sql_connection.php';
+    $dbConnection = Connection::getInstance();
+    $selectQuery = "
+    SELECT *
+    FROM room;
+";
+    if(count($_POST) > 0){
+        $name = $_POST['name'];
+        $floor = $_POST['floor'];
+        $insertQuery = "
+    INSERT INTO room (name, floor)
+    VALUES (
+            '$name',
+            '$floor'
+            );
+";
+        $dbConnection->query($insertQuery);
+    }
+    $selectResults = $dbConnection->query($selectQuery)->fetchAll();
+    ?>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container px-5">
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="reservations.php">Wszystkie rezerwacje</a></li>
+                    <li class="nav-item"><a class="nav-link" href="room_form.php">Dodać pokój</a></li>
                 </ul>
                 </li>
                 </ul>
@@ -47,94 +69,19 @@
                                         <th>floor</th>
                                         <th></th>
                                     </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Room_1</td>
-                                        <td>1</td>
-                                        <td>
-                                            <form method="get" action="form.php">
-                                                <input type="hidden" name="room_id" value="1">
-                                                <input type="submit" value="Reserve" class="btn btn-outline-light">
-                                            </form>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>Room_2</td>
-                                        <td>1</td>
-                                        <td>
-                                            <form method="get" action="form.php">
-                                                <input type="hidden" name="room_id" value="2">
-                                                <input type="submit" value="Reserve" class="btn btn-outline-light">
-                                            </form>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td>Room_3</td>
-                                        <td>2</td>
-                                        <td>
-                                            <form method="get" action="form.php">
-                                                <input type="hidden" name="room_id" value="3">
-                                                <input type="submit" value="Reserve" class="btn btn-outline-light">
-                                            </form>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>4</td>
-                                        <td>Room_4</td>
-                                        <td>2</td>
-                                        <td>
-                                            <form method="get" action="form.php">
-                                                <input type="hidden" name="room_id" value="4">
-                                                <input type="submit" value="Reserve" class="btn btn-outline-light">
-                                            </form>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>5</td>
-                                        <td>Room_5</td>
-                                        <td>2</td>
-                                        <td>
-                                            <form method="get" action="form.php">
-                                                <input type="hidden" name="room_id" value="5">
-                                                <input type="submit" value="Reserve" class="btn btn-outline-light">
-                                            </form>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>6</td>
-                                        <td>Room_6</td>
-                                        <td>3</td>
-                                        <td>
-                                            <form method="get" action="form.php">
-                                                <input type="hidden" name="room_id" value="6">
-                                                <input type="submit" value="Reserve" class="btn btn-outline-light">
-                                            </form>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>7</td>
-                                        <td>Room_7</td>
-                                        <td>3</td>
-                                        <td>
-                                            <form method="get" action="form.php">
-                                                <input type="hidden" name="room_id" value="7">
-                                                <input type="submit" value="Reserve" class="btn btn-outline-light">
-                                            </form>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>8</td>
-                                        <td>Room_8</td>
-                                        <td>3</td>
-                                        <td>
-                                            <form method="get" action="form.php">
-                                                <input type="hidden" name="room_id" value="8">
-                                                <input type="submit" value="Reserve" class="btn btn-outline-light">
-                                            </form>
-                                        </td>
-                                    </tr>
+                                    <?php foreach ($selectResults as $result) { ?>
+                                        <tr>
+                                            <td><?= $result['room_id']; ?></td>
+                                            <td><?= $result['name']; ?></td>
+                                            <td><?= $result['floor']; ?></td>
+                                            <td>
+                                                <form method="get" action="form.php">
+                                                    <input type="hidden" name="room_id" value="<?= $result['room_id'] ?>">
+                                                    <input type="submit" value="Reserve" class="btn btn-outline-light">
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    <?php } ?>
                                 </table>
                             </div>
                         </div>
