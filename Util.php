@@ -1,5 +1,5 @@
 <?php
-
+namespace App;
 class Util
 {
     static public function mapResultsToObjects(array $data): array {

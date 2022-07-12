@@ -1,5 +1,9 @@
 <?php
 
+namespace App\System\Database;
+
+use PDO;
+
 class Connection extends PDO
 {
     private static ?Connection $instance = null;

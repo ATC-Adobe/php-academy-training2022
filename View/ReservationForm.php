@@ -1,44 +1,36 @@
-<!DOCTYPE html>
+<?php
+
+namespace App\View;
+
+use App\Service\ReservationService;
+use App\View\Component\Navbar;
+
+class ReservationForm {
+    public function render() {
+        echo '
+        <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Reservation form</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/View/css/style.css">
 
 </head>
-<body class="background">
+<body class="background">';
+        (new Navbar())->render();
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-            <li class="nav-item ">
-                <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/reservationList.php">Current reservations</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/roomForm.php">Add room</a>
-            </li>
-        </ul>
-    </div>
-</nav>
-
-    <form class="container mt-4" method="post" action="reservationList.php" >
+echo '
+    <form class="container mt-4" method="post" action="reservationFormPost.php" >
         <div class="row my-3">
-            <h1 class="w-100 text-center">
-                <?php
+            <h1 class="w-100 text-center">';
                 $name = $_GET['name'] ?? "";
                 $id = $_GET['id'] ?? "";
                 echo "Make reservation for $name";
 //                echo '<input class="d-none" name="room_name" value="'. $name .'"  type="text" />';
                 echo '<input class="d-none" name="room_id" value="'. $id .'"  type="text" />';
-                ?>
-            </h1>
+
+echo '            </h1>
 
         </div>
         <div class="row">
@@ -74,3 +66,8 @@
 
 </body>
 </html>
+        
+        ';
+    }
+}
+
