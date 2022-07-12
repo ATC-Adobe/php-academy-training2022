@@ -1,23 +1,7 @@
 <?php declare(strict_types = 1);
 
-
-class Singleton {
-    protected static ?singleton $obj = null;
-
-    protected function __construct() { }
-
-    public static function getInstance() : singleton {
-        if(singleton::$obj === null)
-            singleton::$obj = new singleton();
-        return singleton::$obj;
-    }
-
-    public function __toString() {
-        return "test";
-    }
-
-}
-
+namespace System\Database;
+use PDO;
 
 class MySqlConnection extends PDO {
 
@@ -46,17 +30,7 @@ class MySqlConnection extends PDO {
     }
 
 }
-
 /*
-$conn = MySqlConnection::getInstance();
-$res =
-$conn->query("SELECT * FROM Reservations
-WHERE room_id = 1
-  AND   from_date <= STR_TO_DATE('07/03/22 11:00:00','%d/%m/%y %H:%i:%s')
-  AND   to_date   >= STR_TO_DATE('07/03/22 05:00:00','%d/%m/%y %H:%i:%s');") ->fetchAll();
-
-var_dump($res);
-*/
 class ReservationService {
     public function __construct() { }
 
@@ -101,6 +75,7 @@ class ReservationService {
         return true;
     }
 }
+*/
 
 
 

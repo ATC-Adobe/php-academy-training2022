@@ -1,6 +1,6 @@
 <?php
 declare(strict_types = 1);
-include_once "pdo.php";
+include_once "MySqlConnection.php";
 ?>
 
 <!DOCTYPE html>
@@ -10,7 +10,7 @@ include_once "pdo.php";
 
     <title>Rooms</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" type="text/css" href="Layout/css/style.css">
+    <link rel="stylesheet" type="text/css" href="layout/css/style.css">
 
     <!--
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">

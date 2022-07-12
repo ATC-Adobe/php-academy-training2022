@@ -26,11 +26,23 @@ class Autoloader {
 
     public function resolveClass(string $className) : void {
         if(isset($this->funcAssoc[$className])) {
-
             require_once $this->funcAssoc[$className];
+        }
+        else {
+            $ds = DIRECTORY_SEPARATOR;
+            $dir = __DIR__ . '/src';
+            $classNameR = str_replace('\\', $ds, $className);
+
+            // get full name of file containing the required class
+            $file = "{$dir}{$ds}{$classNameR}.php";
+
+            // get file if it is readable
+            if (is_readable($file)) require_once $file;
         }
     }
 }
 
 $autoloader = new Autoloader();
-$autoloader->loadConfig('autoloadingConfig.json');
+$autoloader->loadConfig(
+    $_SERVER['DOCUMENT_ROOT'].'/autoloadingConfig.json'
+);

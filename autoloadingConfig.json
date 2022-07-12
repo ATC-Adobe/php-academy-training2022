@@ -1,7 +1,7 @@
 {
   "root" : [
     {
-      "name" : "MySqlConnection",
+      "name" : "ReservationService",
       "path" : "System/Database/pdo.php"
     }
   ]

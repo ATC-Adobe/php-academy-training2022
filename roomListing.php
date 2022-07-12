@@ -1,6 +1,6 @@
 <?php
 declare(strict_types = 1);
-require_once "pdo.php";
+require_once 'autoloading.php';
 ?>
 
 <!DOCTYPE html>
@@ -10,7 +10,7 @@ require_once "pdo.php";
 
     <title>Rooms</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" type="text/css" href="Layout/css/style.css">
+    <link rel="stylesheet" type="text/css" href="layout/css/style.css">
 
 
     <!--
