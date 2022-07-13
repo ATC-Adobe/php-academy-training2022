@@ -1,19 +1,17 @@
 <?php
 
-namespace services;
 
-use FileHandlerInterface;
-use Util;
+namespace App\System\File;
 
-include_once "./types.php";
+use IOHandlerInterface;
 
-class JsonHandler implements FileHandlerInterface
+class JsonHandler implements IOHandlerInterface
 {
     public function __construct(protected string $filename)
     {
     }
 
-    public function readFile(): array|false
+    public function readAll(): array|false
     {
         $str = file_get_contents($this->filename);
         if ($str === false) {
@@ -23,11 +21,18 @@ class JsonHandler implements FileHandlerInterface
         if ($data === null) {
             return false;
         }
-        return Util::mapResultsToObjects($data);
+        $res =  Util::mapResultsToObjects($data);
+//        var_dump($res);
+        return $res;
     }
 
-    public function appendToFile(array $keyValuePairs): bool
+    public function save(\ModelInterface $model): bool
     {
+        $keyValuePairs = $model->toArray();
+        //genereate id
+        $temp = $this->readAll();
+        $keyValuePairs["id"] = count($temp) + 1;
+
         $str = file_get_contents($this->filename);
         $temp = json_decode($str);
         $temp[] = $keyValuePairs;

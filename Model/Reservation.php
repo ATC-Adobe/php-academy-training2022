@@ -18,8 +18,9 @@ class Reservation implements ModelInterface
     public function toArray(): array
     {
         $result = (array) $this;
+        if(isset($this->room)) {
         $result['room'] = $this->room->id;
-        var_dump($result);
+        }
         return $result;
     }
     public function fromArray(array $reservation): static

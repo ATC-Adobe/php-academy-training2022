@@ -5,9 +5,9 @@ namespace App\Repository;
 use App\Model\Room;
 use App\System\Database\Connection;
 use PDO;
-use RepositoryInterface;
+use IOHandlerInterface;
 
-class RoomRepository implements RepositoryInterface
+class RoomRepository implements IOHandlerInterface
 {
     protected ?Connection $connection = null;
     protected string $table = "room";
@@ -31,9 +31,9 @@ class RoomRepository implements RepositoryInterface
     }
 
     /**
-     * @return bool|Room[]
+     * @return false|Room[]
      */
-    public function readAll(): bool|array
+    public function readAll(): false|array
     {
         return $this->connection->query("SELECT * FROM $this->table")->fetchAll(PDO::FETCH_OBJ);
     }

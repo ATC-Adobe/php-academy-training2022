@@ -4,25 +4,26 @@ namespace App\Service;
 
 use App\Model\Reservation;
 use App\Repository\ReservationRepository;
+use App\Repository\RoomRepository;
 
-class ReservationService
+class ReservationService implements \IOStrategyInterface
 {
-    protected ReservationRepository $repo;
-    public function __construct()
+    public function __construct(protected \IOHandlerInterface $io = new ReservationRepository())
     {
-        $this->repo = new ReservationRepository();
     }
+
 
     /**
      * @param bool $withRelations
      * @return bool|Reservation[]
      */
-    public function readReservations(bool $withRelations = false): bool|array
+    public function readReservations(bool $withRelations = false): bool|iterable
     {
+        //csv, json and xml doesn't implement that!!
         if($withRelations) {
-            return $this->repo->readWithRelations();
+            return $this->io->readWithRelations();
         }
-        return $this->repo->readAll();
+        return $this->io->readAll();
     }
 
     public function checkReservationCollision(Reservation $newReservation): bool
@@ -40,6 +41,14 @@ class ReservationService
 
     public function addReservation(Reservation $room): bool
     {
-        return $this->repo->save($room);
+        return $this->io->save($room);
     }
+    /**
+     * @param \IOHandlerInterface $io
+     */
+    public function setIo(\IOHandlerInterface $io): void
+    {
+        $this->io = $io;
+    }
+
 }

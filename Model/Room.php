@@ -11,14 +11,16 @@ class Room implements ModelInterface
     public string $name;
 
     /**
+     * For fetching alongside reservations!
      * Uses prefix room_
      * @param array $room
      * @return $this
      */
-    public function fromArray(array $room)
+    public function fromArray(array $room): static
     {
         foreach ($room as $key => $value) {
             if(str_starts_with($key, 'room')) {
+                //prefix room_[actual key]
                 $this->{substr($key, 5)} = $value;
             }
         }

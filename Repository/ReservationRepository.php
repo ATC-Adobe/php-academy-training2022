@@ -6,9 +6,9 @@ use App\Model\Reservation;
 use App\Model\Room;
 use App\System\Database\Connection;
 use PDO;
-use RepositoryInterface;
+use IOHandlerInterface;
 
-class ReservationRepository implements RepositoryInterface
+class ReservationRepository implements IOHandlerInterface
 {
     protected ?Connection $connection = null;
     public function __construct()
@@ -28,13 +28,13 @@ class ReservationRepository implements RepositoryInterface
      :end_date
             );"
         );
-        return $statement->execute((array) $reservation);
+        return $statement->execute($reservation->toArray());
     }
 
     /**
-     * @return bool|Reservation[]
+     * @return false|Reservation[]
      */
-    public function readAll(): bool|array
+    public function readAll(): false|array
     {
         return $this->connection->query("SELECT * FROM reservation")->fetchAll(PDO::FETCH_OBJ);
 

@@ -1,5 +1,6 @@
 <?php
-namespace App;
+namespace App\System\File;
+
 class Util
 {
     public static function mapResultsToObjects(array $data): array {

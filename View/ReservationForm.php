@@ -28,7 +28,6 @@ echo '
                 $name = $_GET['name'] ?? "";
                 $id = $_GET['id'] ?? "";
                 echo "Make reservation for $name";
-//                echo '<input class="d-none" name="room_name" value="'. $name .'"  type="text" />';
                 echo '<input class="d-none" name="room_id" value="'. $id .'"  type="text" />';
 
 echo '            </h1>
@@ -55,9 +54,11 @@ echo '            </h1>
                 <label class="d-flex justify-content-between"> End date <input required name="end_date" class="myInput" type="datetime-local" /></label>
             </div>
         </div>
-        <div class="row mt-3">
-            <div class="col-8"></div>
-            <button class="btn btn-primary" type="submit">Submit</button>
+        <div class="row mt-3 d-flex justify-content-around mx-5">
+            <input name="xml" class="btn btn-primary" type="submit" value="Submit to xml" /> 
+            <input name="csv" class="btn btn-primary" type="submit" value="Submit to csv" /> 
+            <input name="json" class="btn btn-primary" type="submit" value="Submit to json" /> 
+            <input name="sql" class="btn btn-primary" type="submit" value="Submit to mysql" /> 
         </div>
     </form>
 

@@ -4,6 +4,9 @@ namespace App\Controller;
 
 use App\Model\Reservation;
 use App\Service\ReservationService;
+use App\System\File\CsvHandler;
+use App\System\File\JsonHandler;
+use App\System\File\IOHandlerFactory;
 use App\View\ReservationForm;
 use App\View\ReservationList;
 
@@ -15,10 +18,14 @@ class ReservationController
     }
     public function store(): void
     {
-        $reservationService = new ReservationService();
+
         $msg = "";
         $ok = true;
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            //based on $_POST[]
+            $handler = IOHandlerFactory::create();
+            $reservationService = new ReservationService($handler);
+
             $reservation = new Reservation();
             $reservation->room_id = htmlentities($_POST['room_id']);
             $reservation->email = htmlentities($_POST['email']);

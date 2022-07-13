@@ -3,11 +3,17 @@
 namespace App\View;
 
 use App\Service\ReservationService;
+use App\System\File\IOHandlerFactory;
 use App\View\Component\Navbar;
 
 class ReservationList {
+
+
     public function render(string $msg = ""): void
     {
+        $reservations = (new ReservationService())->readReservations(true);
+//                $handler = SaveHandlerFactory::create("./System/File/data/reservations.xml");
+//                $reservations = (new ReservationService($handler))->readReservations();
         echo '
         <!DOCTYPE html>
 <html lang="en">
@@ -25,8 +31,7 @@ class ReservationList {
         if($msg) {
             echo '<div class="alert alert-info text-center">'. $msg .'</div>';
         }
-    $reservations = (new ReservationService())->readReservations(true);
-        //error
+
         if($reservations === false) {
             echo '<div class="alert alert-danger text-center">Something went wrong. Try again</div>';
         }

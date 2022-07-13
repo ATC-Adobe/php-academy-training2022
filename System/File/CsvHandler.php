@@ -1,15 +1,18 @@
 <?php
 
-namespace services;
 
-use FileHandlerInterface;
-use Util;
+namespace App\System\File;
 
-include_once "./types.php";
+use IOHandlerInterface;
+use ModelInterface;
+use SplFileObject;
 
-class CsvHandler implements FileHandlerInterface
+class CsvHandler implements IOHandlerInterface
 {
-    public function __construct(protected string $filename, protected array $columns)
+    protected array $columns = [
+        "id", "room_id",  "first_name",  "last_name",  "email",  "start_date",  "end_date",
+    ];
+    public function __construct(protected string $filename, )
     {
     }
 
@@ -28,7 +31,7 @@ class CsvHandler implements FileHandlerInterface
         return $result;
     }
 
-    public function readFile(): array
+    public function readAll(): array
     {
         $results = [];
         $csvResults = $this->readWholeFile();
@@ -44,8 +47,11 @@ class CsvHandler implements FileHandlerInterface
         return Util::mapResultsToObjects($results);
     }
 
-    public function appendToFile(array $keyValuePairs): bool
+    public function save(ModelInterface $model): bool
     {
+        $keyValuePairs = $model->toArray();
+        //generate id
+        $keyValuePairs["id"] = $this->getRowNumCsv();
         $keyValuePairs = $this->reorderColumns($keyValuePairs);
         $file = new SplFileObject($this->filename, 'a');
         return $file->fputcsv($keyValuePairs);

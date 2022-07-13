@@ -26,14 +26,14 @@ class RoomForm {
             Add another room
         </h1>
     </div>
-        <div class="col col-lg-6">
+        <div class="col col-lg-8">
             <label class="d-flex justify-content-between"> room name <input required class="myInput" type="text" name="name" /></label>
         </div>
-        <div class="col col-lg-6">
+        <div class="col col-lg-8">
             <label class="d-flex justify-content-between"> floor <input required class="myInput" type="text" name="floor" /></label>
         </div>
     <div class="row mt-3">
-        <div class="col-5"></div>
+        <div class="col-7"></div>
         <button class="btn btn-primary" type="submit">Submit</button>
     </div>
 </form>
