@@ -47,5 +47,7 @@ if(isset($_POST['room_name'])) {
         </form>
     </div>
 </div>
+
+<?php include 'layout/footer.html' ?>
 </body>
 </html>

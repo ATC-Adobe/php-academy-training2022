@@ -31,7 +31,7 @@ use Room\Repository\RoomConcreteRepository;
 
     <div class="header">
         Active Reservations
-
+        <br><br>
         <div class="main">
             <?php
             if(isset($_GET['status'])) {
@@ -44,9 +44,11 @@ use Room\Repository\RoomConcreteRepository;
                                 </div>",
                     default => "How did we get there?",
                 };
+
+                echo "<br><br>";
             }
             ?>
-            <br><br>
+
 
         <?php
 
@@ -91,6 +93,8 @@ use Room\Repository\RoomConcreteRepository;
         ?>
         </div>
     </div>
+
+<?php include 'layout/footer.html' ?>
 </body>
 </html>
 

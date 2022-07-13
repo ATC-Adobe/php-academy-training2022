@@ -73,6 +73,8 @@ use Room\Repository\RoomConcreteRepository;
 
     </div>
 </div>
+
+<?php include 'layout/footer.html' ?>
 </body>
 </html>
 

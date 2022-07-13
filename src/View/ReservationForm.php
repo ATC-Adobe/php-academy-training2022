@@ -43,6 +43,8 @@ include "layout/menu.html";
                 <br>
                 From: <br>
                 To: <br>
+                <br>
+                Save to:<br>
             </div>
             <div class="float rtable">
 
@@ -70,6 +72,19 @@ include "layout/menu.html";
                 <br>
                 <input type="datetime-local" name="from"><br>
                 <input type="datetime-local" name="to"><br>
+                <br>
+
+
+                <input type="radio" name="option" value="db">
+                <label for="html">Database</label><br>
+                <input type="radio" name="option" value="json">
+                <label for="html">JSON</label><br>
+                <input type="radio" name="option" value="xml">
+                <label for="html">XML</label><br>
+                <input type="radio" name="option" value="csv">
+                <label for="html">CSV</label><br>
+
+
             </div>
             <div class="clear"></div>
             <br><br>
@@ -77,5 +92,7 @@ include "layout/menu.html";
         </form>
     </div>
 </div>
+
+<?php include 'layout/footer.html' ?>
 </body>
 </html>

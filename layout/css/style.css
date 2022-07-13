@@ -1,3 +1,18 @@
+/* Old colors
+
+--fg1: #ecdede;
+    --fg2: #ceb5be;
+    --bg1: #65456b;
+    --bg2: #262626;
+    --ut: #403450;
+    --succ: #2cd91a;
+    --err: #d23439;
+
+
+
+ */
+
+
 :root {
     --fg1: #ecdede;
     --fg2: #ceb5be;
@@ -43,6 +58,7 @@ body {
 }
 
 .main {
+
     font-size: 0.4em;
     margin-top: 10px;
     padding-top: 1em;
@@ -174,7 +190,36 @@ a:hover {
     width: 60%;
     margin-left: auto;
     margin-right: auto;
+}
 
+.separator {
+    width: 4em;
+    display: none;
+}
+
+.inner-sticky > a {
+    margin-right: 1em;
+    padding: 0.6em;
+    border-radius: 1em;
+}
+
+.inner-sticky > a:hover {
+    background-color: var(--ut);
 
 }
 
+.footer {
+    margin-top: 50px;
+    width: 100%;
+    background-color: var(--ut);
+    height: 100px;
+
+    font-size: 0.5em;
+}
+
+.footer-inner {
+    padding-top: 20px;
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+}
