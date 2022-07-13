@@ -1,5 +1,8 @@
 <?php
 declare(strict_types=1);
+namespace System\Database;
+use PDO;
+
 class MysqlConnection extends PDO
 {
     /**

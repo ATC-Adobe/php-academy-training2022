@@ -1,8 +1,4 @@
-<?php
-//
-//include_once "./Singleton.php";
-//
-//?>
+
 <?php
 //class ReservationService {
 //    public $name;
@@ -66,18 +62,9 @@
     <title>Reservations List</title>
 </head>
 <body>
-<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-    <ul class="navbar-nav">
-        <li class="nav-item">
-            <a class="nav-link" href="index.php">Home</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="reservationsList.php">Reservations List</a>
-        </li>
-
-    </ul>
-
-</nav>
+<?php
+require_once "layout/navbar.html";
+?>
 <div class="container">
     <table class="table table-striped table-dark">
         <tr>
@@ -181,37 +168,19 @@
             <td>02/06/23 16:00:00</td>
         </tr>
         <?php
-        include_once "./Connection.php";
-
-        $conn = MysqlConnection::getInstance();
-        $roomNumber = $_POST['roomNumber'];
-        $name = $_POST['name'];
-        $surname = $_POST['surname'];
-        $email = $_POST['email'];
-           $dateTimeFrom = date('d/m/y H:i:s',strtotime($_POST['datetimeFrom']));
-           $dateTimeTo = date('d/m/y H:i:s',strtotime($_POST['datetimeTo']));
-
-        $addQuery = $conn->query("INSERT INTO reservations (room_id, firstname, lastname, email, start_date, end_date)
-VALUES ($roomNumber,'$name','$surname','$email',
-        STR_TO_DATE(\"$dateTimeFrom\", \"%d/%m/%y %H:%i:%s\"),
-        STR_TO_DATE(\"$dateTimeTo\", \"%d/%m/%y %H:%i:%s\")
-);");
-
-
-        $reservations = $conn->query("SELECT * FROM reservations")->fetchAll();
-
-        foreach ($reservations as $row){
-
-            echo "<tr>
-            <td>{$row['reservation_id']}</td>
-            <td>{$row['room_id']}</td>
-            <td>{$row['firstname']}</td>
-            <td>{$row['lastname']}</td>
-            <td>{$row['email']}</td>
-            <td>{$row['start_date']}</td>
-            <td>{$row['end_date']}</td>
-            </tr>";
-        }
+        include_once 'autoloading.php';
+        include 'Reservation/Model/ReservationModel.php';
+        include 'Reservation/Repository/ReservationRepository.php';
+        use System\Database\MysqlConnection;
+        use Reservation\Repository\ReservationRepository;
+        $item = new Reservation\Repository\ReservationRepository($_POST['roomNumber'], $_POST['name'], $_POST['surname'],
+            $_POST['email'], date("d/m/y H:i:s",strtotime($_POST['datetimeFrom'])), date("d/m/y H:i:s",strtotime($_POST['datetimeTo'])));
+        $item->saveReservation();
+        include_once "System/Database/MysqlConnection.php";
+        ?>
+        <?php
+        require_once 'autoloading.php';
+        include 'View/ReservationView.php';
         ?>
 
     </table>

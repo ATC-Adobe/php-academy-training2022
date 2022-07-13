@@ -1,34 +1,3 @@
-<?php
-//class Singleton
-//{
-//    private static $instance;
-//
-//    private function __construct()
-//    {
-//    }
-//
-//    private function __clone()
-//    {
-//    }
-//
-//    public static function getInstance()
-//    {
-//        if (self::$instance === null) {
-//            self::$instance = new Singleton();
-//        }
-//        return self::$instance;
-//    }
-//
-//    public function getString()
-//    {
-//        echo "singleton";
-//    }
-//}
-//
-//Singleton::getInstance()->getString();
-//
-//
-//?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -37,18 +6,9 @@
     <title>Rooms</title>
 </head>
 <body>
-<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-    <ul class="navbar-nav">
-        <li class="nav-item">
-            <a class="nav-link" href="index.php">Home</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="reservationsList.php">Reservations List</a>
-        </li>
-
-    </ul>
-
-</nav>
+<?php
+require_once "layout/navbar.html";
+?>
 <div class="container">
 <table class="table table-sm table-striped table-dark">
     <tr>
@@ -59,25 +19,25 @@
     </tr>
 <?php
 //xml
-/*
- if (file_exists('rooms.xml')) {
-    $rooms = simplexml_load_file('rooms.xml');
-foreach ($rooms->room as $room) {
-    echo "<tr><td>$room->room_id</td>
-<td>$room->name</td>
-<td>$room->value</td>
-<td><form method='get' action='reservations.php'><input type='hidden' name='room' value=$room->name /><input type='submit' value='Zarezerwuj'></form> </td>
-</tr>";
-   // print_r(rooms);
-} }else {
-    exit('Failed to open rooms.xml.');
-}
- */
+//
+// if (file_exists('rooms.xml')) {
+//    $rooms = simplexml_load_file('rooms.xml');
+//foreach ($rooms->room as $room) {
+//    echo "<tr><td>$room->room_id</td>
+//<td>$room->name</td>
+//<td>$room->value</td>
+//<td><form method='get' action='reservations.php'><input type='hidden' name='room' value=$room->name /><input type='submit' value='Zarezerwuj'></form> </td>
+//</tr>";
+//   // print_r(rooms);
+//} }else {
+//    exit('Failed to open rooms.xml.');
+//}
+
 
 //json
+
 $json = file_get_contents('rooms.json');
 
-// Decode the JSON file
 $json_data = json_decode($json,true);
 
 
@@ -85,14 +45,27 @@ foreach ($json_data as $room) {
     echo "<tr><td>$room[room_id]</td>
 <td>$room[name]</td>
 <td>$room[floor]</td>
-<td><form method='get' action='reservations.php'><input type='hidden' name='room' value=$room[name] /><input type='submit' value='Zarezerwuj'></form> </td>
+<td><form method='get' action='reservations.php'><input type='hidden' name='room' value=$room[name] /><input type='submit' value='Reserve'></form> </td>
 </tr>";
    // print_r(rooms);
 }
 
 
 ?>
-
+    <?php
+    include_once 'autoloading.php';
+    include 'Room/Model/RoomModel.php';
+    include 'Room/Repository/RoomRepository.php';
+    use System\Database\MysqlConnection;
+    use Reservation\Repository\ReservationRepository;
+    $item = new Room\Repository\RoomRepository($_POST['name'], $_POST['floor']);
+    $item->saveRoom();
+    include_once "System/Database/MysqlConnection.php";
+    ?>
+    <?php
+    require_once 'autoloading.php';
+    include 'View/RoomView.php';
+    ?>
 
 </table>
 </div>

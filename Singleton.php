@@ -1,5 +1,5 @@
 <?php
-//include_once "./Connection.php";
+//include_once "./MysqlConnection.php";
 //$conn = MysqlConnection::getInstance();
 //$reservations = $conn->query("SELECT * FROM reservations")->fetchAll();
 //
