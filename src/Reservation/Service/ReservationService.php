@@ -1,10 +1,10 @@
 <?php
     declare(strict_types = 1);
-    namespace PHPCourse;
+    namespace Reservation\Service;
+    use System\Database\MysqlConnection;
+    use System\File\CsvReader;
+    use System\File\CsvWriter;
     use Exception;
-
-    require_once "CsvManager.php";
-    require_once "MysqlConnection.php";
 
     class ReservationService {
         public function __construct() {}

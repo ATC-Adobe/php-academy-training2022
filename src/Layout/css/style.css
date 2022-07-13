@@ -1,0 +1,184 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    min-height: 100vh;
+    margin: 0;
+    background-color: #3e4d5e!important;
+}
+
+#main {
+    margin: auto;
+    width: 100%;
+    min-height: 100%;
+}
+
+#content {
+    text-align: center;
+    margin: 1vh 0;
+}
+
+#reservation {
+    width: 50%;
+    text-align: left;
+    background-color: #242E38;
+    color: #fff;
+    padding: 5vh;
+    margin: 1vh auto;
+}
+
+#addroom {
+    min-width: 400px;
+    max-width: 25%;
+    width: 25%;
+    text-align: center;
+    background-color: #242E38;
+    color: #fff;
+    padding: 5vh;
+    margin: 1vh auto;
+}
+
+#footer {
+    width: 100%;
+    text-align: center;
+    background-color: #242E38;
+    color: #fff;
+    height: 2.5rem;
+    line-height: 2.5rem;
+    position: fixed;
+    bottom: 0;
+}
+
+
+
+.table-list {
+    text-align: left;
+    border-spacing: 3px;
+    border-collapse: unset;
+    border-radius: 6px;
+    color: #fff;
+    background-color: #2C3844;
+    margin: 1vh auto;
+}
+
+
+.table-list th {
+    font-size: 18px;
+    font-weight: bold;
+    width: auto;
+    background-color: #202832;
+}
+
+.table-list th, td {
+    margin: 1vh;
+    padding: 1.4vh 1vh;
+}
+
+.table-list tr:nth-child(odd) {
+    background-color: #242E38;
+}
+
+.table-list tr:nth-child(even) {
+    background-color: #2C3844;
+}
+
+.table-list th:nth-child(n+2){
+    width: 20vh;
+}
+
+.table-list tr:nth-last-child(1) td{
+    text-align: center;
+}
+
+.form-default {
+
+}
+
+.form-label {
+    font-size: 20px;
+    margin: 1vh 0;
+}
+
+.form-input input{
+    padding: 1vh;
+    width: 300px;
+    height: 30px;
+    background-color: #2C3844;
+    color: #fff;
+    border: none;
+}
+
+.form-button {
+    margin-top: 5vh;
+}
+
+.form-checkbox input {
+    margin-top: 1vh;
+    color: #C8C8CF;
+}
+
+.form-checkbox a, .link-default {
+    color: #C8C8CF;
+    transition: 0.3s;
+}
+
+.form-checkbox a:visited, .link-default:visited {
+    color: #C8C8CF;
+}
+
+.form-checkbox a:hover, .link-default:hover {
+    color: #eaeaea;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.form-checkbox a:active, .link-default:active {
+    color: #C8C8CF;
+}
+
+.form-checkbox input:checked + label::after {
+    background: red;
+}
+
+.form-button button {
+    height: 45px;
+}
+
+.checkbox-text {
+    color: #fff;
+    padding: 0 1vh;
+}
+
+.btn-submit {
+    width: 16vh;
+    height: 30px;
+    font-size: 16px;
+    background-color: #4A918F;
+    border: none;
+    border-radius: 6px;
+    color: #fff;
+    transition: 0.5s;
+}
+
+.btn-submit:hover {
+    cursor: pointer;
+    background-color: #58bfbd;
+    transition: 0.5s;
+}
+
+.confirm {
+    margin: 2vh;
+    color: #fff;
+}
+
+.bg-darkcustom {
+    background-color: #242E38;
+}
+
+::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+}

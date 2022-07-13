@@ -16,7 +16,7 @@
         <title>Reservation list</title>
 
         <meta charset="UTF-8">
-        <link rel="stylesheet" type="text/css" href="./css/style.css" />
+        <link rel="stylesheet" type="text/css" href="../src/layout/css/style.css" />
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
     </head>
@@ -33,19 +33,19 @@
                     <div class="collapse navbar-collapse" id="navbarNav">
                         <ul class="navbar-nav">
                             <li class="nav-item">
-                                <a class="nav-link" aria-current="page" href="./index.php">Home</a>
+                                <a class="nav-link" aria-current="page" href="../index.php">Home</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="./reservationList.php">Reservations CSV</a>
+                                <a class="nav-link" href="../reservationList.php">Reservations CSV</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link active" href="./reservationListXml.php">Reservations XML</a>
+                                <a class="nav-link active" href="reservationListXml.php">Reservations XML</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="./reservationListJson.php">Reservations JSON</a>
+                                <a class="nav-link" href="reservationListJson.php">Reservations JSON</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="./reservationListSql.php">Reservations SQL</a>
+                                <a class="nav-link" href="reservationListSql.php">Reservations SQL</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link disabled">Test</a>
@@ -61,9 +61,9 @@
 
                 if (isset($_GET['reserved'])) {
                     if ($_GET['reserved'] == "true") {
-                        echo "<h2 class='confirm'>Reservation confirmed</h2>";
+                        echo "<h2 files.old='confirm'>ReservationModel confirmed</h2>";
                     } else {
-                        echo "<h2 class='confirm'>Something went wrong, back to <a href='./index.php' class='link-default'>room list</a>.</h2>";
+                        echo "<h2 files.old='confirm'>Something went wrong, back to <a href='../index.php' files.old='link-default'>room list</a>.</h2>";
                     }
                 }
 
