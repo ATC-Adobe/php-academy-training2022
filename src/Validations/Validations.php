@@ -1,12 +1,9 @@
 <?php
 
-require_once "const/constants.php";
-
+namespace Validations;
 class Validations
 {
-    private $checkRooms;
-
-// Validation of a positively booked room
+    // Validation of a positively booked room
     public function successMessage($roomId)
     {
         echo "Sala $roomId została zarezerwowana";

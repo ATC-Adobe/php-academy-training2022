@@ -1,18 +1,14 @@
 <?php
 
-require_once "layouts/header.html"; ?>
+require_once "../autoloader.php";
+require_once "../layout/header.html" ?>
 <body class="index-list-body">
 <?php
-require_once "layouts/navbar.html"; ?>
+require_once "../layout/navbar.html" ?>
 
 <?php
-require_once "class/MysqlConnection.php";
-
-// The class MysqlConnection is used to load data from the database
-$connection = MysqlConnection::getInstance();
-$selectQuery = "SELECT * FROM rooms;";
-$reservations = $connection->query($selectQuery)->fetchAll();
-
+$displayReservations = new \Controllers\DisplayReservations();
+$reservations = $displayReservations->displayReservations();
 ?>
 
 <table class="table">
@@ -69,6 +65,6 @@ $reservations = $connection->query($selectQuery)->fetchAll();
     endforeach; ?>
 </table>
 <?php
-require_once "layouts/footer.html" ?>
+require_once "../layout/footer.html"; ?>
 </body>
 </html>
