@@ -2,6 +2,37 @@
 
 namespace System\File;
 
-class FileWriterFactory {
+use System\File\Csv\CsvFileWriterBuilder;
+use System\File\DBAdapter\DBWriterBuilder;
+use System\File\Json\JsonFileWriterBuilder;
+use System\File\Xml\XmlFileWriterBuilder;
 
+class FileWriterFactory {
+    private array $workers;
+
+    public function __construct() {
+        $this->workers = [];
+
+        $this->registerWorker("db",   new DBWriterBuilder());
+        $this->registerWorker("xml",  new XmlFileWriterBuilder());
+        $this->registerWorker("json", new JsonFileWriterBuilder());
+        $this->registerWorker("csv",  new CsvFileWriterBuilder());
+    }
+
+    public function registerWorker(string $key, IFileWriterBuilder $worker) : void {
+
+        $this->workers[$key] = $worker;
+    }
+
+    public function getInstance($key) : ?IFileWriter {
+        if(!isset($this->workers[$key])) {
+            return null;
+        }
+
+        if(! $this->workers[$key] instanceof IFileWriterBuilder) {
+            return null;
+        }
+
+        return $this->workers[$key]->buildInstance();
+    }
 }

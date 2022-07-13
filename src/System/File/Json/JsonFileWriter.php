@@ -2,6 +2,8 @@
 
 namespace System\File\Json;
 
-class JsonFileWriter {
+use System\File\IFileWriter;
+
+class JsonFileWriter implements IFileWriter {
 
 }

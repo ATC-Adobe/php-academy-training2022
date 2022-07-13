@@ -2,6 +2,8 @@
 
 namespace System\File\Xml;
 
-class XmlFileWriter {
+use System\File\IFileWriter;
+
+class XmlFileWriter implements IFileWriter {
 
 }

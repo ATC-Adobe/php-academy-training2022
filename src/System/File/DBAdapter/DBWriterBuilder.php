@@ -1,12 +1,12 @@
 <?php
 
-namespace System\File\Json;
+namespace System\File\DBAdapter;
 
 use System\File\IFileWriter;
 use System\File\IFileWriterBuilder;
 
-class JsonFileWriterBuilder implements IFileWriterBuilder {
+class DBWriterBuilder implements IFileWriterBuilder {
     public function buildInstance(): IFileWriter {
-        return new JsonFileWriter();
+        return new DBWriter();
     }
 }

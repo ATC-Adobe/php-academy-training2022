@@ -5,6 +5,7 @@ namespace Controller;
 use Reservation\Model\ReservationModel;
 use Reservation\Repository\ReservationConcreteRepository;
 use Room\Repository\RoomConcreteRepository;
+use System\File\FileWriterFactory;
 use System\Util\DateFormatter;
 
 class AddReservationController {
@@ -84,7 +85,9 @@ class AddReservationController {
                     $email,
                     $surname,
                     $room
-                )
+                ),
+                (new FileWriterFactory())
+                    ->getInstance("csv")
             );
 
         return true;
