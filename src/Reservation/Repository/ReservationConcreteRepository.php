@@ -52,7 +52,7 @@ class ReservationConcreteRepository {
 
         $arr = [];
 
-        $roomRepository = new RoomConcreteRepository();
+        //$roomRepository = new RoomConcreteRepository();
 
         foreach ($res as $entry) {
             //$room = $roomRepository
