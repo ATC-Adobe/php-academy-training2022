@@ -17,7 +17,6 @@ class CsvFileWriter implements IFileWriter {
 
 
     public function writeLine(ReservationModel $reservation): bool {
-        echo "putting";
         if (!$this->spl === null) {
             return false;
         }

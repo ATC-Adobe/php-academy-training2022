@@ -87,7 +87,7 @@ class AddReservationController {
                     $room
                 ),
                 (new FileWriterFactory())
-                    ->getInstance("csv")
+                    ->getInstance("json")
             );
 
         return true;
