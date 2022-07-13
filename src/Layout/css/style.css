@@ -116,6 +116,10 @@ body {
     margin-top: 5vh;
 }
 
+.form-checkbox {
+    margin: 1vh 0 -2vh;
+}
+
 .form-checkbox input {
     margin-top: 1vh;
     color: #C8C8CF;
@@ -141,7 +145,17 @@ body {
 }
 
 .form-checkbox input:checked + label::after {
-    background: red;
+    background: #fff;
+}
+
+.form-selectt select {
+    background-color: #2C3844;
+    color: #fff;
+    border: none;
+    width: 200px;
+    height: 50px;
+    padding: 1vh;
+    box-shadow: 0 0 5px #202832;
 }
 
 .form-button button {

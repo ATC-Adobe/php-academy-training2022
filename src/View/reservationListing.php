@@ -2,7 +2,11 @@
 
     use System\Database\MysqlConnection;
     $db = MysqlConnection::getInstance();
-    $query = "SELECT * FROM reservations";
+    $query = "SELECT
+        reservations.reservation_id, rooms.name, reservations.firstname, reservations.lastname,
+        reservations.email, reservations.start_date, reservations.end_date
+        FROM rooms LEFT JOIN reservations ON rooms.room_id = reservations.room_id 
+        WHERE rooms.room_id=reservations.room_id";
     $result  = $db->query($query)->fetchAll();
 
     ?>
@@ -23,7 +27,7 @@
         <table class="table-list">
             <tr>
                 <th>Reservation ID:</th>
-                <th>Room ID:</th>
+                <th>Room:</th>
                 <th>First name:</th>
                 <th>Second name:</th>
                 <th>Email:</th>
@@ -34,11 +38,11 @@
         <?php
 
         foreach($result as $r) {
-            [ $reservationId, $roomId, $firstName, $lastName, $email, $startDate, $endDate ] = $r;
+            [ $reservationId, $roomName, $firstName, $lastName, $email, $startDate, $endDate ] = $r;
 
             echo "<tr>";
             echo "<td>".$reservationId."</td>";
-            echo "<td>".$roomId."</td>";
+            echo "<td>".$roomName."</td>";
             echo "<td>".$firstName."</td>";
             echo "<td>".$lastName."</td>";
             echo "<td>".$email."</td>";
@@ -53,4 +57,6 @@
                 <td colspan="7">...</td>
             </tr>
         </table>
+
+        <form method="POST" action=""></form>
     </div>

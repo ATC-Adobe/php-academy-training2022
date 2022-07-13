@@ -6,10 +6,10 @@
 
     //testing space
     /*
-    require_once "./files.old/FileManager.php";
-    use PHPCourse\FileManager;
+    require_once "./files.old/FileWriter.php";
+    use PHPCourse\FileWriter;
 
-    $read = new FileManager("./data/reservations.csv");
+    $read = new FileWriter("./data/reservations.csv");
     */
 ?>
 

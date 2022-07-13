@@ -1,5 +1,5 @@
 <?php
-    use Reservation\Service\ReservationService;
+    use Reservation\Repository\ReservationRepository;
 
     if (isset($_POST['roomId'])) {
         [ $roomId, $firstName, $lastName, $email, $startDate, $endDate ] =
@@ -18,7 +18,7 @@
         $startDate  = $startDate->format("d/m/y H:i:s");
         $endDate    = $endDate->format("d/m/y H:i:s");
 
-        $reservation    = new ReservationService();
+        $reservation    = new ReservationRepository();
         $query = "INSERT INTO reservations(room_id, firstname, lastname, email, start_date, end_date)
                 VALUES($roomId,
                        '$firstName', 
@@ -94,13 +94,20 @@
                     <label><input type="datetime-local" name="endDate" required/></label>
                 </div>
                 <div class="form-label">
-                    <label></label>
+                    <label>Save type </label>
+                </div>
+                <div class="form-selectt">
+                    <label>
+                        <select name="type">
+                            <option value="db">Save to Database</option>
+                            <option value="csv">Save to .CSV file</option>
+                            <option value="xml">Save to .XML file</option>
+                            <option value="json">Save to .JSON file</option>
+                        </select>
+                    </label>
                 </div>
                 <div class="form-checkbox">
                     <label><input type="checkbox" name="policy" required/><span class="checkbox-text">I accept the <a href="#">terms and conditions</a> of the reservation.</span></label>
-                </div>
-                <div class="form-label">
-                    <label></label>
                 </div>
                 <div class="form-button">
                     <button type="submit" class="btn-submit">Submit</button>

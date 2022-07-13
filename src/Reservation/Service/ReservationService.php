@@ -1,51 +1,30 @@
 <?php
-    declare(strict_types = 1);
-    namespace Reservation\Service;
-    use System\Database\MysqlConnection;
-    use System\File\CsvReader;
-    use System\File\CsvWriter;
-    use Exception;
 
-    class ReservationService {
+    namespace Reservation\Service;
+
+    use Reservation\Model\ReservationModel;
+    use Reservation\Repository\ReservationRepository;
+
+    class ReservationService implements ReservationServiceInterface {
         public function __construct() {}
 
-        public function insertData ($roomId, $firstName, $lastName, $email, $startDate, $endDate): bool {
-            if ($firstName == '' || $lastName == '' || $email == '') {
-                return false;
-            }
+        public function saveReservation(ReservationModel $reservation) :void {
 
-            if ($startDate >= $endDate) {
-                return false;
-            }
+            $id         = 0;
+            $roomId     = $_POST['room_id'];
+            $firstName  = $_POST['firstname'];
+            $lastName   = $_POST['lastname'];
+            $email      = $_POST['email'];
+            $startDate  = $_POST['start_date'];
+            $endDate    = $_POST['end_date'];
 
-            $reservationId = $this->getReservationId();
+            $reservation = new ReservationModel(
+                $id, $roomId, $firstName, $lastName,
+                $email, $startDate, $endDate
+            );
 
-            if ($reservationId == null) {
-                return false;
-            }
+            $reservationRepository = new ReservationRepository();
+            $reservationRepository->addReservation($reservation);
 
-            $file = new CsvWriter('./data/reservations.csv');
-            $file->saveCsv([[$reservationId, $roomId, $firstName, $lastName, $email, $startDate, $endDate]]);
-            $file->releaseFile();
-
-            return true;
-        }
-
-        public function insertDataToDatabase (string $query): bool {
-            $instance = MysqlConnection::getInstance();
-            try {
-                $instance->query($query);
-                return true;
-            } catch (Exception $e) {
-                echo $e;
-                return false;
-            }
-        }
-
-        public function getReservationId (): int {
-            $file = new CsvReader('./data/reservations.csv');
-            $reservations = $file->readCsv();
-
-            return sizeof($reservations);
         }
     }

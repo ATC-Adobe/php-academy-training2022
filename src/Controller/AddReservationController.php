@@ -3,7 +3,7 @@
     namespace Controller;
 
     use Reservation\Model\ReservationModel;
-    use Reservation\Service\ReservationService;
+    use Reservation\Repository\ReservationRepository;
 
     class AddReservationController {
         public function __construct() { }
@@ -14,7 +14,7 @@
                 $id, $_POST['roomId'], $_POST['firstName'], $_POST['lastName'],
                 $_POST['email'], $_POST['startDate'], $_POST['endDate']
             );
-            $reservationService = new ReservationService();
+            $reservationService = new ReservationRepository();
 
             //TODO: file with extension or database choose / some refactor
         }
