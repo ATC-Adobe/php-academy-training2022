@@ -8,4 +8,6 @@ interface RepositoryInterface {
  * @property int $id
  */
 interface ModelInterface {
+    public function toArray();
+    public function fromArray(array $arr);
 }

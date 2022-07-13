@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Model\Reservation;
+use App\Model\Room;
 use App\System\Database\Connection;
 use PDO;
 use RepositoryInterface;
@@ -10,7 +11,6 @@ use RepositoryInterface;
 class ReservationRepository implements RepositoryInterface
 {
     protected ?Connection $connection = null;
-    protected string $table = "reservation";
     public function __construct()
     {
         $this->connection = Connection::getInstance();
@@ -24,7 +24,7 @@ class ReservationRepository implements RepositoryInterface
     {
         $statement = $this->connection->prepare(
             "
-            INSERT INTO $this->table ( room_id, first_name, last_name, email, start_date, end_date) VALUES ( :room_id, :first_name, :last_name, :email, :start_date,
+            INSERT INTO reservation ( room_id, first_name, last_name, email, start_date, end_date) VALUES ( :room_id, :first_name, :last_name, :email, :start_date,
      :end_date
             );"
         );
@@ -36,7 +36,38 @@ class ReservationRepository implements RepositoryInterface
      */
     public function readAll(): bool|array
     {
-        return $this->connection->query("SELECT * FROM $this->table")->fetchAll(PDO::FETCH_OBJ);
+        return $this->connection->query("SELECT * FROM reservation")->fetchAll(PDO::FETCH_OBJ);
 
+    }
+
+    /**
+     * @return bool|Reservation[]
+     */
+    public function readWithRelations(): array|bool
+    {
+        $data = $this->connection->query("SELECT 
+                reservation.id,
+                room_id,
+                first_name,
+                last_name,
+                email,
+                start_date,
+                end_date,
+                name as room_name,
+                floor as room_floor
+            FROM room JOIN reservation ON room_id = room.id")->fetchAll(PDO::FETCH_ASSOC);
+        if($data === false) {
+            return false;
+        }
+        $result = [];
+        foreach ($data as $i => $row) {
+            $reservation = new Reservation();
+            $room = new Room();
+            $reservation->fromArray($row);
+            $room->fromArray($row);
+            $reservation->room = $room;
+            $result[]= $reservation;
+        }
+        return $result;
     }
 }

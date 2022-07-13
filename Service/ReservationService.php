@@ -13,8 +13,15 @@ class ReservationService
         $this->repo = new ReservationRepository();
     }
 
-    public function readReservations(): bool|array
+    /**
+     * @param bool $withRelations
+     * @return bool|Reservation[]
+     */
+    public function readReservations(bool $withRelations = false): bool|array
     {
+        if($withRelations) {
+            return $this->repo->readWithRelations();
+        }
         return $this->repo->readAll();
     }
 

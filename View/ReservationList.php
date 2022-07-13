@@ -25,8 +25,8 @@ class ReservationList {
         if($msg) {
             echo '<div class="alert alert-info text-center">'. $msg .'</div>';
         }
-    $reservations = (new ReservationService())->readReservations();
-        //empty -> false
+    $reservations = (new ReservationService())->readReservations(true);
+        //error
         if($reservations === false) {
             echo '<div class="alert alert-danger text-center">Something went wrong. Try again</div>';
         }
@@ -35,7 +35,8 @@ class ReservationList {
             echo     '<div class="col col-md-6 listItem pt-3">';
             echo        '<h6>Reservation id: '. $reservations[$i]->id .'</h6>';
                 echo     '<ul class="w-100">';
-                echo         '<li>room id: '. $reservations[$i]->room_id .'</li>';
+                echo         '<li>room name: '. $reservations[$i]->room->name .'</li>';
+                echo         '<li>room floor: '. $reservations[$i]->room->floor .'</li>';
                 echo         '<li>first name: '. $reservations[$i]->first_name .'</li>';
                 echo         '<li>last name: '. $reservations[$i]->last_name .'</li>';
                 echo          '<li>email: '. $reservations[$i]->email .'</li>';
