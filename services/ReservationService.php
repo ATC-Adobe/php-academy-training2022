@@ -1,5 +1,7 @@
 <?php
 
+use System\Database\Connection;
+
 include_once 'services/ApplicationService.php';
 include_once 'db/Connection.php';
 

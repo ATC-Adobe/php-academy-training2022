@@ -1,5 +1,7 @@
 <?php
 
+use System\Database\Connection;
+
 include "views/layouts/head.php";
 include "views/layouts/navbar.php";
 

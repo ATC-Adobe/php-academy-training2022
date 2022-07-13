@@ -1,30 +1,21 @@
 <?php
 
-include "views/layouts/head.php";
-include "views/layouts/navbar.php";
-require_once 'services/RoomService.php';
-require_once 'services/ApplicationService.php';
+declare(strict_types=1);
+
+require_once '../autoloading.php';
+
+include "../Layout/head.php";
+include "../Layout/navbar.php";
+
+use Controller\CreateRoomController;
 
 $name = '';
 $floor = '';
 $error = '';
 
 
-if (isset($_POST['submit'])) {
-    if (empty($_POST['name'] && strlen($_POST['name']) < 50)) {
-        $error .= '<p class="text-danger">Name is required.</p>';
-    } else {
-        $name = $_POST['name'];
-    }
-    if (empty($_POST['floor'] && strlen($_POST['floor']) < 2)) {
-        $error .= '<p class="text-danger">Floor is required.</p>';
-    } else {
-        $floor = $_POST['floor'];
-    }
-    if ($error == ''){
-        (new RoomService())->addDbRoom($name, $floor);
-    }
-}
+
+[$error, $name, $floor] = (new CreateRoomController())->createRoom($error, $name, $floor);
 ?>
 
 <body>
@@ -38,7 +29,7 @@ if (isset($_POST['submit'])) {
                 <div class="card-body">
                     <form action="" method="post">
                         <?php
-                            echo $error;
+                        echo $error;
                         ?>
 
                         <div class="form-group">
@@ -61,7 +52,7 @@ if (isset($_POST['submit'])) {
         </div>
     </div>
 </div>
-</div>
+
 
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"

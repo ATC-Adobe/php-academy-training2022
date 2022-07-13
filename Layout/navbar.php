@@ -8,7 +8,8 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item row">
-                <a class="nav-link" href="reservations.php">Reservations</a>
+                <a class="nav-link" href="/View/rooms.php">Rooms</a>
+                <a class="nav-link" href="../reservations.php">Reservations</a>
             </li>
         </ul>
     </div>

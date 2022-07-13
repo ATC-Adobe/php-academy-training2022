@@ -1,7 +1,14 @@
 <?php
+declare(strict_types=1);
 
-include "views/layouts/head.php";
-include "views/layouts/navbar.php";
+require_once '../autoloading.php';
+
+use Controller\DeleteRoomController;
+use System\Database\Connection;
+use Repository\RoomService;
+
+include "../Layout/head.php";
+include "../Layout/navbar.php";
 
 ?>
 
@@ -12,12 +19,15 @@ include "views/layouts/navbar.php";
     <div class="row justify-content-center" style="margin-top: 30px;">
         <div class="col-md-6">
             <div class="card">
-                <div class="card-header"><h4>Rooms</h4></div>
+                <div class="card-header"><h4>Rooms</h4><a href="../Form/createRoom.php"
+                                                          class="btn btn-sm btn-outline-primary">Add</a></div>
                 <div class="card-body">
 
                     <?php
-                        include_once 'services/RoomListXml.php';
-                        $rooms = (new RoomListXml())->getRoomListXml();
+
+                    $dbConnection = Connection::getConnection();
+                    $rooms = (new RoomService())->getAllRooms($dbConnection);
+                    (new DeleteRoomController())->deleteRoom($dbConnection);
                     ?>
 
                     <table class="table table-striped table-hover table-borderless">
@@ -36,11 +46,16 @@ include "views/layouts/navbar.php";
                             ?>
 
                             <tr>
-                                <th><?php echo $room['room_id']; ?></th>
-                                <td><?php echo $room['name']; ?></td>
-                                <td><?php echo $room['floor']; ?></td>
+                                <th><?php
+                                    echo $room['room_id']; ?></th>
+                                <td><?php
+                                    echo $room['name']; ?></td>
+                                <td><?php
+                                    echo $room['floor']; ?></td>
                                 <td>
-                                    <?php echo "<a class=\"btn btn-sm btn-outline-success\" href=\"/reservation_form.php?room_id={$room['room_id']}&name={$room['name']}\">Book</a>"; ?>
+                                    <?php
+                                    echo "<a class=\"btn btn-sm btn-outline-success\" href=\"/reservation_form.php?room_id={$room['room_id']}&name={$room['name']}\">Book</a>",
+                                    "<a class=\"btn btn-sm btn-outline-danger\" href=\"../View/rooms.php?room_id={$room['room_id']}\">Delete</a>"; ?>
                                 </td>
                             </tr>
 

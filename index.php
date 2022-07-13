@@ -1,7 +1,12 @@
 <?php
+declare(strict_types=1);
 
-include "views/layouts/head.php";
-include "views/layouts/navbar.php";
+require_once 'autoloading.php';
+
+use System\Database\Connection;
+
+include "Layout/head.php";
+include "Layout/navbar.php";
 
 ?>
 
@@ -10,62 +15,10 @@ include "views/layouts/navbar.php";
 <!--Conference rooms list-->
 <div class="container">
     <div class="row justify-content-center" style="margin-top: 30px;">
-        <div class="col-md-6">
+        <div class="col-md-8">
             <div class="card">
-                <div class="card-header"><h4>Rooms</h4><a href="createRoom.php" class="btn btn-sm btn-outline-primary">Add</a></div>
-                <div class="card-body">
-
-                    <?php
-                    include_once 'services/RoomService.php';
-                    require_once 'db/Connection.php';
-                    require_once 'services/RoomService.php';
-                    $dbConnection = Connection::getConnection();
-                    $rooms = (new RoomService())->getRooms($dbConnection);
-
-                    if (isset($_GET['room_id'])) {
-                        $roomId = $_GET['room_id'];
-                        $destroy = $dbConnection->query(
-                            "DELETE FROM rooms WHERE room_id='$roomId'"
-                        );
-                    }
-                    ?>
-
-                    <table class="table table-striped table-hover table-borderless">
-                        <thead>
-                        <tr>
-                            <th>Id</th>
-                            <th>Room name</th>
-                            <th>Floor</th>
-                            <th>Actions</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-
-                        <?php
-                        foreach ($rooms as $room):
-                            ?>
-
-                            <tr>
-                                <th><?php
-                                    echo $room['room_id']; ?></th>
-                                <td><?php
-                                    echo $room['name']; ?></td>
-                                <td><?php
-                                    echo $room['floor']; ?></td>
-                                <td>
-                                    <?php
-                                    echo "<a class=\"btn btn-sm btn-outline-success\" href=\"/reservation_form.php?room_id={$room['room_id']}&name={$room['name']}\">Book</a>",
-                                    "<a class=\"btn btn-sm btn-outline-danger\" href=\"/index.php?room_id={$room['room_id']}\">Delete</a>"; ?>
-                                </td>
-                            </tr>
-
-                        <?php
-                        endforeach;
-                        ?>
-
-                        </tbody>
-                    </table>
-                </div>
+                <div class="card-header text-center"><h4>Welcome to BookMyRoom.</h4><h5>Your meeting room reservation
+                        system.</h5></div>
             </div>
         </div>
     </div>
