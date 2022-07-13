@@ -13,8 +13,6 @@ $name = '';
 $floor = '';
 $error = '';
 
-
-
 [$error, $name, $floor] = (new CreateRoomController())->createRoom($error, $name, $floor);
 ?>
 

@@ -2,7 +2,7 @@
 
 namespace Repository;
 
-class RoomValidation
+class RoomFormValidation
 {
     function validated(string $error, mixed $name, mixed $floor): array
     {

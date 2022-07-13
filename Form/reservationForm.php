@@ -1,7 +1,14 @@
 <?php
 
-require_once "services/ReservationService.php";
-require_once "services/ReservationFormValidation.php";
+declare(strict_types=1);
+
+require_once "../autoloading.php";
+
+use Controller\CreateReservationController;
+
+
+include "../Layout/head.php";
+include "../Layout/navbar.php";
 
 $error = '';
 $message = '';
@@ -12,23 +19,16 @@ $email = '';
 $startDate = '';
 $endDate = '';
 
-if (isset($_POST['submit'])) {
-    list($error, $roomId, $firstName, $lastName, $email, $startDate, $endDate) = (new ReservationFormValidation())->validated(
-        $error,
-        $roomId,
-        $firstName,
-        $lastName,
-        $email,
-        $startDate,
-        $endDate
-    );
-    if ($error == '') {
-        (new ReservationService())->addDbReservation($roomId, $firstName, $lastName, $email, $startDate, $endDate);
-    }
-}
-
-include "views/layouts/head.php";
-include "views/layouts/navbar.php";
+[$error, $roomId, $firstName, $lastName, $email, $startDate, $endDate] = (new CreateReservationController(
+))->createReservation(
+    $error,
+    $roomId,
+    $firstName,
+    $lastName,
+    $email,
+    $startDate,
+    $endDate
+);
 
 ?>
 

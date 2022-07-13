@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 require_once 'autoloading.php';
 
-use System\Database\Connection;
-
 include "Layout/head.php";
 include "Layout/navbar.php";
 

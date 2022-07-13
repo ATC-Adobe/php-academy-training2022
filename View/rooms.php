@@ -54,7 +54,7 @@ include "../Layout/navbar.php";
                                     echo $room['floor']; ?></td>
                                 <td>
                                     <?php
-                                    echo "<a class=\"btn btn-sm btn-outline-success\" href=\"/reservation_form.php?room_id={$room['room_id']}&name={$room['name']}\">Book</a>",
+                                    echo "<a class=\"btn btn-sm btn-outline-success\" href=\"../Form/reservationForm.php?room_id={$room['room_id']}&name={$room['name']}\">Book</a>",
                                     "<a class=\"btn btn-sm btn-outline-danger\" href=\"../View/rooms.php?room_id={$room['room_id']}\">Delete</a>"; ?>
                                 </td>
                             </tr>

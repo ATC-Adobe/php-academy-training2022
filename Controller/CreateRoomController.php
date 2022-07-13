@@ -3,14 +3,14 @@
 namespace Controller;
 
 use Repository\RoomService;
-use Repository\RoomValidation;
+use Repository\RoomFormValidation;
 
 class CreateRoomController
 {
-    function createRoom(string $error, string $name, string $floor): array
+    public function createRoom(string $error, string $name, string $floor): array
     {
         if (isset($_POST['submit'])) {
-            [$error, $name, $floor] = (new RoomValidation())->validated($error, $name, $floor);
+            [$error, $name, $floor] = (new RoomFormValidation())->validated($error, $name, $floor);
             if ($error == '') {
                 (new RoomService())->storeRoom($name, $floor);
             }
