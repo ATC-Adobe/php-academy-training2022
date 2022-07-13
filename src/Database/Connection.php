@@ -1,5 +1,9 @@
 <?php
 
+namespace Database;
+
+use PDO;
+
 class Connection extends PDO
 {
     protected static $instance = null;
