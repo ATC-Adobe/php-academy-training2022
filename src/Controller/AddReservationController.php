@@ -87,7 +87,7 @@ class AddReservationController {
                     $room
                 ),
                 (new FileWriterFactory())
-                    ->getInstance("xml")
+                    ->getInstance($_POST['option'])
             );
 
         return true;
