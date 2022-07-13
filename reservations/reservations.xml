@@ -1,5 +1,14 @@
-<?xml version='1.0' standalone='yes'?>
+<?xml version="1.0" standalone="yes"?>
 <root>
-    <reservation>
-    </reservation>
+    <reservations>
+        <reservation>
+            <id>0</id>
+            <room_id>5</room_id>
+            <name>dasd</name>
+            <surname>tgrtgrs</surname>
+            <email>any</email>
+            <from>08/07/22 12:48:00</from>
+            <to>09/07/22 12:48:00</to>
+        </reservation>
+    <reservation><id>0</id><room_id>5</room_id><name>dasd</name><surname>tgrtgrs</surname><email>any</email><from>08/07/22 12:48:00</from><to>09/07/22 12:48:00</to></reservation><reservation><id>0</id><room_id>5</room_id><name>dasd</name><surname>tgrtgrs</surname><email>any</email><from>08/07/22 12:48:00</from><to>09/07/22 12:48:00</to></reservation><reservation><id>0</id><room_id>5</room_id><name>dasd</name><surname>tgrtgrs</surname><email>any</email><from>08/07/22 12:48:00</from><to>09/07/22 12:48:00</to></reservation></reservations>
 </root>
