@@ -1,5 +1,7 @@
 <?php
 
+include_once 'autoloading.php';
+
 class FileWriterFactory {
     private array $workers;
 
@@ -30,14 +32,14 @@ interface FactoryWorker {
 }
 
 interface FileWriter {
-    public function __construct(string $filename);
+    public function __construct();
     public function writeLine() : void;
     public function isOpen() : bool;
     public function closeStream() : void;
 }
 
 class XmlSaver implements FileWriter {
-    public function __construct(string $filename) {}
+    public function __construct() {}
     public function writeLine() : void {}
     public function isOpen() : bool { return false; }
     public function closeStream() : void {}
@@ -51,7 +53,7 @@ class XmlSaverWorker implements FactoryWorker {
 
 
 class JsonSaver implements FileWriter {
-    public function __construct(string $filename) {}
+    public function __construct() {}
     public function writeLine() : void {}
     public function isOpen() : bool { return false; }
     public function closeStream() : void {}
@@ -65,7 +67,7 @@ class JsonSaverWorker implements FactoryWorker {
 
 
 class CsvSaver implements FileWriter {
-    public function __construct(string $filename) {}
+    public function __construct() {}
     public function writeLine() : void {}
     public function isOpen() : bool { return false; }
     public function closeStream() : void {}
@@ -88,5 +90,8 @@ var_dump($factory->getInstance("json"));
 var_dump($factory->getInstance("No cost too great"));
 
 
+$repo = new \Reservation\Repository\ReservationConcreteRepository();
+
+$repo->getAllReservations();
 
 

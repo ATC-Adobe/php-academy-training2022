@@ -45,7 +45,9 @@ class ReservationConcreteRepository {
     public function getAllReservations() : array {
         $res =
             MySqlConnection::getInstance()
-            ->query("SELECT * FROM Reservations;")
+            ->query("SELECT *, Rooms.id AS room_id, 
+                            Rooms.name AS room_name, Rooms.floor AS floor
+                            FROM Reservations JOIN Rooms ON Rooms.id = Reservations.room_id;")
             ->fetchAll();
 
         $arr = [];
@@ -53,12 +55,18 @@ class ReservationConcreteRepository {
         $roomRepository = new RoomConcreteRepository();
 
         foreach ($res as $entry) {
-            $room = $roomRepository
-                ->getRoomById($entry['room_id']);
+            //$room = $roomRepository
+                //->getRoomById($entry['room_id']);
 
-            if($room === null) {
+            /*if($room === null) {
                 continue;
-            }
+            }*/
+
+            $room = new RoomModel(
+                $entry['room_id'],
+                $entry['room_name'],
+                $entry['floor'],
+            );
 
             $arr[] = new ReservationModel(
                 $entry['id'],
