@@ -74,7 +74,7 @@ class ReservationConcreteRepository {
         return $arr;
     }
 
-    public function addReservation(ReservationModel $reservation) {
+    public function addReservation(ReservationModel $reservation) : void {
         $surname =  $reservation->getSurname();
         $email =    $reservation->getEmail();
         $name =     $reservation->getName();
@@ -87,12 +87,12 @@ class ReservationConcreteRepository {
                     (name, surname, email, room_id, from_date, to_date) 
                     VALUES
                         (
-                         $name,
-                         $surname,
-                         $email,
-                         $roomId,
+                         '$name',
+                         '$surname',
+                         '$email',
+                         '$roomId',
                          STR_TO_DATE('$from','%d/%m/%y %H:%i:%s'),
-                         STR_TO_DATE('$to',  '%d/%m/%y %H:%i:%s'),
+                         STR_TO_DATE('$to',  '%d/%m/%y %H:%i:%s')
                         );"
             );
     }
@@ -106,11 +106,11 @@ class ReservationConcreteRepository {
         $res =
             MySqlConnection::getInstance()->query(
             "SELECT * FROM Reservations 
-                        WHERE room_id = ".$roomId."
+                        WHERE room_id = '".$roomId."'
                         AND   from_date <= STR_TO_DATE('".$to->format('d/m/y H:i:s')."','%d/%m/%y %H:%i:%s')
                         AND   to_date   >= STR_TO_DATE('".$from->format('d/m/y H:i:s')."','%d/%m/%y %H:%i:%s');
                ")->fetchAll();
-        return count( $res ) != 0;
+        return count( $res ) == 0;
     }
 
 }

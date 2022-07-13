@@ -5,6 +5,7 @@ namespace Controller;
 use Reservation\Model\ReservationModel;
 use Reservation\Repository\ReservationConcreteRepository;
 use Room\Repository\RoomConcreteRepository;
+use System\Util\DateFormatter;
 
 class AddReservationController {
     public function __construct() { }
@@ -17,14 +18,18 @@ class AddReservationController {
                     $_POST['email'],    $_POST['from'],     $_POST['to']];
 
 
-            $from = date("d/m/y H:i:s", strtotime($from));
+            $from = DateFormatter::htmlDateToDateTime($from);
+            $to   = DateFormatter::htmlDateToDateTime($to);
+            /*
+            var_dump($conv);
+
+            $from = strtotime($from);
             $to   = date("d/m/y H:i:s", strtotime($to));
+            */
 
             $res = $this->uploadData(
                 $room_id, $name, $surname, $email, $from, $to
             );
-
-            echo "WE THERE";
 
             if( $res  ) { // success
                 header('Location: roomReservationListing.php?status=1');
@@ -32,15 +37,15 @@ class AddReservationController {
             }
         }
 
-        echo "WE THERE";
-
         header('Location: roomReservationListing.php?status=2');
         die();
     }
 
+    // this function might be moved safely
+    // to separate class located in /Reservation/Service
     private function uploadData(
-        string $roomId, string $name, string $surname,
-        string $email,  string $from, string $to
+        string $roomId, string $name,       string $surname,
+        string $email,  \DateTime $from,    \DateTime $to
     ) : bool {
 
         $roomNId = intval($roomId);
@@ -49,9 +54,6 @@ class AddReservationController {
             return false;
 
         $reservationRepository = new ReservationConcreteRepository();
-
-        $from = \DateTime::createFromFormat("Y-m-d H:i:s", $from);
-        $to   = \DateTime::createFromFormat("Y-m-d H:i:s", $to);
 
         $valid =
             $reservationRepository

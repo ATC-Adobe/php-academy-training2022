@@ -30,9 +30,23 @@ use Room\Repository\RoomConcreteRepository;
 ?>
 
     <div class="header">
-        Room Reservation Service
-        <br><br>
+        Active Reservations
+
         <div class="main">
+            <?php
+            if(isset($_GET['status'])) {
+                echo match ($_GET['status']) {
+                    '1' => "<div class='success'>
+                                    Room reserved successfully! 
+                                </div>",
+                    '2' => "<div class='error'>
+                                    An error occurred while reserving new room! 
+                                </div>",
+                    default => "How did we get there?",
+                };
+            }
+            ?>
+            <br><br>
 
         <?php
 
@@ -47,13 +61,13 @@ use Room\Repository\RoomConcreteRepository;
                 die();
             }
 
-            $id = $entry->getId();
-            $name = $entry->getName();
-            $email = $entry->getEmail();
-            $surname = $entry->getSurname();
-            $room = $entry->getRoom()->getName();
-            $to = $entry->getTo()->format("d/m/Y H:i:s");
-            $from = $entry->getFrom()->format("d/m/Y H:i:s");;
+            $id =       $entry->getId();
+            $name =     $entry->getName();
+            $email =    $entry->getEmail();
+            $surname =  $entry->getSurname();
+            $room =     $entry->getRoom()->getName();
+            $to =       $entry->getTo()->format("d/m/Y H:i:s");
+            $from =     $entry->getFrom()->format("d/m/Y H:i:s");;
 
             echo "<div class='row'>
                 <div class='float ltable' style = 'line-height: 1.2em;' >

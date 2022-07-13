@@ -1,9 +1,9 @@
 <?php
 declare(strict_types = 1);
 
-if(isset($_POST['room_id'])) {
-    $serv = new \Controller\AddReservationController();
-    $serv->makeRequest();
+if(isset($_POST['room_name'])) {
+    $serv = new \Controller\AddRoomController();
+    $serv->makeRequst();
 }
 ?>
 
@@ -24,52 +24,22 @@ if(isset($_POST['room_id'])) {
 <body>
 
 <?php
-include "layout/menu.html";
+    include "layout/menu.html";
 ?>
 
 <div class="header">
     Room reservation service
     <br><br>
     <div class="main">
-        <a href="index.php">Return</a><br>
-        <form method="post" action="roomReservationForm.php">
+        <form method="post" action="roomForm.php">
 
             <div class="float ltable">
-                Room Id:<br>
-                <br>
-                Name:<br>
-                Surname:<br>
-                E-mail:<br>
-                <br>
-                From: <br>
-                To: <br>
+                Room name:<br>
+                Floor:<br>
             </div>
             <div class="float rtable">
-
-                <?php
-                $id = 0;
-
-                // we dont want to loose room id information
-                if(isset($_GET['id'])) {
-                    $id = $_GET['id'];
-                }
-                /*elseif(isset($_POST['room_id'])) {
-                    $id = $_POST['room_id'];
-                }*/
-                else {
-                    die('Critical error -> no room specified');
-                }
-
-                echo '<input type="hidden" name="room_id" value="'.$id.'">';
-                echo $id.'<br>';
-                ?>
-                <br>
-                <input type="text" name="name" ><br>
-                <input type="text" name="surname" > <br>
-                <input type="text" name="email" ><br>
-                <br>
-                <input type="datetime-local" name="from"><br>
-                <input type="datetime-local" name="to"><br>
+                <input type="text" name="room_name" ><br>
+                <input type="text" name="floor" > <br>
             </div>
             <div class="clear"></div>
             <br><br>

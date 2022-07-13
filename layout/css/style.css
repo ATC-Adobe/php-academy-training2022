@@ -20,12 +20,12 @@ body {
     transition: all 5s;
 }
 
-.s {
-    background-color: #2cd91a;
+.success {
+    background-color: #22701b;
 }
 
-.errorr {
-    color: var(--err);
+.error {
+    background-color: #651212;
     /*border: 2px solid var(--err);*/
 }
 .header {
