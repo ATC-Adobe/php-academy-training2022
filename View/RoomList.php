@@ -4,6 +4,7 @@ namespace App\View;
 
 
 use App\Service\RoomService;
+use App\System\File\IOHandlerFactory;
 use App\View\Component\Navbar;
 
 class RoomList {
@@ -30,8 +31,9 @@ class RoomList {
             <th class="w-25"><p class="text-center">floor</p></th>
         </tr>';
         echo $msg;
+//        $_POST['xml'] = true;
+//        $handler =  IOHandlerFactory::create("./System/File/data/rooms.xml");
             $rooms = (new RoomService())->readRooms();
-
             foreach ($rooms as $i => $room) {
                 echo '<tr>';
                 echo "<td><p>{$room->id}</p></td>";

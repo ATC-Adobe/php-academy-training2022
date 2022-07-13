@@ -9,10 +9,7 @@ use SplFileObject;
 
 class CsvHandler implements IOHandlerInterface
 {
-    protected array $columns = [
-        "id", "room_id",  "first_name",  "last_name",  "email",  "start_date",  "end_date",
-    ];
-    public function __construct(protected string $filename, )
+    public function __construct(protected string $filename, protected array $columns)
     {
     }
 

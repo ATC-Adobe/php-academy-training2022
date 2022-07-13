@@ -16,7 +16,7 @@ interface IOHandlerInterface {
     public function readAll(): iterable|false;
     public function save(ModelInterface $model): bool;
 }
-interface IOStrategyInterface {
+interface IOStrategyContextInterface {
     public function __construct(IOHandlerInterface $io);
-    public function setIO(IOHandlerInterface $io);
+    public function setIoStrategy(IOHandlerInterface $io);
 }

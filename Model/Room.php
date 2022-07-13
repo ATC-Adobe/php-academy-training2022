@@ -26,8 +26,8 @@ class Room implements ModelInterface
         }
         return $this;
     }
-    public function toArray()
+    public function toArray(): array
     {
-        // TODO: Implement toArray() method.
+        return (array) $this;
     }
 }
