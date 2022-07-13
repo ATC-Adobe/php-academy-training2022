@@ -3,6 +3,7 @@
 namespace System\File\DBAdapter;
 
 use Reservation\Model\ReservationModel;
+use Room\Model\RoomModel;
 use System\Database\MySqlConnection;
 use System\File\IFileWriter;
 
@@ -34,5 +35,55 @@ class DBWriter implements IFileWriter {
 
     public function closeStream() : void {
         // nothing to be done here
+    }
+
+    public function loadData(): void {
+        //
+    }
+
+    public function getEntries(): array {
+        $res =
+            MySqlConnection::getInstance()
+                ->query("SELECT *, 
+                            Reservations.name AS name,
+                            Rooms.id AS room_id, 
+                            Rooms.name AS room_name, 
+                            Rooms.floor AS floor
+                            FROM Reservations JOIN Rooms ON Rooms.id = Reservations.room_id;")
+                ->fetchAll();
+
+        $arr = [];
+
+        //$roomRepository = new RoomConcreteRepository();
+
+        foreach ($res as $entry) {
+            //$room = $roomRepository
+            //->getRoomById($entry['room_id']);
+
+            /*if($room === null) {
+                continue;
+            }*/
+
+            $room = new RoomModel(
+                $entry['room_id'],
+                $entry['room_name'],
+                $entry['floor'],
+            );
+
+            $arr[] = new ReservationModel(
+                $entry['id'],
+                \DateTime::createFromFormat("Y-m-d H:i:s", $entry['from_date']),
+                \DateTime::createFromFormat("Y-m-d H:i:s", $entry['to_date']),
+                $entry['name'],
+                $entry['email'],
+                $entry['surname'],
+                $room
+            );
+        }
+
+        return $arr;
+    }
+
+    public function saveChanges() : void {
     }
 }

@@ -7,6 +7,12 @@ use System\File\IFileWriter;
 
 class XmlFileWriter implements IFileWriter {
 
+    private string $filename;
+
+    public function __construct(string $filename) {
+        $this->filename = $filename;
+    }
+
     public function writeLine(ReservationModel $reservation): bool {
         $id =       $reservation->getId();
         $surname =  $reservation->getSurname();
@@ -16,9 +22,7 @@ class XmlFileWriter implements IFileWriter {
         $from =     $reservation->getFrom()->format('d/m/y H:i:s');
         $to =       $reservation->getTo()->format(  'd/m/y H:i:s');
 
-        $file = "reservations/reservations.xml";
-
-        $xml = simplexml_load_file($file);
+        $xml = simplexml_load_file($this->filename);
 
         $reservations = $xml->reservations;
 
@@ -31,7 +35,7 @@ class XmlFileWriter implements IFileWriter {
         $reservation->addChild('from',      $from);
         $reservation->addChild('to',        $to);
 
-        $xml->saveXML($file);
+        $xml->saveXML($this->filename);
 
 
         return true;
@@ -39,5 +43,18 @@ class XmlFileWriter implements IFileWriter {
 
     public function closeStream(): void {
 
+    }
+
+    public function loadData(): void {
+        // TODO: Implement loadData() method.
+    }
+
+    public function getEntries(): array {
+        // TODO: Implement getEntries() method.
+        return [];
+    }
+
+    public function saveChanges(): void {
+        // TODO: Implement saveChanges() method.
     }
 }

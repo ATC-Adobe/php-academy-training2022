@@ -7,9 +7,15 @@ use System\File\IFileWriter;
 
 class JsonFileWriter implements IFileWriter {
 
+    private string $filename;
+
+    public function __construct(string $filename) {
+        $this->filename = $filename;
+    }
+
     public function writeLine(ReservationModel $reservation): bool {
         $file = json_decode(
-            file_get_contents("reservations/reservations.json"),
+            file_get_contents($this->filename),
             true
         );
 
@@ -33,7 +39,7 @@ class JsonFileWriter implements IFileWriter {
             ];
 
         file_put_contents(
-            "reservations/reservations.json",
+            $this->filename,
             json_encode($file, JSON_PRETTY_PRINT)
             );
 
@@ -41,5 +47,18 @@ class JsonFileWriter implements IFileWriter {
     }
 
     public function closeStream(): void {
+    }
+
+    public function loadData(): void {
+        // TODO: Implement loadData() method.
+    }
+
+    public function getEntries(): array {
+        // TODO: Implement getEntries() method.
+        return [];
+    }
+
+    public function saveChanges(): void {
+        // TODO: Implement saveChanges() method.
     }
 }

@@ -14,9 +14,9 @@ class FileWriterFactory {
         $this->workers = [];
 
         $this->registerWorker("db",   new DBWriterBuilder());
-        $this->registerWorker("xml",  new XmlFileWriterBuilder());
-        $this->registerWorker("json", new JsonFileWriterBuilder());
-        $this->registerWorker("csv",  new CsvFileWriterBuilder());
+        $this->registerWorker("xml",  new XmlFileWriterBuilder("reservations/reservations.xml"));
+        $this->registerWorker("json", new JsonFileWriterBuilder("reservations/reservations.json"));
+        $this->registerWorker("csv",  new CsvFileWriterBuilder("reservations/reservations.csv"));
     }
 
     public function registerWorker(string $key, IFileWriterBuilder $worker) : void {

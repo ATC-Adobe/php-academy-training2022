@@ -46,8 +46,11 @@ class ReservationConcreteRepository {
     public function getAllReservations() : array {
         $res =
             MySqlConnection::getInstance()
-            ->query("SELECT *, Rooms.id AS room_id, 
-                            Rooms.name AS room_name, Rooms.floor AS floor
+            ->query("SELECT *, 
+                            Reservations.name AS name,
+                            Rooms.id AS room_id, 
+                            Rooms.name AS room_name, 
+                            Rooms.floor AS floor
                             FROM Reservations JOIN Rooms ON Rooms.id = Reservations.room_id;")
             ->fetchAll();
 
