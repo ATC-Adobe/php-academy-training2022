@@ -10,8 +10,16 @@ $router = new Router(
     'src/View/Index.php'
 );
 
+$router->use('/', function(Response $res) {
+    echo "eee";
+    $res->render('src/View/Index.php');
+});
+
 
 $router->use('/a', function(Response $res) {
+    if(isset($_GET['a'])) {
+        $res->send('AA');
+    }
     $res->end("A");
 });
 
@@ -20,8 +28,12 @@ $router->use('/b', function(Response $res) {
 });
 
 $router->use('/c', function(Response $res) {
-    $res->goTo('/a');
+    $res->goTo('/a/?a=1');
 });
+
+// app.use('/', (req, res) => {
+
+// });
 
 $router->get('/f', function(Response $res) {
     $res->end("Nothing interesting to see here");
@@ -50,5 +62,5 @@ $router->post('/delete/reservation', function(Response $res) {
 });
 
 $router->redirect(
-    $_SERVER['REQUEST_URI']
+    explode('?', $_SERVER['REQUEST_URI'])[0]
 );
