@@ -212,7 +212,7 @@ a:hover {
     display: none;
 }
 
-.inner-sticky > a {
+.inner-sticky  > a {
     margin-right: 1em;
     padding: 0.6em;
     border-radius: 1em;

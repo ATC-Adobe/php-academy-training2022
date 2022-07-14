@@ -61,10 +61,7 @@ use Room\Repository\RoomConcreteRepository;
                 echo "<td> $id </td>";
                 echo "<td> $name </td>";
                 echo "<td> $floor </td>";
-                echo "<td><form method='GET' action='roomReservationForm.php'>
-                                    <input type='hidden' name='id' value='$id'>
-                                    <input type='submit' value='Reserve'>
-                                  </form></td>";
+                echo "<td><a href='roomReservationForm.php?id=$id'> Reserve ></a></td>";
                 echo "</tr>";
             }
             ?>
