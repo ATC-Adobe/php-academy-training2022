@@ -20,6 +20,10 @@ if(isset($_GET["path"])) {
                 $controller->create();
             }
             exit();
+        case "reservationDelete":
+            $controller = new \App\Controller\ReservationController();
+            $controller->delete();
+            exit();
         case "roomForm":
             $controller = new \App\Controller\RoomController();
             if($_SERVER['REQUEST_METHOD'] === "POST") {

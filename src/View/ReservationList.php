@@ -45,7 +45,7 @@ class ReservationList implements Component
             echo '<li>start_date: ' . $reservations[$i]->start_date . ' </li>';
             echo '<li>end_date: ' . $reservations[$i]->end_date . ' </li>';
             echo '</ul>';
-            echo '<form action="reservationDelete.php">
+            echo '<form method="post" action="/?path=reservationDelete">
         <input type="hidden" name="reservation_id" value="' . $reservations[$i]->id . '"/>
         <button type="submit" class="btn btn-danger">Delete</button>
             </form>';

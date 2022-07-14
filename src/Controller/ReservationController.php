@@ -67,7 +67,7 @@ class ReservationController
     {
         $reservationService = new ReservationService();
         //TODO: authorize
-        $id = $_GET["reservation_id"];
+        $id = $_POST["reservation_id"];
         $ok = $reservationService->deleteReservation($id);
         $msg = "";
         if (!$ok) {
