@@ -10,7 +10,15 @@ class DeleteReservationController
     public function deleteReservation(Connection $dbConnection): void
     {
         if (isset($_GET['reservation_id'])) {
-            (new ReservationRepository())->destroyReservation($dbConnection);
+            (new ReservationRepository(
+                'reservation_id',
+                'room_id',
+                'firstname',
+                'lastname',
+                'email',
+                'start_date',
+                'end_date'
+            ))->destroyReservation($dbConnection);
         }
     }
 }

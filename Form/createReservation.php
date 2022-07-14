@@ -85,8 +85,11 @@ $endDate = '';
                         </div>
                 </div>
                 <div class="modal-footer">
-                    <a type="button" href="/" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</a>
-                    <button type="submit" name="submit" class="btn btn-outline-success">Save</button>
+                    <a type="button" href="../View/rooms.php" class="btn btn-sm btn-outline-secondary" data-dismiss="modal">Cancel</a>
+                    <button type="submit" name="submit" class="btn btn-sm btn-outline-success">Save in DB</button>
+                    <button type="submit" name="submit-csv" class="btn btn-sm btn-outline-success">Save as CSV</button>
+                    <button type="submit" name="submit-xml" class="btn btn-sm btn-outline-success">Save as XML</button>
+                    <button type="submit" name="submit-json" class="btn btn-sm btn-outline-success">Save as JSON</button>
                 </div>
                 </form>
             </div>

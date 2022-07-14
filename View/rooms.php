@@ -1,11 +1,12 @@
 <?php
+
 declare(strict_types=1);
 
 require_once '../autoloading.php';
 
 use Controller\DeleteRoomController;
 use System\Database\Connection;
-use Repository\RoomService;
+use Repository\RoomRepository;
 
 include "../Layout/head.php";
 include "../Layout/navbar.php";
@@ -26,7 +27,7 @@ include "../Layout/navbar.php";
                     <?php
 
                     $dbConnection = Connection::getConnection();
-                    $rooms = (new RoomService())->getAllRooms($dbConnection);
+                    $rooms = (new RoomRepository('$room_id', 'name', 'floor'))->getAllRooms($dbConnection);
                     (new DeleteRoomController())->deleteRoom($dbConnection);
                     ?>
 
@@ -54,7 +55,7 @@ include "../Layout/navbar.php";
                                     echo $room['floor']; ?></td>
                                 <td>
                                     <?php
-                                    echo "<a class=\"btn btn-sm btn-outline-success\" href=\"../Form/reservationForm.php?room_id={$room['room_id']}&name={$room['name']}\">Book</a>",
+                                    echo "<a class=\"btn btn-sm btn-outline-success\" href=\"../Form/createReservation.php?room_id={$room['room_id']}&name={$room['name']}\">Book</a>",
                                     "<a class=\"btn btn-sm btn-outline-danger\" href=\"../View/rooms.php?room_id={$room['room_id']}\">Delete</a>"; ?>
                                 </td>
                             </tr>

@@ -1,6 +1,8 @@
 <?php
 
-include_once 'services/ApplicationService.php';
+use services\ApplicationService;
+
+include_once '../services/ApplicationService.php';
 
 class ReservationList
 {

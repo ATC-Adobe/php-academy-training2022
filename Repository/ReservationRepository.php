@@ -2,9 +2,10 @@
 
 namespace Repository;
 
+use Model\Reservation;
 use System\Database\Connection;
 
-class ReservationRepository
+class ReservationRepository extends Reservation
 {
     public function getAllReservations(Connection $dbConnection)
     {
@@ -24,8 +25,8 @@ class ReservationRepository
         '$email',                                                                                          
         STR_TO_DATE('12/07/22 10:00:00', '%d/%m/%y %H:%i:%s'),                                                                                      
         STR_TO_DATE('12/07/22 10:00:00', '%d/%m/%y %H:%i:%s')
-        /*STR_TO_DATE('$startDate', '%d/%m/%y %H:%i:%s'),                                                                                      
-        STR_TO_DATE('$endDate', '%d/%m/%y %H:%i:%s') */                                                                                         
+        /*STR_TO_DATE(\"$startDate\", \"%d/%m/%y %H:%i:%s\"),                                                                                      
+        STR_TO_DATE(\"$endDate\", \"%d/%m/%y %H:%i:%s\")*/                                                                                          
         )
         "
         );

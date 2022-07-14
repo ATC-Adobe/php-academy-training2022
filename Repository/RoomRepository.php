@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace Repository;
 
+use Model\Room;
 use services\ApplicationService;
 use System\Database\Connection;
 
 
-class RoomService
+class RoomRepository extends Room
 {
     public function getAllRooms(Connection $dbConnection): array
     {

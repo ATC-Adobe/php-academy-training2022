@@ -28,7 +28,15 @@ class CreateReservationController
                 $endDate
             );
             if ($error == '') {
-                (new ReservationRepository())->storeReservation($roomId, $firstName, $lastName, $email, $startDate, $endDate);
+                (new ReservationRepository(
+                    'reservation_id',
+                    'room_id',
+                    'firstname',
+                    'lastname',
+                    'email',
+                    'start_date',
+                    'end_date'
+                ))->storeReservation($roomId, $firstName, $lastName, $email, $startDate, $endDate);
             }
         }
         return array($error, $roomId, $firstName, $lastName, $email, $startDate, $endDate);

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 require_once '../autoloading.php';
@@ -14,19 +15,89 @@ include "../Layout/navbar.php";
 
 <body>
 
-<!--Reservations list-->
+<!--Reservation list from CSV-->
 <div class="container">
     <div class="row justify-content-center" style="margin-top: 30px;">
         <div class="col-md-auto">
             <div class="card">
-                <div class="card-header"><h4>Reservation</h4></div>
+                <div class="card-header"><h4>Reservations CSV</h4></div>
+                <div class="card-body">
+
+                    <?php
+                    $message = 'Your booking is confirmed.';
+                    //include_once "helpers/message-add.php";
+                    include_once '../services/ReservationList.php';
+                    $reservations = (new ReservationList())->getList();
+                    ?>
+
+                    <table class="table table-striped table-hover table-borderless">
+                        <thead>
+                        <tr>
+                            <th>Reservation Id</th>
+                            <th>Room id</th>
+                            <th>First name</th>
+                            <th>Last name</th>
+                            <th>Email</th>
+                            <th>Start date</th>
+                            <th>End date</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        <?php
+                        foreach ($reservations as $res):
+                            ?>
+
+                            <tr>
+                                <th><?php
+                                    echo $res['reservation_id']; ?></th>
+                                <td><?php
+                                    echo $res['room_id']; ?></td>
+                                <td><?php
+                                    echo $res['firstname']; ?></td>
+                                <td><?php
+                                    echo $res['lastname']; ?></td>
+                                <td><?php
+                                    echo $res['email']; ?></td>
+                                <td><?php
+                                    echo $res['start_date']; ?></td>
+                                <td><?php
+                                    echo $res['end_date']; ?></td>
+                            </tr>
+
+                        <?php
+                        endforeach;
+                        ?>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Reservations list from DB-->
+<div class="container">
+    <div class="row justify-content-center" style="margin-top: 30px;">
+        <div class="col-md-auto">
+            <div class="card">
+                <div class="card-header"><h4>Reservations</h4></div>
                 <div class="card-body">
 
                     <?php
                     $message = 'Your booking is confirmed.';
                     include_once "../Helpers/message-add.php";
                     $dbConnection = Connection::getConnection();
-                    $reservations = (new ReservationRepository())->getAllReservations($dbConnection);
+                    $reservations = (new ReservationRepository(
+                        'reservation_id',
+                        'room_id',
+                        'firstname',
+                        'lastname',
+                        'email',
+                        'start_date',
+                        'end_date'
+                    ))->getAllReservations($dbConnection);
                     (new DeleteReservationController())->deleteReservation($dbConnection);
 
                     ?>
