@@ -12,6 +12,12 @@ class ReservationConcreteRepository {
 
     public function __construct() { }
 
+    public function deleteReservationById(int $id) : void {
+
+        MySqlConnection::getInstance()
+            ->query("DELETE FROM Reservations WHERE id = '$id';");
+    }
+
     public function getReservationById(int $id) : ?ReservationModel {
 
         $res =
@@ -48,6 +54,7 @@ class ReservationConcreteRepository {
             MySqlConnection::getInstance()
             ->query("SELECT *, 
                             Reservations.name AS name,
+                            Reservations.id AS id,
                             Rooms.id AS room_id, 
                             Rooms.name AS room_name, 
                             Rooms.floor AS floor

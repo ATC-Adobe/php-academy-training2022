@@ -2,13 +2,14 @@
 
 namespace Controller;
 
+use JetBrains\PhpStorm\NoReturn;
 use Room\Model\RoomModel;
 use Room\Repository\RoomConcreteRepository;
 
 class AddRoomController {
     public function __construct() { }
 
-    public function makeRequst() : void {
+    #[NoReturn] public function makeRequst() : void {
         if(isset($_POST['room_name'])) {
 
             $roomRepository = new RoomConcreteRepository();

@@ -119,6 +119,21 @@ input:hover {
     border-radius: 2px;
 }
 
+input[type=submit] {
+    margin-top: 0.3em;
+    margin-right: 1em;
+    padding: 0.6em;
+    border-radius: 1em;
+    border: 0;
+    background-color: var(--ut);
+}
+
+input[type=submit]:hover {
+    background-color: var(--bg1);
+    color:white;
+    transition: all 0.2s ease-in-out;
+}
+
 .float {
     float: left;
 }
@@ -150,13 +165,13 @@ input:hover {
     margin-bottom:30px;
     transition: all 0.3s ease-in-out;
 }
-
+/*
 .row:hover {
     background-color: var(--bg1);
     border-left: 2px solid var(--fg1);
     color: var(--fg1);
     transition: all 0.3s ease-in-out;
-}
+}*/
 
 a {
     color: inherit;

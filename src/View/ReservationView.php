@@ -7,7 +7,6 @@ use Reservation\Repository\ReservationConcreteRepository;
 use Room\Model\RoomModel;
 use Room\Repository\RoomConcreteRepository;
 
-
 ?>
 
     <!DOCTYPE html>
@@ -42,6 +41,12 @@ use Room\Repository\RoomConcreteRepository;
                     '2' => "<div class='error'>
                                     An error occurred while reserving new room! 
                                 </div>",
+                    '3' => "<div class='success'>
+                                    Reservation deleted successfully! 
+                                </div>",
+                    '4' => "<div class='error'>
+                                    An error occurred while deleting reservation! 
+                                </div>",
                     default => "How did we get there?",
                 };
 
@@ -73,18 +78,20 @@ use Room\Repository\RoomConcreteRepository;
 
             echo "<div class='row'>
                 <div class='float ltable' style = 'line-height: 1.2em;' >
-                    Reservation ID: <br>
-                    Room ID: <br >
+                    Room name: <br >
                     Name: <br >
                     E - mail: <br >
                     Time span: <br >
                 </div >
                 <div class='float rtable' style = 'line-height: 1.2em;' >
-                    $id <br>
                     $room <br>
                     $name $surname <br>
                     $email <br>
                     $from - $to <br>
+                    <form method='POST' action='roomReservationListing.php'>
+                        <input type='hidden' name = 'id' value = '$id'>
+                        <input type='submit' value='Delete reservation >'>                    
+                    </form>
                 </div >
                 <div class='clear' ></div >
                 </div>";
