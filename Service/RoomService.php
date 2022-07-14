@@ -7,25 +7,25 @@ use App\Repository\RoomRepository;
 
 class RoomService implements \IOStrategyContextInterface
 {
-    public function __construct(protected \IOHandlerInterface $io = new RoomRepository())
+    public function __construct(protected \IOHandlerInterface $ioStrategy = new RoomRepository())
     {
     }
 
     public function readRooms(): bool|iterable
     {
-        return $this->io->readAll();
+        return $this->ioStrategy->readAll();
     }
 
     public function addRoom(Room $room): bool
     {
-        return $this->io->save($room);
+        return $this->ioStrategy->save($room);
     }
 
     /**
-     * @param \IOHandlerInterface $io
+     * @param \IOHandlerInterface $ioStrategy
      */
-    public function setIoStrategy(\IOHandlerInterface $io): void
+    public function setIoStrategy(\IOHandlerInterface $ioStrategy): void
     {
-        $this->io = $io;
+        $this->ioStrategy = $ioStrategy;
     }
 }

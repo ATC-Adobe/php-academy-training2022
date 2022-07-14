@@ -55,15 +55,7 @@ class IOHandlerFactory
             }
             return new ReservationRepository();
         }
-//        //get requests
-//        if(!$path) {
-//            echo "Undefined Strategy!";
-//            return new ReservationRepository();
-//        }
-//        if(str_contains($path, "csv")) {
-//
-//        }
-        // ???
+        // default, not specified
         return new ReservationRepository();
     }
 }

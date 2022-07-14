@@ -8,7 +8,7 @@ use App\Repository\RoomRepository;
 
 class ReservationService implements \IOStrategyContextInterface
 {
-    public function __construct(protected \IOHandlerInterface $io = new ReservationRepository())
+    public function __construct(protected \IOHandlerInterface $ioStrategy = new ReservationRepository())
     {
     }
 
@@ -21,13 +21,14 @@ class ReservationService implements \IOStrategyContextInterface
     {
         //csv, json and xml doesn't implement that!!
         if($withRelations) {
-            if(method_exists($this->io, "readWithRelations")) {
-                return $this->io->readWithRelations();
+            if(method_exists($this->ioStrategy, "readWithRelations")) {
+                return $this->ioStrategy->readWithRelations();
             } else {
+                echo "Type doesn't support joins";
                 return false;
             }
         }
-        return $this->io->readAll();
+        return $this->ioStrategy->readAll();
     }
 
     public function checkReservationCollision(Reservation $newReservation): bool
@@ -45,14 +46,17 @@ class ReservationService implements \IOStrategyContextInterface
 
     public function addReservation(Reservation $room): bool
     {
-        return $this->io->save($room);
+        return $this->ioStrategy->save($room);
+    }
+    public function deleteReservation(int $id): bool {
+        return $this->ioStrategy->delete($id);
     }
     /**
-     * @param \IOHandlerInterface $io
+     * @param \IOHandlerInterface $ioStrategy
      */
-    public function setIoStrategy(\IOHandlerInterface $io): void
+    public function setIoStrategy(\IOHandlerInterface $ioStrategy): void
     {
-        $this->io = $io;
+        $this->ioStrategy = $ioStrategy;
     }
 
 }

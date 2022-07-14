@@ -48,6 +48,10 @@ class ReservationList {
                 echo         '<li>start_date: '. $reservations[$i]->start_date .' </li>';
                 echo         '<li>end_date: '. $reservations[$i]->end_date .' </li>';
                 echo     '</ul>';
+                echo    '<form action="reservationDelete.php">
+        <input type="hidden" name="reservation_id" value="'. $reservations[$i]->id .'"/>
+        <button type="submit" class="btn btn-danger">Delete</button>
+            </form>';
                 echo        '</div>';
             if(($i % 2)) echo '</div>';
         }

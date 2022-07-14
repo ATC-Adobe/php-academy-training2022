@@ -70,4 +70,10 @@ class ReservationRepository implements IOHandlerInterface
         }
         return $result;
     }
+
+    public function delete(int $id): bool {
+        $stm = $this->connection->prepare("DELETE FROM reservation WHERE id = :id;");
+        $stm->bindParam("id",  $id);
+        return $stm->execute();
+    }
 }

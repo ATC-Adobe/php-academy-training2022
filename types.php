@@ -10,13 +10,10 @@ interface ModelInterface {
 
 
 interface IOHandlerInterface {
-    /**
-     * @return iterable|false
-     */
-    public function readAll(): iterable|false;
+    public function readAll(): iterable|bool;
     public function save(ModelInterface $model): bool;
 }
 interface IOStrategyContextInterface {
-    public function __construct(IOHandlerInterface $io);
-    public function setIoStrategy(IOHandlerInterface $io);
+    public function __construct(IOHandlerInterface $ioStrategy);
+    public function setIoStrategy(IOHandlerInterface $ioStrategy);
 }

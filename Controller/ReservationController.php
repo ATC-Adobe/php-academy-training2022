@@ -65,4 +65,17 @@ class ReservationController
     {
         (new ReservationForm())->render();
     }
+    public function delete(): void {
+        $reservationService = new ReservationService();
+        //TODO: authorize
+        $id = $_GET["reservation_id"];
+        $ok =$reservationService->deleteReservation($id);
+        $msg = "";
+        if(!$ok) {
+            $msg = "Something went wrong!";
+        } else {
+            $msg = "Successfully deleted reservation!";
+        }
+        $this->index($msg);
+    }
 }
