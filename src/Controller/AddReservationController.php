@@ -2,20 +2,26 @@
 
     namespace Controller;
 
-    use Reservation\Model\ReservationModel;
-    use Reservation\Repository\ReservationRepository;
+    use Reservation\Service\ReservationService;
 
     class AddReservationController {
-        public function __construct() { }
 
-        public function addReservation() :void {
-            $id = 0;
-            $reservation = new ReservationModel(
-                $id, $_POST['roomId'], $_POST['firstName'], $_POST['lastName'],
-                $_POST['email'], $_POST['startDate'], $_POST['endDate']
-            );
-            $reservationService = new ReservationRepository();
+        public function request() :void {
+            if (isset($_POST['roomId']) &&
+                isset($_POST['firstName']) &&
+                isset($_POST['lastName']) &&
+                isset($_POST['email']) &&
+                isset($_POST['startDate']) &&
+                isset($_POST['endDate'])
+                )
+            {
+                $reservationService = new ReservationService();
+                $reservationService->save();
+                header("Location: ./reservationList.php?confirmed=true");
+                die();
+            }
 
-            //TODO: file with extension or database choose / some refactor
+            header("Location: ./reservationList.php?confirmed=false");
+            die();
         }
     }

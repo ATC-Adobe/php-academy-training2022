@@ -7,7 +7,7 @@
     {
         public function addRoom(RoomModel $room) :void;
 
-        public function getById(int $id) :array;
+        public function getById(int $id) :RoomModel;
 
         public function getAllRooms() :array;
 

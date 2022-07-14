@@ -17,16 +17,15 @@
             MysqlConnection::getInstance()->query($query);
         }
 
-        public function getById(int $id) :array {
+        public function getById(int $id) :RoomModel {
             $query  = "SELECT * FROM rooms WHERE room_id=".$id.";";
             $result = MysqlConnection::getInstance()->query($query)->fetchAll();
 
-            $array = [];
             foreach ($result as $r) {
-                $array = new RoomModel ($r['room_id'], $r['name'], $r['floor']);
+                $room = new RoomModel ($r['room_id'], $r['name'], $r['floor']);
             }
 
-            return $array;
+            return $room;
         }
 
         public function getAllRooms() :array {
@@ -35,7 +34,7 @@
 
             $array = [];
             foreach ($result as $r) {
-                $array = new RoomModel ($r['room_id'], $r['name'], $r['floor']);
+                $array[] = new RoomModel ($r['room_id'], $r['name'], $r['floor']);
             }
 
             return $array;

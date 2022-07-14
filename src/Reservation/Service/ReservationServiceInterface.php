@@ -4,5 +4,6 @@
     use Reservation\Model\ReservationModel;
 
     interface ReservationServiceInterface {
-        public function saveReservation (ReservationModel $reservation) :void;
+        public function save () :void;
+        public function delete () :void;
     }

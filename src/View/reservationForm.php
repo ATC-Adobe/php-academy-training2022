@@ -1,48 +1,14 @@
 <?php
-    use Reservation\Repository\ReservationRepository;
+    use Controller\AddReservationController;
 
-    if (isset($_POST['roomId'])) {
-        [ $roomId, $firstName, $lastName, $email, $startDate, $endDate ] =
-            [   $_POST['roomId'], $_POST['firstName'], $_POST['lastName'],
-                $_POST['email'], $_POST['startDate'], $_POST['endDate']
-            ];
-
-        try {
-            $startDate = new DateTime($startDate);
-            $endDate = new DateTime($endDate);
-        } catch (Exception $e) {
-            echo $e->getMessage();
-            die();
-        }
-
-        $startDate  = $startDate->format("d/m/y H:i:s");
-        $endDate    = $endDate->format("d/m/y H:i:s");
-
-        $reservation    = new ReservationRepository();
-        $query = "INSERT INTO reservations(room_id, firstname, lastname, email, start_date, end_date)
-                VALUES($roomId,
-                       '$firstName', 
-                       '$lastName', 
-                       '$email', 
-                       str_to_date(\"$startDate\", \"%d/%m/%y %H:%i:%s\"),
-                       str_to_date(\"$endDate\", \"%d/%m/%y %H:%i:%s\")
-                       );
-                ";
-
-        $request = $reservation->insertDataToDatabase($query);
-
-        //TODO: connect with file manager to read extension
-        /*
-        $filename = "./data/reservations.csv";
-
-        $request = $reservation->insertData($roomId, $firstName, $lastName, $email, $startDate, $endDate);
-        */
-        if ($request) {
-            header("Location: ./reservationList.php?reserved=true");
-        } else {
-            header("Location: ./reservationList.php?reserved=false");
-        }
-
+    if (isset($_POST['roomId']) &&
+        isset($_POST['firstName']) &&
+        isset($_POST['lastName']) &&
+        isset($_POST['email']) &&
+        isset($_POST['startDate']) &&
+        isset($_POST['endDate'])
+    ) {
+        (new AddReservationController())->request();
     }
 
 ?>

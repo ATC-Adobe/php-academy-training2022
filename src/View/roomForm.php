@@ -1,12 +1,24 @@
 <div id="content">
 
 <?php
-    require_once "./src/Controller/AddRoomController.php";
+    use Controller\AddRoomController;
+
+    if (isset($_POST['name']) && isset($_POST['floor'])) {
+        (new AddRoomController())->request();
+    }
 ?>
 
-        <div id="addroom">
-
+        <div class="small-form">
             <h2 class="text-light">Add new room</h2>
+            <?php
+                if (isset($_GET['confirmed'])) {
+                    if ($_GET['confirmed'] === 'true') {
+                        echo "<h5 class='confirm'>Room added successfully.</h5>";
+                    } else {
+                        echo "<h5 class='confirm'>Something went wrong while adding room.</h5>";
+                    }
+                }
+            ?>
             <form method="POST" action="./room.php" class="form-default">
                 <div class="form-label">
                     <label>Room name </label>
