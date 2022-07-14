@@ -4,6 +4,7 @@ namespace Controller;
 
 use Reservation\Model\ReservationModel;
 use Reservation\Repository\ReservationConcreteRepository;
+use Reservation\Service\ReservationAdder;
 use Room\Repository\RoomConcreteRepository;
 use System\File\FileWriterFactory;
 use System\Util\DateFormatter;
@@ -28,7 +29,10 @@ class AddReservationController {
             $to   = date("d/m/y H:i:s", strtotime($to));
             */
 
-            $res = $this->uploadData(
+            $res =
+                (new ReservationAdder())->uploadData(
+                    (new FileWriterFactory())
+                        ->getInstance($_POST['option']),
                 $room_id, $name, $surname, $email, $from, $to
             );
 
@@ -40,56 +44,5 @@ class AddReservationController {
 
         header('Location: roomReservationListing.php?status=2');
         die();
-    }
-
-    // this function might be moved safely
-    // to separate class located in /Reservation/Service
-    private function uploadData(
-        string $roomId, string $name,       string $surname,
-        string $email,  \DateTime $from,    \DateTime $to
-    ) : bool {
-
-        $roomNId = intval($roomId);
-
-        if($surname == '' || $name == '' || $email == '')
-            return false;
-
-        $reservationRepository = new ReservationConcreteRepository();
-
-        $valid =
-            $reservationRepository
-                ->checkForTimeCollisions(
-                    $roomNId,
-                    $from,
-                    $to
-                );
-
-        if( !$valid ) {
-            return false;
-        }
-
-        $room = (new RoomConcreteRepository())
-            ->getRoomById($roomNId);
-
-        if($room === null) {
-            return false;
-        }
-
-        $reservationRepository
-            ->addReservation(
-                new ReservationModel(
-                    0,
-                    $from,
-                    $to,
-                    $name,
-                    $email,
-                    $surname,
-                    $room
-                ),
-                (new FileWriterFactory())
-                    ->getInstance($_POST['option'])
-            );
-
-        return true;
     }
 }

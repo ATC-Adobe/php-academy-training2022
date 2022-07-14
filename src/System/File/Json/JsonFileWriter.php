@@ -48,17 +48,4 @@ class JsonFileWriter implements IFileWriter {
 
     public function closeStream(): void {
     }
-
-    public function loadData(): void {
-        // TODO: Implement loadData() method.
-    }
-
-    public function getEntries(): array {
-        // TODO: Implement getEntries() method.
-        return [];
-    }
-
-    public function saveChanges(): void {
-        // TODO: Implement saveChanges() method.
-    }
 }

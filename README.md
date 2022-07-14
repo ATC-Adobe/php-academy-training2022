@@ -1,8 +1,3 @@
-TODO: 
-
-Poprawić factory -> 
-zamiast rozbijać repo - zadapterpować repo
-
 Zadania: 
 1. Dołożenie przycisku Usuń do listy rezerwacji. 
 2. Wykorzystanie klasy ReservationRepository – dopisanie metody usuwającej rezerwację z bazy danych. 
