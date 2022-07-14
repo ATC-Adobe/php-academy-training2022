@@ -4,7 +4,6 @@ namespace App\View;
 
 
 use App\Service\RoomService;
-use App\System\File\IOHandlerFactory;
 use App\View\Component\Footer;
 use App\View\Component\Header;
 use App\View\Component\Navbar;
@@ -33,7 +32,7 @@ class RoomList implements Component
             echo '<tr>';
             echo "<td><p>{$room->id}</p></td>";
             echo "<td><p>{$room->name}</p></td>";
-            echo "<td class=\"floor\"><p>{$room->floor}</p> <a href=\"/?path=reservationForm?name={$room->name}&id={$room->id}\"><button class=\"btn btn-primary px-3\">Reserve</button> </a> </td>";
+            echo "<td class=\"floor\"><p>{$room->floor}</p> <a href=\"/reservationForm?name={$room->name}&id={$room->id}\"><button class=\"btn btn-primary px-3\">Reserve</button> </a> </td>";
             echo "</tr>";
         }
         echo ' </table>

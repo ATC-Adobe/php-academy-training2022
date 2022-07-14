@@ -20,7 +20,7 @@ class LoginForm implements Component
                 </h1>
             </div>';
         echo ' 
-<form class="container mt-4" method="post" action="/?path=login">
+<form class="container mt-4" method="post" action="/login">
         <div class="col col-lg-6">
             <label class="d-flex justify-content-between"> Email or Nickname <input required class="myInput" type="text" name="emailOrNickname"/></label>
         </div>

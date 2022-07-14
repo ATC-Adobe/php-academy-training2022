@@ -20,7 +20,7 @@ class RegisterForm implements Component
                 </h1>
             </div>';
         echo '
-<form class="container mt-4" method="post" action="/?path=register">
+<form class="container mt-4" method="post" action="/register">
     <div class="row">
         <div class="col col-lg-6">
             <label class="d-flex justify-content-between"> First Name <input required class="myInput" type="text" name="first_name" /></label>

@@ -15,7 +15,7 @@ class ReservationForm implements Component
         (new Header())->render("Add Reservation");
         (new Navbar())->render();
         echo '
-    <form class="container mt-4" method="post" action="/?path=reservationForm" >
+    <form class="container mt-4" method="post" action="/reservationForm" >
         <div class="row my-3">
             <h1 class="w-100 text-center">';
         $name = $_GET['name'] ?? "";

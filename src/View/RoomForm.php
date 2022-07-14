@@ -14,7 +14,7 @@ class RoomForm implements Component
         (new Header())->render("Add room");
         (new Navbar())->render();
         echo '
-<form class="container mt-4" method="post" action="/?path=roomForm" >
+<form class="container mt-4" method="post" action="/roomForm" >
     <div class="row my-3">
         <h1 class="w-100 text-center">
             Add another room

@@ -17,16 +17,16 @@ class Navbar implements Component
                     <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/?path=reservations">Current reservations</a>
+                    <a class="nav-link" href="/reservations">Current reservations</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/?path=roomForm">Add room</a>
+                    <a class="nav-link" href="/roomForm">Add room</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/?path=login">Login</a>
+                    <a class="nav-link" href="/login">Login</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/?path=register">Register</a>
+                    <a class="nav-link" href="/register">Register</a>
                 </li>
             </ul>
         </div>
