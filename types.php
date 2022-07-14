@@ -17,3 +17,6 @@ interface IOStrategyContextInterface {
     public function __construct(IOHandlerInterface $ioStrategy);
     public function setIoStrategy(IOHandlerInterface $ioStrategy);
 }
+interface Component {
+    public function render(): void;
+}

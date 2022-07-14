@@ -6,24 +6,24 @@ use App\Service\ReservationService;
 use App\View\Component\Footer;
 use App\View\Component\Header;
 use App\View\Component\Navbar;
+use Component;
 
-class ReservationForm {
+class ReservationForm implements Component
+{
     public function render(): void
     {
         (new Header())->render("Add Reservation");
-        echo '<body class="background">';
         (new Navbar())->render();
-echo '
-    <form class="container mt-4" method="post" action="reservationFormPost.php" >
+        echo '
+    <form class="container mt-4" method="post" action="/?path=reservationForm" >
         <div class="row my-3">
             <h1 class="w-100 text-center">';
-                $name = $_GET['name'] ?? "";
-                $id = $_GET['id'] ?? "";
-                echo "Make reservation for $name";
-                echo '<input class="d-none" name="room_id" value="'. $id .'"  type="text" />';
+        $name = $_GET['name'] ?? "";
+        $id = $_GET['id'] ?? "";
+        echo "Make reservation for $name";
+        echo '<input class="d-none" name="room_id" value="' . $id . '"  type="text" />';
 
-echo '            </h1>
-
+        echo '            </h1>
         </div>
         <div class="row">
             <div class="col col-lg-6">

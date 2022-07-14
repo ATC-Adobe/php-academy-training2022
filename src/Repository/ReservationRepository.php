@@ -11,6 +11,7 @@ use IOHandlerInterface;
 class ReservationRepository implements IOHandlerInterface
 {
     protected ?Connection $connection = null;
+
     public function __construct()
     {
         $this->connection = Connection::getInstance();
@@ -37,7 +38,6 @@ class ReservationRepository implements IOHandlerInterface
     public function readAll(): false|array
     {
         return $this->connection->query("SELECT * FROM reservation")->fetchAll(PDO::FETCH_OBJ);
-
     }
 
     /**
@@ -45,7 +45,8 @@ class ReservationRepository implements IOHandlerInterface
      */
     public function readWithRelations(): array|bool
     {
-        $data = $this->connection->query("SELECT 
+        $data = $this->connection->query(
+            "SELECT 
                 reservation.id,
                 room_id,
                 first_name,
@@ -55,25 +56,27 @@ class ReservationRepository implements IOHandlerInterface
                 end_date,
                 name as room_name,
                 floor as room_floor
-            FROM room JOIN reservation ON room_id = room.id")->fetchAll(PDO::FETCH_ASSOC);
-        if($data === false) {
+            FROM room JOIN reservation ON room_id = room.id"
+        )->fetchAll(PDO::FETCH_ASSOC);
+        if ($data === false) {
             return false;
         }
         $result = [];
-        foreach ($data as $i => $row) {
+        foreach ($data as $row) {
             $reservation = new Reservation();
             $room = new Room();
             $reservation->fromArray($row);
             $room->fromArray($row);
             $reservation->room = $room;
-            $result[]= $reservation;
+            $result[] = $reservation;
         }
         return $result;
     }
 
-    public function delete(int $id): bool {
+    public function delete(int $id): bool
+    {
         $stm = $this->connection->prepare("DELETE FROM reservation WHERE id = :id;");
-        $stm->bindParam("id",  $id);
+        $stm->bindParam("id", $id);
         return $stm->execute();
     }
 }

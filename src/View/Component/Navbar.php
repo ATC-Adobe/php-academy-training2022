@@ -1,6 +1,8 @@
 <?php
 namespace App\View\Component;
-class Navbar
+use Component;
+
+class Navbar implements Component
 {
     public function render(): void
     {
@@ -15,16 +17,16 @@ class Navbar
                     <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/reservations.php">Current reservations</a>
+                    <a class="nav-link" href="/?path=reservations">Current reservations</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/roomForm.php">Add room</a>
+                    <a class="nav-link" href="/?path=roomForm">Add room</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/loginForm.php">Sign Up</a>
+                    <a class="nav-link" href="/?path=login">Login</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/registerForm.php">Login</a>
+                    <a class="nav-link" href="/?path=register">Register</a>
                 </li>
             </ul>
         </div>

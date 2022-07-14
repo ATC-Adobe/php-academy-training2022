@@ -5,15 +5,16 @@ namespace App\View;
 use App\View\Component\Footer;
 use App\View\Component\Header;
 use App\View\Component\Navbar;
+use Component;
 
-class RoomForm {
+class RoomForm implements Component
+{
     public function render(): void
     {
         (new Header())->render("Add room");
-        echo '<body class="background">';
         (new Navbar())->render();
         echo '
-<form class="container mt-4" method="post" action="/roomFormPost.php" >
+<form class="container mt-4" method="post" action="/?path=roomForm" >
     <div class="row my-3">
         <h1 class="w-100 text-center">
             Add another room

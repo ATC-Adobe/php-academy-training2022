@@ -2,7 +2,9 @@
 
 namespace App\View\Component;
 
-class Footer
+use Component;
+
+class Footer implements Component
 {
     public function render(): void
     {

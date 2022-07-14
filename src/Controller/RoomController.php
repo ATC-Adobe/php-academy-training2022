@@ -13,6 +13,7 @@ class RoomController
     {
         (new RoomList())->render($msg);
     }
+
     public function store(): void
     {
         $roomService = new RoomService();
@@ -23,7 +24,7 @@ class RoomController
             $room->floor = htmlentities($_POST["floor"]);
 
             $ok = $roomService->addRoom($room);
-            if(!$ok) {
+            if (!$ok) {
                 $msg = '<div class="alert alert-danger text-center">Something went wrong. Try again!</div>';
             } else {
                 $msg = '<div class="alert alert-success text-center">Successfully added room!</div>';
@@ -33,6 +34,7 @@ class RoomController
             echo "Unknown Method";
         }
     }
+
     public function create(): void
     {
         (new RoomForm())->render();

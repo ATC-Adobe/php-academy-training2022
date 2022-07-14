@@ -16,12 +16,15 @@ class ReservationController
     {
         (new ReservationList())->render($msg);
     }
+
     public function store(): void
     {
-
         $msg = "";
         $ok = true;
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            echo "Unknown Method!";
+            return;
+        }
             //based on $_POST[]
             $handler = IOHandlerFactory::create();
             $reservationService = new ReservationService($handler);
@@ -39,39 +42,35 @@ class ReservationController
             $reservation->start_date = date("Y-m-d H:i:s", $start);
             $reservation->end_date = date("Y-m-d H:i:s", $end);
 
-            if($end < $start) {
-                $msg = "End date must be after the start date!";
-                $ok = false;
+            if ($end < $start) {
+                 $this->index("End date must be after the start date!");
+                    return;
             }
-            if($ok && !$reservationService->checkReservationCollision($reservation)) {
-                $msg = "Already occupied!";
-                $ok = false;
+            if (!$reservationService->checkReservationCollision($reservation)) {
+                $this->index("Already occupied!");
+                return;
             }
-            if($ok && ! $reservationService->addReservation($reservation)) {
-                $msg = "Something went wrong! Try again";
-                $ok = false;
-            }
-            if($ok) {
-                $msg = "Successfully added reservation!";
+            if (!$reservationService->addReservation($reservation)) {
+                $this->index("Something went wrong! Try again");
+                return;
             }
 
-            $this->index($msg);
-        } else {
-            echo "Unknown Method!";
-        }
-
+            $this->index("Successfully added reservation!");
     }
+
     public function create(): void
     {
         (new ReservationForm())->render();
     }
-    public function delete(): void {
+
+    public function delete(): void
+    {
         $reservationService = new ReservationService();
         //TODO: authorize
         $id = $_GET["reservation_id"];
-        $ok =$reservationService->deleteReservation($id);
+        $ok = $reservationService->deleteReservation($id);
         $msg = "";
-        if(!$ok) {
+        if (!$ok) {
             $msg = "Something went wrong!";
         } else {
             $msg = "Successfully deleted reservation!";

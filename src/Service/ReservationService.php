@@ -12,7 +12,6 @@ class ReservationService implements \IOStrategyContextInterface
     {
     }
 
-
     /**
      * @param bool $withRelations
      * @return bool|iterable<Reservation>
@@ -23,10 +22,9 @@ class ReservationService implements \IOStrategyContextInterface
         if($withRelations) {
             if(method_exists($this->ioStrategy, "readWithRelations")) {
                 return $this->ioStrategy->readWithRelations();
-            } else {
-                echo "Type doesn't support joins";
-                return false;
             }
+            echo "Type doesn't support joins";
+            return false;
         }
         return $this->ioStrategy->readAll();
     }

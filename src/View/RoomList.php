@@ -8,14 +8,15 @@ use App\System\File\IOHandlerFactory;
 use App\View\Component\Footer;
 use App\View\Component\Header;
 use App\View\Component\Navbar;
+use Component;
 
-class RoomList {
+class RoomList implements Component
+{
     public function render(string $msg = ""): void
     {
         (new Header())->render("All rooms");
-        echo '<body class="background">';
         (new Navbar())->render();
-    echo '
+        echo '
     <div class="container mt-2 ">
     <h2 class="text-center">Avaible rooms: </h2>
     <table class="myTable mx-auto">
@@ -27,15 +28,15 @@ class RoomList {
         echo $msg;
 //        $_POST['xml'] = true;
 //        $handler =  IOHandlerFactory::create("./System/File/data/rooms.xml");
-            $rooms = (new RoomService())->readRooms();
-            foreach ($rooms as $i => $room) {
-                echo '<tr>';
-                echo "<td><p>{$room->id}</p></td>";
-                echo "<td><p>{$room->name}</p></td>";
-                echo "<td class=\"floor\"><p>{$room->floor}</p> <a href=\"/reservationForm.php?name={$room->name}&id={$room->id}\"><button class=\"btn btn-primary px-3\">Reserve</button> </a> </td>";
-                echo "</tr>";
-            }
-    echo ' </table>
+        $rooms = (new RoomService())->readRooms();
+        foreach ($rooms as $i => $room) {
+            echo '<tr>';
+            echo "<td><p>{$room->id}</p></td>";
+            echo "<td><p>{$room->name}</p></td>";
+            echo "<td class=\"floor\"><p>{$room->floor}</p> <a href=\"/reservationForm.php?name={$room->name}&id={$room->id}\"><button class=\"btn btn-primary px-3\">Reserve</button> </a> </td>";
+            echo "</tr>";
+        }
+        echo ' </table>
     </div>
         ';
         (new Footer())->render();
