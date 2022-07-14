@@ -2,7 +2,8 @@
 namespace App\View\Component;
 class Navbar
 {
-    public function render() {
+    public function render(): void
+    {
         echo '
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -18,6 +19,12 @@ class Navbar
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/roomForm.php">Add room</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/loginForm.php">Sign Up</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/registerForm.php">Login</a>
                 </li>
             </ul>
         </div>
