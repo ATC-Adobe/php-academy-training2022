@@ -1,7 +1,7 @@
 <?php
 
 include("reservation_class.php");
-#include("MysqlConnection.php");
+#include("ConnectionClass.php");
 
 echo "<h1><strong>".$_GET['room']."</strong></h1>";
 
