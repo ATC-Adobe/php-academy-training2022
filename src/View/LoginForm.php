@@ -13,14 +13,13 @@ class LoginForm implements Component
     {
         (new Header())->render("Register page");
         (new Navbar())->render();
-        echo '
-              <div class="row my-3">
-                <h1 class="w-100 text-center">
-                    Login
-                </h1>
-            </div>';
         echo ' 
 <form class="container mt-4" method="post" action="/login">
+        <div class="row my-3">
+                        <h1 class="w-100 text-center">
+                            Login
+                        </h1>
+         </div>
         <div class="col col-lg-6">
             <label class="d-flex justify-content-between"> Email or Nickname <input required class="myInput" type="text" name="emailOrNickname"/></label>
         </div>

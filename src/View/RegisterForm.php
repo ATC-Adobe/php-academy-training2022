@@ -14,13 +14,12 @@ class RegisterForm implements Component
         (new Header())->render("Login page");
         (new Navbar())->render();
         echo '
-              <div class="row my-3">
+<form class="container mt-4" method="post" action="/register">
+            <div class="row my-3">
                 <h1 class="w-100 text-center">
                     Register
                 </h1>
-            </div>';
-        echo '
-<form class="container mt-4" method="post" action="/register">
+            </div>
     <div class="row">
         <div class="col col-lg-6">
             <label class="d-flex justify-content-between"> First Name <input required class="myInput" type="text" name="first_name" /></label>
