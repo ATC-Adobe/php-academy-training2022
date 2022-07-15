@@ -10,7 +10,7 @@ use Router\Response;
 class AddRoomController {
     public function __construct() { }
 
-    #[NoReturn] public function makeRequst() : void {
+    #[NoReturn] public function makeRequest() : void {
         if(isset($_POST['room_name'])) {
 
             $roomRepository = new RoomConcreteRepository();

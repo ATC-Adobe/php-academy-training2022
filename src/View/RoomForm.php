@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 if(isset($_POST['room_name'])) {
     $serv = new \Controller\AddRoomController();
-    $serv->makeRequst();
+    $serv->makeRequest();
 }
 ?>
 

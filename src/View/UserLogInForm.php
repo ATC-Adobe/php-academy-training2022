@@ -31,7 +31,7 @@ else {
     Log In Form
     <br><br>
     <div class="main">
-        <form method="post" action="userLogIn.php">
+        <form method="post" action="/login">
 
             <div class="float ltable">
                 E-mail:<br>

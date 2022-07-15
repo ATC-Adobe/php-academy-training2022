@@ -30,7 +30,7 @@ else {
     Account Registration Form
     <br><br>
     <div class="main">
-        <form method="post" action="userRegistration.php">
+        <form method="post" action="/add/user">
 
             <div class="float ltable">
                 Name:<br>

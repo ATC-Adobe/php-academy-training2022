@@ -52,7 +52,28 @@ $router->post('/add/reservation', function(Response $res) {
 
 $router->post('/add/room', function(Response $res) {
     (new \Controller\AddRoomController())
-        ->makeRequst();
+        ->makeRequest();
+});
+
+
+$router->post('/add/user', function(Response $res) {
+    (new \Controller\AddUserController())
+        ->makeRequest();
+});
+
+$router->post('/login', function(Response $res) {
+    (new \Controller\LogInController())
+        ->makeRequest();
+});
+
+
+$router->get('/user', function(Response $res) {
+    var_dump(
+        (new \User\Repository\UserConcreteRepository())
+            ->getAllUsers()
+    );
+
+    die();
 });
 
 
@@ -67,7 +88,8 @@ $router->get('/test', function(Response $res) {
         // path as iterator
         public ArrayIterator $it;
 
-        // list of endpoints if current EndPoint is only part of all endpoints
+        // list of endpoints if current path is only part of more endpoints
+        // loaded lazily
         public array $endpoints;
 
         public function __construct(string $path, string $value) {
@@ -110,7 +132,7 @@ $router->get('/test', function(Response $res) {
         }));
 
         // if array is at the end but has endpoints attached -> attach them
-        // possible bug here
+        // bug here
         array_map(function(EndPoint $arr) use ($it) {
             if($arr->it->valid()) {
                 $arr->it->next();
