@@ -36,6 +36,7 @@ class Router {
         $this->routesPost[$path] = $callback;
     }
 
+
     public function redirect() : void {
         $uri = explode('?', $_SERVER['REQUEST_URI'])[0];
 
