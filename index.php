@@ -11,7 +11,6 @@ $router = new Router(
 );
 
 $router->use('/', function(Response $res) {
-    echo "eee";
     $res->render('src/View/Index.php');
 });
 
@@ -24,11 +23,11 @@ $router->use('/a', function(Response $res) {
 });
 
 $router->use('/b', function(Response $res) {
-    $res->goTo('/c');
+    $res->goTo('/a');
 });
 
 $router->use('/c', function(Response $res) {
-    $res->goTo('/a/?a=1');
+    $res->goTo('/b?a=1');
 });
 
 // app.use('/', (req, res) => {

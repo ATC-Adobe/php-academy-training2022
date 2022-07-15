@@ -88,7 +88,7 @@ use Room\Repository\RoomConcreteRepository;
                     $name $surname <br>
                     $email <br>
                     $from - $to <br>
-                    <form method='POST' action='/delete/reservation'>
+                    <form method='POST' action='roomReservationListing.php'>
                         <input type='hidden' name = 'id' value = '$id'>
                         <input type='submit' value='Delete reservation >'>                    
                     </form>

@@ -17,10 +17,10 @@ class RemoveReservationController {
             (new ReservationConcreteRepository())
                 ->deleteReservationById($id);
 
-            //header('Location: roomReservationListing.php?status=3');
-            //die();
+            header('Location: roomReservationListing.php?status=3');
+            die();
         }
-        //header('Location: roomReservationListing.php?status=4');
-        //die();
+        header('Location: roomReservationListing.php?status=4');
+        die();
     }
 }
