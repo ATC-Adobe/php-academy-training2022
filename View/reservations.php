@@ -5,6 +5,7 @@ declare(strict_types=1);
 require_once '../autoloading.php';
 
 use Controller\DeleteReservationController;
+use Repository\ReservationCsvRepository;
 use Repository\ReservationRepository;
 use System\Database\Connection;
 
@@ -25,9 +26,7 @@ include "../Layout/navbar.php";
 
                     <?php
                     $message = 'Your booking is confirmed.';
-                    //include_once "helpers/message-add.php";
-                    include_once '../services/ReservationList.php';
-                    $reservations = (new ReservationList())->getList();
+                    $reservations = (new ReservationCsvRepository())->getList();
                     ?>
 
                     <table class="table table-striped table-hover table-borderless">

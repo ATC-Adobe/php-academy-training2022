@@ -1,10 +1,11 @@
 <?php
 
-use services\ApplicationService;
+namespace Repository;
 
-include_once '../services/ApplicationService.php';
+use Service\ApplicationService;
+use SplFileObject;
 
-class ReservationList
+class ReservationCsvRepository
 {
     private $list;
 
@@ -13,7 +14,6 @@ class ReservationList
         $this->list = new SplFileObject((new ApplicationService())->getCsvReservationUrl(), 'r');
     }
 
-// function from past lessons, replaced with DB data
     public function getList(): array
     {
         $this->list->setFlags(SplFileObject::READ_CSV | SplFileObject::SKIP_EMPTY | SplFileObject::READ_AHEAD);

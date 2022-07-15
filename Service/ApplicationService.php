@@ -1,6 +1,6 @@
 <?php
 
-namespace services;
+namespace Service;
 
 class ApplicationService
 {
@@ -16,9 +16,19 @@ class ApplicationService
 
     public function getRows(): int
     {
-        $rows = count(file("../Data/reservations.csv"));
+        $rows = count(file($this->getCsvReservationUrl()));
         if ($rows > 1) {
-            $rows = ($rows - 1) + 1;
+            $rows = ++$rows;
+        }
+        return $rows;
+    }
+
+    public function getJsonRows()
+    {
+        $array[] = json_decode($this->getJsonRows(), true);
+        $rows = end($array);
+        if ($rows > 1) {
+            $rows = ++$rows;
         }
         return $rows;
     }
@@ -33,7 +43,7 @@ class ApplicationService
         return '../System/File/reservations.xml';
     }
 
-    public function getJsonReservationsUrl(): string
+    public function getJsonReservationUrl(): string
     {
         return '../System/File/reservations.json';
     }

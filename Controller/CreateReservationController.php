@@ -3,7 +3,11 @@
 namespace Controller;
 
 use Repository\ReservationFormValidation;
-use Repository\ReservationRepository;
+use Service\CreateCsvReservation;
+use Service\CreateDbReservation;
+use Service\CreateJsonReservation;
+use Service\ReservationContext;
+use Service\ApplicationService;
 
 class CreateReservationController
 {
@@ -28,15 +32,41 @@ class CreateReservationController
                 $endDate
             );
             if ($error == '') {
-                (new ReservationRepository(
-                    'reservation_id',
-                    'room_id',
-                    'firstname',
-                    'lastname',
-                    'email',
-                    'start_date',
-                    'end_date'
-                ))->storeReservation($roomId, $firstName, $lastName, $email, $startDate, $endDate);
+                $context = new ReservationContext(new CreateDbReservation());
+                $context->createReservation($roomId, $firstName, $lastName, $email, $startDate, $endDate);
+            }
+        }
+        if (isset($_POST['submit-csv'])) {
+            [$error, $roomId, $firstName, $lastName, $email, $startDate, $endDate] = (new ReservationFormValidation(
+            ))->validated(
+                $error,
+                $roomId,
+                $firstName,
+                $lastName,
+                $email,
+                $startDate,
+                $endDate
+            );
+            if ($error == '') {
+                $context = new ReservationContext(new CreateCsvReservation());
+                $context->createReservation($roomId, $firstName, $lastName, $email, $startDate, $endDate);
+            }
+            (new ApplicationService())->getReservationListHeader();
+        }
+        if (isset($_POST['submit-json'])) {
+            [$error, $roomId, $firstName, $lastName, $email, $startDate, $endDate] = (new ReservationFormValidation(
+            ))->validated(
+                $error,
+                $roomId,
+                $firstName,
+                $lastName,
+                $email,
+                $startDate,
+                $endDate
+            );
+            if ($error == '') {
+                $context = new ReservationContext(new CreateJsonReservation());
+                $context->createReservation($roomId, $firstName, $lastName, $email, $startDate, $endDate);
             }
         }
         return array($error, $roomId, $firstName, $lastName, $email, $startDate, $endDate);
