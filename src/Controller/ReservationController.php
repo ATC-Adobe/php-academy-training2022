@@ -15,7 +15,8 @@ class ReservationController
 {
     public function index(string $msg = ""): void
     {
-        (new ReservationList())->render($msg);
+        $reservations = (new ReservationService())->readReservations(true);
+        (new ReservationList($reservations))->render($msg);
     }
 
     public function store(): void
@@ -93,10 +94,12 @@ class ReservationController
         $reservation = $service->findOne($id);
         $reservation->start_date = $_POST["start_date"] ?? $reservation->start_date;
         $reservation->end_date = $_POST["end_date"] ?? $reservation->end_date;
-        $service->checkReservationCollision($reservation);
+        if(!$service->checkReservationCollision($reservation)) {
+            $this->index("Couldn't update reservation. It is already reserve");
+            return;
+        }
         $ok = $service->updateReservation($reservation);
         $msg = $ok ? "Successfully updated reservation" : "Something went wrong!";
         $this->index($msg);
-        return;
     }
 }

@@ -11,6 +11,10 @@ use Component;
 
 class RoomList implements Component
 {
+    public function __construct(protected iterable|bool $rooms)
+    {
+    }
+
     public function render(string $msg = ""): void
     {
         (new Header())->render("All rooms");
@@ -27,8 +31,7 @@ class RoomList implements Component
         echo $msg;
 //        $_POST['xml'] = true;
 //        $handler =  IOHandlerFactory::create("./System/File/data/rooms.xml");
-        $rooms = (new RoomService())->readRooms();
-        foreach ($rooms as $i => $room) {
+        foreach ($this->rooms as $i => $room) {
             echo '<tr>';
             echo "<td><p>{$room->id}</p></td>";
             echo "<td><p>{$room->name}</p></td>";

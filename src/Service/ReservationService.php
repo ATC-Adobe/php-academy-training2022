@@ -33,7 +33,7 @@ class ReservationService implements \IOStrategyContextInterface
     {
         $reservations = $this->readReservations();
         foreach ($reservations as $reservation) {
-            if ($newReservation->room_id == $reservation->room_id) {
+            if ($newReservation->room_id == $reservation->room_id && $newReservation->id != $reservation->id) {
                 if ($newReservation->start_date < $reservation->end_date && $newReservation->end_date > $reservation->start_date) {
                     return false;
                 }

@@ -25,12 +25,6 @@ class RoomForm implements Component
         (new FormField("Room Name", "name"))->render();
         (new FormField("Floor", "floor"))->render();
 
-//        <div class="col col-lg-8">
-//            <label class="d-flex justify-content-between"> room name <input required class="myInput" type="text" name="name" /></label>
-//        </div>
-//        <div class="col col-lg-8">
-//            <label class="d-flex justify-content-between"> floor <input required class="myInput" type="text" name="floor" /></label>
-//        </div>
     echo '<div class="row mt-3">
         <div class="col-5"></div>
         <button class="btn btn-primary" type="submit">Submit</button>

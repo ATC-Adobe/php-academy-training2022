@@ -11,7 +11,8 @@ class RoomController
 {
     public function index(string $msg = ''): void
     {
-        (new RoomList())->render($msg);
+        $rooms = (new RoomService())->readRooms();
+        (new RoomList($rooms))->render($msg);
     }
 
     public function store(): void

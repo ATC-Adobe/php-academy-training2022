@@ -12,7 +12,7 @@ class Navbar implements Component
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
+            <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
                     <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
                 </li>
@@ -22,7 +22,9 @@ class Navbar implements Component
                 <li class="nav-item">
                     <a class="nav-link" href="/roomForm">Add room</a>
                 </li>
-                <li class="nav-item">
+            </ul>
+            <ul class="navbar-nav ml-auto">
+            <li class="nav-item mr-auto">
                     <a class="nav-link" href="/login">Login</a>
                 </li>
                 <li class="nav-item">
