@@ -3,29 +3,30 @@
 
     use SplFileObject;
     use Reservation\Model\ReservationModel;
-    use System\File\FileWriterInterface;
 
-    class CsvWriter implements FileWriterInterface {
+    class CsvWriter {
         protected object $file;
 
         public function __construct(string $filename) {
             $this->file = new SplFileObject($filename, 'a');
         }
 
-        public function saveData (ReservationModel $reservation): bool {
+        public function saveData (): bool {
             if ($this->file == null) {
                 return false;
             }
 
-            $reservationId  = $reservation->getReservationId();
-            $roomId         = $reservation->getRoom()->getId();
-            $firstName      = $reservation->getFirstName();
-            $lastName       = $reservation->getLastName();
-            $email          = $reservation->getEmail();
-            $startDate      = $reservation->getStartDate();
-            $endDate        = $reservation->getEndDate();
+            $read = (new CsvReader('./src/System/Data/reservations.csv'))->loadData();
+            $reservationId = strval(sizeof($read) + 1);
+            $roomId     = $_POST['roomId'];
+            $firstName  = $_POST['firstName'];
+            $lastName   = $_POST['lastName'];
+            $email      = $_POST['email'];
+            $startDate  = date('d/m/y\ H:i:s', strtotime($_POST['startDate']));
+            $endDate    = date('d/m/y\ H:i:s', strtotime($_POST['endDate']));
 
-            $data = [$reservationId, $roomId, $firstName, $lastName, $email, $startDate, $endDate];
+
+            $data[] = [$reservationId, $roomId, $firstName, $lastName, $email, $startDate, $endDate];
 
             foreach ($data as $rows) {
                 $this->file->fputcsv($rows);

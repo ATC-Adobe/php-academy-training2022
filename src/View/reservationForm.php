@@ -51,24 +51,24 @@
                     <label>From </label>
                 </div>
                 <div class="form-input">
-                    <label><input type="datetime-local" name="startDate" required/></label>
+                    <label><input type="datetime-local" name="startDate" step="1" required/></label>
                 </div>
                 <div class="form-label">
                     <label>To </label>
                 </div>
                 <div class="form-input">
-                    <label><input type="datetime-local" name="endDate" required/></label>
+                    <label><input type="datetime-local" name="endDate" step="1" required/></label>
                 </div>
                 <div class="form-label">
                     <label>Save type </label>
                 </div>
                 <div class="form-selectt">
                     <label>
-                        <select name="type">
+                        <select name="action">
                             <option value="db">Save to Database</option>
                             <option value="csv">Save to .CSV file</option>
-                            <option value="xml">Save to .XML file</option>
-                            <option value="json">Save to .JSON file</option>
+                            <option value="xml">Save to .XML file [NOT READY]</option>
+                            <option value="json">Save to .JSON file [NOT READY]</option>
                         </select>
                     </label>
                 </div>

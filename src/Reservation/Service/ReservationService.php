@@ -2,6 +2,7 @@
 
     namespace Reservation\Service;
 
+    use DateTime;
     use Room\Model\RoomModel;
     use Room\Repository\RoomRepository;
     use Reservation\Model\ReservationModel;
@@ -17,14 +18,12 @@
             $firstName  = $_POST['firstName'];
             $lastName   = $_POST['lastName'];
             $email      = $_POST['email'];
-            $startDate  = $_POST['startDate'];
-            $endDate    = $_POST['endDate'];
+            $startDate  = DateTime::createFromFormat("Y-m-d\TH:i:s", $_POST['startDate']);
+            $endDate    = DateTime::createFromFormat("Y-m-d\TH:i:s", $_POST['endDate']);
 
-            //TODO: Debug model problem and refactor
             $roomRepository = new RoomRepository();
             $r      = $roomRepository->getById($roomId);
             $room   = new RoomModel($r->getId(), $r->getName(), $r->getFloor());
-            var_dump($room);
 
             $reservation = new ReservationModel(
                 $id, $room, $firstName, $lastName,

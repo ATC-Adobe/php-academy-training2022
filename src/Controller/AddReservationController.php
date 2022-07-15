@@ -3,6 +3,7 @@
     namespace Controller;
 
     use Reservation\Service\ReservationService;
+    use System\File\FileWriter;
 
     class AddReservationController {
 
@@ -12,11 +13,12 @@
                 isset($_POST['lastName']) &&
                 isset($_POST['email']) &&
                 isset($_POST['startDate']) &&
-                isset($_POST['endDate'])
+                isset($_POST['endDate']) &&
+                isset($_POST['action'])
                 )
             {
-                $reservationService = new ReservationService();
-                $reservationService->save();
+                $instace = new FileWriter();
+                $instace->save($_POST['action']);
                 header("Location: ./reservationList.php?confirmed=true");
                 die();
             }

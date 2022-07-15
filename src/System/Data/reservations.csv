@@ -4,14 +4,6 @@ reservation_id, room_id, firstname, lastname, email, start_date, end_date
 3, 6, Sopoline, Chang, eget.odio.Aliquam@FuscemollisDuis.edu, 22/01/24 12:30:00, 22/01/24 13:45:00, 
 4, 5, Beck, Herman, metus@Nuncpulvinararcu.com, 03/01/23 11:40:00, 03/01/23 13:30:00,
 5, 6, Rhiannon, Fletcher, id@porttitorscelerisque.com, 03/11/23 10:15:00, 03/11/23 15:15:00, 
-6, 2, Georgia, Casey, dictum.cursus@placerateget.ca, 28/02/22 10:00:00, 28/02/22 10:55:00, 
-7, 3, Vladimir, Mcmillan, fringilla.mi@porttitortellusnon.com, 14/09/23 08:15:00, 14/09/23 18:15:00, 
-8, 8, Zachary, Gaines, aliquam.iaculis@tinciduntnibh.org, 30/11/22 09:15:00, 30/11/22 11:30:00, 
-9, 2, Cassandra, May, ipsum.cursus@magnamalesuadavel.ca, 14/09/22 10:25:00,  14/09/22 10:45:00, 
-10, 3, Aimee, Hendricks, scelerisque.lorem@Proin.ca, 02/06/23 10:30:00, 02/06/23 16:00:00,
-11,6,john,smith,john.smith@gmail.com,"07/07/22 08:58:00","08/07/22 08:58:00",
-12,5,john,smith,john.smith@gmail.com,"07/07/22 09:07:00","09/07/22 09:07:00",
-13,8,John,Smith,test@gmail.com,"07/07/22 11:49:00","07/07/22 12:49:00",
-13,4,Test,Room,Room.4@test.com,"07/07/22 11:56:00","07/07/22 12:59:00"
-14,4,test,test,test@gmail.com,"07/07/22 10:01:00","07/07/22 11:01:00"
-15,5,test,test,tester@gmail.com,"08/07/22 14:17:00","08/07/22 15:17:00"
+6, 2, Georgia, Casey, dictum.cursus@placerateget.ca, 28/02/22 10:00:00, 28/02/22 10:55:00,
+7,4,Norbert,Grudzien,norbert.grudzien@domain.com,"15/07/22 14:15:37","15/07/22 15:15:39"
+8,10,Norbert,Grudzien,norbert.grudzien@accenture.com,"15/07/22 16:00:00","15/07/22 17:00:00"

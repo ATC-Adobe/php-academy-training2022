@@ -15,8 +15,8 @@
             $firstName  = $reservation->getFirstName();
             $lastName   = $reservation->getLastName();
             $email      = $reservation->getEmail();
-            $startDate  = $reservation->getStartDate();
-            $endDate    = $reservation->getEndDate();
+            $startDate  = $reservation->getStartDate()->format('d/m/y H:i:s');
+            $endDate    = $reservation->getEndDate()->format('d/m/y H:i:s');
 
             $query = "INSERT INTO reservations(room_id, firstname, lastname, email, start_date, end_date)
                 VALUES($roomId,

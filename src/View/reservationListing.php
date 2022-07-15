@@ -1,11 +1,11 @@
     <?php
 
     use Reservation\Model\ReservationModel;
-    use Reservation\Repository\ReservationRepository;
     use Controller\DeleteReservationController;
+    use System\File\FileReader;
 
-    $reservationRepository  = new ReservationRepository();
-    $reservation            = $reservationRepository ->getAllReservations();
+    $instance = new FileReader();
+    $data = $instance->read('db');
 
     if (isset($_POST['id'])) {
         (new DeleteReservationController())->request();
@@ -13,7 +13,7 @@
 
     ?>
     <div id="content">
-        <h2 class="text-light">List of all confirmed reservations</h2>
+        <h2 class="text-light">List of all confirmed reservations (Database)</h2>
 
     <?php
 
@@ -48,18 +48,18 @@
 
         <?php
 
-        foreach ($reservation as $r) {
-            if (!$r instanceof ReservationModel) {
+        foreach ($data as $d) {
+            if (!$d instanceof ReservationModel) {
                 die();
             }
 
-            $reservationId  = $r->getReservationId();
-            $roomName       = $r->getRoom()->getName();
-            $firstName      = $r->getFirstName();
-            $lastName       = $r->getLastName();
-            $email          = $r->getEmail();
-            $startDate      = $r->getStartDate()->format("d/m/Y H:i:s");
-            $endDate        = $r->getEndDate()->format("d/m/Y H:i:s");
+            $reservationId  = $d->getReservationId();
+            $roomName       = $d->getRoom()->getName();
+            $firstName      = $d->getFirstName();
+            $lastName       = $d->getLastName();
+            $email          = $d->getEmail();
+            $startDate      = $d->getStartDate()->format("d/m/Y H:i:s");
+            $endDate        = $d->getEndDate()->format("d/m/Y H:i:s");
 
             echo "<tr>";
             echo "<td>".$reservationId."</td>";
@@ -84,5 +84,40 @@
             </tr>
         </table>
 
-        <form method="POST" action=""></form>
+        <h2 class="text-light">List of all confirmed reservations (Csv)</h2>
+        <table class="table-list">
+            <tr>
+                <th>Reservation ID:</th>
+                <th>Room:</th>
+                <th>First name:</th>
+                <th>Second name:</th>
+                <th>Email:</th>
+                <th>From:</th>
+                <th>To:</th>
+            </tr>
+        <?php
+
+        $data = $instance->read('csv', './src/System/Data/reservations.csv');
+
+        foreach ($data as $d) {
+
+            [ $reservationId , $roomName, $firstName, $lastName, $email, $startDate, $endDate ] = $d;
+
+            echo "<tr>";
+            echo "<td>".$reservationId."</td>";
+            echo "<td>".$roomName."</td>";
+            echo "<td>".$firstName."</td>";
+            echo "<td>".$lastName."</td>";
+            echo "<td>".$email."</td>";
+            echo "<td>".$startDate."</td>";
+            echo "<td>".$endDate."</td>";
+            echo "</tr>";
+            }
+
+        ?>
+            <tr>
+                <td colspan="7">...</td>
+            </tr>
+        </table>
+
     </div>
