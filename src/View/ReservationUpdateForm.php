@@ -20,7 +20,7 @@ class ReservationUpdateForm implements \Component
         (new Navbar())->render();
         echo '
 <form class="container mt-4" method="post" action="/reservationUpdate" >
-    <input type="hidden" value="'.$this->reservation->id .'" />
+    <input type="hidden" name="reservation_id" value="'.$this->reservation->id .'" />
     <div class="row my-3">
         <h1 class="w-100 text-center">
             Change your reservation '. $this->reservation->first_name.' '.$this->reservation->last_name.'

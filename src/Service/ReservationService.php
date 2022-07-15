@@ -43,19 +43,26 @@ class ReservationService implements \IOStrategyContextInterface
     }
     public function findOne(int $id): bool|Reservation
     {
-        if(method_exists($this->ioStrategy, "find")) {
-            return $this->ioStrategy->find($id);
+        if(method_exists($this->ioStrategy, "findOne")) {
+            return $this->ioStrategy->findOne($id);
         }
         echo "Chosen strategy doesn't support that";
         return false;
     }
 
-    public function addReservation(Reservation $room): bool
+    public function addReservation(Reservation $reservation): bool
     {
-        return $this->ioStrategy->save($room);
+        return $this->ioStrategy->save($reservation);
     }
     public function deleteReservation(int $id): bool {
         return $this->ioStrategy->delete($id);
+    }
+    public function updateReservation(Reservation $reservation) {
+        if(method_exists($this->ioStrategy, "updateOne")) {
+            return $this->ioStrategy->updateOne($reservation);
+        }
+        echo "Chosen strategy doesn't support that";
+        return false;
     }
     /**
      * @param \IOHandlerInterface $ioStrategy

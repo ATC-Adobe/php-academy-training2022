@@ -78,13 +78,25 @@ class ReservationController
         }
         $this->index($msg);
     }
-    public function edit() {
+    public function edit(): void
+    {
         $id = $_GET["reservation_id"];
         $service = new ReservationService();
         $reservation = $service->findOne($id);
         (new ReservationUpdateForm($reservation))->render();
     }
-    public function update() {
-
+    public function update(): void
+    {
+        $service = new ReservationService();
+        // TODO: authorize
+        $id = $_POST["reservation_id"];
+        $reservation = $service->findOne($id);
+        $reservation->start_date = $_POST["start_date"] ?? $reservation->start_date;
+        $reservation->end_date = $_POST["end_date"] ?? $reservation->end_date;
+        $service->checkReservationCollision($reservation);
+        $ok = $service->updateReservation($reservation);
+        $msg = $ok ? "Successfully updated reservation" : "Something went wrong!";
+        $this->index($msg);
+        return;
     }
 }

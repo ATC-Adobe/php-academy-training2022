@@ -79,7 +79,7 @@ class ReservationRepository implements IOHandlerInterface
         $stm->bindParam("id", $id);
         return $stm->execute();
     }
-    public function find(int $id): Reservation
+    public function findOne(int $id): Reservation
     {
         $stm = $this->connection->prepare("SELECT * FROM reservation WHERE id = :id");
         $stm->bindParam("id", $id);
@@ -88,5 +88,14 @@ class ReservationRepository implements IOHandlerInterface
         $model = new Reservation();
         $model->fromArray($data);
         return $model;
+    }
+    public function updateOne(Reservation $reservation): bool
+    {
+        $stm = $this->connection->prepare("UPDATE reservation 
+            SET room_id = :room_id, first_name = :first_name, last_name = :last_name, email = :email, start_date = :start_date, end_date = :end_date
+            WHERE id = :id
+                ");
+        return $stm->execute($reservation->toArray());
+
     }
 }
