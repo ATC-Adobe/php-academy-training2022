@@ -12,6 +12,6 @@
         <input type="number" name="floorNumber" class="form-control" required>
     </div>
 
-    <button type="submit" class="btn btn-info submit ">Zapisz</button>
+    <button type="submit" class="btn btn-info submit ">Dodaj</button>
 </form>
 </body>

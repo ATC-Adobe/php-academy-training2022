@@ -12,7 +12,7 @@ class UpdateReservation
     public function editReservation()
     {
         $editReservation = new ReservationRepository();
-        $editReservation->editReservation();
+        $editReservation->getReservationById();
     }
 
     public function updateReservation()

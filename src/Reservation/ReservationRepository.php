@@ -14,6 +14,15 @@ class ReservationRepository
         return $connection->query($selectQuery)->fetchAll();
     }
 
+    public function getReservationsWithRooms()
+    {
+        $connection = MysqlConnection::getInstance();
+        $selectQuery = "SELECT reservations.id, roomId, firstName, lastName, email, startDay, endDay, startHour, endHour, roomNumber as roomNumber FROM reservations JOIN rooms ON rooms.id = roomId";
+
+        return $connection->query($selectQuery)->fetchAll();
+
+    }
+
     public function addReservation(ReservationModel $reservationModel)
     {
         $connection = MysqlConnection::getInstance();
@@ -33,7 +42,7 @@ class ReservationRepository
         $statement->execute();
     }
 
-    public function editReservation()
+    public function getReservationById()
     {
         $id = $_GET['id'] ?? null;
 

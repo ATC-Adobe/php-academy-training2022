@@ -45,7 +45,21 @@
 }
 
 .f-input {
-    margin-bottom: 4%;
+    margin: auto;
+    width: 400px;
+    padding-bottom: 2%;
+}
+
+.date-time {
+    margin-left: 27%;
+    width: 450px;
+    padding-bottom: 2%;
+}
+
+#file-type {
+    width: 380px;
+    margin: auto;
+    padding-bottom: 2%;
 }
 
 h4 {
@@ -61,7 +75,8 @@ h4 {
 }
 
 .submit {
-    margin-bottom: 2%;
+    margin-left: 28%;
+    margin-bottom: 3%;
 }
 
 #success-message {
@@ -96,4 +111,10 @@ h4 {
     width: 200px;
     margin: auto;
     margin-bottom: 280px;
+}
+
+.registration-form {
+    width: 500px;
+    margin: auto;
+    margin-bottom: 255px;
 }

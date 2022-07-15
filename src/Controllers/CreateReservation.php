@@ -8,7 +8,7 @@ use Reservation\ReservationService;
 
 class CreateReservation
 {
-    public function createReservation()
+    public function createReservationMysql()
     {
         $dataReservation = [
             'roomId' => $_POST['roomId'],

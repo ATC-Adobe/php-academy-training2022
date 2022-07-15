@@ -43,5 +43,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <?php require_once "../layout/header.html"; ?>
 <?php require_once "../layout/navbar.html"; ?>
-<?php require_once "../Form/form.php"; ?>
+<?php require_once "../Form/reservationForm.php"; ?>
 <?php require_once "../layout/footer.html"; ?>

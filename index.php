@@ -36,7 +36,9 @@ $rooms = $displayRooms->displayRooms();
             <td class="table-td"><?php
                 echo $room['floorNumber']; ?></td>
             <input type="hidden" name="roomId" value="<?php
-            echo $i += 1 ?>">
+            echo $room['id']; ?>">
+            <input type="hidden" name="roomNumber" value="<?php
+            echo $room['roomNumber']; ?>">
             <td>
                 <button type="submit" class="btn check">Zarezerwuj</button>
             </td>

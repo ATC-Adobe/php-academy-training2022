@@ -3,16 +3,11 @@
 <form action="" method="POST" enctype="multipart/form-data" id="form">
 
     <!--    Transfer Room Id from the form to a MySQL by php echo command-->
+
     <input type="hidden" name="roomId" value="<?php
     if ($_SERVER['REQUEST_METHOD'] === "GET") {
-        echo $id;
+        echo $id = $_GET['roomId'] ?? null;
     } ?>">
-
-        <div class="input-group f-input">
-            <span class="input-group-text">Numer Sali</span>
-            <input type="number" name="roomId" value="<?php
-            echo $roomId ?>" class="form-control" required>
-        </div>
 
     <div class="input-group f-input">
         <span class="input-group-text">Imię</span>
@@ -35,27 +30,31 @@
                required>
     </div>
 
-    <div class="input-group">
+    <h4>Sale można rezerwować od Poniedziałku do Piątku</h4>
+
+    <div class="input-group date-time">
         <span class="input-group-text">Wybierz dzień rozpoczęcia rezerwacji</span>
         <input type="date" value="<?php
         echo $startDay ?>" name="startDay">
+    </div>
+    <div class="input-group date-time">
         <span class="input-group-text">Wybierz dzień zakończenia rezerwacji</span>
         <input type="date" value="<?php
         echo $endDay ?>" name="endDay">
     </div>
 
-    <h4>Sale można rezerwować od Poniedziałku do Piątku</h4>
+    <h4>Sale można rezerwować od 8:00 do 16:00</h4>
 
-    <div class="input-group">
+    <div class="input-group date-time">
         <span class="input-group-text">Wybierz godzinę rozpoczęcia rezerwacji</span>
         <input type="time" value="<?php
         echo $startHour ?>" name="startHour" min="08:00" max="15:00" required>
+    </div>
+    <div class="input-group date-time">
         <span class="input-group-text">Wybierz godzinę zakończenia rezerwacji</span>
         <input type="time" value="<?php
         echo $endHour ?>" name="endHour" min="09:00" max="16:00" required>
     </div>
-
-    <h4>Sale można rezerwować od 8:00 do 16:00</h4>
 
     <button type="submit" class="btn btn-info submit">Zapisz</button>
 </form>

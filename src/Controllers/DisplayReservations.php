@@ -11,6 +11,6 @@ class DisplayReservations
     public function displayReservations()
     {
         $displayReservations = new ReservationRepository();
-        return $displayReservations->getAllReservations();
+        return $displayReservations->getReservationsWithRooms();
     }
 }

@@ -35,7 +35,7 @@ $reservations = $displayReservations->displayReservations();
         <th scope="row"><?php
             echo $i + 1 ?></th>
         <td><?php
-            echo $reservation['roomId']; ?></td>
+            echo $reservation['roomNumber']; ?></td>
         <td><?php
             echo $reservation['firstName']; ?></td>
         <td><?php

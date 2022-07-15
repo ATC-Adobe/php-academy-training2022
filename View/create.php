@@ -13,11 +13,10 @@ $endHour = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $reservationController = new \Controllers\CreateReservation();
-    $reservationController->createReservation();
+    $reservationController->createReservationMysql();
 
     header('Location:reservationsList.php');
 }
-
 ?>
 
 <?php
@@ -26,16 +25,16 @@ require_once "../layout/header.html" ?>
 require_once "../layout/navbar.html" ?>
     <div id="room-name">
         <?php
-        // Printing Room Id from the previous file (index.php)
+        // Printing Room Number from the previous file (index.php)
         if ($_SERVER['REQUEST_METHOD'] === "GET") {
-            $id = $_GET['roomId'] ?? null;
+            $roomNumber = $_GET['roomNumber'] ?? null;
         }
-        if (!empty($id)) {
-            echo "Wybrano Salę $id";
+        if (!empty($roomNumber)) {
+            echo "Wybrano Salę $roomNumber";
         }
         ?>
     </div>
 <?php
-require_once "../Form/form.php" ?>
+require_once "../Form/reservationForm.php" ?>
 <?php
 require_once "../layout/footer.html" ?>

@@ -24,5 +24,4 @@ class ReservationService
         $updatedRepository = new ReservationRepository();
         $updatedRepository->updateReservation($updatedModel);
     }
-
 }
