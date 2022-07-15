@@ -6,6 +6,7 @@ use Reservation\Model\ReservationModel;
 use Reservation\Repository\ReservationConcreteRepository;
 use Reservation\Service\ReservationAdder;
 use Room\Repository\RoomConcreteRepository;
+use Router\Response;
 use System\File\FileWriterFactory;
 use System\Util\DateFormatter;
 
@@ -36,13 +37,23 @@ class AddReservationController {
                 $room_id, $name, $surname, $email, $from, $to
             );
 
-            if( $res  ) { // success
-                header('Location: roomReservationListing.php?status=1');
-                die();
+
+            if(__ROUTER) {
+                (new Response())->goTo('/roomReservationListing?status=1');
+            }
+            else {
+                if ($res) { // success
+                    header('Location: roomReservationListing.php?status=1');
+                    die();
+                }
             }
         }
-
-        header('Location: roomReservationListing.php?status=2');
-        die();
+        if(__ROUTER) {
+            (new Response())->goTo('/roomReservationListing?status=2');
+        }
+        else {
+            header('Location: roomReservationListing.php?status=2');
+            die();
+        }
     }
 }

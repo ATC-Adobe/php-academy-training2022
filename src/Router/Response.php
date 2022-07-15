@@ -17,12 +17,12 @@ class Response {
         die();
     }
 
-    public function send(string $message) {
+    public function send(string $message) : void {
         echo $message;
     }
 
     #[NoReturn]
-    public function end(string $message) {
+    public function end(string $message) : void {
         echo $message;
         die();
     }

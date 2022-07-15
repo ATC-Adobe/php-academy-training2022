@@ -19,6 +19,10 @@ class Router {
         $this->response = new Response();
     }
 
+    public function getResponseInstance() : Response {
+        return $this->response;
+    }
+
     public function get(string $path, callable $callback) : void {
         $this->routesGet[$path] = $callback;
     }
@@ -32,7 +36,9 @@ class Router {
         $this->routesPost[$path] = $callback;
     }
 
-    public function redirect(string $uri) : void {
+    public function redirect() : void {
+        $uri = explode('?', $_SERVER['REQUEST_URI'])[0];
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if(isset($this->routesPost[$uri])) {
                 $this->routesPost[$uri]($this->response);

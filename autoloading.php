@@ -46,3 +46,7 @@ $autoloader = new Autoloader();
 $autoloader->loadConfig(
     $_SERVER['DOCUMENT_ROOT'].'/autoloadingConfig.json'
 );
+
+
+const __ROUTER = true;
+

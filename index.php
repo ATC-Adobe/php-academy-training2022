@@ -15,51 +15,44 @@ $router->use('/', function(Response $res) {
 });
 
 
-$router->use('/a', function(Response $res) {
-    if(isset($_GET['a'])) {
-        $res->send('AA');
-    }
-    $res->end("A");
+$router->use('/roomForm', function(Response $res) {
+    $res->render("src/View/RoomForm.php");
 });
 
-$router->use('/b', function(Response $res) {
-    $res->goTo('/a');
+$router->use('/roomListing', function(Response $res) {
+    $res->render("src/View/RoomView.php");
 });
 
-$router->use('/c', function(Response $res) {
-    $res->goTo('/b?a=1');
+$router->use('/roomReservationForm', function(Response $res) {
+    $res->render("src/View/ReservationForm.php");
 });
 
-// app.use('/', (req, res) => {
-
-// });
-
-$router->get('/f', function(Response $res) {
-    $res->end("Nothing interesting to see here");
+$router->use('/roomReservationListing', function(Response $res) {
+    $res->render("src/View/ReservationView.php");
 });
 
-$router->get('/database', function(Response $res) {
-
-    $repo = new \Reservation\Repository\ReservationConcreteRepository();
-
-    $table = $repo->getAllReservations();
-
-    foreach ($table as $entry) {
-        $res->send($entry->getId().'<br>');
-    }
-
-    $res->end("");
+$router->use('/userLogIn', function(Response $res) {
+    $res->render("src/View/UserLogInForm.php");
 });
+
+$router->use('/userRegistration', function(Response $res) {
+    $res->render("src/View/UserCreationForm.php");
+});
+
 
 $router->post('/delete/reservation', function(Response $res) {
-    if(isset($_POST['id'])) {
-        (new \Controller\RemoveReservationController())
-            ->makeRequest();
-    }
-
-    $res->render('src/View/ReservationView.php');
+    (new \Controller\RemoveReservationController())
+        ->makeRequest();
 });
 
-$router->redirect(
-    explode('?', $_SERVER['REQUEST_URI'])[0]
-);
+$router->post('/add/reservation', function(Response $res) {
+    (new \Controller\AddReservationController())
+        ->makeRequest();
+});
+
+$router->post('/add/room', function(Response $res) {
+    (new \Controller\AddRoomController())
+        ->makeRequst();
+});
+
+$router->redirect();

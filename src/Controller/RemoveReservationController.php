@@ -3,6 +3,7 @@
 namespace Controller;
 
 use Reservation\Repository\ReservationConcreteRepository;
+use Router\Response;
 
 class RemoveReservationController {
     public function __construct() {
@@ -17,10 +18,20 @@ class RemoveReservationController {
             (new ReservationConcreteRepository())
                 ->deleteReservationById($id);
 
-            header('Location: roomReservationListing.php?status=3');
+            if(__ROUTER) {
+                (new Response())->goTo('/roomReservationListing?status=3');
+            }
+            else {
+                header('Location: roomReservationListing.php?status=3');
+                die();
+            }
+        }
+        if(__ROUTER) {
+            (new Response())->goTo('/roomReservationListing?status=4');
+        }
+        else {
+            header('Location: roomReservationListing.php?status=4');
             die();
         }
-        header('Location: roomReservationListing.php?status=4');
-        die();
     }
 }

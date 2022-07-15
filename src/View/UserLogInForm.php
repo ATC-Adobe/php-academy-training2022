@@ -19,7 +19,12 @@ declare(strict_types = 1);
 <body>
 
 <?php
-include "layout/menu.html";
+if(__ROUTER) {
+    include "layout/menur.html";
+}
+else {
+    require "layout/menu.html";
+}
 ?>
 
 <div class="header">

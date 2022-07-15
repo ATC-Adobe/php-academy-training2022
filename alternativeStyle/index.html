@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Rooms</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" type="text/css" href="/alternativeStyle/style.css">
+    <!--
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    -->
+</head>
+
+<script>
+    function changePalette(num) {
+        document.querySelector('body').classList.remove(
+            'palette1', 'palette2', 'palette3'
+        );
+        document.querySelector('body').classList.add(
+            'palette'+num
+        );
+    }
+</script>
+
+<body class="palette3">
+    <div class="clickable" onclick="changePalette(1)">
+        S1
+    </div>
+
+    <div class="clickable" onclick="changePalette(2)">
+        S2
+    </div>
+
+    <div class="clickable" onclick="changePalette(3)">
+        S3
+    </div>
+
+    <div class="clear"></div>
+
+    <br>
+    <div class="d1 floater">
+        P1
+    </div>
+    <div class="d2 floater">
+        P2
+    </div>
+    <div class="d3 floater">
+        P3
+    </div>
+    <div class="d4 floater">
+        P4
+    </div>
+    <div class="d5 floater">
+        P5
+    </div>
+    <div class="clear"></div>
+</body>
+
+</html>

@@ -21,7 +21,14 @@ use Room\Repository\RoomConcreteRepository;
 </head>
 <body>
 
-<?php include "layout/menu.html"; ?>
+<?php
+if(__ROUTER) {
+    include "layout/menur.html";
+}
+else {
+    require "layout/menu.html";
+}
+?>
 
 <div class="header">
     Room reservation service

@@ -24,7 +24,12 @@ if(isset($_POST['room_id'])) {
 <body>
 
 <?php
-include "layout/menu.html";
+if(__ROUTER) {
+    include "layout/menur.html";
+}
+else {
+    require "layout/menu.html";
+}
 ?>
 
 <div class="header">
@@ -32,7 +37,11 @@ include "layout/menu.html";
     <br><br>
     <div class="main">
         <a href="index.php">Return</a><br>
-        <form method="post" action="roomReservationForm.php">
+
+        <?php
+            $action = __ROUTER ? '/add/reservation' : 'roomReservationForm.php';
+            echo "<form method='post' action='$action'>";
+        ?>
 
             <div class="float ltable">
                 Room Id:<br>

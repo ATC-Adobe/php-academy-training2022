@@ -5,6 +5,7 @@ namespace Controller;
 use JetBrains\PhpStorm\NoReturn;
 use Room\Model\RoomModel;
 use Room\Repository\RoomConcreteRepository;
+use Router\Response;
 
 class AddRoomController {
     public function __construct() { }
@@ -23,11 +24,14 @@ class AddRoomController {
             $roomRepository
                 ->addRoom($room);
 
-            // TODO redirect
-            header('Location: roomReservationListing.php?status=1');
+        }
+        if(__ROUTER) {
+            (new Response())
+                ->goTo('/roomListing');
+        }
+        else {
+            header('Location: roomListing.php');
             die();
         }
-        header('Location: roomReservationListing.php?status=1');
-        die();
     }
 }

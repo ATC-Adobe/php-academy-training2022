@@ -1,0 +1,67 @@
+
+:root {
+    --bg1: black;
+    --bg2: gray;
+    --fg1: white;
+    --fg2: red;
+    --accent: blue;
+}
+
+.palette1 {
+    --bg1: #355070;
+    --bg2: #6d597a;
+    --fg1: #b56576;
+    --fg2: #e56b6f;
+    --accent: #eaac8b;
+}
+
+.palette2 {
+    --bg1: #ffd9da;
+    --bg2: #ea638c;
+    --fg1: #89023e;
+    --fg2: #30343f;
+    --accent: #1b2021;
+}
+
+.palette3 {
+    --bg1: #01161e;
+    --bg2: #124559;
+    --fg1: #598392;
+    --fg2: #aec3b0;
+    --accent: #eff6e0;
+}
+
+body {
+    color: red;
+    background-color: black;
+}
+
+.floater {
+    float: left;
+    width: 19%;
+    height: 1000px;
+}
+
+.clear {
+    clear: both;
+}
+
+.d1 {
+    background-color: var(--bg1);
+}
+
+.d2 {
+    background-color: var(--bg2);
+}
+
+.d3 {
+    background-color: var(--fg1);
+}
+
+.d4 {
+    background-color: var(--fg2);
+}
+
+.d5 {
+    background-color: var(--accent);
+}
