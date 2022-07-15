@@ -9,6 +9,7 @@ use App\System\File\JsonHandler;
 use App\System\File\IOHandlerFactory;
 use App\View\ReservationForm;
 use App\View\ReservationList;
+use App\View\ReservationUpdateForm;
 
 class ReservationController
 {
@@ -76,5 +77,14 @@ class ReservationController
             $msg = "Successfully deleted reservation!";
         }
         $this->index($msg);
+    }
+    public function edit() {
+        $id = $_GET["reservation_id"];
+        $service = new ReservationService();
+        $reservation = $service->findOne($id);
+        (new ReservationUpdateForm($reservation))->render();
+    }
+    public function update() {
+
     }
 }

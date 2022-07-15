@@ -24,6 +24,7 @@ class XmlHandler implements IOHandlerInterface
         if($where) {
             $xml = $xml->{$where};
         }
+        //generate id
         $temp = $this->readAll();
         if(is_countable($temp)) {
             $keyValuePairs["id"] = count($temp) + 1;

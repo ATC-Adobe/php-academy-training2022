@@ -17,7 +17,7 @@ class Router
     }
     public function resolve(): void
     {
-        $path = Util::getPath();
+        $path = $this->getPath();
         $method = strtolower($_SERVER["REQUEST_METHOD"]);
         $callback = $this->routes[$method][$path] ?? false;
         if(!$callback) {
@@ -26,5 +26,13 @@ class Router
             return;
         }
         call_user_func($callback);
+    }
+    public function getPath() {
+        $path = $_SERVER['REQUEST_URI'] ?? '/';
+        $position = strpos($path, '?');
+        if($position === false) {
+            return $path;
+        }
+        return substr($path, 0, $position);
     }
 }

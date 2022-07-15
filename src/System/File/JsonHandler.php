@@ -28,7 +28,6 @@ class JsonHandler implements IOHandlerInterface
 
     public function save(\ModelInterface $model): bool
     {
-        var_dump($model);
         $keyValuePairs = $model->toArray();
         //genereate id
         $temp = $this->readAll();

@@ -45,10 +45,16 @@ class ReservationList implements Component
             echo '<li>start_date: ' . $reservations[$i]->start_date . ' </li>';
             echo '<li>end_date: ' . $reservations[$i]->end_date . ' </li>';
             echo '</ul>';
-            echo '<form method="post" action="/reservationDelete">
+            echo '<div>';
+            echo '<form class="my-3" method="post" action="/reservationDelete">
         <input type="hidden" name="reservation_id" value="' . $reservations[$i]->id . '"/>
         <button type="submit" class="btn btn-danger">Delete</button>
             </form>';
+            echo '<form class="my-3" method="get" action="/reservationUpdate">
+        <input type="hidden" name="reservation_id" value="' . $reservations[$i]->id . '"/>
+        <button type="submit" class="btn btn-primary">Update</button>
+            </form>';
+            echo '</div>';
             echo '</div>';
             if (($i % 2)) {
                 echo '</div>';

@@ -79,4 +79,14 @@ class ReservationRepository implements IOHandlerInterface
         $stm->bindParam("id", $id);
         return $stm->execute();
     }
+    public function find(int $id): Reservation
+    {
+        $stm = $this->connection->prepare("SELECT * FROM reservation WHERE id = :id");
+        $stm->bindParam("id", $id);
+        $stm->execute();
+        $data = $stm->fetchAll(PDO::FETCH_ASSOC)[0];
+        $model = new Reservation();
+        $model->fromArray($data);
+        return $model;
+    }
 }

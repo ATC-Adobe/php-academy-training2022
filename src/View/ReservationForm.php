@@ -4,6 +4,7 @@ namespace App\View;
 
 use App\Service\ReservationService;
 use App\View\Component\Footer;
+use App\View\Component\FormField;
 use App\View\Component\Header;
 use App\View\Component\Navbar;
 use Component;
@@ -25,27 +26,22 @@ class ReservationForm implements Component
 
         echo '            </h1>
         </div>
-        <div class="row">
-            <div class="col col-lg-6">
-                <label class="d-flex justify-content-between"> First Name <input required class="myInput" type="text" name="first_name" /></label>
-            </div>
-            <div class="col col-lg-6">
-                <label class="d-flex justify-content-between"> Last Name <input required class="myInput" type="text" name="last_name" /></label>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col col-lg-6">
-            <label class="d-flex justify-content-between"> Email <input required class="myInput" type="email" name="email"/></label>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col col-lg-6">
-                <label class="d-flex justify-content-between"> Start date <input required name="start_date" class="myInput" type="datetime-local" /></label>
-            </div>
-            <div class="col col-lg-6">
-                <label class="d-flex justify-content-between"> End date <input required name="end_date" class="myInput" type="datetime-local" /></label>
-            </div>
-        </div>
+        <div class="row">';
+
+        (new FormField("First Name", "first_name"))->render();
+        (new FormField("Last Name", "last_name"))->render();
+
+        echo '</div>
+        <div class="row">';
+        (new FormField("Email", "email", "email"))->render();
+
+        echo '</div>
+        <div class="row">';
+
+        (new FormField("Start date", "start_date", "datetime-local"))->render();
+        (new FormField("End date", "end_date", "datetime-local"))->render();
+
+        echo '</div>
         <div class="row mt-3 d-flex justify-content-around mx-5">
             <input name="xml" class="btn btn-primary" type="submit" value="Submit to xml" /> 
             <input name="csv" class="btn btn-primary" type="submit" value="Submit to csv" /> 
