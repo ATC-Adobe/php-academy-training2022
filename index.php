@@ -7,7 +7,7 @@ require_once "layout/header.html"; ?>
 require_once "layout/navbar.html"; ?>
 
 <?php
-$displayRooms = new \Controllers\DisplayRooms();
+$displayRooms = new \Controllers\Room\DisplayRooms();
 $rooms = $displayRooms->displayRooms();
 ?>
 

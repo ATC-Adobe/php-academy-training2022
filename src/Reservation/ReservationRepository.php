@@ -5,6 +5,7 @@ namespace Reservation;
 use System\Database\MysqlConnection;
 
 class ReservationRepository
+
 {
 
     public function getAllReservations()
@@ -20,7 +21,6 @@ class ReservationRepository
         $selectQuery = "SELECT reservations.id, roomId, firstName, lastName, email, startDay, endDay, startHour, endHour, roomNumber as roomNumber FROM reservations JOIN rooms ON rooms.id = roomId";
 
         return $connection->query($selectQuery)->fetchAll();
-
     }
 
     public function addReservation(ReservationModel $reservationModel)
@@ -52,7 +52,7 @@ class ReservationRepository
         $statement = $connection->prepare($selectQuery);
         $statement->bindValue(':id', $id);
         $statement->execute();
-        var_dump($statement->fetchAll());
+        $statement->fetchAll();
     }
 
     public function updateReservation(ReservationModel $updatedModel)

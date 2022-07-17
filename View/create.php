@@ -1,6 +1,7 @@
 <?php
 
 require_once "../autoloader.php";
+require_once "../src/Constants/constants.php";
 
 $roomId = '';
 $firstName = '';
@@ -12,10 +13,10 @@ $startHour = '';
 $endHour = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $reservationController = new \Controllers\CreateReservation();
-    $reservationController->createReservationMysql();
+    $reservationController = new \Controllers\Reservation\CreateReservation();
+    $reservationController->getDataFromForm();
 
-    header('Location:reservationsList.php');
+    header('Location:reservationsList.php?reservation');
 }
 ?>
 

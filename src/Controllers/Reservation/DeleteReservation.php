@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-namespace Controllers;
+namespace Controllers\Reservation;
 
 use Reservation\ReservationRepository;
 

@@ -9,6 +9,11 @@
         echo $id = $_GET['roomId'] ?? null;
     } ?>">
 
+    <input type="hidden" name="roomNumber" value="<?php
+    if ($_SERVER['REQUEST_METHOD'] === "GET") {
+        echo $roomNumber = $_GET['roomNumber'] ?? null;
+    } ?>">
+
     <div class="input-group f-input">
         <span class="input-group-text">Imię</span>
         <input type="text" name="firstName" value="<?php
@@ -54,6 +59,24 @@
         <span class="input-group-text">Wybierz godzinę zakończenia rezerwacji</span>
         <input type="time" value="<?php
         echo $endHour ?>" name="endHour" min="09:00" max="16:00" required>
+    </div>
+
+    <div class="input-group " id="file-type">
+        <span class="input-group-text">Wybierz miejsce zapisu danych</span>
+        <select class="form-control" name="dataType">
+            <option value="database">
+                Baza Danych
+            </option>
+            <option value="csv">
+                Plik CSV
+            </option>
+            <option value="xml">
+                Plik XML
+            </option>
+            <option value="json">
+                Plik JSON
+            </option>
+        </select>
     </div>
 
     <button type="submit" class="btn btn-info submit">Zapisz</button>

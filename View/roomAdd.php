@@ -4,7 +4,7 @@ require_once "../autoloader.php";
 ?>
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $createRoom = new \Controllers\CreateRoom();
+    $createRoom = new \Controllers\Room\CreateRoom();
     $createRoom->createRoom();
 
     header('Location:../index.php');

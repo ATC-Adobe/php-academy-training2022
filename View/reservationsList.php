@@ -7,9 +7,18 @@ require_once "../layout/header.html" ?>
 require_once "../layout/navbar.html" ?>
 
 <?php
-$displayReservations = new \Controllers\DisplayReservations();
+$displayReservations = new \Controllers\Reservation\DisplayReservations();
 $reservations = $displayReservations->displayReservations();
 ?>
+
+<?php
+if (isset($_GET['reservation'])) : ?>
+    <p class="message">Sala została zarezerwowana</p>
+<?php
+elseif (isset($_GET['delete'])) : ?>
+    <p class="message">Rezerwacja została usunięta</p>
+<?php
+endif; ?>
 
 <table class="table">
     <thead id="reservated-head">

@@ -2,26 +2,16 @@
 
 namespace Reservation;
 
-use Reservation\ReservationModel;
+use Factory\IReservation;
 
-class ReservationService
+class ReservationService implements IReservation
 {
-
-    public function createReservation(array $dataReservation)
+    public function createReservation($dataReservation)
     {
         $reservationModel = new ReservationModel();
-        $reservationModel->createReservation($dataReservation);
+        $reservationModel->sendDataToModel($dataReservation);
 
         $reservationRepository = new ReservationRepository();
         $reservationRepository->addReservation($reservationModel);
-    }
-
-    public function updateReservation(array $updateReservation)
-    {
-        $updatedModel = new ReservationModel();
-        $updatedModel->updateReservation($updateReservation);
-
-        $updatedRepository = new ReservationRepository();
-        $updatedRepository->updateReservation($updatedModel);
     }
 }

@@ -14,7 +14,7 @@ class ReservationModel
     protected $startHour;
     protected $endHour;
 
-    public function createReservation(array $dataReservation)
+    public function sendDataToModel(array $dataReservation)
     {
         $this->roomId = $dataReservation['roomId'];
         $this->firstName = $dataReservation['firstName'];
