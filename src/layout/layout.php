@@ -14,6 +14,8 @@
                     <li class="nav-item"><a class="nav-link" href="../../index.php">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="../../src/View/reservations.php">Wszystkie rezerwacje</a></li>
                     <li class="nav-item"><a class="nav-link" href="../../src/Form/room_form.php">Dodaj salę</a></li>
+<li class="nav-item"><a class="nav-link" href="../../src/Form/login_form.php">Logowanie</a></li>
+<li class="nav-item"><a class="nav-link" href="../../src/Form/registration_form.php">Rejestracja</a></li>
                 </ul>
                 </li>
                 </ul>

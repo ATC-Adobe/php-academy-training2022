@@ -26,8 +26,7 @@
             <!-- Contact form-->
             <div class="bg-light rounded-3 py-5 px-4 px-md-5 mb-5">
                 <div class="text-center mb-5">
-                    <h1 class="fw-bolder">Your room id is <?php echo $_GET['room_id']; ?>. Fill in this form to reserve it </h1>
-                    <p class="lead fw-normal text-muted mb-0">We need some information from you</p>
+                    <h1 class="fw-bolder">Fill in this form to log in </h1>
                 </div>
                 <div class="row gx-5 justify-content-center">
                     <div class="col-lg-8 col-xl-6">
@@ -38,54 +37,31 @@
                         <!-- To make this form functional, sign up at-->
                         <!-- https://startbootstrap.com/solution/contact-forms-->
                         <!-- to get an API token!-->
-                        <form method="post" action="../Repository/Strategy.php" enctype="multipart/form-data">
-                            <!-- Name input-->
+                        <form method="post" action="../Controller/RoomController.php" enctype="multipart/form-data">
+                            <!-- Nickname input-->
                             <div class="form-floating mb-3">
-                                <input type="hidden" name="delete" value="false">
-                                <input type="hidden" name="room_id" value="<?= $_GET['room_id'] ?>">
-                                <input class="form-control" name="firstname" type="text" placeholder="Enter your name..."
+                                <input class="form-control" name="nickname" type="text" placeholder="Enter your nickname..."
                                        data-sb-validations="required"/>
-                                <label for="name">First Name</label>
-                                <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
+                                <label for="nickname">Nickname</label>
+                                <div class="invalid-feedback" data-sb-feedback="name:required">A nickname is required.</div>
                             </div>
-                            <!-- Surname input-->
+                            <!-- Email input-->
                             <div class="form-floating mb-3">
-                                <input class="form-control" name="lastname" type="text" placeholder="Enter your surname..."
+                                <input class="form-control" name="email" type="text" placeholder="Enter your email..."
                                        data-sb-validations="required"/>
-                                <label for="name">Last Name</label>
-                                <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
+                                <label for="email">Email</label>
+                                <div class="invalid-feedback" data-sb-feedback="name:required">An email is required.</div>
                             </div>
-                            <!-- Email address input-->
+                            <!-- Password input-->
                             <div class="form-floating mb-3">
-                                <input class="form-control" name="email" type="email" placeholder="name@example.com"
-                                       data-sb-validations="required,email"/>
-                                <label for="email">Email address</label>
-                                <div class="invalid-feedback" data-sb-feedback="email:required">An email is required.
-                                </div>
-                                <div class="invalid-feedback" data-sb-feedback="email:email">Email is not valid.</div>
-                            </div>
-                            <!-- From input-->
-                            <div class="form-floating mb-3">
-                                <input class="form-control" name="start_date" type="datetime-local" placeholder="From..."
+                                <input class="form-control" name="password" type="text" placeholder="Enter your password..."
                                        data-sb-validations="required"/>
-                                <label for="name">From</label>
-                                <div class="invalid-feedback" data-sb-feedback="name:required">A date is required.</div>
+                                <label for="password">Password</label>
+                                <div class="invalid-feedback" data-sb-feedback="name:required">A password is required.</div>
                             </div>
-                            <!-- Till input-->
-                            <div class="form-floating mb-3">
-                                <input class="form-control" name="end_date" type="datetime-local" placeholder="Till..."
-                                       data-sb-validations="required"/>
-                                <label for="name">To</label>
-                                <div class="invalid-feedback" data-sb-feedback="name:required">A date is required.</div>
-                            </div>
-                            <!-- Submit Buttons-->
-                            <div class="text-center d-flex justify-content-around m-2">
-                                <input class="btn btn-primary" name="save_id" type="submit" value="Zapisz w bazie danych"/>
-                                <input class="btn btn-primary" name="save_id" type="submit" value="Zapisz w pliku CSV"/>
-                            </div>
-                            <div class="text-center d-flex justify-content-around">
-                                <input class="btn btn-primary" name="save_id" type="submit" value="Zapisz w pliku JSON"/>
-                                <input class="btn btn-primary" name="save_id" type="submit" value="Zapisz w pliku XML"/>
+                            <!-- Submit Button-->
+                            <div class="text-center">
+                                <input class="btn btn-primary" type="submit" value="Zaloguj się"/>
                             </div>
                         </form>
                     </div>
@@ -123,4 +99,6 @@
 <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
 </body>
 </html>
+
+
 

@@ -1,5 +1,9 @@
 <?php
 
+namespace Model;
+
+use Model\Room;
+
 class Reservation
 {
     private int $reservationId;
@@ -10,10 +14,15 @@ class Reservation
     private string $startDate;
     private string $endDate;
 
+    public function __construct($reservationId, $roomId, $firstname, $lastname, $email, $startDate, $endDate)
+    {
+    }
+
     public function setReservationId($reservationId)
     {
         $this->reservationId = $reservationId;
     }
+
     public function getReservationId()
     {
         return $this->reservationId;
@@ -23,6 +32,7 @@ class Reservation
     {
         $this->roomId = $roomId;
     }
+
     public function getRoomId()
     {
         return $this->roomId;
@@ -32,6 +42,7 @@ class Reservation
     {
         $this->firstname = $firstname;
     }
+
     public function getFirstname()
     {
         return $this->firstname;
@@ -41,6 +52,7 @@ class Reservation
     {
         $this->lastname = $lastname;
     }
+
     public function getLastname()
     {
         return $this->lastname;
@@ -50,6 +62,7 @@ class Reservation
     {
         $this->email = $email;
     }
+
     public function getEmail()
     {
         return $this->email;
@@ -59,6 +72,7 @@ class Reservation
     {
         $this->startDate = $startDate;
     }
+
     public function getStartDate()
     {
         return $this->startDate;
@@ -68,8 +82,10 @@ class Reservation
     {
         $this->endDate = $endDate;
     }
+
     public function getEndDate()
     {
         return $this->endDate;
     }
+
 }

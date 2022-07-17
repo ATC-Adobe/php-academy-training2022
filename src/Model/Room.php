@@ -2,11 +2,17 @@
 
 namespace Model;
 
+use Model\Reservation;
+
 class Room
 {
     private int $roomId;
     private string $name;
     private int $floor;
+
+    public function __construct($roomId, $name, $floor){
+
+    }
 
     public function setRoomId($roomId)
     {
@@ -37,5 +43,6 @@ class Room
     {
         return $this->floor;
     }
+
 
 }

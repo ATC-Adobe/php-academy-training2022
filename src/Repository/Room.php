@@ -4,11 +4,11 @@ namespace Repository;
 
 use Database\Connection;
 
+require_once '../../autoloading.php';
 class Room
 {
     public function addRoom()
     {
-        require_once '../../autoloading.php';
         $dbConnection = Connection::getInstance();
 
         if (count($_POST) > 0) {

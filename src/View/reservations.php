@@ -1,42 +1,7 @@
 <?php declare(strict_types=1);
 
 use Database\Connection;
-
-require_once '../../autoloading.php';
-$dbConnection = Connection::getInstance();
-
-$selectQuery = "
-    SELECT *
-    FROM reservations;
-";
-
-if(count($_POST) > 0){
-    $room_id = $_POST['room_id'];
-    $firstname = $_POST['firstname'];
-    $lastname = $_POST['lastname'];
-    $email = $_POST['email'];
-    $start_date = $_POST['start_date'];
-    $start_date = new DateTime($start_date);
-    $start_date = $start_date->format('Y-m-d H:i:s');
-    $end_date = $_POST['end_date'];
-    $end_date = new DateTime($end_date);
-    $end_date = $end_date->format('Y-m-d H:i:s');
-    $insertQuery = "
-    INSERT INTO reservations (room_id, firstname, lastname, email, start_date, end_date)
-    VALUES (
-            '$room_id',
-            '$firstname',
-            '$lastname',
-            '$email',
-            STR_TO_DATE('$start_date','%Y-%m-%d %H:%i:%s'),
-            STR_TO_DATE('$end_date','%Y-%m-%d %H:%i:%s')
-            );
-";
-    $dbConnection->query($insertQuery);
-
-}
-
-$selectResults = $dbConnection->query($selectQuery)->fetchAll();
+use Repository\Reservation;
 
 ?>
 <!DOCTYPE html>
@@ -65,7 +30,14 @@ $selectResults = $dbConnection->query($selectQuery)->fetchAll();
                 <div class="col-lg-3 col-xl-12 col-xxl-6">
                     <div class="my-5 text-center text-xl-start">
                         <h1 class="display-5 fw-bolder text-white mb-2">Thank you for your reservation!</h1>
-                        <p class="lead fw-normal text-white-50 mb-4">Here are all reservations</p>
+                        <p class="lead fw-normal text-white-50 mb-4">Here are all reservations from CSV</p>
+                        <?php
+                        $file = new SplFileObject("../Database/reservations.csv");
+                        $reservationsCsv = [];
+                        while (!$file->eof()) {
+                            $reservationsCsv[] = $file->fgetcsv();
+                        }
+                        ?>
                         <div class="text-center">
                             <table class="table table-bordered text-white table-dark room-table">
                                 <tr>
@@ -77,15 +49,121 @@ $selectResults = $dbConnection->query($selectQuery)->fetchAll();
                                     <th>start_date</th>
                                     <th>end_date</th>
                                 </tr>
-                                <?php foreach ($selectResults as $result) { ?>
+                                <?php foreach ($reservationsCsv as $reservation) { ?>
+                                    <tr>
+                                        <td><?= $reservation['0'] ?></td>
+                                        <td><?= $reservation['1'] ?></td>
+                                        <td><?= $reservation['2'] ?></td>
+                                        <td><?= $reservation['3'] ?></td>
+                                        <td><?= $reservation['4'] ?></td>
+                                        <td><?= $reservation['5'] ?></td>
+                                        <td><?= $reservation['6'] ?></td>
+                                    </tr>
+                                <?php } ?>
+                            </table>
+                        </div>
+
+                        <p class="lead fw-normal text-white-50 mb-4">Here are all reservations from JSON</p>
+                        <div class="text-center">
+                            <table class="table table-bordered text-white table-dark room-table">
+                                <tr>
+                                    <th>reservation_id</th>
+                                    <th>room_id</th>
+                                    <th>firstname</th>
+                                    <th>lastname</th>
+                                    <th>email</th>
+                                    <th>start_date</th>
+                                    <th>end_date</th>
+                                </tr>
+                                <?php
+                                $reservationsJson = file_get_contents("../Database/reservations.json");
+                                $reservationsJson = json_decode($reservationsJson, true);
+                                foreach ($reservationsJson as $reservation) {
+                                    ?>
+                                    <tr>
+                                        <td><?= $reservation['reservation_id'] ?></td>
+                                        <td><?= $reservation['room_id'] ?></td>
+                                        <td><?= $reservation['firstname'] ?></td>
+                                        <td><?= $reservation['lastname'] ?></td>
+                                        <td><?= $reservation['email'] ?></td>
+                                        <td><?= $reservation['start_date'] ?></td>
+                                        <td><?= $reservation['end_date'] ?></td>
+                                    </tr>
+                                <?php } ?>
+                            </table>
+                        </div>
+
+                        <p class="lead fw-normal text-white-50 mb-4">Here are all reservations from XML</p>
+                        <?php
+                        include '../Database/reservations_xml.php';
+                        $xmlFile = file_get_contents("../Database/reservations.xml");
+                        $reservationsXml = new SimpleXMLElement($xmlFile);
+                        ?>
+
+                        <div class="text-center">
+                            <table class="table table-bordered text-white table-dark room-table">
+                                <tr>
+                                    <th>reservation_id</th>
+                                    <th>room_id</th>
+                                    <th>firstname</th>
+                                    <th>lastname</th>
+                                    <th>email</th>
+                                    <th>start_date</th>
+                                    <th>end_date</th>
+                                </tr>
+                                <?php foreach ($reservationsXml as $reservation) { ?>
+                                    <tr>
+                                        <td><?= $reservation->reservationid; ?></td>
+                                        <td><?= $reservation->roomid; ?></td>
+                                        <td><?= $reservation->firstname; ?></td>
+                                        <td><?= $reservation->lastname; ?></td>
+                                        <td><?= $reservation->email; ?></td>
+                                        <td><?= $reservation->startdate; ?></td>
+                                        <td><?= $reservation->enddate; ?></td>
+                                    </tr>
+                                <?php } ?>
+                            </table>
+                        </div>
+                        <p class="lead fw-normal text-white-50 mb-4">Here are all reservations from Data Base</p>
+                        <div class="text-center">
+                            <table class="table table-bordered text-white table-dark room-table">
+                                <tr>
+                                    <th>reservation_id</th>
+                                    <th>room_id</th>
+                                    <th>room_name</th>
+                                    <th>firstname</th>
+                                    <th>lastname</th>
+                                    <th>email</th>
+                                    <th>start_date</th>
+                                    <th>end_date</th>
+                                    <th></th>
+                                </tr>
+                                <?php
+                                require_once '../../autoloading.php';
+                                $dbConnection = Connection::getInstance();
+                                $reservation = new Reservation();
+                                $selectResults = $reservation->getAllReservations();
+                                foreach ($selectResults as $result) {
+                                    $query = "SELECT name FROM room WHERE room_id = '" . $result['room_id'] . "'";
+                                    $roomName = $dbConnection->query($query)->fetchColumn(0);
+                                    ?>
                                     <tr>
                                         <td><?= $result['reservation_id']; ?></td>
                                         <td><?= $result['room_id']; ?></td>
+                                        <td><?= $roomName ?></td>
                                         <td><?= $result['firstname']; ?></td>
                                         <td><?= $result['lastname']; ?></td>
                                         <td><?= $result['email']; ?></td>
                                         <td><?= $result['start_date']; ?></td>
                                         <td><?= $result['end_date'] ?></td>
+                                        <td>
+                                            <form method="post" action="../Controller/ReservationController.php">
+                                                <input type="hidden" name="reservation_id"
+                                                       value="<?= $result['reservation_id'] ?>">
+                                                <input type="hidden" name="delete" value="true">
+                                                <input type="submit" value="Delete" class="btn btn-outline-light">
+                                            </form>
+                                        </td>
                                     </tr>
                                 <?php } ?>
                             </table>
