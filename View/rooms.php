@@ -27,7 +27,7 @@ include "../Layout/navbar.php";
                     <?php
 
                     $dbConnection = Connection::getConnection();
-                    $rooms = (new RoomRepository('$room_id', 'name', 'floor'))->getAllRooms($dbConnection);
+                    $rooms = (new RoomRepository('room_id', 'name', 'floor'))->getAllRooms($dbConnection);
                     (new DeleteRoomController())->deleteRoom($dbConnection);
                     ?>
 

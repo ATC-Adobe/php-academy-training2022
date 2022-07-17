@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Repository;
 
 use Model\Room;
-use services\ApplicationService;
+use Service\ApplicationService;
 use System\Database\Connection;
 
 

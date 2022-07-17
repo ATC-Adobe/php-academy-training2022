@@ -4,19 +4,19 @@ namespace Service;
 
 class CreateJsonReservation implements ReservationStrategy
 {
-    private $roomId;
-    private $firstName;
-    private $lastName;
-    private $email;
-    private $startDate;
-    private $endDate;
 
     public function createReservation($roomId, $firstName, $lastName, $email, $startDate, $endDate)
     {
-        // TODO: Json save repair
-
-        $reservationFile = file_get_contents((new ApplicationService())->getJsonReservationUrl());
-        $save_data[] = json_encode($reservationFile, JSON_PRETTY_PRINT);
-        $this->reservationFile = file_put_contents('../System/File/reservations.json', $save_data);
+        $reservation = array($roomId, $firstName, $lastName, $email, $startDate, $endDate);
+        if (filesize((new ApplicationService())->getJsonReservationUrl()) === 0) {
+            $newRecord = array($reservation);
+            $saveReservation = $newRecord;
+        } else {
+            $existReservations = json_decode(file_get_contents(((new ApplicationService())->getJsonReservationUrl())));
+            $existReservations[] = $reservation;
+            $saveReservation = $existReservations;
+        }
+        $encoded = json_encode($saveReservation, JSON_PRETTY_PRINT);
+        file_put_contents(((new ApplicationService())->getJsonReservationUrl()), $encoded, LOCK_EX);
     }
 }

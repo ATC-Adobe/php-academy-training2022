@@ -6,6 +6,7 @@ use Repository\ReservationFormValidation;
 use Service\CreateCsvReservation;
 use Service\CreateDbReservation;
 use Service\CreateJsonReservation;
+use Service\CreateXmlReservation;
 use Service\ReservationContext;
 use Service\ApplicationService;
 
@@ -66,6 +67,22 @@ class CreateReservationController
             );
             if ($error == '') {
                 $context = new ReservationContext(new CreateJsonReservation());
+                $context->createReservation($roomId, $firstName, $lastName, $email, $startDate, $endDate);
+            }
+        }
+        if (isset($_POST['submit-xml'])) {
+            [$error, $roomId, $firstName, $lastName, $email, $startDate, $endDate] = (new ReservationFormValidation(
+            ))->validated(
+                $error,
+                $roomId,
+                $firstName,
+                $lastName,
+                $email,
+                $startDate,
+                $endDate
+            );
+            if ($error == '') {
+                $context = new ReservationContext(new CreateXmlReservation());
                 $context->createReservation($roomId, $firstName, $lastName, $email, $startDate, $endDate);
             }
         }

@@ -47,14 +47,4 @@ class ApplicationService
     {
         return '../System/File/reservations.json';
     }
-
-    public function getXmlRoomUrl(): string
-    {
-        return '../System/File/rooms.xml';
-    }
-
-    public function getJsonRoomUrl(): string
-    {
-        return '../System/File/rooms.json';
-    }
 }
