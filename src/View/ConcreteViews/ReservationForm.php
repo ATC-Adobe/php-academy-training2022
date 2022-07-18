@@ -25,7 +25,7 @@ if(isset($_POST['room_id'])) {
 
 <?php
 if(__ROUTER) {
-    include "layout/menur.html";
+    include "layout/menur.php";
 }
 else {
     require "layout/menu.html";

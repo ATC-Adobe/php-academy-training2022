@@ -20,7 +20,7 @@ declare(strict_types = 1);
 
 <?php
 if(__ROUTER) {
-    include "layout/menur.html";
+    include "layout/menur.php";
 }
 else {
     require "layout/menu.html";

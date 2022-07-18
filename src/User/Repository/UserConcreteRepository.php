@@ -73,6 +73,52 @@ class UserConcreteRepository {
 
     }
 
+    public function getUserByUsername(string $username) : ?UserModel {
+        $res =
+            MySqlConnection::getInstance()
+                ->query("SELECT * FROM Users WHERE nickname = '$username'")
+                ->fetchAll();
+
+        if(count($res) != 1) {
+            return null;
+        }
+
+        $entry = $res[0];
+
+        return new UserModel(
+            $entry['id'],
+            $entry['name'],
+            $entry['surname'],
+            $entry['email'],
+            $entry['nickname'],
+            $entry['salt'],
+            $entry['password']
+        );
+    }
+
+    public function getUserByEmail(string $email) : ?UserModel {
+        $res =
+            MySqlConnection::getInstance()
+                ->query("SELECT * FROM Users WHERE email = '$email'")
+                ->fetchAll();
+
+        if(count($res) != 1) {
+            return null;
+        }
+
+        $entry = $res[0];
+
+        return new UserModel(
+            $entry['id'],
+            $entry['name'],
+            $entry['surname'],
+            $entry['email'],
+            $entry['nickname'],
+            $entry['salt'],
+            $entry['password']
+        );
+    }
+
     /**
      * Inserts user into database
      *

@@ -20,7 +20,7 @@ declare(strict_types = 1);
 
 <?php
 if(__ROUTER) {
-    include "layout/menur.html";
+    include "layout/menur.php";
 }
 else {
     require "layout/menu.html";
@@ -38,7 +38,7 @@ else {
                 Password: <br>
             </div>
             <div class="float rtable">
-                <input type="text" name="email"><br>
+                <input type="text" name="username"><br>
                 <input type="password" name="password"><br>
                 <br>
                 <br>

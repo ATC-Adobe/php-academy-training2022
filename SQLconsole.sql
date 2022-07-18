@@ -23,3 +23,6 @@ VALUES ('Wojtek', 'Pokoj', 'wojciech.pokoj@accenture.com', 'wpokoj', 'pass','sal
 
 SELECT * FROM Users;
 
+DESCRIBE Users;
+
+DELETE FROM Users;

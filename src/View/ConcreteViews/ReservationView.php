@@ -26,7 +26,7 @@ use Room\Repository\RoomConcreteRepository;
 
 <?php
 if(__ROUTER) {
-    include "layout/menur.html";
+    include "layout/menur.php";
 }
 else {
     require "layout/menu.html";
