@@ -1,5 +1,8 @@
 <?php
 declare(strict_types = 1);
+
+use \System\Util\Authenticator;
+
 ?>
 
 <!DOCTYPE html>
@@ -9,7 +12,7 @@ declare(strict_types = 1);
 
     <title>Rooms</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" type="text/css" href="layout/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/layout/css/style.css">
 
     <!--
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -30,6 +33,32 @@ else {
     Account Registration Form
     <br><br>
     <div class="main">
+
+        <?php
+            if(isset($_POST['status'])) {
+                echo '<div class="error">';
+
+                echo match(intval($_POST['status'])) {
+                    Authenticator::FIELD_EMPTY =>
+                    "Some input field are empty!",
+                    Authenticator::PASSWORD_TOO_WEAK =>
+                    "Password is too weak!",
+                    Authenticator::PASSWORD_NOT_MATCH =>
+                    "Passwords don't match!",
+                    Authenticator::USERNAME_OR_EMAIL_TAKEN =>
+                    "An account with given username or email is already in use",
+                    Authenticator::EMAIL_INVALID =>
+                    "Invalid email",
+                    default => "unknown error",
+                };
+
+                echo ' </div><br><br>';
+            }
+
+
+
+
+        ?>
         <form method="post" action="/add/user">
 
             <div class="float ltable">
@@ -43,16 +72,40 @@ else {
                 Repeat password: <br>
             </div>
             <div class="float rtable">
+                <input type="text" name="name" <?php
+                    if(isset($_POST['name'])) {
+                        echo 'value="'.$_POST['name'].'"';
+                    }
+                ?>><br>
 
+                <input type="text" name="surname" <?php
+                if(isset($_POST['surname'])) {
+                    echo 'value="'.$_POST['surname'].'"';
+                }
+                ?>><br>
+                <input type="text" name="email" <?php
+                if(isset($_POST['email'])) {
+                    echo 'value="'.$_POST['email'].'"';
+                }
+                ?>><br>
 
-                <input type="text" name="name"><br>
-                <input type="text" name="surname"><br>
-                <input type="text" name="email"><br>
                 <br>
-                <input type="text" name="nickname"> <br>
+                <input type="text" name="nickname" <?php
+                if(isset($_POST['nickname'])) {
+                    echo 'value="'.$_POST['nickname'].'"';
+                }
+                ?>><br>
                 <br>
-                <input type="password" name="password1"><br>
-                <input type="password" name="password2"><br>
+                <input type="password" name="password1"<?php
+                if(isset($_POST['password1'])) {
+                    echo 'value="'.$_POST['password1'].'"';
+                }
+                ?>><br>
+                <input type="password" name="password2"<?php
+                if(isset($_POST['password2'])) {
+                    echo 'value="'.$_POST['password2'].'"';
+                }
+                ?>><br>
                 <br>
                 <br>
                 <input type="submit" value="Create Account >">

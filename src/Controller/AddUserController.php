@@ -4,6 +4,7 @@ namespace Controller;
 
 use Router\Response;
 use System\Util\Authenticator;
+use View\UserCreationFormView;
 
 class AddUserController {
 
@@ -38,7 +39,10 @@ class AddUserController {
             $res->goTo('/userLogIn?status=1');
         }
         else {
-            $res->goTo('/userRegistration?status='.$code);
+           // $res->goTo('/userRegistration?status='.$code);
+            $_POST['status'] = $code;
+            (new UserCreationFormView())
+                ->render();
         }
     }
 }

@@ -54,6 +54,17 @@ $router->use('/userLogOut', function(Response $res) {
         ->makeRequest();
 });
 
+$router->use('/sessinfo', function(Response $res) {
+
+    $sess = \System\Util\Session::getInstance();
+
+    $res->send($sess->get('name').'<br>');
+    $res->send($sess->get('surname').'<br>');
+    $res->send($sess->get('username').'<br>');
+    $res->send($sess->get('email').'<br>');
+    $res->end('<a href="/">Return</a>');
+});
+
 
 $router->post('/delete/reservation', function(Response $res) {
     (new \Controller\RemoveReservationController())
@@ -79,6 +90,16 @@ $router->post('/add/user', function(Response $res) {
 $router->post('/login', function(Response $res) {
     (new \Controller\LogInController())
         ->makeRequest();
+});
+
+$router->get('/test', function(Response $res) {
+    $auth = new \System\Util\Authenticator();
+
+    for($i = 0 ; $i <= 6; $i++) {
+        $val =  $auth->passwordHash('abc', '');
+        echo $auth->passwordVerify('abc', '', $val) ? '1' : '0';
+    }
+    //die();
 });
 
 $router->redirect();

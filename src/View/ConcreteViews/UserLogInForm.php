@@ -33,6 +33,22 @@ else {
     <div class="main">
         <form method="post" action="/login">
 
+            <?php
+                if(isset($_GET['status'])) {
+                    echo match(intval($_GET['status'])) {
+                        1 => "<div class='success'>
+                                    Account Created successfully
+                                </div>",
+                        2 => "<div class='error'>
+                                    Invalid login or password
+                                </div>",
+                        default => "unknown error",
+                    };
+
+                    echo '<br><br>';
+                }
+            ?>
+
             <div class="float ltable">
                 E-mail:<br>
                 Password: <br>

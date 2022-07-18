@@ -25,13 +25,10 @@ class Authenticator {
         }
 
         // hash password
-        $hash = $this->passwordHash(
-            $password,
-            $user->getSalt()
-        );
+
 
         // if hashed matches stored password, login successful
-        if($hash === $user->getPassword()) {
+        if($this->passwordVerify($password, $user->getSalt(), $user->getPassword())) {
             return $user;
         }
 
@@ -109,10 +106,14 @@ class Authenticator {
 
 
     // due to some unholy bug, hashing is temporarily disabled
-    private function passwordHash(string $password, string $salt) : string {
+    public function passwordHash(string $password, string $salt) : string {
 
-        //return password_hash(/*$salt . */$password/* . $salt*/, PASSWORD_DEFAULT);
-        return $password;
+        return password_hash($salt . $password . $salt, PASSWORD_DEFAULT);
+    }
+
+    public function  passwordVerify(string $password, string $salt, string $hash) : bool {
+
+        return password_verify($salt . $password . $salt, $hash);
     }
 
     private function generateSalt() : string {
