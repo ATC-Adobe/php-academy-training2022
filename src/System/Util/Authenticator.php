@@ -104,14 +104,12 @@ class Authenticator {
 
     }
 
-
-    // due to some unholy bug, hashing is temporarily disabled
-    public function passwordHash(string $password, string $salt) : string {
+    private function passwordHash(string $password, string $salt) : string {
 
         return password_hash($salt . $password . $salt, PASSWORD_DEFAULT);
     }
 
-    public function  passwordVerify(string $password, string $salt, string $hash) : bool {
+    private function passwordVerify(string $password, string $salt, string $hash) : bool {
 
         return password_verify($salt . $password . $salt, $hash);
     }
