@@ -1,5 +1,6 @@
 <?php
 namespace App\View\Component;
+use App\Model\Session;
 use Component;
 
 class Navbar implements Component
@@ -23,14 +24,27 @@ class Navbar implements Component
                     <a class="nav-link" href="/roomForm">Add room</a>
                 </li>
             </ul>
-            <ul class="navbar-nav ml-auto">
-            <li class="nav-item mr-auto">
+            <ul class="navbar-nav ml-auto">';
+        if(Session::getInstance()->get("user_id")) {
+            echo '
+                <li class="nav-item">
+                    <a  class="nav-link">Hello '. ucfirst(Session::getInstance()->get("nickname") ?? "") .'</a>
+                </li>
+                <li class="nav-item">
+                                            <a href="/logout" class="nav-link" >Logout</a>
+                </li>
+            ';
+        } else {
+            echo '
+                 <li class="nav-item">
                     <a class="nav-link" href="/login">Login</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/register">Register</a>
                 </li>
-            </ul>
+            ';
+        }
+       echo ' </ul>
         </div>
     </nav>
         ';

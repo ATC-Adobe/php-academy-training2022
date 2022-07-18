@@ -8,13 +8,12 @@ use App\System\Database\Connection;
 use PDO;
 use IOHandlerInterface;
 
-class ReservationRepository implements IOHandlerInterface
+class ReservationRepository extends BaseRepository implements IOHandlerInterface
 {
-    protected ?Connection $connection = null;
-
+    protected string $table = "reservation";
     public function __construct()
     {
-        $this->connection = Connection::getInstance();
+        parent::__construct();
     }
 
     /**
@@ -30,14 +29,6 @@ class ReservationRepository implements IOHandlerInterface
             );"
         );
         return $statement->execute($reservation->toArray());
-    }
-
-    /**
-     * @return false|Reservation[]
-     */
-    public function readAll(): false|array
-    {
-        return $this->connection->query("SELECT * FROM reservation")->fetchAll(PDO::FETCH_OBJ);
     }
 
     /**
@@ -73,18 +64,10 @@ class ReservationRepository implements IOHandlerInterface
         return $result;
     }
 
-    public function delete(int $id): bool
-    {
-        $stm = $this->connection->prepare("DELETE FROM reservation WHERE id = :id;");
-        $stm->bindParam("id", $id);
-        return $stm->execute();
-    }
+
     public function findOne(int $id): Reservation
     {
-        $stm = $this->connection->prepare("SELECT * FROM reservation WHERE id = :id");
-        $stm->bindParam("id", $id);
-        $stm->execute();
-        $data = $stm->fetchAll(PDO::FETCH_ASSOC)[0];
+        $data = $this->findOneAssoc($id);
         $model = new Reservation();
         $model->fromArray($data);
         return $model;

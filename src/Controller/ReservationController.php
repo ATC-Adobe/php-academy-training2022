@@ -36,18 +36,16 @@ class ReservationController
             $reservation->email = htmlentities($_POST['email']);
             $reservation->first_name = htmlentities($_POST['first_name']);
             $reservation->last_name = htmlentities($_POST['last_name']);
+            $reservation->start_date = htmlentities($_POST['start_date']);
+            $reservation->end_date = htmlentities($_POST['end_date']);
 
+            $this->formatDates($reservation);
 
-            $start = strtotime(htmlentities($_POST['start_date']));
-            $end = strtotime(htmlentities($_POST['end_date']));
-
-            $reservation->start_date = date("Y-m-d H:i:s", $start);
-            $reservation->end_date = date("Y-m-d H:i:s", $end);
-
-            if ($end < $start) {
+            if (!$reservationService->checkEndIsAfterStart($reservation->start_date, $reservation->end_date)) {
                  $this->index("End date must be after the start date!");
                     return;
             }
+
             if (!$reservationService->checkReservationCollision($reservation)) {
                 $this->index("Already occupied!");
                 return;
@@ -90,10 +88,20 @@ class ReservationController
     {
         $service = new ReservationService();
         // TODO: authorize
+        // TODO: start < end!
         $id = $_POST["reservation_id"];
         $reservation = $service->findOne($id);
-        $reservation->start_date = $_POST["start_date"] ?? $reservation->start_date;
-        $reservation->end_date = $_POST["end_date"] ?? $reservation->end_date;
+        $reservation->start_date = htmlentities($_POST["start_date"] ?? $reservation->start_date);
+        $reservation->end_date = htmlentities($_POST["end_date"] ?? $reservation->end_date);
+
+        $this->formatDates($reservation);
+
+
+        if (!$service->checkEndIsAfterStart($reservation->start_date, $reservation->end_date)) {
+            $this->index("End date must be after the start date!");
+            return;
+        }
+
         if(!$service->checkReservationCollision($reservation)) {
             $this->index("Couldn't update reservation. It is already reserve");
             return;
@@ -101,5 +109,17 @@ class ReservationController
         $ok = $service->updateReservation($reservation);
         $msg = $ok ? "Successfully updated reservation" : "Something went wrong!";
         $this->index($msg);
+    }
+
+    /**
+     * @param string $start
+     * @param Reservation $reservation
+     * @param string $end
+     * @return void
+     */
+    public function formatDates(Reservation $reservation): void
+    {
+        $reservation->start_date = date("Y-m-d H:i:s", strtotime($reservation->start_date));
+        $reservation->end_date = date("Y-m-d H:i:s", strtotime($reservation->end_date));
     }
 }

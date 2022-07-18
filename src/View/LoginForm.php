@@ -10,7 +10,7 @@ use Component;
 
 class LoginForm implements Component
 {
-    public function render(): void
+    public function render($msg = ""): void
     {
         (new Header())->render("Register page");
         (new Navbar())->render();
@@ -21,7 +21,7 @@ class LoginForm implements Component
                             Login
                         </h1>
          </div>';
-        (new FormField("Email or Nickname", "emailOrNickname"))->render();
+        (new FormField("Email", "email"))->render($msg);
         (new FormField("Password", "password", "password"))->render();
 
     echo '<div class="row mt-3">

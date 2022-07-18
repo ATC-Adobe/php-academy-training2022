@@ -33,7 +33,11 @@ class ReservationService implements \IOStrategyContextInterface
     {
         $reservations = $this->readReservations();
         foreach ($reservations as $reservation) {
-            if ($newReservation->room_id == $reservation->room_id && $newReservation->id != $reservation->id) {
+            if ($newReservation->room_id == $reservation->room_id ) {
+                //Updated reservation -> prevent from checking with itself
+                if(isset($newReservation->id) && $newReservation->id === $reservation->id) {
+                    continue;
+                }
                 if ($newReservation->start_date < $reservation->end_date && $newReservation->end_date > $reservation->start_date) {
                     return false;
                 }
@@ -57,12 +61,19 @@ class ReservationService implements \IOStrategyContextInterface
     public function deleteReservation(int $id): bool {
         return $this->ioStrategy->delete($id);
     }
-    public function updateReservation(Reservation $reservation) {
+    public function updateReservation(Reservation $reservation): bool
+    {
         if(method_exists($this->ioStrategy, "updateOne")) {
             return $this->ioStrategy->updateOne($reservation);
         }
         echo "Chosen strategy doesn't support that";
         return false;
+    }
+    public function checkEndIsAfterStart(string $start, string $end): bool
+    {
+        $startTime = strtotime($start);
+        $endTime = strtotime($end);
+        return $startTime < $endTime;
     }
     /**
      * @param \IOHandlerInterface $ioStrategy

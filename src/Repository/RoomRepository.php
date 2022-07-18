@@ -7,14 +7,14 @@ use App\System\Database\Connection;
 use PDO;
 use IOHandlerInterface;
 
-class RoomRepository implements IOHandlerInterface
+class RoomRepository extends BaseRepository implements IOHandlerInterface
 {
-    protected ?Connection $connection = null;
     protected string $table = "room";
     public function __construct()
     {
-        $this->connection = Connection::getInstance();
+        parent::__construct();
     }
+
 
     /**
      * @param Room $room
@@ -29,12 +29,11 @@ class RoomRepository implements IOHandlerInterface
         );
         return $statement->execute((array) $room);
     }
-
-    /**
-     * @return false|Room[]
-     */
-    public function readAll(): false|array
+    public function findOne(int $id): Room
     {
-        return $this->connection->query("SELECT * FROM $this->table")->fetchAll(PDO::FETCH_OBJ);
+        $data = $this->findOneAssoc($id);
+        $model = new Room();
+        $model->fromArray($data);
+        return $model;
     }
 }

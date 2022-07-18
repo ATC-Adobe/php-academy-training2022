@@ -10,7 +10,7 @@ use Component;
 
 class RegisterForm implements Component
 {
-    public function render(): void
+    public function render($msg = "", $type = ""): void
     {
         (new Header())->render("Login page");
         (new Navbar())->render();
@@ -24,13 +24,15 @@ class RegisterForm implements Component
     <div class="row">';
         (new FormField("First Name", "first_name"))->render();
         (new FormField("Last Name", "last_name"))->render();
+
     echo '</div>
     <div class="row">';
-        (new FormField("Email", "email", "email"))->render();
-        (new FormField("Nickname", "nickname"))->render();
+        (new FormField("Email", "email", "email"))->render($type === "email" ? $msg : "");
+        (new FormField("Nickname", "nickname"))->render($type === "nickname" ? $msg : "");
+
     echo '</div>
     <div class="row">';
-        (new FormField("Password", "password", "password"))->render();
+        (new FormField("Password", "password", "password"))->render($type === "password" ? $msg : "");
         (new FormField("Repeat Password", "repeat_password", "password"))->render();
     echo '</div>
         <div class="row mt-3">
