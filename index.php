@@ -7,36 +7,43 @@ use Router\Router;
 require_once 'autoloading.php';
 
 $router = new Router(
-    'src/View/Index.php'
+    '404.html'
 );
 
 $router->use('/', function(Response $res) {
-    $res->render('src/View/Index.php');
+    (new \View\IndexView())
+        ->render();
 });
 
 
 $router->use('/roomForm', function(Response $res) {
-    $res->render("src/View/RoomForm.php");
+    (new \View\RoomFormView())
+        ->render();
 });
 
 $router->use('/roomListing', function(Response $res) {
-    $res->render("src/View/RoomView.php");
+    (new \View\RoomListingView())
+        ->render();
 });
 
 $router->use('/roomReservationForm', function(Response $res) {
-    $res->render("src/View/ReservationForm.php");
+    (new \View\ReservationFormView())
+        ->render();
 });
 
 $router->use('/roomReservationListing', function(Response $res) {
-    $res->render("src/View/ReservationView.php");
+    (new \View\ReservationListingView())
+        ->render();
 });
 
 $router->use('/userLogIn', function(Response $res) {
-    $res->render("src/View/UserLogInForm.php");
+    (new \View\UserLogInFormView())
+        ->render();
 });
 
 $router->use('/userRegistration', function(Response $res) {
-    $res->render("src/View/UserCreationForm.php");
+    (new \View\UserCreationFormView())
+        ->render();
 });
 
 

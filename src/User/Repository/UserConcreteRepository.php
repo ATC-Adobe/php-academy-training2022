@@ -52,7 +52,8 @@ class UserConcreteRepository {
     public function getUserById(int $id) : ?UserModel {
         $res =
             MySqlConnection::getInstance()
-            ->query("SELECT * FROM Users WHERE id = '$id'");
+            ->query("SELECT * FROM Users WHERE id = '$id'")
+            ->fetchAll();
 
         if(count($res) != 1) {
             return null;

@@ -4,18 +4,12 @@ namespace System\Util;
 
 class DateFormatter {
     public static function htmlDateToDateTime(string $date) : \DateTime {
-        //echo $date;
-        $from = date("d/m/y H:i:s", strtotime($date));
-        //echo $from;
-        return \DateTime::createFromFormat("d/m/y H:i:s", $from);
+        return new \DateTime($date);
     }
 
 
     public static function dateTimeToString(\DateTime $date) : string {
-
+        return $date->format('d-m-Y H:i:s');
     }
 
-    public static function  sqlDateToDateTime(string $date) : \DateTime {
-
-    }
 }

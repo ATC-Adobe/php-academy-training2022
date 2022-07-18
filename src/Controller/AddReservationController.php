@@ -26,20 +26,11 @@ class AddReservationController {
                     $_POST['email'],    $_POST['from'],     $_POST['to']];
 
 
-            $from = DateFormatter::htmlDateToDateTime($from);
-            $to   = DateFormatter::htmlDateToDateTime($to);
-            /*
-            var_dump($conv);
-
-            $from = strtotime($from);
-            $to   = date("d/m/y H:i:s", strtotime($to));
-            */
-
             $res =
                 (new ReservationAdder())->uploadData(
                     (new FileWriterFactory())
                         ->getInstance($_POST['option']),
-                $room_id, $name, $surname, $email, $from, $to
+                $room_id, $name, $surname, $email, new \DateTime($from),  new \DateTime($to),
             );
 
 

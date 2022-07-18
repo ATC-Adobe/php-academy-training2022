@@ -68,7 +68,14 @@ else {
                 echo "<td> $id </td>";
                 echo "<td> $name </td>";
                 echo "<td> $floor </td>";
-                echo "<td><a href='roomReservationForm.php?id=$id'> Reserve ></a></td>";
+
+                if(__ROUTER) {
+                    echo "<td><a href='roomReservationForm?id=$id'> Reserve ></a></td>";
+                }
+                else {
+                    echo "<td><a href='roomReservationForm.php?id=$id'> Reserve ></a></td>";
+                }
+
                 echo "</tr>";
             }
             ?>
