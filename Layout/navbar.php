@@ -10,6 +10,8 @@
             <li class="nav-item row">
                 <a class="nav-link" href="/View/rooms.php">Rooms</a>
                 <a class="nav-link" href="/View/reservations.php">Reservations</a>
+                <a class="nav-link" href="/View/registration.php">Sign up</a>
+                <a class="nav-link" href="/View/login.php">Login</a>
             </li>
         </ul>
     </div>

@@ -3,6 +3,7 @@
 namespace Repository;
 
 use Model\Reservation;
+use Service\ApplicationService;
 use System\Database\Connection;
 
 class ReservationRepository extends Reservation
