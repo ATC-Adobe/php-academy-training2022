@@ -8,10 +8,10 @@
     use Reservation\Model\ReservationModel;
     use Reservation\Repository\ReservationRepository;
 
-    class ReservationService implements ReservationServiceInterface {
+    class ReservationService {
         public function __construct() {}
 
-        public function save () :void {
+        public function addReservation () :void {
 
             $id         = 0;
             $roomId    = $_POST['roomId'];
@@ -30,14 +30,14 @@
                 $email, $startDate, $endDate
             );
 
-            $reservationRepository = new ReservationRepository();
-            $reservationRepository->addReservation($reservation);
+            $repo = new ReservationRepository();
+            $repo->addReservation($reservation);
 
         }
 
-        public function delete () :void {
-            $reservationId = $_POST['id'];
-            $reservationRepository = new ReservationRepository();
-            $reservationRepository->deleteReservation($reservationId);
+        public function deleteReservation () :void {
+            $id = $_POST['id'];
+            $repo = new ReservationRepository();
+            $repo->deleteReservation($id);
         }
     }

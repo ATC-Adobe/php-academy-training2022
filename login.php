@@ -1,35 +1,30 @@
 <?php
     declare(strict_types = 1);
     require_once "./autoloading.php";
+    include_once "./src/Form/loginForm.php";
+    //session_start();
+
     ?>
 
     <!DOCTYPE html>
     <html lang="en">
-    <head>
-        <title>Login</title>
-
         <?php
-        include_once "./src/Layout/head.html";
+            require_once "./src/layout/head.php";
         ?>
-
-    </head>
-    <body>
-
-    <div id="main">
-
+    <body class="d-flex flex-column min-vh-100 bg-lightdark text-white" cz-shortcut-listen="true">
         <?php
-
-        include_once "./src/Layout/navbar.html";
-        include_once "./src/View/loginForm.php";
-
+            include_once "./src/layout/navbar.php";
         ?>
-
-        <div id="footer">
-            <p>&copy; Norbert Grudzień - 2022</p>
-        </div>
-
-    </div>
-
-
+        <main class="main">
+            <div class="container">
+                <?php
+                    include_once "./src/View/notifications.php";
+                    //include_once "./src/Form/loginForm.php";
+                ?>
+            </div>
+        </main>
+        <?php
+            include_once "./src/layout/footer.php";
+        ?>
     </body>
     </html>

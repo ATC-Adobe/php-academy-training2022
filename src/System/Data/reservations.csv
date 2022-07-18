@@ -6,4 +6,3 @@ reservation_id, room_id, firstname, lastname, email, start_date, end_date
 5, 6, Rhiannon, Fletcher, id@porttitorscelerisque.com, 03/11/23 10:15:00, 03/11/23 15:15:00, 
 6, 2, Georgia, Casey, dictum.cursus@placerateget.ca, 28/02/22 10:00:00, 28/02/22 10:55:00,
 7,4,Norbert,Grudzien,norbert.grudzien@domain.com,"15/07/22 14:15:37","15/07/22 15:15:39"
-8,10,Norbert,Grudzien,norbert.grudzien@accenture.com,"15/07/22 16:00:00","15/07/22 17:00:00"

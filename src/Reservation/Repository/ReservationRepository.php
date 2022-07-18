@@ -1,15 +1,12 @@
 <?php
-    declare(strict_types = 1);
+
     namespace Reservation\Repository;
-    use Reservation\Model\ReservationModel;
-    use Room\Model\RoomModel;
-    use System\Database\MysqlConnection;
-    use System\File\Csv\CsvReader;
-    use System\File\Csv\CsvWriter;
     use DateTime;
+    use Room\Model\RoomModel;
+    use Reservation\Model\ReservationModel;
+    use System\Database\MysqlConnection;
 
     class ReservationRepository {
-
         public function addReservation (ReservationModel $reservation) :void {
             $roomId     = $reservation->getRoom()->getId();
             $firstName  = $reservation->getFirstName();
@@ -29,35 +26,6 @@
                 ";
             $instance = MysqlConnection::getInstance();
             $instance->query($query);
-        }
-
-        public function insertDataToCsv ($roomId, $firstName, $lastName, $email, $startDate, $endDate) :bool {
-            if ($firstName == '' || $lastName == '' || $email == '') {
-                return false;
-            }
-
-            if ($startDate >= $endDate) {
-                return false;
-            }
-
-            $reservationId = $this->getReservationId();
-
-            if ($reservationId == null) {
-                return false;
-            }
-
-            $file = new CsvWriter('./data/reservations.csv');
-            $file->saveData([[$reservationId, $roomId, $firstName, $lastName, $email, $startDate, $endDate]]);
-            $file->closeFile();
-
-            return true;
-        }
-
-        public function getReservationId (): int {
-            $file = new CsvReader('./data/reservations.csv');
-            $reservations = $file->loadData();
-
-            return sizeof($reservations);
         }
 
         public function getAllReservations() :array {

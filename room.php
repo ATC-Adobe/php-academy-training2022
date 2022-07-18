@@ -1,34 +1,29 @@
 <?php
     declare(strict_types = 1);
     require_once "./autoloading.php";
-?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Add room form</title>
-
-    <?php
-        include_once "./src/Layout/head.html";
+    session_start();
+    include_once "./src/Form/roomForm.php";
     ?>
 
-</head>
-<body>
-
-<div id="main">
-
-    <?php
-        include_once "./src/Layout/navbar.html";
-        include_once "./src/View/roomForm.php";
-    ?>
-
-
-
-    <div id="footer">
-        <p>&copy; Norbert Grudzień - 2022</p>
-    </div>
-
-</div>
-
-</body>
+    <!DOCTYPE html>
+    <html lang="en">
+        <?php
+            require_once "./src/layout/head.php";
+        ?>
+    <body class="d-flex flex-column min-vh-100 bg-lightdark text-white" cz-shortcut-listen="true">
+        <?php
+            include_once "./src/layout/navbar.php";
+        ?>
+        <main class="main">
+            <div class="container">
+                <?php
+                    include_once "./src/View/notifications.php";
+                    //include_once "./src/Form/roomForm.php";
+                ?>
+            </div>
+        </main>
+        <?php
+            include_once "./src/layout/footer.php";
+        ?>
+    </body>
 </html>

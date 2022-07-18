@@ -1,0 +1,27 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+
+}
+
+.bg-lightdark {
+    background-color: #0d1117
+}
+
+.main {
+    margin-top: 1.5vh;
+}
+
+.user {
+    display: block;
+    padding: var(--bs-nav-link-padding-y) var(--bs-nav-link-padding-x);
+    font-weight: var(--bs-nav-link-font-weight);
+    line-height: 4vh;
+}
+
+.username {
+    text-transform: uppercase;
+}
