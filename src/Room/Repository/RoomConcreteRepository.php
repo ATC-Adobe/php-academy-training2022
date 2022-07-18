@@ -6,8 +6,17 @@ use Room\Model\RoomModel;
 use System\Database\MySqlConnection;
 
 class RoomConcreteRepository {
+    /**
+     *
+     */
     public function __construct() {}
 
+    /**
+     * Fetches RoomModel if room with given id exists
+     *
+     * @param int $id
+     * @return RoomModel|null
+     */
     public function getRoomById(int $id) : ?RoomModel {
         $res =
             MySqlConnection::getInstance()
@@ -25,6 +34,11 @@ class RoomConcreteRepository {
         );
     }
 
+    /**
+     * Returns all valid rooms
+     *
+     * @return array<RoomModel>
+     */
     public function getAllRooms() : array {
         $res =
             MySqlConnection::getInstance()
@@ -44,6 +58,12 @@ class RoomConcreteRepository {
         return $list;
     }
 
+    /**
+     * Adds room to the DB
+     *
+     * @param RoomModel $room
+     * @return void
+     */
     public function addRoom(RoomModel $room) : void {
         $name = $room->getName();
         $floor = $room->getFloor();

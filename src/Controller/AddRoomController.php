@@ -10,6 +10,11 @@ use Router\Response;
 class AddRoomController {
     public function __construct() { }
 
+    /**
+     * Function validates room data and redirects.
+     *
+     * @return void
+     */
     #[NoReturn] public function makeRequest() : void {
         if(isset($_POST['room_name'])) {
 

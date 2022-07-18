@@ -9,6 +9,19 @@ use System\File\FileWriterFactory;
 use System\File\IFileWriter;
 
 class ReservationAdder {
+
+    /**
+     * Validates data and stores them using given strategy
+     *
+     * @param IFileWriter $strategy
+     * @param string $roomId
+     * @param string $name
+     * @param string $surname
+     * @param string $email
+     * @param \DateTime $from
+     * @param \DateTime $to
+     * @return bool
+     */
     public function uploadData(
         IFileWriter $strategy,
         string $roomId, string $name,       string $surname,

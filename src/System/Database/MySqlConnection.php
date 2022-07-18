@@ -21,6 +21,11 @@ class MySqlConnection extends PDO {
         );
     }
 
+    /**
+     * Gets singleton instance of MySqlConnection
+     *
+     * @return MySqlConnection
+     */
     public static function getInstance() : MySqlConnection {
         if(self::$conn === null) {
             self::$conn = new MySqlConnection();

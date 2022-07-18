@@ -5,6 +5,13 @@ namespace Controller;
 use Router\Response;
 
 class AddUserController {
+
+
+    /**
+     * Function validates user creation request and redirects
+     *
+     * @return void
+     */
     public function makeRequest() : void {
         $res = new Response();
         $res->send($_POST['name'].'<br>');

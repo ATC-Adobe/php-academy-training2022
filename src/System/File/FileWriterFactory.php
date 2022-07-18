@@ -10,6 +10,9 @@ use System\File\Xml\XmlFileWriterBuilder;
 class FileWriterFactory {
     private array $workers;
 
+    /**
+     *
+     */
     public function __construct() {
         $this->workers = [];
 
@@ -19,11 +22,24 @@ class FileWriterFactory {
         $this->registerWorker("csv",  new CsvFileWriterBuilder("reservations/reservations.csv"));
     }
 
+    /**
+     * Adds new resolve rule to the collection
+     *
+     * @param string $key Name
+     * @param IFileWriterBuilder $worker Factory Worker
+     * @return void
+     */
     public function registerWorker(string $key, IFileWriterBuilder $worker) : void {
 
         $this->workers[$key] = $worker;
     }
 
+    /**
+     * Gets IFileWriter by given key value
+     *
+     * @param $key
+     * @return IFileWriter|null
+     */
     public function getInstance($key) : ?IFileWriter {
         if(!isset($this->workers[$key])) {
             return null;

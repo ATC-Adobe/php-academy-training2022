@@ -2,14 +2,24 @@
 
 namespace User\Repository;
 
+use http\Client\Curl\User;
 use System\Database\MySqlConnection;
 use User\Model\UserModel;
 
 class UserConcreteRepository {
+
+    /**
+     *
+     */
     public function __construct() {
 
     }
 
+    /**
+     * Gets all users
+     *
+     * @return array<UserModel>
+     */
     public function getAllUsers() : array {
         $res =
             MySqlConnection::getInstance()
@@ -33,6 +43,12 @@ class UserConcreteRepository {
         return $users;
     }
 
+    /**
+     * Gets user with given id if exists
+     *
+     * @param int $id
+     * @return UserModel|null
+     */
     public function getUserById(int $id) : ?UserModel {
         $res =
             MySqlConnection::getInstance()
@@ -56,6 +72,12 @@ class UserConcreteRepository {
 
     }
 
+    /**
+     * Inserts user into database
+     *
+     * @param UserModel $user
+     * @return void
+     */
     public function addUser(UserModel $user) : void {
         //$id =       $user->getId();
         $name =     $user->getName();

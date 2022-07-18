@@ -2,6 +2,7 @@
 
 namespace Controller;
 
+use JetBrains\PhpStorm\NoReturn;
 use Reservation\Repository\ReservationConcreteRepository;
 use Router\Response;
 
@@ -10,7 +11,12 @@ class RemoveReservationController {
 
     }
 
-    public function makeRequest() : void {
+    /**
+     * Function validates reservation removal request and redirects with proper message
+     *
+     * @return void
+     */
+    #[NoReturn] public function makeRequest() : void {
         if(isset($_POST['id'])) {
             $id = $_POST['id'];
             unset($_POST['id']);

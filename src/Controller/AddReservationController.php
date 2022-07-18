@@ -13,6 +13,11 @@ use System\Util\DateFormatter;
 class AddReservationController {
     public function __construct() { }
 
+    /**
+     * Function validates reservation requests and redirects to proper view
+     *
+     * @return void
+     */
     public function makeRequest() : void {
 
         if(isset($_POST['room_id'])) {

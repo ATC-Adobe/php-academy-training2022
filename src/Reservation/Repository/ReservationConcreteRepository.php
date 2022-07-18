@@ -10,14 +10,29 @@ use System\File\IFileWriter;
 
 class ReservationConcreteRepository {
 
+    /** Default constructor
+     *
+     */
     public function __construct() { }
 
+    /**
+     * Deletes reservation with given id
+     *
+     * @param int $id
+     * @return void
+     */
     public function deleteReservationById(int $id) : void {
 
         MySqlConnection::getInstance()
             ->query("DELETE FROM Reservations WHERE id = '$id';");
     }
 
+    /**
+     * Fetches ReservationModel if reservation with given id exists
+     *
+     * @param int $id
+     * @return ReservationModel|null
+     */
     public function getReservationById(int $id) : ?ReservationModel {
 
         $res =
@@ -49,6 +64,11 @@ class ReservationConcreteRepository {
         );
     }
 
+    /**
+     * Fetches all active reservations in an array
+     *
+     * @return array<ReservationModel>
+     */
     public function getAllReservations() : array {
         $res =
             MySqlConnection::getInstance()
@@ -93,6 +113,12 @@ class ReservationConcreteRepository {
         return $arr;
     }
 
+    /**
+     * Adds new reservation to DB
+     *
+     * @param ReservationModel $reservation
+     * @return void
+     */
     public function addReservation(
         ReservationModel $reservation,
     ) : void {
@@ -119,6 +145,14 @@ class ReservationConcreteRepository {
 
     }
 
+    /**
+     * Checks whether or nor room is reserved during given time period
+     *
+     * @param int $roomId
+     * @param \DateTime $from
+     * @param \DateTime $to
+     * @return bool
+     */
     public function checkForTimeCollisions(
         int $roomId,
         \DateTime $from,
