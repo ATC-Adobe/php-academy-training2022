@@ -12,7 +12,8 @@ class RegisterController
     {
         (new RegisterForm())->render($msg, $type);
     }
-    public function store() {
+    public function store(): void
+    {
 
         $user = new User();
         $user->first_name = htmlentities($_POST["first_name"]);

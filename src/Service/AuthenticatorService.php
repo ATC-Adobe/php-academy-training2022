@@ -42,7 +42,7 @@ class AuthenticatorService
     }
     public function logout(): void
     {
-        Session::getInstance()->unset();
+        Session::getInstance()->delete();
     }
     protected function hash(string $password): string
     {

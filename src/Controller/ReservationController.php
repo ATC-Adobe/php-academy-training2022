@@ -77,9 +77,13 @@ class ReservationController
     public function delete(): void
     {
         (new AuthenticatorService())->isNotAuthRedirect();
+
         $reservationService = new ReservationService();
-        //TODO: authorize
         $id = $_POST["reservation_id"];
+        $reservation = $reservationService->findOne($id);
+
+        $this->yourReservationGuard($reservation);
+
         $ok = $reservationService->deleteReservation($id);
         $msg = "";
         if (!$ok) {
@@ -94,17 +98,21 @@ class ReservationController
         (new AuthenticatorService())->isNotAuthRedirect();
         $id = $_GET["reservation_id"];
         $service = new ReservationService();
-        $reservation = $service->findOne($id);
+        $reservation = $service->findOneWithRelations($id);
         (new ReservationUpdateForm($reservation))->render();
     }
     public function update(): void
     {
         (new AuthenticatorService())->isNotAuthRedirect();
         $service = new ReservationService();
-        // TODO: authorize
-        // TODO: start < end!
         $id = $_POST["reservation_id"];
         $reservation = $service->findOne($id);
+        if(!$reservation) {
+            $this->index("Failed fetching reservation! Is id correct?");
+            return;
+        }
+        $this->yourReservationGuard($reservation);
+
         $reservation->start_date = htmlentities($_POST["start_date"] ?? $reservation->start_date);
         $reservation->end_date = htmlentities($_POST["end_date"] ?? $reservation->end_date);
         $reservation->user_id = Session::getInstance()->get("user_id");
@@ -141,5 +149,17 @@ class ReservationController
     {
         $reservation->start_date = date("Y-m-d H:i:s", strtotime($reservation->start_date));
         $reservation->end_date = date("Y-m-d H:i:s", strtotime($reservation->end_date));
+    }
+
+    /**
+     * @param Reservation $reservation
+     * @return void
+     */
+    public function yourReservationGuard(Reservation $reservation): void
+    {
+        if ($reservation->user_id != Session::getInstance()->get("user_id")) {
+            echo "Not your reservation!";
+            exit();
+        }
     }
 }

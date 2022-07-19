@@ -52,6 +52,13 @@ class ReservationService implements \IOStrategyContextInterface
         }
         return true;
     }
+    public function findOneWithRelations(int $id) {
+        if(method_exists($this->ioStrategy, "findOneWithRelations")) {
+            return $this->ioStrategy->findOneWithRelations($id);
+        }
+        echo "Chosen strategy doesn't support that";
+        return false;
+    }
     public function findOne(int $id): bool|Reservation
     {
         if(method_exists($this->ioStrategy, "findOne")) {

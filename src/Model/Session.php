@@ -37,9 +37,10 @@ class Session
     {
         session_commit();
     }
-    public function unset(): void
+    public function delete(): void
     {
         session_unset();
+        session_destroy();
     }
     public function flush(array $keys): void
     {

@@ -94,4 +94,11 @@ class ReservationRepository extends BaseRepository implements IOHandlerInterface
     public function findBelongsToUser(int $user_id) {
         return $this->readWithRelations("WHERE user_id = $user_id");
     }
+    public function findOneWithRelations(int $reservation_id) {
+        $data = $this->readWithRelations("WHERE reservation.id = $reservation_id");
+        if(!$data) {
+            return false;
+        }
+        return $data[0];
+    }
 }

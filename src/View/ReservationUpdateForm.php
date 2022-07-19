@@ -23,7 +23,7 @@ class ReservationUpdateForm implements \Component
     <input type="hidden" name="reservation_id" value="'.$this->reservation->id .'" />
     <div class="row my-3">
         <h1 class="w-100 text-center">
-            Change your reservation '. $this->reservation->first_name.' '.$this->reservation->last_name.'
+            Change your reservation '. $this->reservation->user->first_name.' '.$this->reservation->user->last_name.'
         </h1>
     </div>';
         (new FormField("Start date ( current: ". $this->reservation->start_date .")","start_date", "datetime-local"))->render();
