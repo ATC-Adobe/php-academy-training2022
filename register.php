@@ -1,15 +1,21 @@
 <?php
     declare(strict_types = 1);
     require_once "./autoloading.php";
-    session_start();
-    include_once "./src/Form/registerForm.php";
-    ?>
 
-    <!DOCTYPE html>
-    <html lang="en">
-    <?php
-        require_once "./src/layout/head.php";
-    ?>
+    use Controller\User\RegisterController;
+
+    if (isset($_POST['username']) &&
+        isset($_POST['firstname']) &&
+        isset($_POST['lastname']) &&
+        isset($_POST['email']) &&
+        isset($_POST['password'])
+    ) {
+        (new RegisterController())->request();
+    }
+
+    require_once "./src/layout/head.php";
+?>
+
     <body class="d-flex flex-column min-vh-100 bg-lightdark text-white" cz-shortcut-listen="true">
         <?php
             include_once "./src/layout/navbar.php";
@@ -18,7 +24,7 @@
             <div class="container">
                 <?php
                     include_once "./src/View/notifications.php";
-                    //include_once "./src/Form/registerForm.php";
+                    include_once "./src/Form/registerForm.php";
                 ?>
             </div>
         </main>

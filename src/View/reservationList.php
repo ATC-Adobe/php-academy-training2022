@@ -1,14 +1,9 @@
 <?php
     use Reservation\Model\ReservationModel;
     use Reservation\Repository\ReservationRepository;
-    use Controller\Reservation\DeleteReservationController;
 
     $repo     = new ReservationRepository();
     $reservations = $repo->getAllReservations();
-
-    if (isset($_POST['id'])) {
-        (new DeleteReservationController())->request();
-    }
 
 ?>
     <h2 class="text-center">List of all confirmed reservations</h2>

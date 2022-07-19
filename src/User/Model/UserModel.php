@@ -9,14 +9,16 @@ class UserModel {
     private string $firstName;
     private string $lastName;
     private string $email;
+    private string $salt;
     private string $password;
 
-    public function __construct ($id, $username, $firstName, $lastName, $email, $password) {
+    public function __construct (int $id, string $username, string $firstName, string $lastName, string $email, string $salt, string $password) {
         $this->id = $id;
         $this->username = $username;
         $this->firstName = $firstName;
         $this->lastName = $lastName;
         $this->email = $email;
+        $this->salt = $salt;
         $this->password = $password;
     }
 
@@ -41,6 +43,11 @@ class UserModel {
     public function getEmail(): string
     {
         return $this->email;
+    }
+
+    public function getSalt(): string
+    {
+        return $this->salt;
     }
 
     public function getPassword(): string

@@ -1,15 +1,26 @@
 <?php
     declare(strict_types = 1);
     require_once "./autoloading.php";
-    session_start();
-    include_once "./src/Form/reservationForm.php";
-    ?>
 
-    <!DOCTYPE html>
-    <html lang="en">
-        <?php
-            require_once "./src/layout/head.php";
-        ?>
+    use Controller\Reservation\AddReservationController;
+
+    if ($session->get('user_id')) {
+        if (isset($_POST['roomId']) &&
+            isset($_POST['firstName']) &&
+            isset($_POST['lastName']) &&
+            isset($_POST['email']) &&
+            isset($_POST['startDate']) &&
+            isset($_POST['endDate'])
+        ) {
+            (new AddReservationController())->request();
+        }
+    } else {
+        header ('Location: ./login.php');
+    }
+
+    require_once "./src/layout/head.php";
+?>
+
     <body class="d-flex flex-column min-vh-100 bg-lightdark text-white" cz-shortcut-listen="true">
         <?php
             include_once "./src/layout/navbar.php";
@@ -18,7 +29,16 @@
             <div class="container">
                 <?php
                     include_once "./src/View/notifications.php";
-                    //include_once "./src/Form/reservationForm.php";
+                    if (isset($_GET['roomId']) && isset($_GET['name'])) {
+                        $roomId = $_GET['roomId'];
+
+                        echo "<h2 class='text-center'>Reserve " . $_GET['name'] . "</h2>";
+                        $input = "<input type='hidden' name='roomId' value='".$roomId."'>";
+                    } else {
+                        header ("Location: ./index.php");
+                        die();
+                    }
+                    include_once "./src/Form/reservationForm.php";
                 ?>
             </div>
         </main>

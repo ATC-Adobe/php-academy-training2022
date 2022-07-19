@@ -1,17 +1,4 @@
-<?php
-    use Controller\User\RegisterController;
-
-    if (isset($_POST['username']) &&
-        isset($_POST['firstname']) &&
-        isset($_POST['lastname']) &&
-        isset($_POST['email']) &&
-        isset($_POST['password'])
-    ) {
-        (new RegisterController())->request();
-    }
-?>
-
-    <h2 class="text-center">Register a new account</h2>
+ <h2 class="text-center">Register a new account</h2>
     <form method="POST" action="./register.php">
         <div class="mb-3">
             <label for="username" class="form-label">Username</label>
@@ -32,6 +19,12 @@
         <div class="mb-3">
             <label for="password" class="form-label">Password</label>
             <input type="password" class="form-control" name="password" placeholder="password" id="password" required/>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" required>
+            <label class="form-check-label" for="flexCheckDefault">
+                I accept the <a href="#">terms and conditions</a>.
+            </label>
         </div>
         <button type="submit" class="btn btn-primary">Register</button>
     </form>

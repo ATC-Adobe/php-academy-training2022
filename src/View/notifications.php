@@ -60,6 +60,30 @@ if (isset($_GET['login'])) {
     }
 }
 
+if (isset($_GET['regError'])) {
+    if ($_GET['regError'] == 1) {
+        echo "<div class='alert alert-danger' role='alert'>
+                <span>The fields are empty!</span>
+            </div>";
+    } else if ($_GET['regError'] == 2){
+        echo "<div class='alert alert-danger' role='alert'>
+                <span>Invalid or unsupported email type!</span>
+            </div>";
+    } else if ($_GET['regError'] == 3){
+        echo "<div class='alert alert-danger' role='alert'>
+                <span>Username or Email is taken!</span>
+            </div>";
+    } else if ($_GET['regError'] == 4){
+        echo "<div class='alert alert-danger' role='alert'>
+                <span>Your password is too weak!</span>
+            </div>";
+    } else {
+        echo "<div class='alert alert-danger' role='alert'>
+                <span>Something went wrong while registering your account!</span>
+            </div>";
+    }
+}
+
 if (isset($_GET['register'])) {
     if ($_GET['register'] === 'true') {
         echo "<div class='alert alert-success' role='alert'>

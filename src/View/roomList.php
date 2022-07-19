@@ -1,16 +1,13 @@
 <?php
     use Room\Model\RoomModel;
     use Room\Repository\RoomRepository;
-    use Controller\Room\DeleteRoomController;
 
     $roomRepository     = new RoomRepository();
     $rooms              = $roomRepository->getAllRooms();
-
-    if (isset($_POST['id'])) {
-        (new DeleteRoomController())->request();
-    }
 ?>
+
 <h2 class="text-center">List of available Rooms</h2>
+<h5 class="text-center">Only logged user can book a room.</h5>
 
 <table class="table table-dark table-striped">
   <thead>

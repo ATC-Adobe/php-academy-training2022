@@ -3,6 +3,7 @@
     namespace Reservation\Model;
     use DateTime;
     use Room\Model\RoomModel;
+    use User\Model\UserModel;
 
     class ReservationModel {
 
@@ -13,6 +14,7 @@
         private string $email;
         private DateTime $startDate;
         private DateTime $endDate;
+        private UserModel $user;
 
         public function __construct (
             int       $reservationId,
@@ -21,7 +23,8 @@
             string    $lastName,
             string    $email,
             DateTime  $startDate,
-            DateTime  $endDate
+            DateTime  $endDate,
+            UserModel $user
         ) {
             $this->reservationId    = $reservationId;
             $this->room             = $room;
@@ -30,6 +33,7 @@
             $this->email            = $email;
             $this->startDate        = $startDate;
             $this->endDate          = $endDate;
+            $this->user             = $user;
         }
 
         public function getReservationId() :int {
@@ -58,5 +62,13 @@
 
         public function getEndDate() :DateTime {
             return $this->endDate;
+        }
+
+        public function getUser() :UserModel {
+            return $this->user;
+        }
+
+        public function setUser(UserModel $user): void {
+            $this->user = $user;
         }
     }

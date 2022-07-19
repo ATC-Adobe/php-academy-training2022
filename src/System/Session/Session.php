@@ -4,22 +4,18 @@
 
     class Session implements SessionInterface {
 
-        protected static ?Session $instance = null;
+        private static ?Session $instance = null;
 
         protected function __construct () {
             if (session_status() === PHP_SESSION_NONE) {
+                session_write_close();
                 session_start();
             }
         }
 
         public static function getInstance (): Session {
-            if (self::$instance === null) {
-                self::$instance = new Session();
-            }
-            return self::$instance;
+            return self::$instance ??= new Session();
         }
-
-        protected function __clone () { }
 
         public function get (string $key) :mixed {
             if (array_key_exists($key, $_SESSION)) {
@@ -33,13 +29,14 @@
             return $this;
         }
 
-        public function destroy (string $key) :void {
+        public function unset (string $key) :void {
             if (array_key_exists($key, $_SESSION)) {
                 unset($_SESSION[$key]);
             }
         }
 
-        public function clear () :void {
+        public function destroy () :void {
             session_unset();
+            session_destroy();
         }
     }
