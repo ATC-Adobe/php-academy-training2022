@@ -7,6 +7,7 @@ use Room\Model\RoomModel;
 use Room\Repository\RoomConcreteRepository;
 use Router\Response;
 use System\Status;
+use System\Util\Authenticator;
 use System\Util\Session;
 
 class AddRoomController {
@@ -24,9 +25,9 @@ class AddRoomController {
                 ->goTo('/');
         }
 
-        $sess = Session::getInstance();
+        $auth = new Authenticator();
 
-        if($sess->get('valid') === null) {
+        if(!$auth->isLogged()) {
             (new Response())
                 ->goTo('/');
         }

@@ -9,6 +9,7 @@ use Room\Repository\RoomConcreteRepository;
 use Router\Response;
 use System\File\FileWriterFactory;
 use System\Status;
+use System\Util\Authenticator;
 use System\Util\DateFormatter;
 use System\Util\Session;
 
@@ -32,9 +33,9 @@ class AddReservationController {
             = [ $_POST['room_id'],    $_POST['from'],     $_POST['to']];
 
 
-        $sess = Session::getInstance();
+        $auth = new Authenticator();
 
-        if($sess->get('valid') === null) {
+        if(!$auth->isLogged()) {
             (new Response())
                 ->goTo('/');
         }
@@ -54,7 +55,7 @@ class AddReservationController {
             (new ReservationAdder())->uploadData(
                 (new FileWriterFactory())
                     ->getInstance($_POST['option']),
-            $room_id, $sess->get('id'), $from, $to,
+            $room_id, $auth->getUser()->getId(), $from, $to,
         );
 
 

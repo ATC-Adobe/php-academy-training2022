@@ -36,6 +36,9 @@ else {
             <?php
                 if(isset($_GET['status'])) {
                     echo match(intval($_GET['status'])) {
+                        \System\Status::REGISTER_OK => "<div class='success'>
+                                    Account created
+                                </div>",
                         \System\Status::LOGIN_INVALID => "<div class='error'>
                                     Invalid login or password
                                 </div>",

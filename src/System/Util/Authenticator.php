@@ -25,11 +25,21 @@ class Authenticator {
             return null;
         }
 
-        // hash password
-
-
         // if hashed matches stored password, login successful
         if($this->passwordVerify($password, $user->getSalt(), $user->getPassword())) {
+
+            $sess = Session::getInstance();
+
+            $sess->set('valid',     true);
+
+            $sess->set('username',  $user->getNickname());
+            $sess->set('id',        $user->getId());
+            $sess->set('password',  $user->getPassword());
+            $sess->set('salt',      $user->getSalt());
+            $sess->set('name',      $user->getName());
+            $sess->set('surname',   $user->getSurname());
+            $sess->set('email',     $user->getEmail());
+
             return $user;
         }
 
@@ -37,54 +47,24 @@ class Authenticator {
         return null;
     }
 
-    // error codes
-    public const REGISTER_OK = 0;
-    public const FIELD_EMPTY = 1;
-    public const USERNAME_OR_EMAIL_TAKEN = 2;
-    public const EMAIL_INVALID = 3;
-    public const PASSWORD_NOT_MATCH = 4;
-    public const PASSWORD_TOO_WEAK = 5;
-
     public function register(
         string $username, string $name, string $surname, string $email,
         string $password1, string $password2
     ) : int {
 
-        if($username == '' || $name == '' || $surname == '' || $email == ''
-                || $password1 == '' || $password2 == '') {
-            return Status::REGISTER_FIELD_EMPTY;
-        }
+        $validation =
+            (new RegisterValidator())
+                ->validate($username, $name, $surname,
+                            $email, $password1, $password2);
 
-        if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            return Status::REGISTER_EMAIL_INVALID;
-        }
-
-        $repo = new UserConcreteRepository();
-
-        $u1 = $repo->getUserByUsername($username);
-        $u2 = $repo->getUserByEmail($email);
-
-        if($u1 !== null || $u2 !== null) {
-            return Status::REGISTER_USERNAME_OR_EMAIL_TAKEN;
-        }
-
-        if($password2 !== $password1) {
-            return Status::REGISTER_PASSWORD_NOT_MATCH;
-        }
-
-        // Validate password strength
-        $uppercase = preg_match('@[A-Z]@',      $password1);
-        $lowercase = preg_match('@[a-z]@',      $password1);
-        $number    = preg_match('@[0-9]@',      $password1);
-        $specialChars = preg_match('@[^\w]@',   $password1);
-
-        if(!$uppercase || !$lowercase || !$number
-            || !$specialChars || strlen($password1) < 8) {
-            return Status::REGISTER_PASSWORD_TOO_WEAK;
+        if($validation != Status::REGISTER_OK) {
+            return $validation;
         }
 
         $salt = $this->generateSalt();
         $hash = $this->passwordHash($password1, $salt);
+
+        $repo =  new UserConcreteRepository();
 
         $repo->addUser(
             new UserModel (
@@ -103,6 +83,33 @@ class Authenticator {
 
     public function logout() : void {
 
+        $sess = Session::getInstance();
+        $sess->destroy();
+    }
+
+    public function isLogged() : bool {
+
+        $sess = Session::getInstance();
+
+        return $sess->get('valid') !== null;
+    }
+
+    public function getUser() : ?UserModel {
+        if(!$this->isLogged()) {
+            return null;
+        }
+
+        $sess = Session::getInstance();
+
+        return new UserModel(
+            $sess->get('id'),
+            $sess->get('name'),
+            $sess->get('surname'),
+            $sess->get('email'),
+            $sess->get('username'),
+            $sess->get('salt'),
+            $sess->get('password'),
+        );
     }
 
     private function passwordHash(string $password, string $salt) : string {
