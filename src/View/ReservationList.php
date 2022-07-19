@@ -40,7 +40,7 @@ class ReservationList implements Component
             echo '<ul class="w-100">';
             echo '<li>room name: ' . $this->reservations[$i]->room->name . '</li>';
             echo '<li>room floor: ' . $this->reservations[$i]->room->floor . '</li>';
-            echo '<li>user: ' . $this->reservations[$i]->user->first_name . '...</li>';
+            echo '<li>user: ' . substr($this->reservations[$i]->user->nickname,0,5) . '...</li>';
 //            echo '<li>last name: ' . $this->reservations[$i]->user->last_name . '</li>';
 //            echo '<li>email: ' . $this->reservations[$i]->email . '</li>';
             echo '<li>start_date: ' . $this->reservations[$i]->start_date . ' </li>';

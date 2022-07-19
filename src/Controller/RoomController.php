@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Model\Room;
+use App\Service\AuthenticatorService;
 use App\Service\RoomService;
 use App\View\RoomForm;
 use App\View\RoomList;
@@ -17,6 +18,7 @@ class RoomController
 
     public function store(): void
     {
+        (new AuthenticatorService())->isNotAuthRedirect();
         $roomService = new RoomService();
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -38,6 +40,7 @@ class RoomController
 
     public function create(): void
     {
+        (new AuthenticatorService())->isNotAuthRedirect();
         (new RoomForm())->render();
     }
 }

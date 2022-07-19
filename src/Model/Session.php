@@ -41,4 +41,10 @@ class Session
     {
         session_unset();
     }
+    public function flush(array $keys): void
+    {
+        foreach ($keys as $key) {
+            unset($_SESSION[$key]);
+        }
+    }
 }

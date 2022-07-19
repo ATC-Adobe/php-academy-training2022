@@ -11,7 +11,11 @@ use Component;
 
 class ReservationForm implements Component
 {
-    public function render(): void
+    public function __construct(protected string $name, protected string $id)
+    {
+    }
+
+    public function render(string $msg = ""): void
     {
         (new Header())->render("Add Reservation");
         (new Navbar())->render();
@@ -19,10 +23,9 @@ class ReservationForm implements Component
     <form class="container mt-4" method="post" action="/reservationForm" >
         <div class="row my-3">
             <h1 class="w-100 text-center">';
-        $name = $_GET['name'] ?? "";
-        $id = $_GET['id'] ?? "";
-        echo "Make reservation for $name";
-        echo '<input class="d-none" name="room_id" value="' . $id . '"  type="text" />';
+        echo "Make reservation for $this->name";
+        echo '<input class="d-none" name="room_id" value="' . $this->id . '"  type="text" />';
+        echo '<input class="d-none" name="room_name" value="' . $this->name . '"  type="text" />';
 
         echo '            </h1>
         </div>';
@@ -38,7 +41,7 @@ class ReservationForm implements Component
 //        echo '</div>';
         echo '<div class="row">';
 
-        (new FormField("Start date", "start_date", "datetime-local"))->render();
+        (new FormField("Start date", "start_date", "datetime-local"))->render($msg);
         (new FormField("End date", "end_date", "datetime-local"))->render();
 
         echo '</div>

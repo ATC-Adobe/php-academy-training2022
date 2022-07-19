@@ -45,6 +45,7 @@ class ReservationRepository extends BaseRepository implements IOHandlerInterface
                 u.first_name as user_first_name,
                 u.last_name as user_last_name,
                 u.email as user_email,
+                u.nickname as user_nickname,                
                 start_date,
                 end_date,
                 name as room_name,
