@@ -14,7 +14,7 @@ if(isset($_POST['room_name'])) {
 
     <title>Rooms</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" type="text/css" href="layout/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/layout/css/style.css">
 
     <!--
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -24,12 +24,7 @@ if(isset($_POST['room_name'])) {
 <body>
 
 <?php
-if(__ROUTER) {
     include "layout/menur.php";
-}
-else {
-    require "layout/menu.html";
-}
 ?>
 
 <div class="header">
@@ -37,8 +32,7 @@ else {
     <br><br>
     <div class="main">
         <?php
-            $action = __ROUTER ? '/add/room' : 'roomForm.php';
-            echo "<form method='post' action='$action'>";
+            echo "<form method='post' action='/add/room'>";
         ?>
 
             <div class="float ltable">

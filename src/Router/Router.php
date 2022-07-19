@@ -69,13 +69,37 @@ class Router {
     }
 
 
+    public function stage(string $path, string $filename) : void {
+        $callback = function (Response $res) use ($filename) {
+            $_REQUEST['iterator']->next();
+            include $filename;
+        };
+
+        $this->use($path, $callback);
+    }
+
     /**
      * Lets the router redirect to requested path
      *
      * @return void
      */
     public function redirect() : void {
+
         $uri = explode('?', $_SERVER['REQUEST_URI'])[0];
+
+        /* Multilevel router implementation
+        if(!isset($_REQUEST['iterator'])) {
+            $uri = explode('?', $_SERVER['REQUEST_URI'])[0];
+
+            $_REQUEST['iterator'] = new \ArrayIterator(
+                explode('/', $uri)
+            );
+
+            $_REQUEST['iterator']->next();
+        }
+
+        $uri = '/' . $_REQUEST['iterator']->current();
+        */
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if(isset($this->routesPost[$uri])) {

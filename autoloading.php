@@ -79,6 +79,4 @@ $autoloader->loadConfig(
     $_SERVER['DOCUMENT_ROOT'].'/autoloadingConfig.json'
 );
 
-// global variable telling whether router is active or not
-const __ROUTER = true;
 

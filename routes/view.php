@@ -1,11 +1,11 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 use Router\Response;
 use Router\Router;
 use System\Util\Session;
-
-require_once 'autoloading.php';
+use View\IndexView;
 
 $sess = Session::getInstance();
 
@@ -13,8 +13,10 @@ $router = new Router(
     '404.html'
 );
 
-// experimental router segregation
-$router->stage('/view', 'routes/view.php');
+$router->get('/', function(Response $res) {
+    (new IndexView)->render();
+});
+
 
 $router->use('/', function(Response $res) {
     (new \View\IndexView())
@@ -56,36 +58,5 @@ $router->use('/userLogOut', function(Response $res) {
         ->makeRequest();
 });
 
-$router->use('/user/reservations', function(Response $res) {
-    (new \View\UsersReservationListingView())
-        ->render();
-});
-
-
-$router->post('/delete/reservation', function(Response $res) {
-    (new \Controller\RemoveReservationController())
-        ->makeRequest();
-});
-
-$router->post('/add/reservation', function(Response $res) {
-    (new \Controller\AddReservationController())
-        ->makeRequest();
-});
-
-$router->post('/add/room', function(Response $res) {
-    (new \Controller\AddRoomController())
-        ->makeRequest();
-});
-
-
-$router->post('/add/user', function(Response $res) {
-    (new \Controller\AddUserController())
-        ->makeRequest();
-});
-
-$router->post('/login', function(Response $res) {
-    (new \Controller\LogInController())
-        ->makeRequest();
-});
 
 $router->redirect();

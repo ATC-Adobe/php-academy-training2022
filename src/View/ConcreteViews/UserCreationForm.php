@@ -23,12 +23,7 @@ use \System\Util\Authenticator;
 <body>
 
 <?php
-if(__ROUTER) {
     include "layout/menur.php";
-}
-else {
-    require "layout/menu.html";
-}
 ?>
 <div class="header">
     Account Registration Form

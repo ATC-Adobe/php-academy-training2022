@@ -22,9 +22,9 @@ class CsvFileWriter implements IFileWriter {
         }
 
         $id =       $reservation->getId();
-        $surname =  $reservation->getSurname();
-        $email =    $reservation->getEmail();
-        $name =     $reservation->getName();
+        $surname =  $reservation->getUser()->getSurname();
+        $email =    $reservation->getUser()->getEmail();
+        $name =     $reservation->getUser()->getName();
         $roomId =   $reservation->getRoom()->getId();
         $from =     $reservation->getFrom()->format('d/m/y H:i:s');
         $to =       $reservation->getTo()->format(  'd/m/y H:i:s');

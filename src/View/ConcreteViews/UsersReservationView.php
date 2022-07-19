@@ -25,12 +25,7 @@ use Room\Repository\RoomConcreteRepository;
 <body>
 
 <?php
-if(__ROUTER) {
     include "layout/menur.php";
-}
-else {
-    require "layout/menu.html";
-}
 ?>
 
 <div class="header">
@@ -83,10 +78,7 @@ else {
                     $email <br>
                     $from - $to <br>";
 
-
-            $action = __ROUTER ? '/delete/reservation' : 'roomReservationListing.php';
-
-            echo    "<form method='POST' action='$action'>
+            echo    "<form method='POST' action='/delete/reservation'>
                         <input type='hidden' name = 'id' value = '$id'>
                         <input type='submit' value='Delete reservation >'>                    
                     </form>

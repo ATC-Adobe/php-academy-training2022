@@ -14,12 +14,7 @@
 <body>
 
 <?php
-    if(__ROUTER) {
-        include "layout/menur.php";
-    }
-    else {
-        require "layout/menu.html";
-    }
+    include "layout/menur.php";
 ?>
 
 <div class="header">
