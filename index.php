@@ -18,6 +18,12 @@ $router->use('/', function(Response $res) {
         ->render();
 });
 
+$router->use('/test', function(Response $res) {
+    include 'DependencyInjection.php';
+    die();
+});
+
+
 // experimental router segregation
 $router->stage('/view',         'routes/view.php');
 $router->stage('/room',         'routes/room.php');
