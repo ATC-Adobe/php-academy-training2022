@@ -7,7 +7,7 @@ use Reservation\ReservationRepository;
 class DeleteReservation
 {
 
-    public function deleteReservation()
+    public function deleteReservation(): void
     {
         $deleteRoom = new ReservationRepository();
         $deleteRoom->deleteReservation();

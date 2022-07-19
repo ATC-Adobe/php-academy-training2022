@@ -4,8 +4,8 @@ namespace Factory;
 
 class ReservationCommand implements ICommand
 {
-    private $dataReservation;
-    private $objectStrategy;
+    private array $dataReservation;
+    private object $objectStrategy;
 
     public function __construct($dataReservation, IReservation $object)
     {

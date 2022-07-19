@@ -14,4 +14,13 @@ class ReservationService implements IReservation
         $reservationRepository = new ReservationRepository();
         $reservationRepository->addReservation($reservationModel);
     }
+
+    public function updateReservation($updateReservation)
+    {
+        $reservationModel = new ReservationModel();
+        $reservationModel->sendUpdatedDataToModel($updateReservation);
+
+        $reservationRepository = new ReservationRepository();
+        $reservationRepository->updateReservation($reservationModel);
+    }
 }

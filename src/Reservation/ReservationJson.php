@@ -7,7 +7,7 @@ use Factory\IReservation;
 class ReservationJson implements IReservation
 {
 
-    private $json;
+    private string $json;
 
     public function __construct()
     {

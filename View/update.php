@@ -9,13 +9,13 @@ if (!$id) {
     exit;
 }
 
-$editRoom = new \Controllers\UpdateReservation();
+$editRoom = new \Controllers\Reservation\UpdateReservation();
 $editRoom->editReservation();
 
 //var_dump($editRoom);die;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $updatedReservation = new \Controllers\UpdateReservation();
+    $updatedReservation = new \Controllers\Reservation\UpdateReservation();
     $updatedReservation->updateReservation();
 
     header('Location:reservationsList.php');
@@ -42,6 +42,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 
 <?php require_once "../layout/header.html"; ?>
-<?php require_once "../layout/navbar.html"; ?>
+<?php require_once "../layout/navbar.php"; ?>
 <?php require_once "../Form/reservationForm.php"; ?>
 <?php require_once "../layout/footer.html"; ?>

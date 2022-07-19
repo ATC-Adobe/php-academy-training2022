@@ -7,14 +7,14 @@ use System\Database\MysqlConnection;
 class RoomRepository
 {
 
-    public function getAllRooms()
+    public function getAllRooms(): bool|array
     {
         $connection = MysqlConnection::getInstance();
         $selectQuery = "SELECT * FROM rooms;";
         return $connection->query($selectQuery)->fetchAll();
     }
 
-    public function addRoom(RoomModel $roomModel)
+    public function addRoom(RoomModel $roomModel): void
     {
         $connection = MysqlConnection::getInstance();
 

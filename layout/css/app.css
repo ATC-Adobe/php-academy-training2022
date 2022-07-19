@@ -118,3 +118,9 @@ h4 {
     margin: auto;
     margin-bottom: 255px;
 }
+
+#username {
+    color: white;
+    margin: auto;
+    margin-left: 70px;
+}

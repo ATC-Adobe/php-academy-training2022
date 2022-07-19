@@ -1,14 +1,27 @@
 <?php
 
+declare(strict_types=1);
+
+use Controllers\Room\DisplayRooms;
+use Controllers\User\LoginUser;
+
 require_once "autoloader.php";
+
+session_start();
+
 require_once "layout/header.html"; ?>
 <body class="index-list-body">
 <?php
-require_once "layout/navbar.html"; ?>
+require_once "layout/navbar.php"; ?>
 
 <?php
-$displayRooms = new \Controllers\Room\DisplayRooms();
+$displayRooms = new DisplayRooms();
 $rooms = $displayRooms->displayRooms();
+
+$nickName = $_SESSION['username'];
+
+$login = new LoginUser();
+$userId = $login->getUserId($nickName);
 ?>
 
 <table class="table">
@@ -39,6 +52,14 @@ $rooms = $displayRooms->displayRooms();
             echo $room['id']; ?>">
             <input type="hidden" name="roomNumber" value="<?php
             echo $room['roomNumber']; ?>">
+
+            <?php
+            foreach ($userId as $id) : ?>
+                <input type="hidden" name="userId" value="<?php
+                echo $id['id']; ?>">
+            <?php
+            endforeach; ?>
+
             <td>
                 <button type="submit" class="btn check">Zarezerwuj</button>
             </td>
@@ -48,8 +69,6 @@ $rooms = $displayRooms->displayRooms();
     <?php
     endforeach; ?>
 </table>
-</form>
 <?php
 require_once "layout/footer.html" ?>
 </body>
-</html>

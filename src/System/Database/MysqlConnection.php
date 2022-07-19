@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace System\Database;
 
-class MysqlConnection extends \PDO
+use PDO;
+
+class MysqlConnection extends PDO
 {
     protected static ?MysqlConnection $instance = null;
 

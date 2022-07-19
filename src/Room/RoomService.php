@@ -2,11 +2,9 @@
 
 namespace Room;
 
-use Room\RoomModel;
-
 class RoomService
 {
-    public function createRoom(array $roomData)
+    public function createRoom(array $roomData): void
     {
         $roomModel = new RoomModel();
         $roomModel->createRoom($roomData);

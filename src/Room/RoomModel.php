@@ -9,7 +9,7 @@ class RoomModel
     protected int $roomNumber;
     protected int $floorNumber;
 
-    public function createRoom(array $roomData)
+    public function createRoom(array $roomData): void
     {
         $this->roomNumber = $roomData['roomNumber'];
         $this->floorNumber = $roomData['floorNumber'];
@@ -27,12 +27,12 @@ class RoomModel
         return $this;
     }
 
-    public function getRoomNumber()
+    public function getRoomNumber(): int
     {
         return $this->roomNumber;
     }
 
-    public function getFloorNumber()
+    public function getFloorNumber(): int
     {
         return $this->floorNumber;
     }

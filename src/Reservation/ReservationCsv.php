@@ -7,7 +7,7 @@ use SplFileObject;
 
 class ReservationCsv implements IReservation
 {
-    private $spl;
+    private object $spl;
 
     public function __construct()
     {

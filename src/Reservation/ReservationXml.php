@@ -3,11 +3,10 @@
 namespace Reservation;
 
 use Factory\IReservation;
-use SimpleXMLElement;
 
 class ReservationXml implements IReservation
 {
-    private $xml;
+    private object $xml;
 
     public function __construct()
     {

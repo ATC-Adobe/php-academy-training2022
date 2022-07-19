@@ -9,14 +9,14 @@ use Reservation\ReservationXml;
 
 class ReservationsFactory
 {
-    private $dataType;
+    private string $dataType;
 
     public function __construct($dataType)
     {
         $this->dataType = $dataType;
     }
 
-    public function getReservationType()
+    public function getReservationType(): ReservationJson|ReservationCsv|ReservationService|ReservationXml
     {
         switch ($this->dataType) {
             case "database":

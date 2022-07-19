@@ -12,18 +12,15 @@ require_once "../layout/header.html" ?>
 require_once "../layout/navbar.php" ?>
 
 <?php
-$displayReservations = new DisplayReservations();
-$reservations = $displayReservations->displayReservations();
-?>
-
-<?php
-if (isset($_GET['reservation'])) : ?>
-    <p class="message">Sala została zarezerwowana</p>
-<?php
-elseif (isset($_GET['delete'])) : ?>
-    <p class="message">Rezerwacja została usunięta</p>
+if (isset($_GET['log'])) : ?>
+    <p class="message">Zostałeś pomyślnie zalogowany</p>
 <?php
 endif; ?>
+
+<?php
+$displayReservations = new DisplayReservations();
+$reservations = $displayReservations->displayMyReservations();
+?>
 
 <table class="table">
     <thead id="reservated-head">

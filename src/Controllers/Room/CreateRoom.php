@@ -7,7 +7,7 @@ use Room\RoomService;
 class CreateRoom
 {
 
-    public function createRoom()
+    public function createRoom(): void
     {
         $roomData = [
             'roomNumber' => $_POST['roomNumber'],
