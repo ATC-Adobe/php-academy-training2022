@@ -25,23 +25,24 @@ class ReservationForm implements Component
         echo '<input class="d-none" name="room_id" value="' . $id . '"  type="text" />';
 
         echo '            </h1>
-        </div>
-        <div class="row">';
-
-        (new FormField("First Name", "first_name"))->render();
-        (new FormField("Last Name", "last_name"))->render();
-
-        echo '</div>
-        <div class="row">';
-        (new FormField("Email", "email", "email"))->render();
-
-        echo '</div>
-        <div class="row">';
+        </div>';
+//        echo '<div class="row">';
+//
+//        (new FormField("First Name", "first_name"))->render();
+//        (new FormField("Last Name", "last_name"))->render();
+//
+//        echo '</div>
+//        <div class="row">';
+//        (new FormField("Email", "email", "email"))->render();
+//
+//        echo '</div>';
+        echo '<div class="row">';
 
         (new FormField("Start date", "start_date", "datetime-local"))->render();
         (new FormField("End date", "end_date", "datetime-local"))->render();
 
         echo '</div>
+        <div class="my-5"></div>
         <div class="row mt-3 d-flex justify-content-around mx-5">
             <input name="xml" class="btn btn-primary" type="submit" value="Submit to xml" /> 
             <input name="csv" class="btn btn-primary" type="submit" value="Submit to csv" /> 

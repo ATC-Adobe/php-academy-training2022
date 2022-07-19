@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Model\Reservation;
+use App\Model\Session;
+use App\Service\AuthenticatorService;
 use App\Service\ReservationService;
 use App\System\File\CsvHandler;
 use App\System\File\JsonHandler;
@@ -10,6 +12,7 @@ use App\System\File\IOHandlerFactory;
 use App\View\ReservationForm;
 use App\View\ReservationList;
 use App\View\ReservationUpdateForm;
+use App\View\UserReservationList;
 
 class ReservationController
 {
@@ -21,8 +24,6 @@ class ReservationController
 
     public function store(): void
     {
-        $msg = "";
-        $ok = true;
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             echo "Unknown Method!";
             return;
@@ -33,12 +34,9 @@ class ReservationController
 
             $reservation = new Reservation();
             $reservation->room_id = htmlentities($_POST['room_id']);
-            $reservation->email = htmlentities($_POST['email']);
-            $reservation->first_name = htmlentities($_POST['first_name']);
-            $reservation->last_name = htmlentities($_POST['last_name']);
             $reservation->start_date = htmlentities($_POST['start_date']);
             $reservation->end_date = htmlentities($_POST['end_date']);
-
+            $reservation->user_id = Session::getInstance()->get("user_id");
             $this->formatDates($reservation);
 
             if (!$reservationService->checkEndIsAfterStart($reservation->start_date, $reservation->end_date)) {
@@ -60,6 +58,7 @@ class ReservationController
 
     public function create(): void
     {
+        (new AuthenticatorService())->isNotAuthRedirect();
         (new ReservationForm())->render();
     }
 
@@ -93,6 +92,7 @@ class ReservationController
         $reservation = $service->findOne($id);
         $reservation->start_date = htmlentities($_POST["start_date"] ?? $reservation->start_date);
         $reservation->end_date = htmlentities($_POST["end_date"] ?? $reservation->end_date);
+        $reservation->user_id = Session::getInstance()->get("user_id");
 
         $this->formatDates($reservation);
 
@@ -111,10 +111,14 @@ class ReservationController
         $this->index($msg);
     }
 
+    public function show(): void {
+        $user_id = Session::getInstance()->get("user_id");
+        $reservations = (new ReservationService())->findUsersReservations($user_id);
+        (new UserReservationList($reservations))->render();
+    }
+
     /**
-     * @param string $start
      * @param Reservation $reservation
-     * @param string $end
      * @return void
      */
     public function formatDates(Reservation $reservation): void

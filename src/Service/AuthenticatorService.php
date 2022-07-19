@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Controller\LoginController;
 use App\Controller\RegisterController;
 use App\Model\Session;
 use App\Model\User;
@@ -21,7 +22,7 @@ class AuthenticatorService
         $this->setLoginSession($user);
         return $user;
     }
-    public function register(User $user)
+    public function register(User $user): User|bool|array
     {
         $userRepo = new UserRepository();
         $user->password = $this->hash($user->password);
@@ -56,5 +57,13 @@ class AuthenticatorService
     {
         Session::getInstance()->set("user_id", $user->id);
         Session::getInstance()->set("nickname", $user->nickname);
+    }
+    public function isNotAuthRedirect(): void
+    {
+        if(!Session::getInstance()->get("user_id")) {
+            //redirect and exit for not doubling website
+            (new LoginController())->create("You need to be logged in!");
+            exit();
+        }
     }
 }

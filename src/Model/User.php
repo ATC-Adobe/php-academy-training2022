@@ -10,11 +10,19 @@ class User implements \ModelInterface
     public string $nickname;
     public string $email;
     public string $password;
-    public function fromArray(array $user): static
+
+    /**
+     * Uses prefix user_ !!
+     * Used for fetching with reservations
+     * @param array $user
+     * @return $this
+     */
+    public function fromArrayPrefix(array $user): static
     {
         foreach ($user as $key => $value) {
-            if(property_exists($this, $key)) {
-                $this->{$key} = $value;
+            if(str_starts_with($key, 'user')) {
+                //prefix user_[actual key]
+                $this->{substr($key, 5)} = $value;
             }
         }
         return $this;
@@ -25,5 +33,14 @@ class User implements \ModelInterface
         $result = (array) $this;
 //        $result["password"] = "";
         return $result;
+    }
+    public function fromArray(array $user): static
+    {
+        foreach ($user as $key => $value) {
+            if(property_exists($this, $key)) {
+                $this->{$key} = $value;
+            }
+        }
+        return $this;
     }
 }

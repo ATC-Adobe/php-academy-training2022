@@ -28,6 +28,13 @@ class ReservationService implements \IOStrategyContextInterface
         }
         return $this->ioStrategy->readAll();
     }
+    public function findUsersReservations(int $user_id) {
+        if(method_exists($this->ioStrategy, "findBelongsToUser")) {
+            return $this->ioStrategy->findBelongsToUser($user_id);
+        }
+        echo "Type doesn't support joins";
+        return false;
+    }
 
     public function checkReservationCollision(Reservation $newReservation): bool
     {

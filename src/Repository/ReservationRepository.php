@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Model\Reservation;
 use App\Model\Room;
+use App\Model\User;
 use App\System\Database\Connection;
 use PDO;
 use IOHandlerInterface;
@@ -24,7 +25,7 @@ class ReservationRepository extends BaseRepository implements IOHandlerInterface
     {
         $statement = $this->connection->prepare(
             "
-            INSERT INTO reservation ( room_id, first_name, last_name, email, start_date, end_date) VALUES ( :room_id, :first_name, :last_name, :email, :start_date,
+            INSERT INTO reservation ( room_id, user_id, start_date, end_date) VALUES ( :room_id, :user_id, :start_date,
      :end_date
             );"
         );
@@ -34,20 +35,24 @@ class ReservationRepository extends BaseRepository implements IOHandlerInterface
     /**
      * @return bool|Reservation[]
      */
-    public function readWithRelations(): array|bool
+    public function readWithRelations(string $whereClause = ""): array|bool
     {
         $data = $this->connection->query(
             "SELECT 
                 reservation.id,
                 room_id,
-                first_name,
-                last_name,
-                email,
+                user_id,
+                u.first_name as user_first_name,
+                u.last_name as user_last_name,
+                u.email as user_email,
                 start_date,
                 end_date,
                 name as room_name,
                 floor as room_floor
-            FROM room JOIN reservation ON room_id = room.id"
+                FROM room 
+                JOIN reservation ON room_id = room.id
+                JOIN user u on u.id = reservation.user_id
+                $whereClause"
         )->fetchAll(PDO::FETCH_ASSOC);
         if ($data === false) {
             return false;
@@ -56,9 +61,12 @@ class ReservationRepository extends BaseRepository implements IOHandlerInterface
         foreach ($data as $row) {
             $reservation = new Reservation();
             $room = new Room();
+            $user = new User();
             $reservation->fromArray($row);
-            $room->fromArray($row);
+            $room->fromArrayPrefix($row);
+            $user->fromArrayPrefix($row);
             $reservation->room = $room;
+            $reservation->user = $user;
             $result[] = $reservation;
         }
         return $result;
@@ -75,10 +83,14 @@ class ReservationRepository extends BaseRepository implements IOHandlerInterface
     public function updateOne(Reservation $reservation): bool
     {
         $stm = $this->connection->prepare("UPDATE reservation 
-            SET room_id = :room_id, first_name = :first_name, last_name = :last_name, email = :email, start_date = :start_date, end_date = :end_date
+            SET room_id = :room_id, user_id = :user_id, start_date = :start_date, end_date = :end_date
             WHERE id = :id
                 ");
         return $stm->execute($reservation->toArray());
 
+    }
+
+    public function findBelongsToUser(int $user_id) {
+        return $this->readWithRelations("WHERE user_id = $user_id");
     }
 }

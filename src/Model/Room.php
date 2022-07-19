@@ -16,7 +16,7 @@ class Room implements ModelInterface
      * @param array $room
      * @return $this
      */
-    public function fromArray(array $room): static
+    public function fromArrayPrefix(array $room): static
     {
         foreach ($room as $key => $value) {
             if(str_starts_with($key, 'room')) {
@@ -29,5 +29,14 @@ class Room implements ModelInterface
     public function toArray(): array
     {
         return (array) $this;
+    }
+    public function fromArray(array $room): static
+    {
+        foreach ($room as $key => $value) {
+            if(property_exists($this, $key)) {
+                $this->{$key} = $value;
+            }
+        }
+        return $this;
     }
 }

@@ -19,6 +19,7 @@ $router->post('/reservationForm', [$reservationController, 'store']);
 $router->post('/reservationDelete', [$reservationController, 'delete']);
 $router->post('/reservationUpdate', [$reservationController, 'update']);
 $router->get('/reservationUpdate', [$reservationController, 'edit']);
+$router->get('/userReservations', [$reservationController, 'show']);
 
 $registerController = new \App\Controller\RegisterController();
 $router->get('/register', [$registerController, 'create']);

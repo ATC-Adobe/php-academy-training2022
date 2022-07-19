@@ -31,6 +31,9 @@ class Navbar implements Component
                     <a  class="nav-link">Hello '. ucfirst(Session::getInstance()->get("nickname") ?? "") .'</a>
                 </li>
                 <li class="nav-item">
+                                            <a href="/userReservations" class="nav-link" >Your reservations</a>
+                </li>
+                <li class="nav-item">
                                             <a href="/logout" class="nav-link" >Logout</a>
                 </li>
             ';
