@@ -3,6 +3,7 @@
 namespace System\Util;
 
 use Couchbase\User;
+use System\Status;
 use User\Model\UserModel;
 use User\Repository\UserConcreteRepository;
 
@@ -51,11 +52,11 @@ class Authenticator {
 
         if($username == '' || $name == '' || $surname == '' || $email == ''
                 || $password1 == '' || $password2 == '') {
-            return self::FIELD_EMPTY;
+            return Status::REGISTER_FIELD_EMPTY;
         }
 
         if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            return self::EMAIL_INVALID;
+            return Status::REGISTER_EMAIL_INVALID;
         }
 
         $repo = new UserConcreteRepository();
@@ -64,11 +65,11 @@ class Authenticator {
         $u2 = $repo->getUserByEmail($email);
 
         if($u1 !== null || $u2 !== null) {
-            return self::USERNAME_OR_EMAIL_TAKEN;
+            return Status::REGISTER_USERNAME_OR_EMAIL_TAKEN;
         }
 
         if($password2 !== $password1) {
-            return self::PASSWORD_NOT_MATCH;
+            return Status::REGISTER_PASSWORD_NOT_MATCH;
         }
 
         // Validate password strength
@@ -79,7 +80,7 @@ class Authenticator {
 
         if(!$uppercase || !$lowercase || !$number
             || !$specialChars || strlen($password1) < 8) {
-            return self::PASSWORD_TOO_WEAK;
+            return Status::REGISTER_PASSWORD_TOO_WEAK;
         }
 
         $salt = $this->generateSalt();
@@ -97,7 +98,7 @@ class Authenticator {
             )
         );
 
-        return self::REGISTER_OK;
+        return Status::REGISTER_OK;
     }
 
     public function logout() : void {

@@ -1,6 +1,7 @@
 <?php
 declare(strict_types = 1);
 
+use System\Status;
 use \System\Util\Authenticator;
 
 ?>
@@ -39,25 +40,21 @@ else {
                 echo '<div class="error">';
 
                 echo match(intval($_POST['status'])) {
-                    Authenticator::FIELD_EMPTY =>
+                    Status::REGISTER_FIELD_EMPTY =>
                     "Some input field are empty!",
-                    Authenticator::PASSWORD_TOO_WEAK =>
+                    Status::REGISTER_PASSWORD_TOO_WEAK =>
                     "Password is too weak!",
-                    Authenticator::PASSWORD_NOT_MATCH =>
+                    Status::REGISTER_PASSWORD_NOT_MATCH =>
                     "Passwords don't match!",
-                    Authenticator::USERNAME_OR_EMAIL_TAKEN =>
+                    Status::REGISTER_USERNAME_OR_EMAIL_TAKEN =>
                     "An account with given username or email is already in use",
-                    Authenticator::EMAIL_INVALID =>
+                    Status::REGISTER_EMAIL_INVALID =>
                     "Invalid email",
-                    default => "unknown error",
+                    default => "unknown status",
                 };
 
                 echo ' </div><br><br>';
             }
-
-
-
-
         ?>
         <form method="post" action="/add/user">
 

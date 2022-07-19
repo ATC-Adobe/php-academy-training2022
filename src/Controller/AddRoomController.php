@@ -6,6 +6,8 @@ use JetBrains\PhpStorm\NoReturn;
 use Room\Model\RoomModel;
 use Room\Repository\RoomConcreteRepository;
 use Router\Response;
+use System\Status;
+use System\Util\Session;
 
 class AddRoomController {
     public function __construct() { }
@@ -16,27 +18,32 @@ class AddRoomController {
      * @return void
      */
     #[NoReturn] public function makeRequest() : void {
-        if(isset($_POST['room_name'])) {
 
-            $roomRepository = new RoomConcreteRepository();
-
-            $room = new RoomModel(
-                0,
-                $_POST['room_name'],
-                intval($_POST['floor'])
-            );
-
-            $roomRepository
-                ->addRoom($room);
-
-        }
-        if(__ROUTER) {
+        if(!isset($_POST['room_name'])) {
             (new Response())
-                ->goTo('/roomListing');
+                ->goTo('/');
         }
-        else {
-            header('Location: roomListing.php');
-            die();
+
+        $sess = Session::getInstance();
+
+        if($sess->get('valid') === null) {
+            (new Response())
+                ->goTo('/');
         }
+
+        $roomRepository = new RoomConcreteRepository();
+
+        $room = new RoomModel(
+            0,
+            $_POST['room_name'],
+            intval($_POST['floor'])
+        );
+
+        $roomRepository
+            ->addRoom($room);
+
+
+        (new Response())
+            ->goTo('/roomListing?status='.Status::ROOM_OK);
     }
 }

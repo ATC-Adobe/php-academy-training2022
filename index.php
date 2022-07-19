@@ -3,11 +3,12 @@ declare(strict_types = 1);
 
 use Router\Response;
 use Router\Router;
+use System\Util\Session;
 
 require_once 'autoloading.php';
 
-$sess = \System\Util\Session::getInstance();
-$sess->create();
+$sess = Session::getInstance();
+
 
 $router = new Router(
     '404.html'
@@ -54,15 +55,18 @@ $router->use('/userLogOut', function(Response $res) {
         ->makeRequest();
 });
 
-$router->use('/sessinfo', function(Response $res) {
+$router->use('/user/reservations', function(Response $res) {
 
-    $sess = \System\Util\Session::getInstance();
+    /*$sess = \System\Util\Session::getInstance();
 
     $res->send($sess->get('name').'<br>');
     $res->send($sess->get('surname').'<br>');
     $res->send($sess->get('username').'<br>');
     $res->send($sess->get('email').'<br>');
-    $res->end('<a href="/">Return</a>');
+    $res->end('<a href="/">Return</a>');*/
+
+    (new \View\UsersReservationListingView())
+        ->render();
 });
 
 
@@ -93,13 +97,8 @@ $router->post('/login', function(Response $res) {
 });
 
 $router->get('/test', function(Response $res) {
-    $auth = new \System\Util\Authenticator();
-
-    for($i = 0 ; $i <= 6; $i++) {
-        $val =  $auth->passwordHash('abc', '');
-        echo $auth->passwordVerify('abc', '', $val) ? '1' : '0';
-    }
-    //die();
+    var_dump((new \Reservation\Repository\ReservationConcreteRepository())->getAllReservations());
 });
+
 
 $router->redirect();

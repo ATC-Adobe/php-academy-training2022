@@ -16,7 +16,7 @@ class DBWriter implements IFileWriter {
         $valid =
             $reservationRepository
                 ->checkForTimeCollisions(
-                    $reservation->getId(),
+                    $reservation->getRoom()->getId(),
                     $reservation->getFrom(),
                     $reservation->getTo()
                 );

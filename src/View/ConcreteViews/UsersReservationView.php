@@ -9,19 +9,19 @@ use Room\Repository\RoomConcreteRepository;
 
 ?>
 
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
 
-        <title>Rooms</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <link rel="stylesheet" type="text/css" href="/layout/css/style.css">
+    <title>Rooms</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" type="text/css" href="/layout/css/style.css">
 
-        <!--
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-        -->
-    </head>
+    <!--
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    -->
+</head>
 <body>
 
 <?php
@@ -33,38 +33,24 @@ else {
 }
 ?>
 
-    <div class="header">
-        Active Reservations
-        <br><br>
-        <div class="main">
-            <?php
-            if(isset($_GET['status'])) {
-                echo match (intval($_GET['status'])) {
-                    \System\Status::RESERVATION_OK =>
-                                "<div class='success'>
-                                    Room reserved successfully! 
-                                </div>",
-                    \System\Status::RESERVATION_REMOVE_OK =>
-                                "<div class='success'>
-                                    Reservation deleted successfully! 
-                                </div>",
-                    \System\Status::RESERVATION_REMOVE_ERROR =>
-                                "<div class='error'>
-                                    An error occurred while deleting reservation! 
-                                </div>",
-                    default => "Unknown error",
-                };
-
-                echo "<br><br>";
-            }
-            ?>
-
+<div class="header">
+    Your Reservations
+    <br><br>
+    <div class="main">
 
         <?php
 
         $reservationRepository = new ReservationConcreteRepository();
 
-        $entries = $reservationRepository->getAllReservations();
+        $sess =  \System\Util\Session::getInstance();
+
+        echo "ID: ".$sess->get('id')."<br>";
+
+
+        $entries = $reservationRepository
+            ->getReservationsByUserId(
+                intval($sess->get('id'))
+            );
 
         foreach($entries as $entry) {
 
@@ -74,10 +60,13 @@ else {
             }
 
             $id =       $entry->getId();
+
             $name =     $entry->getUser()->getName();
             $email =    $entry->getUser()->getEmail();
             $surname =  $entry->getUser()->getSurname();
+
             $room =     $entry->getRoom()->getName();
+
             $to =       $entry->getTo()->format("d/m/Y H:i:s");
             $from =     $entry->getFrom()->format("d/m/Y H:i:s");;
 
@@ -107,8 +96,8 @@ else {
         }
 
         ?>
-        </div>
     </div>
+</div>
 
 <?php include 'layout/footer.html' ?>
 </body>

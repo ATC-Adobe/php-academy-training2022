@@ -6,25 +6,18 @@ class Session {
 
     private static ?Session $instance = null;
 
-    private function __construct() { }
+    private function __construct() {
+        session_write_close();
+        session_start();
+        //session_regenerate_id(true);
+    }
 
     public static function getInstance() : Session {
 
         return self::$instance ??= new Session();
     }
 
-    private function start() : void {
-
-    }
-
-    public function create() : void {
-        if (!$this->isOpen()) {
-            session_write_close();
-            session_start();
-            session_regenerate_id(true);
-        }
-    }
-
+    public function create() : void { }
 
     public function destroy() : void {
 

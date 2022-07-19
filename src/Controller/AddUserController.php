@@ -3,6 +3,7 @@
 namespace Controller;
 
 use Router\Response;
+use System\Status;
 use System\Util\Authenticator;
 use View\UserCreationFormView;
 
@@ -35,8 +36,8 @@ class AddUserController {
             $_POST['password2'],
         );
 
-        if($code == Authenticator::REGISTER_OK) {
-            $res->goTo('/userLogIn?status=1');
+        if($code == Status::REGISTER_OK) {
+            $res->goTo('/userLogIn?status='.$code);
         }
         else {
            // $res->goTo('/userRegistration?status='.$code);

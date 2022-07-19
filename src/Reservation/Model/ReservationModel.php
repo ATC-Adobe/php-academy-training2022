@@ -3,6 +3,7 @@
 namespace Reservation\Model;
 
 use Room\Model\RoomModel;
+use User\Model\UserModel;
 
 class ReservationModel {
     private int $id;
@@ -10,9 +11,7 @@ class ReservationModel {
     private \DateTime $from;
     private \DateTime $to;
 
-    private string $name;
-    private string $email;
-    private string $surname;
+    private UserModel $user;
 
     private RoomModel $room;
 
@@ -22,21 +21,16 @@ class ReservationModel {
      * @param int $id
      * @param \DateTime $from
      * @param \DateTime $to
-     * @param string $name
-     * @param string $email
-     * @param string $surname
+     * @param UserModel $user
      * @param RoomModel $room
      */
     public function __construct(
-        int $id,\DateTime $from, \DateTime $to, string $name,
-        string $email, string $surname, RoomModel $room,
+        int $id,\DateTime $from, \DateTime $to, UserModel $user, RoomModel $room,
     ) {
         $this->id =     $id;
         $this->from =   $from;
         $this->to =     $to;
-        $this->name =   $name;
-        $this->email =  $email;
-        $this->surname = $surname;
+        $this->user =   $user;
         $this->room =   $room;
     }
 
@@ -54,25 +48,8 @@ class ReservationModel {
         return $this->to;
     }
 
-    /**
-     * @return string
-     */
-    public function getName() : string {
-        return $this->name;
-    }
-
-    /**
-     * @return string
-     */
-    public function getSurname() : string {
-        return $this->surname;
-    }
-
-    /**
-     * @return string
-     */
-    public function getEmail() : string {
-        return $this->email;
+    public function getUser() : UserModel {
+        return $this->user;
     }
 
     /**

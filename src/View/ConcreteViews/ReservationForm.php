@@ -1,10 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-if(isset($_POST['room_id'])) {
-    $serv = new \Controller\AddReservationController();
-    $serv->makeRequest();
-}
+use \System\Status;
 ?>
 
 <!DOCTYPE html>
@@ -39,16 +36,24 @@ else {
         <a href="index.php">Return</a><br>
 
         <?php
-            $action = __ROUTER ? '/add/reservation' : 'roomReservationForm.php';
-            echo "<form method='post' action='$action'>";
+            if(isset($_GET['status'])) {
+                echo match(intval($_GET['status'])) {
+                    Status::RESERVATION_COLLISION =>
+                        '<div class="error">
+                            Room is already occupied
+                         </div>',
+                    Status::RESERVATION_DATE_INVERSION =>
+                        '<div class="error">
+                            Date inversion
+                         </div>',
+                    default =>
+                        'Unknown status'
+                };
+            }
         ?>
-
+        <form method='post' action='/add/reservation'>
             <div class="float ltable">
                 Room Id:<br>
-                <br>
-                Name:<br>
-                Surname:<br>
-                E-mail:<br>
                 <br>
                 From: <br>
                 To: <br>
@@ -75,16 +80,12 @@ else {
                 echo $id.'<br>';
                 ?>
                 <br>
-                <input type="text" name="name" ><br>
-                <input type="text" name="surname" > <br>
-                <input type="text" name="email" ><br>
-                <br>
                 <input type="datetime-local" name="from"><br>
                 <input type="datetime-local" name="to"><br>
                 <br>
 
 
-                <input type="radio" name="option" value="db">
+                <input type="radio" name="option" value="db" checked>
                 <label for="html">Database</label><br>
                 <input type="radio" name="option" value="json">
                 <label for="html">JSON</label><br>

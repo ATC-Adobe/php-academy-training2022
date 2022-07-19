@@ -22,12 +22,7 @@ use Room\Repository\RoomConcreteRepository;
 <body>
 
 <?php
-if(__ROUTER) {
     include "layout/menur.php";
-}
-else {
-    require "layout/menu.html";
-}
 ?>
 
 <div class="header">
@@ -36,8 +31,18 @@ else {
     <div class="main">
 
         <br>
+        <?php
+            if(isset($_GET['status'])) {
 
-        <br><br>
+                echo match(intval($_GET['status'])) {
+                    \System\Status::ROOM_OK =>
+                    '<div class="success">Room added successfully</div>',
+                    default => 'unknown status',
+                };
+
+                echo '<br><br>';
+            }
+        ?>
         <span style="font-size: 1.5em">Choose room to continue:</span> <br><br><br><br>
 
         <table>
@@ -69,12 +74,7 @@ else {
                 echo "<td> $name </td>";
                 echo "<td> $floor </td>";
 
-                if(__ROUTER) {
-                    echo "<td><a href='roomReservationForm?id=$id'> Reserve ></a></td>";
-                }
-                else {
-                    echo "<td><a href='roomReservationForm.php?id=$id'> Reserve ></a></td>";
-                }
+                echo "<td><a href='roomReservationForm?id=$id'> Reserve ></a></td>";
 
                 echo "</tr>";
             }

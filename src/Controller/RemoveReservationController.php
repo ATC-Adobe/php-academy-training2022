@@ -5,6 +5,7 @@ namespace Controller;
 use JetBrains\PhpStorm\NoReturn;
 use Reservation\Repository\ReservationConcreteRepository;
 use Router\Response;
+use System\Status;
 
 class RemoveReservationController {
     public function __construct() {
@@ -17,27 +18,23 @@ class RemoveReservationController {
      * @return void
      */
     #[NoReturn] public function makeRequest() : void {
-        if(isset($_POST['id'])) {
-            $id = $_POST['id'];
-            unset($_POST['id']);
+        if(!isset($_POST['id'])) {
+            (new Response())->goTo(
+                '/roomReservationListing?status='
+                        .Status::RESERVATION_REMOVE_ERROR
+            );
+        }
 
-            (new ReservationConcreteRepository())
-                ->deleteReservationById($id);
+        $id = $_POST['id'];
+        unset($_POST['id']);
 
-            if(__ROUTER) {
-                (new Response())->goTo('/roomReservationListing?status=3');
-            }
-            else {
-                header('Location: roomReservationListing.php?status=3');
-                die();
-            }
-        }
-        if(__ROUTER) {
-            (new Response())->goTo('/roomReservationListing?status=4');
-        }
-        else {
-            header('Location: roomReservationListing.php?status=4');
-            die();
-        }
+        (new ReservationConcreteRepository())
+            ->deleteReservationById($id);
+
+
+        (new Response())->goTo(
+            '/roomReservationListing?status='
+                    .Status::RESERVATION_REMOVE_OK
+        );
     }
 }

@@ -8,7 +8,9 @@ use Reservation\Service\ReservationAdder;
 use Room\Repository\RoomConcreteRepository;
 use Router\Response;
 use System\File\FileWriterFactory;
+use System\Status;
 use System\Util\DateFormatter;
+use System\Util\Session;
 
 class AddReservationController {
     public function __construct() { }
@@ -20,36 +22,53 @@ class AddReservationController {
      */
     public function makeRequest() : void {
 
-        if(isset($_POST['room_id'])) {
-            [ $room_id, $name, $surname, $email, $from, $to, ]
-                = [ $_POST['room_id'],  $_POST['name'],     $_POST['surname'],
-                    $_POST['email'],    $_POST['from'],     $_POST['to']];
-
-
-            $res =
-                (new ReservationAdder())->uploadData(
-                    (new FileWriterFactory())
-                        ->getInstance($_POST['option']),
-                $room_id, $name, $surname, $email, new \DateTime($from),  new \DateTime($to),
-            );
-
-
-            if(__ROUTER) {
-                (new Response())->goTo('/roomReservationListing?status=1');
-            }
-            else {
-                if ($res) { // success
-                    header('Location: roomReservationListing.php?status=1');
-                    die();
-                }
-            }
+        if(!isset($_POST['room_id'])) {
+            (new Response())
+                ->goTo('/');
         }
-        if(__ROUTER) {
-            (new Response())->goTo('/roomReservationListing?status=2');
+
+
+        [ $room_id, $from, $to, ]
+            = [ $_POST['room_id'],    $_POST['from'],     $_POST['to']];
+
+
+        $sess = Session::getInstance();
+
+        if($sess->get('valid') === null) {
+            (new Response())
+                ->goTo('/');
+        }
+
+        $from   = new \DateTime($from);
+        $to     = new \DateTime($to);
+
+        if($to <= $from) {
+            (new Response())
+                ->goTo('/roomReservationForm?id='
+                    .$_POST['room_id']
+                    .'&status='
+                    .Status::RESERVATION_DATE_INVERSION);
+        }
+
+        $res =
+            (new ReservationAdder())->uploadData(
+                (new FileWriterFactory())
+                    ->getInstance($_POST['option']),
+            $room_id, $sess->get('id'), $from, $to,
+        );
+
+
+        if($res) {
+            (new Response())
+                ->goTo('/roomReservationListing?status='
+                    . Status::RESERVATION_OK);
         }
         else {
-            header('Location: roomReservationListing.php?status=2');
-            die();
+            (new Response())
+                ->goTo('/roomReservationForm?id='
+                    .$_POST['room_id']
+                    .'&status='
+                    . Status::RESERVATION_COLLISION);
         }
     }
 }

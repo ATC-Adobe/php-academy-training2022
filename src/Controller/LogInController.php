@@ -3,6 +3,7 @@
 namespace Controller;
 
 use Router\Response;
+use System\Status;
 use System\Util\Authenticator;
 use System\Util\Session;
 
@@ -21,7 +22,7 @@ class LogInController {
         $resp = new Response();
 
         if($res === null) {
-            $resp->goTo('/userLogIn?status=2');
+            $resp->goTo('/userLogIn?status='.Status::LOGIN_INVALID);
         }
 
         $sess = Session::getInstance();
@@ -29,11 +30,15 @@ class LogInController {
         $sess->create();
 
         $sess->set('valid',     true);
+
         $sess->set('username',  $res->getNickname());
+        $sess->set('id',        $res->getId());
+        $sess->set('password',  $res->getPassword());
+        $sess->set('salt',      $res->getSalt());
         $sess->set('name',      $res->getName());
         $sess->set('surname',   $res->getSurname());
         $sess->set('email',     $res->getEmail());
 
-        $resp->goTo('/');
+        $resp->goTo('/user/reservations');
     }
 }

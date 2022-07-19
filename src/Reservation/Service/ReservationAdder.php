@@ -7,6 +7,7 @@ use Reservation\Repository\ReservationConcreteRepository;
 use Room\Repository\RoomConcreteRepository;
 use System\File\FileWriterFactory;
 use System\File\IFileWriter;
+use User\Repository\UserConcreteRepository;
 
 class ReservationAdder {
 
@@ -24,19 +25,23 @@ class ReservationAdder {
      */
     public function uploadData(
         IFileWriter $strategy,
-        string $roomId, string $name,       string $surname,
-        string $email,  \DateTime $from,    \DateTime $to
+        string $roomId, string $userId,  \DateTime $from,    \DateTime $to
     ) : bool {
 
         $roomNId = intval($roomId);
 
-        if($surname == '' || $name == '' || $email == '')
-            return false;
 
         $room = (new RoomConcreteRepository())
             ->getRoomById($roomNId);
 
         if($room === null) {
+            return false;
+        }
+
+        $user = (new UserConcreteRepository())
+            ->getUserById(intval($userId));
+
+        if($user === null) {
             return false;
         }
 
@@ -46,10 +51,8 @@ class ReservationAdder {
                     0,
                     $from,
                     $to,
-                    $name,
-                    $email,
-                    $surname,
-                    $room
+                    $user,
+                    $room,
                 ),
 
             );

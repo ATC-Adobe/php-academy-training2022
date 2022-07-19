@@ -81,3 +81,4 @@ $autoloader->loadConfig(
 
 // global variable telling whether router is active or not
 const __ROUTER = true;
+
