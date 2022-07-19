@@ -38,8 +38,9 @@
                         <!-- To make this form functional, sign up at-->
                         <!-- https://startbootstrap.com/solution/contact-forms-->
                         <!-- to get an API token!-->
-                        <form method="post" action="../Controller/RoomController.php" enctype="multipart/form-data">
+                        <form method="post" action="../Controller/AuthenticationController.php" enctype="multipart/form-data">
                             <!-- Nickname input-->
+                            <input type="hidden" name="authentication" value="registration">
                             <div class="form-floating mb-3">
                                 <input class="form-control" name="nickname" type="text" placeholder="Enter your nickname..."
                                        data-sb-validations="required"/>
@@ -59,6 +60,13 @@
                                        data-sb-validations="required"/>
                                 <label for="password">Password</label>
                                 <div class="invalid-feedback" data-sb-feedback="name:required">A password is required.</div>
+                            </div>
+                            <!-- Password confirmation input-->
+                            <div class="form-floating mb-3">
+                                <input class="form-control" name="password_confirmation" type="text" placeholder="Confirm your password..."
+                                       data-sb-validations="required"/>
+                                <label for="password_confirmation">Password</label>
+                                <div class="invalid-feedback" data-sb-feedback="name:required">A password confirmation is required.</div>
                             </div>
                             <!-- Submit Button-->
                             <div class="text-center">

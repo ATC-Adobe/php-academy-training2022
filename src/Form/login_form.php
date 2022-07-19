@@ -1,4 +1,5 @@
 <?php
+
 ?>
 
 <!DOCTYPE html>
@@ -37,8 +38,9 @@
                         <!-- To make this form functional, sign up at-->
                         <!-- https://startbootstrap.com/solution/contact-forms-->
                         <!-- to get an API token!-->
-                        <form method="post" action="../Controller/RoomController.php" enctype="multipart/form-data">
+                        <form method="post" action="../Controller/AuthenticationController.php" enctype="multipart/form-data">
                             <!-- Nickname input-->
+                            <input type="hidden" name="authentication" value="login">
                             <div class="form-floating mb-3">
                                 <input class="form-control" name="nickname" type="text" placeholder="Enter your nickname..."
                                        data-sb-validations="required"/>
@@ -46,12 +48,12 @@
                                 <div class="invalid-feedback" data-sb-feedback="name:required">A nickname is required.</div>
                             </div>
                             <!-- Email input-->
-                            <div class="form-floating mb-3">
-                                <input class="form-control" name="email" type="text" placeholder="Enter your email..."
-                                       data-sb-validations="required"/>
-                                <label for="email">Email</label>
-                                <div class="invalid-feedback" data-sb-feedback="name:required">An email is required.</div>
-                            </div>
+<!--                            <div class="form-floating mb-3">-->
+<!--                                <input class="form-control" name="email" type="text" placeholder="Enter your email..."-->
+<!--                                       data-sb-validations="required"/>-->
+<!--                                <label for="email">Email</label>-->
+<!--                                <div class="invalid-feedback" data-sb-feedback="name:required">An email is required.</div>-->
+<!--                            </div>-->
                             <!-- Password input-->
                             <div class="form-floating mb-3">
                                 <input class="form-control" name="password" type="text" placeholder="Enter your password..."

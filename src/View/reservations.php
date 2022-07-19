@@ -1,8 +1,14 @@
 <?php declare(strict_types=1);
-
-use Database\Connection;
-use Repository\Reservation;
-
+require_once '../../autoloading.php';
+//use Database\Connection;
+//use Repository\Reservation;
+//use Repository\Session;
+//
+//$session = Session::getInstance();
+//
+//echo $session->getNickname();
+session_start();
+var_dump($_SESSION);
 ?>
 <!DOCTYPE html>
 <html lang="en">
