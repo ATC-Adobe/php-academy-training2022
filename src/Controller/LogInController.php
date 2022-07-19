@@ -22,9 +22,9 @@ class LogInController {
         $resp = new Response();
 
         if($res === null) {
-            $resp->goTo('/userLogIn?status='.Status::LOGIN_INVALID);
+            $resp->goTo('/user/login?status='.Status::LOGIN_INVALID);
         }
 
-        $resp->goTo('/user/reservations');
+        $resp->goTo('/reservation/user');
     }
 }

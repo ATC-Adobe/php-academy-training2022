@@ -1,21 +1,21 @@
 <div class="sticky">
     <div class="inner-sticky">
         <a href = "/">Menu</a>
-        <a href = "/roomListing">Room reservation</a>
-        <a href = "/roomForm">Add room</a>
-        <a href = "/roomReservationListing">Reservations</a>
+        <a href = "/room/list">Room reservation</a>
+        <a href = "/room/add">Add room</a>
+        <a href = "/reservation/list">Reservations</a>
 
         <?php
 
             $sess = \System\Util\Session::getInstance();
 
             if($sess->isValid()) {
-                echo '<a href = "/userLogOut">Log out</a>';
-                echo 'Logged as: <a href="/user/reservations">'.$sess->get('username').'</a>';
+                echo '<a href = "/user/logout">Log out</a>';
+                echo 'Logged as: <a href="/reservation/user">'.$sess->get('username').'</a>';
             }
             else {
-                echo '<a href = "/userRegistration">Sign in</a>';
-                echo '<a href = "/userLogIn">Log in</a>';
+                echo '<a href = "/user/add">Sign in</a>';
+                echo '<a href = "/user/login">Log in</a>';
             }
         ?>
     </div>

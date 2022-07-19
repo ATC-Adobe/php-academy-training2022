@@ -51,7 +51,7 @@ use \System\Util\Authenticator;
                 echo ' </div><br><br>';
             }
         ?>
-        <form method="post" action="/add/user">
+        <form method="post" action="/user/add">
 
             <div class="float ltable">
                 Name:<br>

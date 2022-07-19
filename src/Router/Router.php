@@ -85,9 +85,9 @@ class Router {
      */
     public function redirect() : void {
 
-        $uri = explode('?', $_SERVER['REQUEST_URI'])[0];
+        //$uri = explode('?', $_SERVER['REQUEST_URI'])[0];
 
-        /* Multilevel router implementation
+        /* Multilevel router implementation*/
         if(!isset($_REQUEST['iterator'])) {
             $uri = explode('?', $_SERVER['REQUEST_URI'])[0];
 
@@ -99,7 +99,7 @@ class Router {
         }
 
         $uri = '/' . $_REQUEST['iterator']->current();
-        */
+
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if(isset($this->routesPost[$uri])) {

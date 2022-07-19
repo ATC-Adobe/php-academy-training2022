@@ -74,7 +74,7 @@ use Room\Repository\RoomConcreteRepository;
                 echo "<td> $name </td>";
                 echo "<td> $floor </td>";
 
-                echo "<td><a href='/roomReservationForm?id=$id'> Reserve ></a></td>";
+                echo "<td><a href='/reservation/add?id=$id'> Reserve ></a></td>";
 
                 echo "</tr>";
             }

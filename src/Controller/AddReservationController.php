@@ -45,7 +45,7 @@ class AddReservationController {
 
         if($to <= $from) {
             (new Response())
-                ->goTo('/roomReservationForm?id='
+                ->goTo('/room/add?id='
                     .$_POST['room_id']
                     .'&status='
                     .Status::RESERVATION_DATE_INVERSION);
@@ -61,12 +61,12 @@ class AddReservationController {
 
         if($res) {
             (new Response())
-                ->goTo('/roomReservationListing?status='
+                ->goTo('/reservation/list?status='
                     . Status::RESERVATION_OK);
         }
         else {
             (new Response())
-                ->goTo('/roomReservationForm?id='
+                ->goTo('/reservation/list?id='
                     .$_POST['room_id']
                     .'&status='
                     . Status::RESERVATION_COLLISION);

@@ -1,3 +1,23 @@
+Routes:
+ANY     /
+
+GET     /reservation/add
+POST    /reservation/add
+POST    /reservation/delete
+GET     /reservation/list
+GET     /reservation/user
+
+GET     /room/add
+POST    /room/add
+GET     /room/list
+
+GET     /user/login
+POST    /user/login
+GET     /user/add
+POST    /user/add
+ANY     /user/logout
+
+
 Zadania: 
 1. Dodanie kolumny id_user (foreign key), pola id_user w klasie Reservation, a do niego gettera i settera 
 2. User musi mieć dostęp do wszystkich rezerwacji. 

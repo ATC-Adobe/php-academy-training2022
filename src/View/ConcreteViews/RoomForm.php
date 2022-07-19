@@ -32,7 +32,7 @@ if(isset($_POST['room_name'])) {
     <br><br>
     <div class="main">
         <?php
-            echo "<form method='post' action='/add/room'>";
+            echo "<form method='post' action='/room/add'>";
         ?>
 
             <div class="float ltable">

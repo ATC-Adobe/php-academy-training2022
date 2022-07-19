@@ -28,7 +28,6 @@ use \System\Status;
     Room reservation service
     <br><br>
     <div class="main">
-        <a href="index.php">Return</a><br>
 
         <?php
             if(isset($_GET['status'])) {
@@ -46,7 +45,7 @@ use \System\Status;
                 };
             }
         ?>
-        <form method='post' action='/add/reservation'>
+        <form method='post' action='/reservation/add'>
             <div class="float ltable">
                 Room Id:<br>
                 <br>

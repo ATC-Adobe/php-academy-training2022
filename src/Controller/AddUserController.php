@@ -37,7 +37,7 @@ class AddUserController {
         );
 
         if($code == Status::REGISTER_OK) {
-            $res->goTo('/userLogIn?status='.$code);
+            $res->goTo('/user/login?status='.$code);
         }
         else {
            // $res->goTo('/userRegistration?status='.$code);

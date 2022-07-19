@@ -45,6 +45,6 @@ class AddRoomController {
 
 
         (new Response())
-            ->goTo('/roomListing?status='.Status::ROOM_OK);
+            ->goTo('/room/list?status='.Status::ROOM_OK);
     }
 }

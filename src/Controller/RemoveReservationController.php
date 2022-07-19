@@ -20,7 +20,7 @@ class RemoveReservationController {
     #[NoReturn] public function makeRequest() : void {
         if(!isset($_POST['id'])) {
             (new Response())->goTo(
-                '/roomReservationListing?status='
+                '/reservation/list?status='
                         .Status::RESERVATION_REMOVE_ERROR
             );
         }
@@ -33,7 +33,7 @@ class RemoveReservationController {
 
 
         (new Response())->goTo(
-            '/roomReservationListing?status='
+            '/reservation/list?status='
                     .Status::RESERVATION_REMOVE_OK
         );
     }

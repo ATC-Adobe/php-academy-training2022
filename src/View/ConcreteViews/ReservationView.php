@@ -90,7 +90,7 @@ use Room\Repository\RoomConcreteRepository;
                     $from - $to <br>";
 
 
-            echo    "<form method='POST' action='/delete/reservation'>
+            echo    "<form method='POST' action='/reservation/delete'>
                         <input type='hidden' name = 'id' value = '$id'>
                         <input type='submit' value='Delete reservation >'>                    
                     </form>

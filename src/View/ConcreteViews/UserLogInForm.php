@@ -26,7 +26,7 @@ declare(strict_types = 1);
     Log In Form
     <br><br>
     <div class="main">
-        <form method="post" action="/login">
+        <form method="post" action="/user/login">
 
             <?php
                 if(isset($_GET['status'])) {
