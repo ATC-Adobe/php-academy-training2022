@@ -1,4 +1,27 @@
 <?php
+/*
+
+Simple script language implementation in PHP
+
+Example syntax:
+
+func Average(arg1, arg2, arg3) {
+
+    t = (arg1 + arg2 + arg3) / 3
+
+    return t
+}
+
+
+// any spacing allowed
+func Max       (a,b     ) {
+    if   (  a>     b) { return     a} else {return b}
+}
+
+*/
+
+
+
 
 declare(strict_types = 1);
 
@@ -44,14 +67,14 @@ function scriptParser($script) : array {
     $white      = "@[\ \t\n]@";
     $digit      = "@[0-9]@";
     $word       = "@[a-zA-Z+*/!\-]@";
-    $specials   = "@[=\[\]\(\)\{\}]@";
+    $specials   = "@[=\[\](){},]@";
 
     $acc = '';
 
     $dest = [];
 
     // DFA-like parsing
-    for(; $i < strlen($script); $i -=- 1) {
+    for(; $i < strlen($script); $i ++) {
         $char = $script[$i];
 
         if(preg_match($specials, $char)) {
