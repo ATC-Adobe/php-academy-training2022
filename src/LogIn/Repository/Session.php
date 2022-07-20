@@ -51,7 +51,7 @@ class Session
     }
 
 
-    public function start($nickname, $password , $userID , $username, $surname, $email)
+    public function start($nickname, $password , $userID)
     {
         session_start();
         $_SESSION['nickname'] = $nickname;
