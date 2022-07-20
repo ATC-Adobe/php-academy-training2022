@@ -23,6 +23,11 @@ $router->use('/test', function(Response $res) {
     die();
 });
 
+$router->use('/ds', function(Response $res) {
+    include 'YetAnotherMiniTest.php';
+    die();
+});
+
 
 // experimental router segregation
 $router->stage('/view',         'routes/view.php');
