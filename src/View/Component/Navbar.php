@@ -19,10 +19,15 @@ class Navbar implements Component
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/reservations">Current reservations</a>
-                </li>
+                </li>';
+        if(Session::getInstance()->get("user_id")) {
+            echo '
                 <li class="nav-item">
                     <a class="nav-link" href="/roomForm">Add room</a>
                 </li>
+            ';
+        }
+        echo ' 
             </ul>
             <ul class="navbar-nav ml-auto">';
         if(Session::getInstance()->get("user_id")) {

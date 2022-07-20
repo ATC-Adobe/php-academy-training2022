@@ -62,7 +62,7 @@ class AuthenticatorService
     {
         if(!Session::getInstance()->get("user_id")) {
             //redirect and exit for not doubling website
-            (new LoginController())->create("You need to be logged in!");
+            (new LoginController())->create(alertMsg: "You need to be logged in to do this!");
             exit();
         }
     }

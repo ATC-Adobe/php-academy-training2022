@@ -16,10 +16,10 @@ use App\View\UserReservationList;
 
 class ReservationController
 {
-    public function index(string $msg = ""): void
+    public function index(string $alertMsg ="",  string $type="danger"): void
     {
         $reservations = (new ReservationService())->readReservations(true);
-        (new ReservationList($reservations))->render($msg);
+        (new ReservationList($reservations, $alertMsg, $type))->render();
     }
 
     public function store(): void
@@ -33,8 +33,9 @@ class ReservationController
             $handler = IOHandlerFactory::create();
             $reservationService = new ReservationService($handler);
 
-            Session::getInstance()->set("room_id", $_POST["room_id"]);
-            Session::getInstance()->set("room_name", $_POST["room_name"]);
+            //for hidden inputs if $this->create() is invoked ($_GET will be lost)
+            Session::getInstance()->set("room_id", htmlentities($_POST["room_id"]));
+            Session::getInstance()->set("room_name", htmlentities($_POST["room_name"]));
 
             $reservation = new Reservation();
             $reservation->room_id = htmlentities($_POST['room_id']);
@@ -54,13 +55,14 @@ class ReservationController
                 $this->create("Already occupied!");
                 return;
             }
+            //delete info for inputs if it passed validation
         Session::getInstance()->flush(["room_id", "room_name"]);
 
         if (!$reservationService->addReservation($reservation)) {
-            $this->index("Something went wrong! Try again");
+            $this->index(alertMsg: "Something went wrong! Try again");
                 return;
             }
-        $this->index("Successfully added reservation!");
+        $this->index(alertMsg: "Successfully added reservation!", type: "success");
     }
 
     public function create(string $msg = ""): void
@@ -68,7 +70,7 @@ class ReservationController
         $name = $_GET["name"] ?? Session::getInstance()->get("room_name");
         $id = $_GET["id"] ?? Session::getInstance()->get("room_id");
         if(!$name || !$id) {
-            $this->index("Something went wrong! Try again");
+            $this->index(alertMsg: "Something went wrong! Try again");
         }
         (new AuthenticatorService())->isNotAuthRedirect();
         (new ReservationForm($name, $id))->render($msg);
@@ -79,7 +81,7 @@ class ReservationController
         (new AuthenticatorService())->isNotAuthRedirect();
 
         $reservationService = new ReservationService();
-        $id = $_POST["reservation_id"];
+        $id = htmlentities($_POST["reservation_id"]);
         $reservation = $reservationService->findOne($id);
 
         $this->yourReservationGuard($reservation);
@@ -91,24 +93,24 @@ class ReservationController
         } else {
             $msg = "Successfully deleted reservation!";
         }
-        $this->index($msg);
+        $this->index(alertMsg: $msg, type: $ok ? "success" : "danger");
     }
-    public function edit(): void
+    public function edit(string $msg = ""): void
     {
         (new AuthenticatorService())->isNotAuthRedirect();
-        $id = $_GET["reservation_id"];
+        $id = htmlentities($_GET["reservation_id"]);
         $service = new ReservationService();
         $reservation = $service->findOneWithRelations($id);
-        (new ReservationUpdateForm($reservation))->render();
+        (new ReservationUpdateForm($reservation))->render($msg);
     }
     public function update(): void
     {
         (new AuthenticatorService())->isNotAuthRedirect();
         $service = new ReservationService();
-        $id = $_POST["reservation_id"];
+        $id = htmlentities($_POST["reservation_id"]);
         $reservation = $service->findOne($id);
         if(!$reservation) {
-            $this->index("Failed fetching reservation! Is id correct?");
+            $this->index(alertMsg: "Failed fetching reservation! Is id correct?");
             return;
         }
         $this->yourReservationGuard($reservation);
@@ -119,24 +121,25 @@ class ReservationController
 
         $this->formatDates($reservation);
 
-
         if (!$service->checkEndIsAfterStart($reservation->start_date, $reservation->end_date)) {
-            $this->index("End date must be after the start date!");
+            $_GET["reservation_id"] = $_POST["reservation_id"];
+            $this->edit("End date must be after the start date!");
             return;
         }
 
         if(!$service->checkReservationCollision($reservation)) {
-            $this->index("Couldn't update reservation. It is already reserve");
+            $_GET["reservation_id"] = $_POST["reservation_id"];
+            $this->edit("Couldn't update reservation. It is already reserve");
             return;
         }
         $ok = $service->updateReservation($reservation);
         $msg = $ok ? "Successfully updated reservation" : "Something went wrong!";
-        $this->index($msg);
+        $this->index($msg, "success");
     }
 
     public function show(): void {
         (new AuthenticatorService())->isNotAuthRedirect();
-        $user_id = Session::getInstance()->get("user_id");
+        $user_id = (int)Session::getInstance()->get("user_id");
         $reservations = (new ReservationService())->findUsersReservations($user_id);
         (new UserReservationList($reservations))->render();
     }

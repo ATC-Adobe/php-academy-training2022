@@ -6,9 +6,9 @@ use App\Service\AuthenticatorService;
 
 class LoginController
 {
-    public function create($msg = ""): void
+    public function create($msg = "", $alertMsg = "", $alertType = "danger"): void
     {
-        (new \App\View\LoginForm())->render($msg);
+        (new \App\View\LoginForm($alertMsg, $alertType))->render($msg);
     }
     public function store(): void
     {

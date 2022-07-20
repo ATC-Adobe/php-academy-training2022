@@ -28,7 +28,8 @@ class ReservationService implements \IOStrategyContextInterface
         }
         return $this->ioStrategy->readAll();
     }
-    public function findUsersReservations(int $user_id) {
+    public function findUsersReservations(int $user_id): bool|array
+    {
         if(method_exists($this->ioStrategy, "findBelongsToUser")) {
             return $this->ioStrategy->findBelongsToUser($user_id);
         }

@@ -14,7 +14,7 @@ class ReservationUpdateForm implements \Component
     {
     }
 
-    public function render(): void
+    public function render(string $msg = ""): void
     {
         (new Header())->render("Change Reservation");
         (new Navbar())->render();
@@ -26,7 +26,7 @@ class ReservationUpdateForm implements \Component
             Change your reservation '. $this->reservation->user->first_name.' '.$this->reservation->user->last_name.'
         </h1>
     </div>';
-        (new FormField("Start date ( current: ". $this->reservation->start_date .")","start_date", "datetime-local"))->render();
+        (new FormField("Start date ( current: ". $this->reservation->start_date .")","start_date", "datetime-local"))->render($msg);
         (new FormField("End date( current: ". $this->reservation->end_date .")","end_date" ,"datetime-local"))->render();
 
     echo '<div class="row mt-3">

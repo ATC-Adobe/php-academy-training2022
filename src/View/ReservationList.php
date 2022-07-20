@@ -2,8 +2,7 @@
 
 namespace App\View;
 
-use App\Service\ReservationService;
-use App\System\File\IOHandlerFactory;
+use App\View\Component\Alert;
 use App\View\Component\Footer;
 use App\View\Component\Header;
 use App\View\Component\Navbar;
@@ -11,11 +10,11 @@ use Component;
 
 class ReservationList implements Component
 {
-    public function __construct(protected bool|iterable $reservations)
+    public function __construct(protected bool|iterable $reservations, protected string $alertMsg ="", protected string $type="danger")
     {
     }
 
-    public function render(string $msg = ""): void
+    public function render(): void
     {
 //                $handler = SaveHandlerFactory::create("./System/File/data/reservations.xml");
 //                $reservations = (new ReservationService($handler))->readReservations();
@@ -24,8 +23,8 @@ class ReservationList implements Component
 
         echo '<div class="container my-3">
             <h1 class="text-center">All reservations</h1>';
-        if ($msg) {
-            echo '<div class="alert alert-info text-center">' . $msg . '</div>';
+        if($this->alertMsg) {
+            (new Alert($this->alertMsg, $this->type))->render();
         }
 
         if ($this->reservations === false) {

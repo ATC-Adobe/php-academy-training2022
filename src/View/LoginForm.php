@@ -2,6 +2,7 @@
 
 namespace App\View;
 
+use App\View\Component\Alert;
 use App\View\Component\Footer;
 use App\View\Component\FormField;
 use App\View\Component\Header;
@@ -10,17 +11,26 @@ use Component;
 
 class LoginForm implements Component
 {
+    public function __construct(protected string $alertMsg ="", protected string $type="danger")
+    {
+    }
+
     public function render($msg = ""): void
     {
         (new Header())->render("Register page");
         (new Navbar())->render();
+
         echo ' 
-<form class="container mt-4" method="post" action="/login">
-        <div class="row my-3">
+            <form class="container mt-4" method="post" action="/login">';
+
+        echo '<div class="row my-3">
                         <h1 class="w-100 text-center">
                             Login
                         </h1>
          </div>';
+        if($this->alertMsg) {
+            (new Alert($this->alertMsg, $this->type))->render();
+        }
         (new FormField("Email", "email"))->render($msg);
         (new FormField("Password", "password", "password"))->render();
 
