@@ -3,6 +3,7 @@
 namespace Controller;
 
 use Repository\ReservationRepository;
+use Service\ApplicationService;
 use System\Database\Connection;
 
 class DeleteReservationController
@@ -20,5 +21,6 @@ class DeleteReservationController
                 'end_date'
             ))->destroyReservation($dbConnection);
         }
+        (new ApplicationService())->getReservationListHeader();
     }
 }

@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <reservations>
   <reservation>
-    <room_id>1</room_id>
+    <room_id>5</room_id>
     <first_name>Test</first_name>
-    <last_name>Test</last_name>
-    <email>test@test.pl</email>
-    <start_date>2022-07-17T13:06</start_date>
-    <end_date>2022-07-17T13:07</end_date>
+    <last_name>test</last_name>
+    <email>test2@test.pl</email>
+    <start_date>2022-07-18T11:17</start_date>
+    <end_date>2022-07-18T11:19</end_date>
   </reservation>
 </reservations>

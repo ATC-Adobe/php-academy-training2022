@@ -36,6 +36,7 @@ class CreateReservationController
                 $context = new ReservationContext(new CreateDbReservation());
                 $context->createReservation($roomId, $firstName, $lastName, $email, $startDate, $endDate);
             }
+            (new ApplicationService())->getReservationListHeader();
         }
         if (isset($_POST['submit-csv'])) {
             [$error, $roomId, $firstName, $lastName, $email, $startDate, $endDate] = (new ReservationFormValidation(
@@ -69,6 +70,7 @@ class CreateReservationController
                 $context = new ReservationContext(new CreateJsonReservation());
                 $context->createReservation($roomId, $firstName, $lastName, $email, $startDate, $endDate);
             }
+            (new ApplicationService())->getReservationListHeader();
         }
         if (isset($_POST['submit-xml'])) {
             [$error, $roomId, $firstName, $lastName, $email, $startDate, $endDate] = (new ReservationFormValidation(
@@ -85,6 +87,7 @@ class CreateReservationController
                 $context = new ReservationContext(new CreateXmlReservation());
                 $context->createReservation($roomId, $firstName, $lastName, $email, $startDate, $endDate);
             }
+            (new ApplicationService())->getReservationListHeader();
         }
         return array($error, $roomId, $firstName, $lastName, $email, $startDate, $endDate);
     }

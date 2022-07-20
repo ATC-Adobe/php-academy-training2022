@@ -6,12 +6,12 @@ class ApplicationService
 {
     public function getReservationListHeader(): void
     {
-        header('location:/View/reservations.php?msg=add');
+        header('Location: /View/reservations.php?msg=add');
     }
 
     public function getRoomsListHeader(): void
     {
-        header('location:/View/rooms.php?msg=add');
+        header('Location: /View/rooms.php?msg=add');
     }
 
     public function getRows(): int
@@ -23,7 +23,7 @@ class ApplicationService
         return $rows;
     }
 
-    public function getJsonRows()
+    public function getJsonRows(): int
     {
         $array[] = json_decode($this->getJsonRows(), true);
         $rows = end($array);

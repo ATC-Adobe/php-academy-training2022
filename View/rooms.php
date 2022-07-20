@@ -27,6 +27,7 @@ include "../Layout/navbar.php";
                     <?php
 
                     $dbConnection = Connection::getConnection();
+                    // TODO: sprawdzić przekazywany typ danych
                     $rooms = (new RoomRepository('room_id', 'name', 'floor'))->getAllRooms($dbConnection);
                     (new DeleteRoomController())->deleteRoom($dbConnection);
                     ?>

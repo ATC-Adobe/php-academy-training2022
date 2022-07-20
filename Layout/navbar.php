@@ -7,12 +7,28 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item row">
-                <a class="nav-link" href="/View/rooms.php">Rooms</a>
-                <a class="nav-link" href="/View/reservations.php">Reservations</a>
-                <a class="nav-link" href="/View/registration.php">Sign up</a>
-                <a class="nav-link" href="/View/login.php">Login</a>
-            </li>
+            <?php
+
+            use Controller\LogoutController;
+
+            if (isset($_SESSION['userid'])) {
+                ?>
+                <li class="nav-item row">
+                    <a class="nav-link" href="/View/rooms.php">Rooms</a>
+                    <a class="nav-link" href="/View/reservations.php">Reservations</a>
+                    <a class="nav-link" href="<?php ((new LogoutController())->logout())?>">Logout</a>
+                </li>
+                <?php
+            } else {
+                ?>
+                <li class="nav-item row">
+                    <a class="nav-link" href="/Form/register.php">Sign up</a>
+                    <a class="nav-link" href="/Form/login.php">Login</a>
+                </li>
+                <?php
+            }
+            ?>
+
         </ul>
     </div>
 </nav>

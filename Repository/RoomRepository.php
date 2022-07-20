@@ -17,21 +17,19 @@ class RoomRepository extends Room
         return $rooms;
     }
 
-    public function storeRoom($name, $floor)
+    public function storeRoom($name, $floor): void
     {
         $dbConnection = Connection::getConnection();
         $dbConnection->query(
             "INSERT INTO rooms(name, floor) VALUES('$name', '$floor')"
         );
-        (new ApplicationService())->getRoomsListHeader();
     }
 
-    function destroy(Connection $dbConnection): void
+    public function destroy(Connection $dbConnection): void
     {
         $roomId = $_GET['room_id'];
         $dbConnection->query(
             "DELETE FROM rooms WHERE room_id='$roomId'"
         );
-        (new ApplicationService())->getRoomsListHeader();
     }
 }

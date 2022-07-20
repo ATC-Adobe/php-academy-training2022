@@ -3,6 +3,7 @@
 namespace Controller;
 
 use Repository\RoomRepository;
+use Service\ApplicationService;
 use System\Database\Connection;
 
 class DeleteRoomController
@@ -12,5 +13,6 @@ class DeleteRoomController
         if (isset($_GET['room_id'])) {
             (new RoomRepository('$room_id', 'name', 'floor'))->destroy($dbConnection);
         }
+        (new ApplicationService())->getRoomsListHeader();
     }
 }

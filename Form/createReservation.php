@@ -6,9 +6,8 @@ require_once "../autoloading.php";
 
 use Controller\CreateReservationController;
 
-
-include "../Layout/head.php";
-include "../Layout/navbar.php";
+include_once "../Layout/head.php";
+include_once "../Layout/navbar.php";
 
 $error = '';
 $message = '';
