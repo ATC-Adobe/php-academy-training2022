@@ -93,9 +93,19 @@ class ReservationRepository extends BaseRepository implements IOHandlerInterface
 
     public function findBelongsToUser(int $user_id): bool|array
     {
+        //Where clause isn't a prepared statement, so id requires checking for sql injection
+        if(!is_numeric($user_id)) {
+            echo "id is not numeric";
+            return false;
+        }
         return $this->readWithRelations("WHERE user_id = $user_id");
     }
     public function findOneWithRelations(int $reservation_id) {
+        //Where clause isn't a prepared statement, so id requires checking for sql injection
+        if(!is_numeric($reservation_id)) {
+            echo "id is not numeric";
+            return false;
+        }
         $data = $this->readWithRelations("WHERE reservation.id = $reservation_id");
         if(!$data) {
             return false;
