@@ -1,3 +1,9 @@
+<?php
+require_once 'autoloading.php';
+include_once 'Controller/Logout.php';
+include_once 'layout/navbar.php';
+
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,9 +12,7 @@
     <title>Add Room</title>
 </head>
 <body>
-<?php
-require_once "layout/navbar.html";
-?>
+
 <div class="container">
     <form class="bg-dark text-light" method="post" action="index.php">
         <label for="name">Room Name:</label>

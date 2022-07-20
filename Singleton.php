@@ -1,6 +1,6 @@
 <?php
-//include_once "./MysqlConnection.php";
-//$conn = MysqlConnection::getInstance();
+//include_once "./Connection.php";
+//$conn = Connection::getInstance();
 //$reservations = $conn->query("SELECT * FROM reservations")->fetchAll();
 //
 //foreach ($reservations as $row){

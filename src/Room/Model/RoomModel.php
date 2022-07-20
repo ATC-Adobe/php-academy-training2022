@@ -1,7 +1,7 @@
 <?php
-namespace Room\Model;
+namespace src\Room\Model;
 use http\Exception\BadQueryStringException;
-use Reservation\Repository\ReservationRepository;
+use src\Reservation\Repository\RoomRepository;
 
 class RoomModel{
     public string $roomName;

@@ -1,4 +1,20 @@
-
+<?php
+//require_once 'autoloading.php';
+//use System\Database\Connection;
+//include 'System/Database/Connection.php';
+//if(isset($_POST['CSV'])) {
+//    $myFile = new SplFileObject('reservation.csv', "a");
+//    $myFile->fputcsv($_POST);
+//
+//}
+//if(isset($_POST['JSON'])) {
+//
+//    file_put_contents('reservation.json', json_encode($_POST));
+//}
+//if(isset($_POST['XML'])) {
+//    echo "This is Button2 that is selected";
+//}
+//?>
 <?php
 //class ReservationService {
 //    public $name;
@@ -52,19 +68,21 @@
 //
 //
 //?>
-
-
+<?php
+require_once 'autoloading.php';
+include_once 'Controller/Logout.php';
+include_once 'layout/navbar.php';
+?>
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
     <title>Reservations List</title>
 </head>
 <body>
-<?php
-require_once "layout/navbar.html";
-?>
+
 <div class="container">
     <table class="table table-striped table-dark">
         <tr>
@@ -75,6 +93,8 @@ require_once "layout/navbar.html";
             <th>email</th>
             <th>start_date</th>
             <th>end_date</th>
+            <th>room_name</th>
+            <th></th>
         </tr>
 
         <tr>
@@ -168,16 +188,150 @@ require_once "layout/navbar.html";
             <td>02/06/23 16:00:00</td>
         </tr>
         <?php
-        include_once 'autoloading.php';
-        include 'Reservation/Model/ReservationModel.php';
-        include 'Reservation/Repository/ReservationRepository.php';
-        use System\Database\MysqlConnection;
-        use Reservation\Repository\ReservationRepository;
-        $item = new Reservation\Repository\ReservationRepository($_POST['roomNumber'], $_POST['name'], $_POST['surname'],
-            $_POST['email'], date("d/m/y H:i:s",strtotime($_POST['datetimeFrom'])), date("d/m/y H:i:s",strtotime($_POST['datetimeTo'])));
-        $item->saveReservation();
-        include_once "System/Database/MysqlConnection.php";
+        require_once 'autoloading.php';
+        use System\Database\Connection;
+        use src\Reservation\Model\ReservationModel;
+        use src\Reservation\Repository\ReservationRepository;
+        use src\Reservation\Service\ReservationService;
+        use src\Reservation\Service\AddToJSON;
+
+        use src\Reservation\Service\AddToCSV;
+        include_once "System/Database/Connection.php";
+        include_once 'src/Reservation/Model/ReservationModel.php';
+        include_once 'src/Reservation/Repository/ReservationRepository.php';
+        include_once 'src/Reservation/Service/ReservationService.php';
+        include_once 'src/Reservation/Service/AddToCSV.php';
+        include_once 'src/Reservation/Service/AddToJSON.php';
+
+
+
+
+
+        if(isset($_POST['CSV'])) {
+            $reservation = new ReservationService($_POST['roomNumber'], $_POST['name'], $_POST['surname'],
+                $_POST['email'], $_POST['datetimeFrom'], $_POST['datetimeTo']);
+            $data = ReservationService::createReservation($reservation);
+
+//            $myFile = new SplFileObject('reservation.csv', "a");
+//            $myFile->fputcsv($data);
+//            $reservation = new \src\Reservation\Service\AddToCSV($_POST['roomNumber'], $_POST['name'], $_POST['surname'],
+//                $_POST['email'], $_POST['datetimeFrom'], $_POST['datetimeTo']);
+
+
+            src\Reservation\Service\AddToCSV::saveFile($data);
+
+
+        }
+        if(isset($_POST['JSON'])) {
+//            $reservation = new ReservationService($_POST['roomNumber'], $_POST['name'], $_POST['surname'],
+//                $_POST['email'], $_POST['datetimeFrom'], $_POST['datetimeTo']);
+//            $data = ReservationService::createReservation($reservation);
+
+//            $data=[$_POST['roomNumber'],$_POST['name'],$_POST['surname'],$_POST['email'],
+//                $_POST['datetimeFrom'], $_POST['datetimeTo']];
+
+            $newReservation = [
+                'roomNumber'  => $_POST['roomNumber'],
+                'name'  => $_POST['name'],
+                'surname' => $_POST['surname'],
+                'email'  => $_POST['email'],
+                'datetimeFrom'  => $_POST['datetimeFrom'],
+                'datetimeTo'  => $_POST['datetimeTo']
+            ];
+            $json = file_get_contents('reservation.json');
+            if($json){
+                $jsonData = json_decode($json);
+            }
+            else{
+                $jsonData = [];
+            }
+            $jsonData[] = $newReservation;
+
+            $json2 = json_encode($jsonData);
+            file_put_contents('reservation.json', $json2);
+
+
+//            src\Reservation\Service\AddToJSON::saveFile(json_encode($reservation));
+
+
+        }
+        if(isset($_POST['XML'])) {
+            $newReservation = [
+                'roomNumber'  => $_POST['roomNumber'],
+                'name'  => $_POST['name'],
+                'surname' => $_POST['surname'],
+                'email'  => $_POST['email'],
+                'datetimeFrom'  => $_POST['datetimeFrom'],
+                'datetimeTo'  => $_POST['datetimeTo']
+            ];
+            function arrayToXml($array, $rootElement = null, $xml = null) {
+                $_xml = $xml;
+
+                // If there is no Root Element then insert root
+                if ($_xml === null) {
+                    $_xml = new SimpleXMLElement($rootElement !== null ? $rootElement : '<root/>');
+                }
+
+                // Visit all key value pair
+                foreach ($array as $k => $v) {
+
+                    // If there is nested array then
+                    if (is_array($v)) {
+
+                        // Call function for nested array
+                        arrayToXml($v, $k, $_xml->addChild($k));
+                    }
+
+                    else {
+
+                        // Simply add child element.
+                        $_xml->addChild($k, $v);
+                    }
+                }
+
+                return $_xml->asXML();
+            }
+
+            $xml = file_get_contents('reservation.xml');
+            if($xml){
+                $xmlData = simplexml_load_string($xml);
+            }
+            else{
+                $xmlData = [];
+            }
+            $xmlData[] = $newReservation;
+            $xml = arrayToXml($xmlData);
+
+
+            file_put_contents('reservation.xml', $xml);
+
+
+
+
+
+
+        }
+        if(isset($_SESSION['nickname'])) {
+        if(isset($_POST['DB'])) {
+
+            if (!empty($_POST['datetimeFrom']) && !empty($_POST['datetimeTo']) && !empty($_POST['roomNumber'])) {
+                $item = new ReservationRepository(
+                    $_POST['roomNumber'],
+                    $_SESSION['userID'],
+                    date("d/m/y H:i:s", strtotime($_POST['datetimeFrom'])),
+                    date("d/m/y H:i:s", strtotime($_POST['datetimeTo']))
+
+                );
+
+                $item->saveReservation();
+
+
+            }
+        }}
+        else echo "You must login first";
+
         ?>
+
         <?php
         require_once 'autoloading.php';
         include 'View/ReservationView.php';

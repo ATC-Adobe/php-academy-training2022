@@ -1,14 +1,19 @@
+<?php
+require_once 'autoloading.php';
+include_once 'Controller/Logout.php';
+include_once 'layout/navbar.php';
+
+?>
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
     <title>Rooms</title>
 </head>
 <body>
-<?php
-require_once "layout/navbar.html";
-?>
+
 <div class="container">
 <table class="table table-sm table-striped table-dark">
     <tr>
@@ -35,35 +40,42 @@ require_once "layout/navbar.html";
 
 
 //json
-
-$json = file_get_contents('rooms.json');
-
-$json_data = json_decode($json,true);
-
-
-foreach ($json_data as $room) {
-    echo "<tr><td>$room[room_id]</td>
-<td>$room[name]</td>
-<td>$room[floor]</td>
-<td><form method='get' action='reservations.php'><input type='hidden' name='room' value=$room[name] /><input type='submit' value='Reserve'></form> </td>
-</tr>";
-   // print_r(rooms);
-}
+//
+//$json = file_get_contents('rooms.json');
+//
+//$json_data = json_decode($json,true);
+//
+//
+//foreach ($json_data as $room) {
+//    echo "<tr><td>$room[room_id]</td>
+//<td>$room[name]</td>
+//<td>$room[floor]</td>
+//<td><form method='get' action='reservations.php'><input type='hidden' name='room' value=$room[name] /><input type='submit' value='Reserve'></form> </td>
+//</tr>";
+//   // print_r(rooms);
+//}
 
 
 ?>
     <?php
-    include_once 'autoloading.php';
-    include 'Room/Model/RoomModel.php';
-    include 'Room/Repository/RoomRepository.php';
-    use System\Database\MysqlConnection;
-    use Reservation\Repository\ReservationRepository;
-    $item = new Room\Repository\RoomRepository($_POST['name'], $_POST['floor']);
-    $item->saveRoom();
-    include_once "System/Database/MysqlConnection.php";
+    require 'autoloading.php';
+    include_once "System/Database/Connection.php";
+    include_once 'src/Room/Model/RoomModel.php';
+    include_once 'src/Room/Repository/RoomRepository.php';
+    use System\Database\Connection;
+    use src\Room\Repository\RoomRepository;
+    if(!empty($_POST['name']) && !empty($_POST['floor'])) {
+        $item = new src\Room\Repository\RoomRepository(
+            $_POST['name'],
+            $_POST['floor'],
+        );
+
+        $item->saveRoom();
+    }
+
     ?>
     <?php
-    require_once 'autoloading.php';
+//    require_once 'autoloading.php';
     include 'View/RoomView.php';
     ?>
 

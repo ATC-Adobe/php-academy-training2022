@@ -1,13 +1,13 @@
 <?php
-namespace Room\Repository;
-use Room\Model\RoomModel;
-use System\Database\MysqlConnection;
-include 'System/Database/MysqlConnection.php';
+namespace src\Room\Repository;
+use src\Room\Model\RoomModel;
+use System\Database\Connection;
+//include_once 'System/Database/Connection.php';
 
 class RoomRepository extends RoomModel {
 //    public function __construct(){}
     public function saveRoom(){
-        MySqlConnection::getInstance()
+        Connection::getInstance()
             ->query("INSERT INTO rooms 
                     (roomName, floor) 
                     VALUES
@@ -16,5 +16,9 @@ class RoomRepository extends RoomModel {
                          '$this->floor'
                         );"
             );
+    }
+    public static function getRoom(){
+        return Connection::getInstance()
+            ->query("SELECT * FROM rooms;");
     }
 }

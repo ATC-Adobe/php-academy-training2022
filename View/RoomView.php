@@ -1,8 +1,7 @@
 <?php
 require_once 'autoloading.php';
-use System\Database\MysqlConnection;
-$conn = MysqlConnection::getInstance();
-$result = $conn->query("SELECT * FROM rooms")->fetchAll();
+$conn = System\Database\Connection::getInstance();
+$result = \src\Room\Repository\RoomRepository::getRoom()->fetchAll();
 foreach ($result as $row) {
     echo "<tr>
             <td>{$row[0]}</td>

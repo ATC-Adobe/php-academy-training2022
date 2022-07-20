@@ -3,12 +3,12 @@ declare(strict_types=1);
 namespace System\Database;
 use PDO;
 
-class MysqlConnection extends PDO
+class Connection extends PDO
 {
     /**
-     * @var MysqlConnection|null
+     * @var Connection|null
      */
-    protected static ?MysqlConnection $instance = null;
+    protected static ?Connection $instance = null;
     protected const MYSQL_HOST = "mysql";
     protected const MYSQL_USER = "app";
     protected const MYSQL_PASSWORD = "qwerty";
@@ -22,12 +22,12 @@ class MysqlConnection extends PDO
         );
     }
     /**
-     * @return MysqlConnection
+     * @return Connection
      */
-    public static function getInstance(): MysqlConnection
+    public static function getInstance(): Connection
     {
         if(self::$instance === null) {
-            self::$instance = new MysqlConnection();
+            self::$instance = new Connection();
         }
         return self::$instance;
     }

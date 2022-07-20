@@ -1,6 +1,14 @@
 <?php
 require_once 'autoloading.php';
+use Controller\Authenticator;
+require_once 'src/Registration/Model/RegistrationModel.php';
+require_once 'src/LogIn/Model/LogInModel.php';
+require_once 'src/LogIn/Repository/LogInRepository.php';
+require_once 'Controller/Authenticator.php';
+require_once 'System/Database/Connection.php';
 include_once 'Controller/Logout.php';
+
+    Authenticator::logIn();
 include_once 'layout/navbar.php';
 
 ?>
@@ -10,30 +18,18 @@ include_once 'layout/navbar.php';
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
-    <title>Reservation Form</title>
+    <title>Login</title>
 </head>
 <body>
 
 <div class="container">
-<form class="bg-dark text-light" method="post" action="reservationsList.php">
-    <?php $room = $_GET["room"];
-    $roomNumber = substr($room, 5);
-    echo "<input type='hidden' name='roomNumber' value='$roomNumber' /><h2>$room</h2>"?>
-<!--    <label for="name">Name:</label>-->
-<!--    <input type="text" id="name"  name="name"><br>-->
-<!--    <label for="surname">Surname:</label>-->
-<!--    <input type="text" id="surname"  name="surname"><br>-->
-<!--    <label for="email">E-mail:</label>-->
-<!--    <input type="text" id="email"  name="email"><br>-->
-    <label for="datetimeFrom">From:</label>
-    <input type="datetime-local" id="datetimeFrom" name="datetimeFrom"><br>
-    <label for="datetimeTo">To:</label>
-    <input type="datetime-local" id="datetimeTo" name="datetimeTo"><br>
-    <input type="submit" name="CSV" value="Save to CSV">
-    <input type="submit" name="JSON" value="Save to JSON">
-    <input type="submit" name="XML" value="Save to XML">
-    <input type="submit" name="DB" value="Save to database">
-</form>
+    <form class="bg-dark text-light" method="post" action="login.php">
+        <label for="nickname">Nickname:</label>
+        <input type="text" id="nickname"  name="nickname"><br>
+        <label for="password">Password:</label>
+        <input type="password" id="password"  name="password"><br>
+        <input type="submit" name="login" value="Login">
+    </form>
 
 </div>
 

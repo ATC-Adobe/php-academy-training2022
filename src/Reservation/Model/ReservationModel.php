@@ -1,7 +1,7 @@
 <?php
-namespace Reservation\Model;
+namespace src\Reservation\Model;
 use http\Exception\BadQueryStringException;
-use Reservation\Repository\ReservationRepository;
+use src\Reservation\Repository\ReservationRepository;
 
 class ReservationModel{
    // public int $reservationID;
@@ -11,20 +11,25 @@ class ReservationModel{
     public string $email;
     public string $dateTimeFrom;
     public string $dateTimeTo;
+    public int $userID;
 
-    public function __construct( int $roomNumber, string $name, string $surname, string $email, string $dateTimeFrom, string $dateTimeTo){
+    public function __construct( int $roomNumber, int $userID, string $dateTimeFrom, string $dateTimeTo ){
 //       $this->reservationID = $reservationID;
         $this->roomNumber = $roomNumber;
-        $this->name = $name;
-        $this->surname = $surname;
-        $this->email = $email;
         $this->dateTimeFrom = $dateTimeFrom;
         $this->dateTimeTo = $dateTimeTo;
+        $this->userID = $userID;
     }
 
 //    function get_reservationID() {
 //       return $this->reservationID;
 //    }
+    function set_userID($userID) {
+        $this->userID = $userID;
+    }
+    function get_userID() {
+        return $this->userID;
+    }
 
     function set_roomNumber($roomNumber) {
         $this->roomNumber = $roomNumber;
