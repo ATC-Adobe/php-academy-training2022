@@ -13,8 +13,9 @@ class Reservation
     private string $email;
     private string $startDate;
     private string $endDate;
+    private int $userId;
 
-    public function __construct($reservationId, $roomId, $firstname, $lastname, $email, $startDate, $endDate)
+    public function __construct($reservationId, $roomId, $firstname, $lastname, $email, $startDate, $endDate, $userId)
     {
     }
 
@@ -88,4 +89,19 @@ class Reservation
         return $this->endDate;
     }
 
+    /**
+     * @param int $userId
+     */
+    public function setUserId(int $userId): void
+    {
+        $this->userId = $userId;
+    }
+
+    /**
+     * @return int
+     */
+    public function getUserId(): int
+    {
+        return $this->userId;
+    }
 }

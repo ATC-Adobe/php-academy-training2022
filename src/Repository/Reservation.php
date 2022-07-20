@@ -31,6 +31,7 @@ class Reservation
             '$endDate'
             );
 ";
+
             $dbConnection->query($insertQuery);
         }
 

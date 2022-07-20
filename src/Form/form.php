@@ -1,5 +1,7 @@
 <?php
 session_start();
+var_dump($_SESSION);
+
 ?>
 
 <!DOCTYPE html>
@@ -27,8 +29,15 @@ session_start();
             <!-- Contact form-->
             <div class="bg-light rounded-3 py-5 px-4 px-md-5 mb-5">
                 <div class="text-center mb-5">
-                    <h1 class="fw-bolder">Your room id is <?php echo $_GET['room_id']; ?>. Fill in this form to reserve it </h1>
+                    <h1 class="fw-bolder">Your room id is <?php echo $_GET['room_id']; ?>. Fill in this form to reserve
+                        it </h1>
                     <p class="lead fw-normal text-muted mb-0">We need some information from you</p>
+                    <?php if (isset($_SESSION['error_date'])) { ?>
+                        <div class="alert-danger"><?php echo $_SESSION['error_date'] ?></div>
+                    <?php } ?>
+                    <?php if (isset($_SESSION['error_room'])) { ?>
+                        <div class="alert-danger"><?php echo $_SESSION['error_room'] ?></div>
+                    <?php } ?>
                 </div>
                 <div class="row gx-5 justify-content-center">
                     <div class="col-lg-8 col-xl-6">
@@ -44,14 +53,16 @@ session_start();
                             <div class="form-floating mb-3">
                                 <input type="hidden" name="delete" value="false">
                                 <input type="hidden" name="room_id" value="<?= $_GET['room_id'] ?>">
-                                <input class="form-control" name="firstname" type="text" placeholder="Enter your name..."
+                                <input class="form-control" name="firstname" type="text"
+                                       placeholder="Enter your name..."
                                        data-sb-validations="required"/>
                                 <label for="name">First Name</label>
                                 <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
                             </div>
                             <!-- Surname input-->
                             <div class="form-floating mb-3">
-                                <input class="form-control" name="lastname" type="text" placeholder="Enter your surname..."
+                                <input class="form-control" name="lastname" type="text"
+                                       placeholder="Enter your surname..."
                                        data-sb-validations="required"/>
                                 <label for="name">Last Name</label>
                                 <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
@@ -67,7 +78,8 @@ session_start();
                             </div>
                             <!-- From input-->
                             <div class="form-floating mb-3">
-                                <input class="form-control" name="start_date" type="datetime-local" placeholder="From..."
+                                <input class="form-control" name="start_date" type="datetime-local"
+                                       placeholder="From..."
                                        data-sb-validations="required"/>
                                 <label for="name">From</label>
                                 <div class="invalid-feedback" data-sb-feedback="name:required">A date is required.</div>
@@ -81,11 +93,13 @@ session_start();
                             </div>
                             <!-- Submit Buttons-->
                             <div class="text-center d-flex justify-content-around m-2">
-                                <input class="btn btn-primary" name="save_id" type="submit" value="Zapisz w bazie danych"/>
+                                <input class="btn btn-primary" name="save_id" type="submit"
+                                       value="Zapisz w bazie danych"/>
                                 <input class="btn btn-primary" name="save_id" type="submit" value="Zapisz w pliku CSV"/>
                             </div>
                             <div class="text-center d-flex justify-content-around">
-                                <input class="btn btn-primary" name="save_id" type="submit" value="Zapisz w pliku JSON"/>
+                                <input class="btn btn-primary" name="save_id" type="submit"
+                                       value="Zapisz w pliku JSON"/>
                                 <input class="btn btn-primary" name="save_id" type="submit" value="Zapisz w pliku XML"/>
                             </div>
                         </form>

@@ -1,20 +1,23 @@
 <?php
 
 namespace Repository;
-use MongoDB\Driver\Exception\EncryptionException;
+use Exception;
 
 
 class Validator
 {
-    protected string $login;
+    protected string $email;
 
-    public function __construct($login)
+    public function __construct($email)
     {
-        if(strlen($login) > 7){
-            $this->login = $login;
-        }else{
-            throw new EncryptionException('Nickname is too short');
+
+    }
+
+    public function checkEmail($email){
+        if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
+            throw new Exception('Invalid email');
         }
     }
+
 
 }
