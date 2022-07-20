@@ -1,6 +1,7 @@
 <?php
 
 use Controllers\Reservation\CreateReservation;
+use Session\Session;
 
 require_once "../autoloader.php";
 
@@ -12,7 +13,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $reservationController = new CreateReservation();
     $reservationController->getDataFromForm();
 
-    header('Location:reservationsList.php?reservation');
+    $session = new Session();
+    $session->set('reservationAdded');
+    header('Location:myReservations.php');
+    exit();
 }
 ?>
 

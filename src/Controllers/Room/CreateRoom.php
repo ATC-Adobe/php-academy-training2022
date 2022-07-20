@@ -10,8 +10,8 @@ class CreateRoom
     public function createRoom(): void
     {
         $roomData = [
-            'roomNumber' => $_POST['roomNumber'],
-            'floorNumber' => $_POST['floorNumber'],
+            'roomNumber' => intval($_POST['roomNumber']),
+            'floorNumber' => intval($_POST['floorNumber'])
         ];
 
         $roomService = new RoomService();

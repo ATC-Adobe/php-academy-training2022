@@ -2,6 +2,8 @@
 
 require_once "../autoloader.php";
 
+session_start();
+
 use Controllers\User\RegistrationUser;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -14,20 +16,15 @@ require_once "../layout/navbar.php";
 ?>
 
 <?php
-if (isset($_GET['error'])) : ?>
-    <p class="message">Nazwa użytkownika lub adres Email są już zarezerwowane</p>
-<?php
-endif;
-if (isset($_GET['passerror'])) : ?>
-    <p class="message">Wpisane hasła nie są takie same</p>
-<?php
-endif;
-if (isset($_GET['roomerror'])) : ?>
-    <p class="message">Ta sala jest już zarezerwowana w wybranym terminie</p>
-<?php
-endif; ?>
 
-<?php
+if (isset($_SESSION['message'])) : ?>
+    <div class="alert alert-danger message" role="alert">
+        <?php
+        echo $_SESSION['message']; ?>
+    </div>
+    <?php
+    unset($_SESSION['message']);
+endif;
+
 require_once "../Form/registrationForm.php";
 require_once "../layout/footer.html";
-?>

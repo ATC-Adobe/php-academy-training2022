@@ -1,5 +1,7 @@
 <?php
+
 use Controllers\Room\CreateRoom;
+use Session\Session;
 
 require_once "../autoloader.php";
 
@@ -11,16 +13,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $createRoom = new CreateRoom();
     $createRoom->createRoom();
 
-    header('Location:../index.php');
-}
-?>
-<?php
-require_once "../layout/header.html" ?>
-<?php
-require_once "../layout/navbar.php" ?>
+    $session = new Session();
+    $session->set('roomAdded');
 
-<?php
-require_once "../Form/roomForm.php" ?>
-<?php
-require_once "../layout/footer.html" ?>
+    header('Location:../index.php');
+    exit();
+}
+
+require_once "../layout/header.html";
+
+require_once "../layout/navbar.php";
+
+require_once "../Form/roomForm.php";
+
+require_once "../layout/footer.html";
 

@@ -5,15 +5,7 @@ namespace Reservation;
 use System\Database\MysqlConnection;
 
 class ReservationRepository
-
 {
-    public function getAllReservations(): bool|array
-    {
-        $connection = MysqlConnection::getInstance();
-        $selectQuery = "SELECT * FROM reservations;";
-        return $connection->query($selectQuery)->fetchAll();
-    }
-
     public function getReservationsWithRooms(): bool|array
     {
         $connection = MysqlConnection::getInstance();

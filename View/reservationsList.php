@@ -16,15 +16,6 @@ $displayReservations = new DisplayReservations();
 $reservations = $displayReservations->displayReservations();
 ?>
 
-<?php
-if (isset($_GET['reservation'])) : ?>
-    <p class="message">Sala została zarezerwowana</p>
-<?php
-elseif (isset($_GET['delete'])) : ?>
-    <p class="message">Rezerwacja została usunięta</p>
-<?php
-endif; ?>
-
 <table class="table">
     <thead id="reservated-head">
     <tr>

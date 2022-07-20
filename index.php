@@ -12,13 +12,21 @@ session_start();
 require_once "layout/header.html"; ?>
 <body class="index-list-body">
 <?php
-require_once "layout/navbar.php"; ?>
+require_once "layout/navbar.php";
 
-<?php
+if (isset($_SESSION['message'])) : ?>
+    <div class="alert alert-info message" role="alert">
+        <?php
+        echo $_SESSION['message']; ?>
+    </div>
+    <?php
+    unset($_SESSION['message']);
+endif;
+
 $displayRooms = new DisplayRooms();
 $rooms = $displayRooms->displayRooms();
 
-$nickName = $_SESSION['username'];
+$nickName = $_SESSION['username'] ?? null;
 
 $login = new LoginUser();
 $userId = $login->getUserId($nickName);

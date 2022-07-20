@@ -38,16 +38,16 @@ class UserRepository
     {
         $connection = MysqlConnection::getInstance();
 
-        $selectQuery = "SELECT * FROM user WHERE nickName = :nickName";
+        $selectQuery = "SELECT nickName FROM user WHERE nickName = :nickName";
         $statement = $connection->prepare($selectQuery);
         $statement->bindValue(':nickName', $nickName);
         $statement->execute();
         $nickNameCheck = $statement->fetchAll();
 
         if (count($nickNameCheck) === 1) {
-            return 'true';
+            return "true";
         } else {
-            return 'false';
+            return "false";
         }
     }
 
@@ -55,16 +55,16 @@ class UserRepository
     {
         $connection = MysqlConnection::getInstance();
 
-        $selectQuery = "SELECT * FROM user WHERE email = :email";
+        $selectQuery = "SELECT email FROM user WHERE email = :email";
         $statement = $connection->prepare($selectQuery);
         $statement->bindValue(':email', $email);
         $statement->execute();
         $emailCheck = $statement->fetchAll();
 
         if (count($emailCheck) === 1) {
-            return 'true';
+            return "true";
         } else {
-            return 'false';
+            return "false";
         }
     }
 

@@ -1,15 +1,19 @@
 <?php
 
 use Controllers\Reservation\DeleteReservation;
+use Session\Session;
 
 require_once "../autoloader.php";
 
 $id = $_POST['id'] ?? null;
 
 if (!$id) {
-    header('Location:reservationsList.php?delete=true');
+    header('Location:myReservations.php');
     exit;
 }
 $deleteReservation = new DeleteReservation();
 $deleteReservation->deleteReservation();
-header('Location:reservationsList.php?delete');
+$session = new Session();
+$session->set('reservationDeleted');
+
+header('Location:myReservations.php');

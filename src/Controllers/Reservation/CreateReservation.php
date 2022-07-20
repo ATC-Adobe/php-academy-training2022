@@ -5,6 +5,7 @@ namespace Controllers\Reservation;
 use Factory\ReservationsFactory;
 use Factory\ReservationCommand;
 use Reservation\ReservationRepository;
+use Session\Session;
 
 class CreateReservation
 {
@@ -19,13 +20,13 @@ class CreateReservation
             'email' => $_POST['email'],
             'startDay' => date("Y-m-d", (strtotime($_POST['startDay']))),
             'endDay' => date("Y-m-d", (strtotime($_POST['endDay']))),
-            'startHour' => $_POST['startHour'],
-            'endHour' => $_POST['endHour'],
+            'startHour' => date("H:i", (strtotime($_POST['startHour']))),
+            'endHour' => date("H:i", (strtotime($_POST['endHour']))),
             'dataType' => $_POST['dataType']
         ];
 
         $startDay = date("Y-m-d", (strtotime($_POST['startDay'])));
-        $startHour = $_POST['startHour'];
+        $startHour = date("H:i", (strtotime($_POST['startHour'])));
 
         $dataType = $_POST['dataType'];
 
@@ -39,7 +40,10 @@ class CreateReservation
             $reservationCommand = new ReservationCommand($dataReservation, $object);
             $reservationCommand->makeReservation();
         } else {
-            header('Location:registration.php?roomerror');
+            $value = 'roomsCollision';
+            $session = new Session();
+            $session->set($value);
+            header('Location:myReservations.php');
         }
     }
 }

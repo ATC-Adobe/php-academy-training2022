@@ -19,11 +19,11 @@
     </div>
     <div class="input-group f-input">
         <span class="input-group-text">Hasło</span>
-        <input type="password" name="password1" class="form-control" id="exampleInputPassword1" required>
+        <input type="password" min="8" name="password1" class="form-control" id="exampleInputPassword1" required>
     </div>
     <div class="input-group f-input">
         <span class="input-group-text">Powtórz Hasło</span>
-        <input type="password" name="password2" class="form-control" id="exampleInputPassword1" required>
+        <input type="password" min="8" name="password2" class="form-control" id="exampleInputPassword1" required>
     </div>
     <button type="submit" class="btn btn-info">Zarejestruj</button>
 </form>

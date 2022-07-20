@@ -10,34 +10,32 @@ class Authenticator
 {
     public function register($firstName, $lastName, $nickName, $email, $password, $password2)
     {
-        if ($password === $password2) {
-            $uppercase = preg_match('@[A-Z]@', $password);
-            $lowercase = preg_match('@[a-z]@', $password);
-            $number = preg_match('@[0-9]@', $password);
-            $specialChars = preg_match('@[^\w]@', $password);
+        $uppercase = preg_match('@[A-Z]@', $password);
+        $lowercase = preg_match('@[a-z]@', $password);
+        $number = preg_match('@[0-9]@', $password);
+        $specialChars = preg_match('@[^\w]@', $password);
 
-            if (!$uppercase || !$lowercase || !$number || !$specialChars || strlen($password) < 8) {
-                $value = 'passwordNotStrong';
-                $session = new Session();
-                $session->set($value);
-                header('Location:../index.php');
-            }
+        $userRepository = new UserRepository();
+        $nickNameCheck = $userRepository->getUserByNickName($nickName);
+        $emailCheck = $userRepository->getUserByEmail($email);
 
-            $userRepository = new UserRepository();
-            $nickNameCheck = $userRepository->getUserByNickName($nickName);
-            $emailCheck = $userRepository->getUserByEmail($email);
+        if ($password !== $password2) {
+            $value = 'passwordsNotTheSame';
+            $session = new Session();
+            $session->set($value);
+        } elseif (!$uppercase || !$lowercase || !$number || !$specialChars || strlen($password) < 8) {
+            $value = 'passwordNotStrong';
+            $session = new Session();
+            $session->set($value);
+        } elseif ($nickNameCheck === 'true' || $emailCheck === 'true') {
+            $value = 'userNameOrEmail';
+            $session = new Session();
+            $session->set($value);
         } else {
-            header('Location:registration.php?passerror');
-        }
-
-        $newPass = $this->complicateThePassword($password);
-
-        if ($nickNameCheck === 'false' && $emailCheck === 'false') {
+            $newPass = $this->complicateThePassword($password);
             $userService = new UserService();
             $userService->createUser($firstName, $lastName, $nickName, $email, $newPass);
-            header('Location:../index.php');
-        } else {
-            header('Location:registration.php?error');
+            header('Location:login.php');
         }
     }
 
@@ -52,17 +50,22 @@ class Authenticator
         }
 
         if ($userNick === "true" && $checkPass == "true") {
+            $value = 'correctLogin';
             $session = new Session();
+            $session->set($value);
             $session->create($nickName);
-            header('Location:myReservations.php?log');
         } else {
-            header('Location:login.php?error');
+            $value = 'incorrectLogin';
+            $session = new Session();
+            $session->set($value);
         }
     }
 
     public function logOut()
     {
+        $value = 'logout';
         $session = new Session();
+        $session->set($value);
         $session->destroy();
     }
 
