@@ -11,7 +11,8 @@
 
             if($sess->isValid()) {
                 echo '<a href = "/user/logout">Log out</a>';
-                echo 'Logged as: <a href="/reservation/user">'.$sess->get('username').'</a>';
+                echo 'Logged as: <a href="/reservation/user">'
+                    .htmlspecialchars($sess->get('username')).'</a>';
             }
             else {
                 echo '<a href = "/user/add">Sign in</a>';

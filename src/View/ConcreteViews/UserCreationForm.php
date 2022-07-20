@@ -19,6 +19,87 @@ use \System\Util\Authenticator;
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     -->
+
+    <script>
+
+        $ = (id) => { return document.getElementById(id) }
+
+        const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+
+        function validateEmail() {
+            inp = $('emailInput').value;
+
+            if(!inp.match(
+                re
+            )) {
+                $('emailSpan').innerHTML = 'This is not correct email';
+            }
+            else {
+                if(inp === '') {
+                    $('emailSpan').innerHTML = '';
+                }
+                else {
+                    $('emailSpan').innerHTML = 'Email is correct';
+                }
+            }
+        }
+
+        function validatePassword1() {
+            inp = $('pass1Input').value
+
+            span = $('passSpan');
+
+            if(!inp.match(/[A-Z]/)) {
+                span.innerHTML = "Password must contain uppercase letter"
+            }
+            else if(!inp.match(/[a-z]/)) {
+                span.innerHTML = "Password must contain lowercase letter";
+            }
+            else if(!inp.match(/\d/)) {
+                span.innerHTML = "Password must contain digit";
+            }
+            else if(!inp.match(/[^\w]/)) {
+                span.innerHTML = "Password must contain special character";
+            }
+            else if(inp.length < 8) {
+                span.innerHTML = "Password is too short. Must be at least 8 characters long."
+            }
+            else {
+                span.innerHTML = '';
+            }
+        }
+
+        function validatePassword2() {
+            span = $('passSpan');
+
+            pass1 = $('pass1Input').value;
+            pass2 = $('pass2Input').value;
+
+            if(span.innerHTML === '') {
+                span.innerHTML = (pass1 === '')
+                                ? ''
+                                : ((pass1 === pass2)
+                                    ? 'Password is okay :)'
+                                    : 'Passwords arent matching')
+            }
+        }
+
+        window.addEventListener('load', () => {
+            document.getElementById('emailInput')
+                .addEventListener('change', validateEmail);
+
+            document.getElementById('pass1Input')
+                .addEventListener('change', validatePassword1);
+
+            document.getElementById('pass2Input')
+                .addEventListener('change', validatePassword2);
+
+            validateEmail();
+            validatePassword1();
+            validatePassword2();
+        });
+
+    </script>
 </head>
 <body>
 
@@ -66,39 +147,40 @@ use \System\Util\Authenticator;
             <div class="float rtable">
                 <input type="text" name="name" <?php
                     if(isset($_POST['name'])) {
-                        echo 'value="'.$_POST['name'].'"';
+                        echo 'value="'.htmlspecialchars($_POST['name']).'"';
                     }
                 ?>><br>
 
                 <input type="text" name="surname" <?php
                 if(isset($_POST['surname'])) {
-                    echo 'value="'.$_POST['surname'].'"';
+                    echo 'value="'.htmlspecialchars($_POST['surname']).'"';
                 }
                 ?>><br>
-                <input type="text" name="email" <?php
+                <input type="text" name="email" id="emailInput" <?php
                 if(isset($_POST['email'])) {
-                    echo 'value="'.$_POST['email'].'"';
+                    echo 'value="'.htmlspecialchars($_POST['email']).'"';
                 }
                 ?>><br>
 
-                <br>
+                <span style="error" id="emailSpan"></span><br>
+
                 <input type="text" name="nickname" <?php
                 if(isset($_POST['nickname'])) {
-                    echo 'value="'.$_POST['nickname'].'"';
+                    echo 'value="'.htmlspecialchars($_POST['nickname']).'"';
                 }
                 ?>><br>
                 <br>
-                <input type="password" name="password1"<?php
+                <input type="password" name="password1" id="pass1Input" <?php
                 if(isset($_POST['password1'])) {
-                    echo 'value="'.$_POST['password1'].'"';
+                    echo 'value="'.htmlspecialchars($_POST['password1']).'"';
                 }
-                ?>><br>
-                <input type="password" name="password2"<?php
+                ?> ><br>
+                <input type="password" name="password2" id="pass2Input" <?php
                 if(isset($_POST['password2'])) {
-                    echo 'value="'.$_POST['password2'].'"';
+                    echo 'value="'.htmlspecialchars($_POST['password2']).'"';
                 }
-                ?>><br>
-                <br>
+                ?> ><br>
+                <span style="error" id="passSpan"></span><br>
                 <br>
                 <input type="submit" value="Create Account >">
 

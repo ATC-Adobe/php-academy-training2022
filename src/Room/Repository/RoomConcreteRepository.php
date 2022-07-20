@@ -18,6 +18,9 @@ class RoomConcreteRepository {
      * @return RoomModel|null
      */
     public function getRoomById(int $id) : ?RoomModel {
+
+        // id declared as int, no sanitization needed
+
         $res =
             MySqlConnection::getInstance()
             ->query("SELECT * FROM Rooms WHERE id = '$id';")
@@ -68,8 +71,11 @@ class RoomConcreteRepository {
         $name = $room->getName();
         $floor = $room->getFloor();
 
-        MySqlConnection::getInstance()
-            ->query("INSERT INTO Rooms (name, floor)
-                                VALUES ('$name', '$floor');");
+        $stmt = MySqlConnection::getInstance()
+            ->prepare("INSERT INTO Rooms (name, floor) VALUES (:name, :floor)");
+        $stmt->bindParam(':name', $name);
+        $stmt->bindParam(':floor', $floor);
+
+        $stmt->execute();
     }
 }

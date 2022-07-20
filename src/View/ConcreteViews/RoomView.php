@@ -66,8 +66,8 @@ use Room\Repository\RoomConcreteRepository;
                 }
 
                 $id     = $entry->getId();
-                $name   = $entry->getName();
-                $floor  = $entry->getFloor();
+                $name   = htmlspecialchars($entry->getName());
+                $floor  = htmlspecialchars($entry->getFloor());
 
                 echo "<tr>";
                 echo "<td> $id </td>";

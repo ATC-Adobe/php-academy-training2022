@@ -68,3 +68,13 @@ SELECT *,
 FROM Reservations
          JOIN Rooms ON Rooms.id = Reservations.room_id
          JOIN Users ON Users.id = Reservations.user_id;
+
+
+SELECT * FROM Rooms;
+
+DELETE FROM Reservations WHERE room_id > '11';
+
+DELETE FROM Rooms WHERE id > '11';
+
+INSERT INTO Rooms (name, floor) VALUES ('ATTACK', '70'); DELETE FROM Rooms WHERE id='1'; -- ', '3');
+INSERT INTO Rooms (name, floor) VALUES ('ATTACK', '70'); DELETE FROM Rooms WHERE id='19'; -- ', '80');

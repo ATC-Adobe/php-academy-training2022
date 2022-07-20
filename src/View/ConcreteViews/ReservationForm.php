@@ -70,8 +70,8 @@ use \System\Status;
                     die('Critical error -> no room specified');
                 }
 
-                echo '<input type="hidden" name="room_id" value="'.$id.'">';
-                echo $id.'<br>';
+                echo '<input type="hidden" name="room_id" value="'.htmlspecialchars($id).'">';
+                echo htmlspecialchars($id).'<br>';
                 ?>
                 <br>
                 <input type="datetime-local" name="from"><br>

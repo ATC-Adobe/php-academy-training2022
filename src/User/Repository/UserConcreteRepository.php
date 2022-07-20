@@ -74,10 +74,15 @@ class UserConcreteRepository {
     }
 
     public function getUserByUsername(string $username) : ?UserModel {
-        $res =
+
+        $stmt =
             MySqlConnection::getInstance()
-                ->query("SELECT * FROM Users WHERE nickname = '$username'")
-                ->fetchAll();
+            ->prepare('SELECT * FROM Users WHERE nickname = :username');
+
+        $stmt->bindParam(':username', $username);
+
+        $stmt->execute();
+        $res = $stmt->fetchAll();
 
         if(count($res) != 1) {
             return null;
@@ -97,10 +102,16 @@ class UserConcreteRepository {
     }
 
     public function getUserByEmail(string $email) : ?UserModel {
-        $res =
+
+        $stmt =
             MySqlConnection::getInstance()
-                ->query("SELECT * FROM Users WHERE email = '$email'")
-                ->fetchAll();
+                ->prepare('SELECT * FROM Users WHERE email = :email');
+
+        $stmt->bindParam(':email', $email);
+
+        $stmt->execute();
+
+        $res = $stmt->fetchAll();
 
         if(count($res) != 1) {
             return null;
@@ -126,7 +137,17 @@ class UserConcreteRepository {
      * @return void
      */
     public function addUser(UserModel $user) : void {
-        //$id =       $user->getId();
+        $stmt = MySqlConnection::getInstance()
+            ->prepare("INSERT INTO Users(name, surname, email, nickname, password, salt)
+                VALUES (
+                        :name,
+                        :surname,
+                        :email,
+                        :nickname,
+                        :password,
+                        :salt
+                );");
+
         $name =     $user->getName();
         $surname =  $user->getSurname();
         $email =    $user->getEmail();
@@ -134,6 +155,13 @@ class UserConcreteRepository {
         $password = $user->getPassword();
         $salt =     $user->getSalt();
 
+        $stmt->bindParam(':name',       $name);
+        $stmt->bindParam(':surname',    $surname);
+        $stmt->bindParam(':email',      $email);
+        $stmt->bindParam(':nickname',   $nickname);
+        $stmt->bindParam(':password',   $password);
+        $stmt->bindParam(':salt',       $salt);
+        /*
         MySqlConnection::getInstance()
             ->query("
                 INSERT INTO Users(name, surname, email, nickname, password, salt)
@@ -144,6 +172,8 @@ class UserConcreteRepository {
                     '$nickname',
                     '$password',
                     '$salt'
-                );");
+                );");*/
+
+        $stmt->execute();
     }
 }

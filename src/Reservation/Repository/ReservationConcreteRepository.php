@@ -115,7 +115,7 @@ class ReservationConcreteRepository {
         $from =     $reservation->getFrom()->format('d/m/y H:i:s');
         $to =       $reservation->getTo()->format(  'd/m/y H:i:s');
 
-        MySqlConnection::getInstance()
+        $stmt = MySqlConnection::getInstance()
             ->query("INSERT INTO Reservations 
                     (user_id, room_id, time_from, time_to) 
                     VALUES
