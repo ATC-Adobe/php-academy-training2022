@@ -18,7 +18,9 @@
         </div>
         <div class="mb-3">
             <label for="password" class="form-label">Password</label>
-            <input type="password" class="form-control" name="password" placeholder="password" id="password" required/>
+            <input type="password" class="form-control passwordInput" name="password" placeholder="password" id="password" required/>
+            <span id="strength" class="badge displayBadge">Type password to check strength</span>
+            <p>Password must be at least 8 character and contain at least one uppercase, lowercase, number and special character.</p>
         </div>
         <div class="form-check">
             <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" required>

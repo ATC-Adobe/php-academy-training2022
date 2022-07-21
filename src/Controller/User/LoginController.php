@@ -8,8 +8,8 @@
             if (isset($_POST['username']) && isset($_POST['password'])) {
                 $authenticator = new Authenticator();
                 if ($authenticator->login(
-                    $_POST['username'],
-                    $_POST['password']
+                    htmlspecialchars($_POST['username']),
+                    htmlspecialchars($_POST['password'])
                 )) {
                     header('Location: ./index.php?login=true');
                     die();

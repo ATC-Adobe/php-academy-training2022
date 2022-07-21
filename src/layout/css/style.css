@@ -23,3 +23,8 @@ body {
 .username {
     text-transform: uppercase;
 }
+
+.displayBadge {
+    margin-top: 1h;
+    display: none;
+}

@@ -21,11 +21,12 @@
         </div>
         <div class="mb-3">
             <label for="date-from" class="form-label">From</label>
-            <input type="datetime-local" class="form-control" name="startDate" step="1" id="date-from" required/>
+            <input type="datetime-local" class="form-control" name="startDate" id="date-from" required/>
         </div>
         <div class="mb-3">
             <label for="date-to" class="form-label">To</label>
-            <input type="datetime-local" class="form-control" name="endDate" step="1" id="date-to" required/>
+            <input type="datetime-local" class="form-control" name="endDate" id="date-to" required/>
+            <span id="dateSpan" class="badge dateBadge">Choose start and end date.</span>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>

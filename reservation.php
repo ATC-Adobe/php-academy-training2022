@@ -29,6 +29,24 @@
             <div class="container">
                 <?php
                     include_once "./src/View/notifications.php";
+
+                    if($session->get('reservationAddError')) {
+                        if ($session->get('reservationAddError') === 'PAST_DATE') {
+                            echo "<div class='alert alert-danger' role='alert'>
+                                <span>The start date cannot be earlier than the current time!</span>
+                            </div>";
+                        } else if ($session->get('reservationAddError') === 'INCORRECT_DATE') {
+                            echo "<div class='alert alert-danger' role='alert'>
+                                <span>The start date of the reservation cannot be older than the end date!</span>
+                            </div>";
+                        } else if ($session->get('reservationAddError') === 'ROOM_NOT_AVAILABLE') {
+                            echo "<div class='alert alert-danger' role='alert'>
+                                <span>Room is not available in this date. Try different date.</span>
+                            </div>";
+                        }
+                        $session->unset('reservationAddError');
+                    }
+
                     if (isset($_GET['roomId']) && isset($_GET['name'])) {
                         $roomId = $_GET['roomId'];
 
@@ -45,5 +63,6 @@
         <?php
             include_once "./src/layout/footer.php";
         ?>
+    <script src='./src/layout/js/validator.js'></script>
     </body>
 </html>

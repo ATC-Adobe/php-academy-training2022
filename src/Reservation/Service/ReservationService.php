@@ -7,19 +7,26 @@
     use Room\Repository\RoomRepository;
     use Reservation\Model\ReservationModel;
     use Reservation\Repository\ReservationRepository;
+    use User\Repository\UserRepository;
+    use System\Session\Session;
 
     class ReservationService {
         public function __construct() {}
 
         public function addReservation () :void {
+            $session = Session::getInstance();
 
             $id         = 0;
-            $roomId    = $_POST['roomId'];
-            $firstName  = $_POST['firstName'];
-            $lastName   = $_POST['lastName'];
-            $email      = $_POST['email'];
-            $startDate  = DateTime::createFromFormat("Y-m-d\TH:i:s", $_POST['startDate']);
-            $endDate    = DateTime::createFromFormat("Y-m-d\TH:i:s", $_POST['endDate']);
+            $roomId     = htmlspecialchars($_POST['roomId']);
+            $firstName  = htmlspecialchars($_POST['firstName']);
+            $lastName   = htmlspecialchars($_POST['lastName']);
+            $email      = htmlspecialchars($_POST['email']);
+            $startDate  = DateTime::createFromFormat("Y-m-d\TH:i", htmlspecialchars($_POST['startDate']));
+            $endDate    = DateTime::createFromFormat("Y-m-d\TH:i", htmlspecialchars($_POST['endDate']));
+
+            $userId     = $session->get('user_id');
+            $userRepo   = new UserRepository();
+            $user       = $userRepo->getUserById($userId);
 
             $roomRepository = new RoomRepository();
             $r      = $roomRepository->getById($roomId);
@@ -27,7 +34,7 @@
 
             $reservation = new ReservationModel(
                 $id, $room, $firstName, $lastName,
-                $email, $startDate, $endDate
+                $email, $startDate, $endDate, $user
             );
 
             $repo = new ReservationRepository();
@@ -36,7 +43,7 @@
         }
 
         public function deleteReservation () :void {
-            $id = $_POST['id'];
+            $id = htmlspecialchars($_POST['id']);
             $repo = new ReservationRepository();
             $repo->deleteReservation($id);
         }

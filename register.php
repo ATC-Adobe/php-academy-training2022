@@ -31,5 +31,6 @@
         <?php
             include_once "./src/layout/footer.php";
         ?>
+    <script src='./src/layout/js/validator.js'></script>
     </body>
-    </html>
+</html>

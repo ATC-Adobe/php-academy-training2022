@@ -9,8 +9,8 @@ class RoomService {
 
     public function addRoom(): void {
         $id = 0;
-        $name = $_POST['name'];
-        $floor = $_POST['floor'];
+        $name = htmlspecialchars($_POST['name']);
+        $floor = htmlspecialchars(($_POST['floor']);
 
         $room = new RoomModel($id, $name, $floor);
         $repo = new RoomRepository();

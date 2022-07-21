@@ -3,9 +3,8 @@
     require_once "./autoloading.php";
 
     use Controller\User\LogoutController;
-    session_start();
 
-    if (isset($_SESSION['username'])) {
+    if ($session->get('user_id')) {
         (new LogoutController())->request();
     } else {
         header ('Location: index.php?logout=false');

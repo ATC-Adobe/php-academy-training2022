@@ -16,13 +16,20 @@
                 <li class="nav-item">
                     <a class="nav-link" href="./room.php">Add room</a>
                 </li>
+                <?php
+                if ($session->get('user_id')) {
+                    echo "<li class='nav-item'>
+                            <a class='nav-link' href='./myReservation.php'>My reservations</a>
+                        </li>";
+                }
+                ?>
             </ul>
             <ul class="navbar-nav ms-auto">
                 <?php
 
-                if (isset ($_SESSION['username'])) {
-                    echo "<li class='nav-item'>
-                            <div class='user'>Hello <span class='username text-center'>".$_SESSION['username']."</span></div>
+                if ($session->get('username')) {
+                    echo "<li class='nav-item user'>
+                            <a class='nav-link disabled text-white'>Hello <span class='username'>".$session->get('username')."</span></a>
                         </li>";
                     echo "<li class='nav-item'>
                             <a class='nav-link' href='./logout.php'><button class='btn btn-danger'>Logout</button></a>
