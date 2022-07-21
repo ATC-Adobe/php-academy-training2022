@@ -1,8 +1,7 @@
 <?php declare(strict_types = 1);
 
-use Router\Response;
-use Router\Router;
-use System\Util\Session;
+use System\Router\Response;
+use System\Router\Router;
 
 $router = new Router(
     '404.html'
@@ -32,5 +31,16 @@ $router->use('/logout', function(Response $res) {
     (new \Controller\LogOutController())
         ->makeRequest();
 });
+
+$router->get('/info', function(Response $res) {
+    (new \View\UserProfileView())
+        ->render();
+});
+
+$router->post('/style', function(Response $res) {
+    (new \Controller\ChangeStyleController())
+        ->makeRequest();
+});
+
 
 $router->redirect();

@@ -53,12 +53,14 @@ const WHITES = 1;
 const TOKEN = 2;
 const NUMBER = 3;
 
-$white      = "@[\ \t\n]@";
-$digit      = "@[0-9]@";
-$word       = "@[a-zA-Z+*/!\-]@";
-$specials   = "@[=\[\]\(\)\{\}]@";
+const WHITE      = "@[\ \t\n]@";
+const DIGIT      = "@[0-9.]@";
+const WORD       = "@[a-zA-Z+*/!\-]@";
+const SPECIAL    = "@[=\[\]\(\)\{\}]@";
+const OPERATOR   = "";
 
-function scriptParser($script) : array {
+
+function tokenizer($script) : array {
 
     $mode = WHITES;
 
@@ -150,7 +152,7 @@ function scriptParser($script) : array {
     return $dest;
 }
 
-print_r($arr = scriptParser($script));
+print_r($arr = tokenizer($script));
 
 $environ = [
     '+'   => new EnvApply(function ($a, $b) { return $a + $b; }),
@@ -254,10 +256,10 @@ function buildProgram(ArrayIterator $prog) : ?Program {
 
 echo '<br><br>';
 
-// działą razem z dziwnym nawiasowaniem
-$program = 'print( max (5 6 ) )  ';
+// na razie zaimplementowana ewaluacja lispo-podobna
+$program = 'print( max (+(5 90) *(6 7) ) )  ';
 
-$ex = buildProgram(new ArrayIterator(scriptParser($program)));
+$ex = buildProgram(new ArrayIterator(tokenizer($program)));
 
 echo '<br><br>';
 

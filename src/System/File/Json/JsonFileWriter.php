@@ -2,7 +2,7 @@
 
 namespace System\File\Json;
 
-use Reservation\Model\ReservationModel;
+use Model\Reservation\Model\ReservationModel;
 use System\File\IFileWriter;
 
 class JsonFileWriter implements IFileWriter {

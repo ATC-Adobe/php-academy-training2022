@@ -2,10 +2,8 @@
 
 declare(strict_types = 1);
 
-use Reservation\Model\ReservationModel;
-use Reservation\Repository\ReservationConcreteRepository;
-use Room\Model\RoomModel;
-use Room\Repository\RoomConcreteRepository;
+use Model\Reservation\Model\ReservationModel;
+use Model\Reservation\Repository\ReservationConcreteRepository;
 
 ?>
 
@@ -32,6 +30,8 @@ use Room\Repository\RoomConcreteRepository;
     Your Reservations
     <br><br>
     <div class="main">
+
+        <a href="/user/info"> User Profile > </a><br><br>
 
         <?php
 

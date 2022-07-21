@@ -2,8 +2,8 @@
 
 namespace System\Util;
 
+use Model\User\Repository\UserConcreteRepository;
 use System\Status;
-use User\Repository\UserConcreteRepository;
 
 class RegisterValidator {
     public function validate(

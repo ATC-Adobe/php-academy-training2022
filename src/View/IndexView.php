@@ -2,11 +2,22 @@
 
 namespace View;
 
-use Router\Response;
+use View\CompositeComponents\ConcreteNodes\GeneralPurposeNodes\DocumentBodyNode;
+use View\CompositeComponents\ConcreteNodes\GeneralPurposeNodes\DocumentRootNode;
+use View\CompositeComponents\ConcreteNodes\GeneralPurposeNodes\FooterLeaf;
+use View\CompositeComponents\ConcreteNodes\GeneralPurposeNodes\MenuLeaf;
+use View\CompositeComponents\ConcreteNodes\SpecificNodes\IndexLeaf;
 
 class IndexView {
     public function render() {
-        (new Response())
-            ->render('src/View/ConcreteViews/Index.php');
+        $document = new DocumentRootNode([
+            new MenuLeaf(),
+            new DocumentBodyNode([
+                new IndexLeaf()
+            ], 'Room Reservation Service'),
+            new FooterLeaf()
+        ]);
+
+        $document->draw();
     }
 }

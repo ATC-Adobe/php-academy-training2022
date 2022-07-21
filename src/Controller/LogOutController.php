@@ -2,9 +2,8 @@
 
 namespace Controller;
 
-use Router\Response;
+use System\Router\Response;
 use System\Util\Authenticator;
-use System\Util\Session;
 
 class LogOutController {
     public function makeRequest() : void {

@@ -2,7 +2,7 @@
 
 namespace System\File\Csv;
 
-use Reservation\Model\ReservationModel;
+use Model\Reservation\Model\ReservationModel;
 use System\File\IFileWriter;
 
 class CsvFileWriter implements IFileWriter {

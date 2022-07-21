@@ -1,7 +1,7 @@
 <?php
 
-use Room\Model\RoomModel;
-use Room\Repository\RoomConcreteRepository;
+use Model\Room\Model\RoomModel;
+use Model\Room\Repository\RoomConcreteRepository;
 
 ?>
 

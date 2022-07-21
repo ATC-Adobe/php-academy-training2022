@@ -3,8 +3,8 @@
 namespace Controller;
 
 use JetBrains\PhpStorm\NoReturn;
-use Reservation\Repository\ReservationConcreteRepository;
-use Router\Response;
+use Model\Reservation\Repository\ReservationConcreteRepository;
+use System\Router\Response;
 use System\Status;
 
 class RemoveReservationController {

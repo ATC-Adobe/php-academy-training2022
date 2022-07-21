@@ -2,7 +2,7 @@
 
 namespace System\File\Xml;
 
-use Reservation\Model\ReservationModel;
+use Model\Reservation\Model\ReservationModel;
 use System\File\IFileWriter;
 
 class XmlFileWriter implements IFileWriter {

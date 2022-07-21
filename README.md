@@ -1,4 +1,9 @@
-
+### Xdebug
+- port: 9009
+- ssh port: 12000
+- remote project files path `/var/www/php`
+- xdebug tunnel: `ssh -R 9009:127.0.0.1:9009 xdebug@<remote-address> -p 12000`
+- ssh xdebug password (for tunnel): `xdebug`
 
 ==============
 

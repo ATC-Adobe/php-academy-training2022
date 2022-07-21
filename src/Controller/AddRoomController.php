@@ -3,12 +3,11 @@
 namespace Controller;
 
 use JetBrains\PhpStorm\NoReturn;
-use Room\Model\RoomModel;
-use Room\Repository\RoomConcreteRepository;
-use Router\Response;
+use Model\Room\Model\RoomModel;
+use Model\Room\Repository\RoomConcreteRepository;
+use System\Router\Response;
 use System\Status;
 use System\Util\Authenticator;
-use System\Util\Session;
 
 class AddRoomController {
     public function __construct() { }

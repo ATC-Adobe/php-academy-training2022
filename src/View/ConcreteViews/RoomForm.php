@@ -31,10 +31,8 @@ if(isset($_POST['room_name'])) {
     Room reservation service
     <br><br>
     <div class="main">
-        <?php
-            echo "<form method='post' action='/room/add'>";
-        ?>
 
+        <form method='post' action='/room/add'>
             <div class="float ltable">
                 Room name:<br>
                 Floor:<br>

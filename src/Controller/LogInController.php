@@ -2,10 +2,9 @@
 
 namespace Controller;
 
-use Router\Response;
+use System\Router\Response;
 use System\Status;
 use System\Util\Authenticator;
-use System\Util\Session;
 
 class LogInController {
 

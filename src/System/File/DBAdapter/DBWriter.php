@@ -2,10 +2,8 @@
 
 namespace System\File\DBAdapter;
 
-use Reservation\Model\ReservationModel;
-use Reservation\Repository\ReservationConcreteRepository;
-use Room\Model\RoomModel;
-use System\Database\MySqlConnection;
+use Model\Reservation\Model\ReservationModel;
+use Model\Reservation\Repository\ReservationConcreteRepository;
 use System\File\IFileWriter;
 
 class DBWriter implements IFileWriter {

@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use Router\Response;
-use Router\Router;
+use System\Router\Response;
+use System\Router\Router;
 use System\Util\Session;
 use View\IndexView;
 

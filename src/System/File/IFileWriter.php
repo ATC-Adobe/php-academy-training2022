@@ -2,7 +2,7 @@
 
 namespace System\File;
 
-use Reservation\Model\ReservationModel;
+use Model\Reservation\Model\ReservationModel;
 
 interface IFileWriter {
 

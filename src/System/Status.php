@@ -16,14 +16,78 @@ class Status {
     public const LOGIN_INVALID = 8;
 
     public const ROOM_INVALID = 9;
-    public const ROOM_OK = 14;
+    public const ROOM_OK = 10;
 
-    public const RESERVATION_OK = 10;
-    public const RESERVATION_COLLISION = 11;
-    public const RESERVATION_DATE_INVERSION = 12;
+    public const RESERVATION_OK = 11;
+    public const RESERVATION_COLLISION = 12;
+    public const RESERVATION_DATE_INVERSION = 13;
 
-    public const RESERVATION_REMOVE_OK = 15;
-    public const RESERVATION_REMOVE_ERROR = 16;
+    public const RESERVATION_REMOVE_OK = 14;
+    public const RESERVATION_REMOVE_ERROR = 15;
 
-    public const PARAMETER_ERROR = 13;
+    public const PARAMETER_ERROR = 16;
+
+
+    // TODO: Comply with SRP => move this to different class
+    public static function getString(int $status) : array {
+        return match($status) {
+            self::NONE =>
+                ['info', 'No errors'],
+            self::OK =>
+                ['success', 'Success'],
+
+
+
+            self::REGISTER_OK =>
+                ['success', 'Registration successful'],
+            self::REGISTER_FIELD_EMPTY =>
+                ['error', 'Empty field'],
+            self::REGISTER_USERNAME_OR_EMAIL_TAKEN =>
+                ['error', 'Username or email are taken'],
+            self::REGISTER_EMAIL_INVALID =>
+                ['error', 'Invalid email'],
+            self::REGISTER_PASSWORD_NOT_MATCH =>
+                ['error', 'Passwords don\'t match' ],
+            self::REGISTER_PASSWORD_TOO_WEAK =>
+                ['error', 'Password is too weak'],
+
+
+
+            self::LOGIN_INVALID =>
+                ['error', 'Login invalid'],
+
+
+
+            self::ROOM_INVALID =>
+                ['error', 'Room invalid'],
+            self::ROOM_OK =>
+                ['success', 'Room added successfully'],
+
+
+
+            self::RESERVATION_OK =>
+                ['success', 'Room reserved successfully'],
+            self::RESERVATION_COLLISION =>
+                ['error', 'Room is already reserved'],
+            self::RESERVATION_DATE_INVERSION =>
+                ['error', 'Reservation date inversion'],
+
+
+
+            self::RESERVATION_REMOVE_OK =>
+                ['success', 'Reservation removed successfully'],
+            self::RESERVATION_REMOVE_ERROR =>
+                ['error', 'An error occurred while deleting reservation'],
+
+
+
+            self::PARAMETER_ERROR  =>
+                ['error', 'Invalid parameters, try again'],
+
+
+
+            default =>
+                ['info', 'Unknown code'],
+        };
+    }
 }

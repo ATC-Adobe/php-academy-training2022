@@ -8,8 +8,6 @@
     --succ: #2cd91a;
     --err: #d23439;
 
-
-
  */
 
 
@@ -23,6 +21,41 @@
     --err: #d23439;
 
     transition: all 0.2s linear;
+}
+
+.palette1 {
+    --bg1: #2d2a32;
+    --bg2: #516e32;
+    --ut: #33481c;
+    --fg2: #eeefa8;
+    --fg1:  #fafdf6;
+}
+
+
+.palette2 {
+    --fg1: #ffd9da;
+    --fg2: #ea638c;
+    --bg1: #89023e;
+    --bg2: #30343f;
+    --ut: #1b2021;
+}
+
+.palette3 {
+    --bg1: #01161e;
+    --ut: #124559;
+    --bg2: #598392;
+    --fg2: #aec3b0;
+    --fg1: #eff6e0;
+}
+
+
+/* Sadly palette doesn't work here :( */
+.palette4 {
+    --bg2: #355070;
+    --bg1: #6d597a;
+    --ut: #b56576;
+    --fg1: #e56b6f;
+    --fg2: #eaac8b;
 }
 
 body {

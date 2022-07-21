@@ -2,10 +2,8 @@
 
 declare(strict_types = 1);
 
-use Reservation\Model\ReservationModel;
-use Reservation\Repository\ReservationConcreteRepository;
-use Room\Model\RoomModel;
-use Room\Repository\RoomConcreteRepository;
+use Model\Reservation\Model\ReservationModel;
+use Model\Reservation\Repository\ReservationConcreteRepository;
 
 ?>
 
@@ -87,10 +85,8 @@ use Room\Repository\RoomConcreteRepository;
                     $room <br>
                     $name $surname <br>
                     $email <br>
-                    $from - $to <br>";
-
-
-            echo    "<form method='POST' action='/reservation/delete'>
+                    $from - $to <br>
+                    <form method='POST' action='/reservation/delete'>
                         <input type='hidden' name = 'id' value = '$id'>
                         <input type='submit' value='Delete reservation >'>                    
                     </form>

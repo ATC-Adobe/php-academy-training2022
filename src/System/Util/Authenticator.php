@@ -2,10 +2,9 @@
 
 namespace System\Util;
 
-use Couchbase\User;
+use Model\User\Model\UserModel;
+use Model\User\Repository\UserConcreteRepository;
 use System\Status;
-use User\Model\UserModel;
-use User\Repository\UserConcreteRepository;
 
 class Authenticator {
 

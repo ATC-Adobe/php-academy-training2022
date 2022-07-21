@@ -1,8 +1,8 @@
 <?php
 declare(strict_types = 1);
 
-use Router\Response;
-use Router\Router;
+use System\Router\Response;
+use System\Router\Router;
 use System\Util\Session;
 
 require_once 'autoloading.php';
@@ -28,9 +28,13 @@ $router->use('/ds', function(Response $res) {
     die();
 });
 
+$router->use('/phpinfo', function(Response $res) {
+    phpinfo();
+});
+
 
 // experimental router segregation
-$router->stage('/view',         'routes/view.php');
+//$router->stage('/view',         'routes/view.php');
 $router->stage('/room',         'routes/room.php');
 $router->stage('/reservation',  'routes/reservation.php');
 $router->stage('/user',         'routes/user.php');
