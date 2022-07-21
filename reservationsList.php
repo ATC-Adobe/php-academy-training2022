@@ -315,16 +315,21 @@ include_once 'layout/navbar.php';
         if(isset($_POST['DB'])) {
 
             if (!empty($_POST['datetimeFrom']) && !empty($_POST['datetimeTo']) && !empty($_POST['roomNumber'])) {
-                $item = new ReservationRepository(
-                    $_POST['roomNumber'],
-                    $_SESSION['userID'],
-                    date("d/m/y H:i:s", strtotime($_POST['datetimeFrom'])),
-                    date("d/m/y H:i:s", strtotime($_POST['datetimeTo']))
+                if($_POST['datetimeTo']>$_POST['datetimeFrom']) {
+                    $item = new ReservationRepository(
+                        $_POST['roomNumber'],
+                        $_SESSION['userID'],
+                        date("d/m/y H:i:s", strtotime($_POST['datetimeFrom'])),
+                        date("d/m/y H:i:s", strtotime($_POST['datetimeTo']))
 
-                );
+                    );
 
-                $item->saveReservation();
-
+                    $item->saveReservation();
+                }
+                else
+                {
+                    echo 'Invalid date and time';
+                }
 
             }
         }}
