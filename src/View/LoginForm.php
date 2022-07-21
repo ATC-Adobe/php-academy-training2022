@@ -17,7 +17,7 @@ class LoginForm implements Component
 
     public function render($msg = ""): void
     {
-        (new Header())->render("Register page");
+        (new Header())->render("Login page");
         (new Navbar())->render();
 
         echo ' 

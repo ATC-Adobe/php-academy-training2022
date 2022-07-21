@@ -10,6 +10,10 @@ use App\Repository\UserRepository;
 
 class AuthenticatorService
 {
+    public function findOne(int $id): User|false
+    {
+        return (new UserRepository())->findOne($id);
+    }
     public function login(string $email, string $password): User|false
     {
         $user = (new UserRepository())->findByEmail($email);

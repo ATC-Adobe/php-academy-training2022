@@ -20,11 +20,21 @@ abstract class BaseRepository
         $stm->bindParam("id", $id);
         return $stm->execute();
     }
+
+    /**
+     * @return false|array rows mapped to objects( Not actual models!)
+     */
     public function readAll(): false|array
     {
         return $this->connection->query("SELECT * FROM $this->table")->fetchAll(PDO::FETCH_OBJ);
     }
-    protected function findOneAssoc(int $id) {
+
+    /**
+     * @param int $id
+     * @return false|mixed associative array
+     */
+    protected function findOneAssoc(int $id): mixed
+    {
         $stm = $this->connection->prepare("SELECT * FROM $this->table WHERE id = :id");
         $stm->bindParam("id", $id);
         $stm->execute();

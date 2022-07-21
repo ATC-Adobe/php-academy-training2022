@@ -29,6 +29,7 @@ $loginController = new \App\Controller\LoginController();
 $router->get('/login', [$loginController, 'create']);
 $router->post('/login', [$loginController, 'store']);
 $router->get('/logout', [$loginController, 'logout']);
+$router->get("/user", [$loginController, "show"]);
 
 
 $router->resolve();

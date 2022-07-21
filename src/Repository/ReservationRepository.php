@@ -91,6 +91,10 @@ class ReservationRepository extends BaseRepository implements IOHandlerInterface
 
     }
 
+    /**
+     * @param int $user_id
+     * @return bool|Reservation[]
+     */
     public function findBelongsToUser(int $user_id): bool|array
     {
         //Where clause isn't a prepared statement, so id requires checking for sql injection
@@ -100,6 +104,11 @@ class ReservationRepository extends BaseRepository implements IOHandlerInterface
         }
         return $this->readWithRelations("WHERE user_id = $user_id");
     }
+
+    /**
+     * @param int $reservation_id
+     * @return Reservation|false
+     */
     public function findOneWithRelations(int $reservation_id) {
         //Where clause isn't a prepared statement, so id requires checking for sql injection
         if(!is_numeric($reservation_id)) {

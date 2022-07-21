@@ -14,7 +14,7 @@ class ReservationService implements \IOStrategyContextInterface
 
     /**
      * @param bool $withRelations
-     * @return bool|iterable<Reservation>
+     * @return bool|iterable<Reservation> xml return iterable, not an array!
      */
     public function readReservations(bool $withRelations = false): bool|iterable
     {
@@ -28,6 +28,11 @@ class ReservationService implements \IOStrategyContextInterface
         }
         return $this->ioStrategy->readAll();
     }
+
+    /**
+     * @param int $user_id
+     * @return bool|Reservation[]
+     */
     public function findUsersReservations(int $user_id): bool|array
     {
         if(method_exists($this->ioStrategy, "findBelongsToUser")) {

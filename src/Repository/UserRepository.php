@@ -16,9 +16,12 @@ class UserRepository extends BaseRepository
         );
         return $statement->execute($user->toArray());
     }
-    public function findOne(int $id): User
+    public function findOne(int $id): User|false
     {
         $data = $this->findOneAssoc($id);
+        if(!$data) {
+            return false;
+        }
         $model = new User();
         $model->fromArray($data);
         return $model;
