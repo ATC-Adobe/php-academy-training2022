@@ -1,13 +1,13 @@
 <?php
 
 declare(strict_types=1);
-
 use Controller\LoginController;
 
 include "../autoloading.php";
 
+$userNotFoundMsg = '';
 
-if (isset($_POST['submit'])){
+if (isset($_POST['submit'])) {
     $login = $_POST['login'];
     $password = $_POST['password'];
 
@@ -19,10 +19,16 @@ if (isset($_POST['submit'])){
 include "../Layout/head.php";
 include "../Layout/navbar.php";
 ?>
-
+<body>
 <div class="d-flex align-items-center justify-content-center" style="margin-top: 30px">
     <div class="col-md-4">
-        <dic class="card">
+        <?php
+        $userNotFoundMsg = "User not found!";
+        $wrongPasswordMsg = "Wrong password!";
+        include "../Helpers/Messages/msgUserNotFound.php";
+        include "../Helpers/Messages/msgWrongPassword.php";
+        ?>
+        <div class="card">
             <div class="card-header">BookMyRoom login</div>
             <div class="card-body">
                 <form method="post">
@@ -43,5 +49,16 @@ include "../Layout/navbar.php";
                     </div>
                 </form>
             </div>
+        </div>
     </div>
-</div>
+    <?php
+    include "../Layout/footer.php";
+    ?>
+</body>
+<script type="text/javascript">
+    $(document).ready(function () {
+        setTimeout(function () {
+            $("#userNotFound, #wrongPassword").remove();
+        }, 5000);
+    });
+</script>

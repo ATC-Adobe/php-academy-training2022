@@ -20,7 +20,8 @@ class DeleteReservationController
                 'start_date',
                 'end_date'
             ))->destroyReservation($dbConnection);
+            header('location: ../View/reservations?msg=add');
         }
-        (new ApplicationService())->getReservationListHeader();
+        //(new ApplicationService())->getReservationListHeader();
     }
 }

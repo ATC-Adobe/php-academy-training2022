@@ -1,7 +1,8 @@
 <?php
 
 declare(strict_types=1);
-
+session_start();
+var_dump($_SESSION);
 use Controller\RegisterController;
 use Repository\RegisterFormValidation;
 
@@ -9,9 +10,6 @@ include_once "../autoloading.php";
 include_once "../Layout/head.php";
 include_once "../Layout/navbar.php";
 
-?>
-
-<?php
 
 $error = '';
 $firstName = '';
@@ -21,6 +19,8 @@ $email = '';
 $password = '';
 $confirmPassword = '';
 
+(new RegisterFormValidation($firstName, $lastName, $login, $email, $password, $confirmPassword))->validationsMsg();
+
 if (isset($_POST['submit'])) {
     $firstName = $_POST['firstname'];
     $lastName = $_POST['lastname'];
@@ -29,7 +29,17 @@ if (isset($_POST['submit'])) {
     $password = $_POST['password'];
     $confirmPassword = $_POST['confirm-password'];
 
-    (new RegisterController($firstName, $lastName, $login, $email, $password, $confirmPassword))->signupUser();
+    [$error, $firstName, $lastName, $login, $email, $password, $confirmPassword] = (new RegisterController(
+        $firstName, $lastName, $login, $email, $password, $confirmPassword
+    ))->registerUser(
+        $error,
+        $firstName,
+        $lastName,
+        $login,
+        $email,
+        $password,
+        $confirmPassword
+    );
 }
 
 ?>

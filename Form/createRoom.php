@@ -1,19 +1,21 @@
 <?php
 
-declare(strict_types=1);
+use Controller\CreateRoomController;
 
 require_once '../autoloading.php';
 
-include "../Layout/head.php";
-include "../Layout/navbar.php";
+session_start();
 
-use Controller\CreateRoomController;
+include_once "../Layout/head.php";
+include_once "../Layout/navbar.php";
+
 
 $name = '';
 $floor = '';
 $error = '';
 
 [$error, $name, $floor] = (new CreateRoomController())->createRoom($error, $name, $floor);
+
 ?>
 
 <body>

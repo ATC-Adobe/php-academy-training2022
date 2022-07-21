@@ -1,15 +1,16 @@
 <?php
 
-declare(strict_types=1);
-
-require_once '../autoloading.php';
-
 use Controller\DeleteRoomController;
 use System\Database\Connection;
 use Repository\RoomRepository;
 
-include "../Layout/head.php";
-include "../Layout/navbar.php";
+require_once '../autoloading.php';
+
+session_start();
+var_dump($_SESSION);
+
+require_once "../Layout/head.php";
+require_once "../Layout/navbar.php";
 
 ?>
 
@@ -30,6 +31,7 @@ include "../Layout/navbar.php";
                     // TODO: sprawdzić przekazywany typ danych
                     $rooms = (new RoomRepository('room_id', 'name', 'floor'))->getAllRooms($dbConnection);
                     (new DeleteRoomController())->deleteRoom($dbConnection);
+
                     ?>
 
                     <table class="table table-striped table-hover table-borderless">

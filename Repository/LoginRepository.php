@@ -12,27 +12,27 @@ class LoginRepository extends Connection
         $statement = self::getConnection()->prepare("SELECT password FROM users WHERE login = ? OR email = ?;");
         if (!$statement->execute(array($login, $password))) {
             $statement = null;
-//            header('location:../index.php?error=statementfailed');
+            header('location: login.php?error=failed');
             exit();
         }
         if ($statement->rowCount() == 0) {
             $statement = null;
-            header('location: ../index.php?error=usernotfound');
+            header('location: login.php?error=usernotfound');
         }
         $passwordHashed = $statement->fetchAll(PDO::FETCH_ASSOC);
         $passwordCheck = password_verify($password, $passwordHashed[0]['password']);
-
         if ($passwordCheck == false) {
             $statement = null;
-//            header('location: register.php?error=wrongpassword');
+            header('location: login.php?error=wrongpassword');
             exit();
-        } elseif ($passwordCheck == true) {
+        }
+        if ($passwordCheck == true) {
             $statement = self::getConnection()->prepare(
                 "SELECT * FROM users WHERE login = ? OR email = ? AND password = ?;"
             );
             if (!$statement->execute(array($login, $login, $password))) {
                 $statement = null;
-//            header('location:../index.php?error=statementfailed');
+                header('location: login.php?error=failed');
                 exit();
             }
             if ($statement->rowCount() == 0) {
@@ -43,7 +43,9 @@ class LoginRepository extends Connection
             session_start();
             $_SESSION['userid'] = $user[0]['user_id'];
             $_SESSION['userlogin'] = $user[0]['login'];
-            $statement = null;
+            //$statement = null;
+            header('location: ../View/reservations.php?success=loginsuccess');
+            exit();
         }
     }
 }

@@ -2,7 +2,9 @@
 
 namespace Repository;
 
-class RegisterFormValidation
+use Controller\RegisterController;
+
+class RegisterFormValidation extends RegisterController
 
 {
     public function validationsMsg(): void

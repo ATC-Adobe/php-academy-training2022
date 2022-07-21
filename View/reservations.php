@@ -1,7 +1,8 @@
 <?php
 
 declare(strict_types=1);
-
+session_start();
+var_dump($_SESSION);
 require_once '../autoloading.php';
 
 use Controller\DeleteReservationController;
@@ -20,15 +21,16 @@ include "../Layout/navbar.php";
 <div class="container">
     <div class="row justify-content-center" style="margin-top: 30px;">
         <div class="col-md-auto">
+            <?php
+            $message = 'Your booking is confirmed.';
+            $loginSuccessMsg = "You are logged in as: ".$_SESSION['userlogin'] ;
+            include "../Helpers/Messages/msgReservationAdded.php";
+            include "../Helpers/Messages/msgLoginSuccess.php";
+            $reservations = (new ReservationCsvRepository())->getList();
+            ?>
             <div class="card">
                 <div class="card-header"><h4>Reservations CSV</h4></div>
                 <div class="card-body">
-
-                    <?php
-                    $message = 'Your booking is confirmed.';
-                    $reservations = (new ReservationCsvRepository())->getList();
-                    ?>
-
                     <table class="table table-striped table-hover table-borderless">
                         <thead>
                         <tr>
@@ -85,8 +87,6 @@ include "../Layout/navbar.php";
                 <div class="card-body">
 
                     <?php
-                    $message = 'Your booking is confirmed.';
-                    include_once "../Helpers/message-add.php";
                     $dbConnection = Connection::getConnection();
                     $reservations = (new ReservationRepository(
                         'reservation_id',
@@ -167,7 +167,7 @@ include "../Layout/navbar.php";
 <script type="text/javascript">
     $(document).ready(function () {
         setTimeout(function () {
-            $("#bookSaved").remove();
+            $("#bookSaved, #loginSuccess").remove();
         }, 5000);
     });
 </script>

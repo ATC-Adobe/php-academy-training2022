@@ -18,16 +18,16 @@ class RegisterRepository extends Connection
 
         if (!$statement->execute(array($firstname, $lastname, $login, $email, $hashedPassword))) {
             $statement = null;
-//            header('location: ../Form/register.php?error=statementfailed');
+            header('location: ../Form/register.php?error=failed');
             exit();
         }
-        $statement = null;
+        // $statement = null;
+        header('location: ../Form/register.php?error=failed');
     }
 
-    protected function checkUser($login, $email)
+    protected function checkUser($email)
     {
-        $statement = self::getConnection()->prepare("SELECT login FROM users WHERE login = ? OR email = ?;");
-
+        $statement = self::getConnection()->prepare("SELECT login FROM users WHERE email = ?;");
         if ($statement->rowCount() > 0) {
             $resultCheck = false;
         } else {
