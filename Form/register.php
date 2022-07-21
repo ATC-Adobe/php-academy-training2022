@@ -1,8 +1,9 @@
 <?php
 
 declare(strict_types=1);
+
 session_start();
-var_dump($_SESSION);
+
 use Controller\RegisterController;
 use Repository\RegisterFormValidation;
 

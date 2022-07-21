@@ -7,7 +7,6 @@ use Repository\RoomRepository;
 require_once '../autoloading.php';
 
 session_start();
-var_dump($_SESSION);
 
 require_once "../Layout/head.php";
 require_once "../Layout/navbar.php";
@@ -20,6 +19,28 @@ require_once "../Layout/navbar.php";
 <div class="container">
     <div class="row justify-content-center" style="margin-top: 30px;">
         <div class="col-md-6">
+            <?php
+            if (isset($_SESSION['success'])) {
+                ?>
+                <div class="alert alert-success" role="alert" id="success">
+                    <?php
+                    echo $_SESSION['success']; ?>
+                </div>
+                <?php
+                unset ($_SESSION['success']);
+            }
+            ?>
+            <?php
+            if (isset($_SESSION['warning'])) {
+                ?>
+                <div class="alert alert-warning" role="alert" id="warning">
+                    <?php
+                    echo $_SESSION['warning']; ?>
+                </div>
+                <?php
+                unset ($_SESSION['warning']);
+            }
+            ?>
             <div class="card">
                 <div class="card-header"><h4>Rooms</h4><a href="../Form/createRoom.php"
                                                           class="btn btn-sm btn-outline-primary">Add</a></div>
@@ -85,5 +106,12 @@ require_once "../Layout/navbar.php";
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
 </body>
+<script type="text/javascript">
+    $(document).ready(function () {
+        setTimeout(function () {
+            $("#success, #warning").remove();
+        }, 5000);
+    });
+</script>
 </html>
 

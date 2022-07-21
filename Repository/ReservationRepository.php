@@ -4,6 +4,7 @@ namespace Repository;
 
 use Model\Reservation;
 use Service\ApplicationService;
+use Service\Session;
 use System\Database\Connection;
 
 class ReservationRepository extends Reservation
@@ -20,6 +21,8 @@ class ReservationRepository extends Reservation
         $dbConnection->query(
             "DELETE FROM reservations WHERE reservation_id='$reservationId'"
         );
+        $sessionMsg = new Session();
+        $sessionMsg->sessionMessage('reservationDeleted');
+        (new ApplicationService())->getReservationListHeader();
     }
-
 }

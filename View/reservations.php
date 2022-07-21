@@ -1,14 +1,15 @@
 <?php
 
 declare(strict_types=1);
-session_start();
-var_dump($_SESSION);
-require_once '../autoloading.php';
 
 use Controller\DeleteReservationController;
 use Repository\ReservationCsvRepository;
 use Repository\ReservationRepository;
 use System\Database\Connection;
+
+session_start();
+require_once '../autoloading.php';
+
 
 include "../Layout/head.php";
 include "../Layout/navbar.php";
@@ -17,71 +18,32 @@ include "../Layout/navbar.php";
 
 <body>
 
-<!--Reservation list from CSV-->
-<div class="container">
-    <div class="row justify-content-center" style="margin-top: 30px;">
-        <div class="col-md-auto">
-            <?php
-            $message = 'Your booking is confirmed.';
-            $loginSuccessMsg = "You are logged in as: ".$_SESSION['userlogin'] ;
-            include "../Helpers/Messages/msgReservationAdded.php";
-            include "../Helpers/Messages/msgLoginSuccess.php";
-            $reservations = (new ReservationCsvRepository())->getList();
-            ?>
-            <div class="card">
-                <div class="card-header"><h4>Reservations CSV</h4></div>
-                <div class="card-body">
-                    <table class="table table-striped table-hover table-borderless">
-                        <thead>
-                        <tr>
-                            <th>Reservation Id</th>
-                            <th>Room id</th>
-                            <th>First name</th>
-                            <th>Last name</th>
-                            <th>Email</th>
-                            <th>Start date</th>
-                            <th>End date</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-
-                        <?php
-                        foreach ($reservations as $res):
-                            ?>
-
-                            <tr>
-                                <th><?php
-                                    echo $res['reservation_id']; ?></th>
-                                <td><?php
-                                    echo $res['room_id']; ?></td>
-                                <td><?php
-                                    echo $res['firstname']; ?></td>
-                                <td><?php
-                                    echo $res['lastname']; ?></td>
-                                <td><?php
-                                    echo $res['email']; ?></td>
-                                <td><?php
-                                    echo $res['start_date']; ?></td>
-                                <td><?php
-                                    echo $res['end_date']; ?></td>
-                            </tr>
-
-                        <?php
-                        endforeach;
-                        ?>
-
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
 <!--Reservations list from DB-->
 <div class="container">
     <div class="row justify-content-center" style="margin-top: 30px;">
         <div class="col-md-auto">
+            <?php
+            if (isset($_SESSION['success'])) {
+                ?>
+                <div class="alert alert-success" role="alert" id="success">
+                    <?php
+                    echo $_SESSION['success']; ?>
+                </div>
+                <?php
+                unset ($_SESSION['success']);
+            }
+            ?>
+            <?php
+            if (isset($_SESSION['warning'])) {
+                ?>
+                <div class="alert alert-warning" role="alert" id="warning">
+                    <?php
+                    echo $_SESSION['warning']; ?>
+                </div>
+                <?php
+                unset ($_SESSION['warning']);
+            }
+            ?>
             <div class="card">
                 <div class="card-header"><h4>Reservations</h4></div>
                 <div class="card-body">
@@ -154,6 +116,74 @@ include "../Layout/navbar.php";
     </div>
 </div>
 
+<!--Reservation list from CSV-->
+<div class="container">
+    <div class="row justify-content-center" style="margin-top: 30px;">
+        <div class="col-md-auto">
+            <?php
+            $reservations = (new ReservationCsvRepository())->getList();
+            ?>
+            <?php
+            if (isset($_SESSION['success'])) {
+                ?>
+                <div class="alert alert-success" role="alert" id="success">
+                    <?php
+                    echo $_SESSION['success']; ?>
+                </div>
+                <?php
+                unset ($_SESSION['success']);
+            }
+            ?>
+            <div class="card">
+                <div class="card-header"><h4>Reservations CSV</h4></div>
+                <div class="card-body">
+                    <table class="table table-striped table-hover table-borderless">
+                        <thead>
+                        <tr>
+                            <th>Reservation Id</th>
+                            <th>Room id</th>
+                            <th>First name</th>
+                            <th>Last name</th>
+                            <th>Email</th>
+                            <th>Start date</th>
+                            <th>End date</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        <?php
+                        foreach ($reservations as $res):
+                            ?>
+
+                            <tr>
+                                <th><?php
+                                    echo $res['reservation_id']; ?></th>
+                                <td><?php
+                                    echo $res['room_id']; ?></td>
+                                <td><?php
+                                    echo $res['firstname']; ?></td>
+                                <td><?php
+                                    echo $res['lastname']; ?></td>
+                                <td><?php
+                                    echo $res['email']; ?></td>
+                                <td><?php
+                                    echo $res['start_date']; ?></td>
+                                <td><?php
+                                    echo $res['end_date']; ?></td>
+                            </tr>
+
+                        <?php
+                        endforeach;
+                        ?>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
         crossorigin="anonymous"></script>
@@ -167,7 +197,7 @@ include "../Layout/navbar.php";
 <script type="text/javascript">
     $(document).ready(function () {
         setTimeout(function () {
-            $("#bookSaved, #loginSuccess").remove();
+            $("#success, #warning").remove();
         }, 5000);
     });
 </script>

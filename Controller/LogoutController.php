@@ -2,6 +2,8 @@
 
 namespace Controller;
 
+use Service\Session;
+
 class LogoutController
 {
     public function logout(): void
@@ -9,6 +11,9 @@ class LogoutController
         session_start();
         session_unset();
         session_destroy();
-        header('location: ../index.php?logout=success');
+        $sessionMsg = new Session();
+        $sessionMsg->sessionMessage('logoutSuccess');
+        header('location: ../index.php');
+
     }
 }

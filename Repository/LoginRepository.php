@@ -3,27 +3,33 @@
 namespace Repository;
 
 use PDO;
+use Service\ApplicationService;
+use Service\Session;
 use System\Database\Connection;
 
 class LoginRepository extends Connection
 {
     protected function getUser($login, $password)
     {
+        $sessionMsg = new Session();
         $statement = self::getConnection()->prepare("SELECT password FROM users WHERE login = ? OR email = ?;");
         if (!$statement->execute(array($login, $password))) {
             $statement = null;
-            header('location: login.php?error=failed');
+            $sessionMsg->sessionMessage('error');
+            (new ApplicationService())->getLoginHeader();
             exit();
         }
         if ($statement->rowCount() == 0) {
             $statement = null;
-            header('location: login.php?error=usernotfound');
+            $sessionMsg->sessionMessage('wrongLogin');
+            (new ApplicationService())->getLoginHeader();
         }
         $passwordHashed = $statement->fetchAll(PDO::FETCH_ASSOC);
         $passwordCheck = password_verify($password, $passwordHashed[0]['password']);
         if ($passwordCheck == false) {
             $statement = null;
-            header('location: login.php?error=wrongpassword');
+            $sessionMsg->sessionMessage('wrongPassword');
+            (new ApplicationService())->getLoginHeader();
             exit();
         }
         if ($passwordCheck == true) {
@@ -32,19 +38,22 @@ class LoginRepository extends Connection
             );
             if (!$statement->execute(array($login, $login, $password))) {
                 $statement = null;
-                header('location: login.php?error=failed');
+                $sessionMsg->sessionMessage('error');
+                (new ApplicationService())->getLoginHeader();
                 exit();
             }
             if ($statement->rowCount() == 0) {
                 $statement = null;
-                header('location: ../index.php?error=usernotfound');
+                $sessionMsg->sessionMessage('wrongLogin');
+                (new ApplicationService())->getLoginHeader();
             }
             $user = $statement->fetchAll(PDO::FETCH_ASSOC);
-            session_start();
+            //session_start();
             $_SESSION['userid'] = $user[0]['user_id'];
             $_SESSION['userlogin'] = $user[0]['login'];
-            //$statement = null;
-            header('location: ../View/reservations.php?success=loginsuccess');
+            $statement = null;
+            $sessionMsg->sessionMessage('loginSuccess');
+            (new ApplicationService())->getReservationListHeader();
             exit();
         }
     }

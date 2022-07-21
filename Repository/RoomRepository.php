@@ -6,6 +6,7 @@ namespace Repository;
 
 use Model\Room;
 use Service\ApplicationService;
+use Service\Session;
 use System\Database\Connection;
 
 
@@ -23,6 +24,9 @@ class RoomRepository extends Room
         $dbConnection->query(
             "INSERT INTO rooms(name, floor) VALUES('$name', '$floor')"
         );
+        $sessionMsg = new Session();
+        $sessionMsg->sessionMessage('roomCreated');
+        (new ApplicationService())->getRoomsListHeader();
     }
 
     public function destroy(Connection $dbConnection): void
@@ -31,5 +35,8 @@ class RoomRepository extends Room
         $dbConnection->query(
             "DELETE FROM rooms WHERE room_id='$roomId'"
         );
+        $sessionMsg = new Session();
+        $sessionMsg->sessionMessage('roomDeleted');
+        (new ApplicationService())->getRoomsListHeader();
     }
 }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Repository;
 
 use Model\User;
+use Service\ApplicationService;
 use System\Database\Connection;
 
 class RegisterRepository extends Connection
@@ -18,11 +19,9 @@ class RegisterRepository extends Connection
 
         if (!$statement->execute(array($firstname, $lastname, $login, $email, $hashedPassword))) {
             $statement = null;
-            header('location: ../Form/register.php?error=failed');
+            (new ApplicationService())->getRegisterHeader();
             exit();
         }
-        // $statement = null;
-        header('location: ../Form/register.php?error=failed');
     }
 
     protected function checkUser($email)

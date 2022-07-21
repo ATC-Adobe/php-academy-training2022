@@ -15,7 +15,6 @@ class CreateRoomController
             if ($error == '') {
                 (new RoomRepository('$room_id', 'name', 'floor'))->storeRoom($name, $floor);
             }
-            (new ApplicationService())->getRoomsListHeader();
         }
         return array($error, $name, $floor);
     }

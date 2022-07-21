@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 session_start();
+
 require_once 'autoloading.php';
 
 include "Layout/head.php";
@@ -15,6 +16,17 @@ include "Layout/navbar.php";
 <div class="container">
     <div class="row justify-content-center" style="margin-top: 30px;">
         <div class="col-md-8">
+            <?php
+            if (isset($_SESSION['success'])) {
+                ?>
+                <div class="alert alert-success" role="alert" id="success">
+                    <?php
+                    echo $_SESSION['success']; ?>
+                </div>
+                <?php
+                unset ($_SESSION['success']);
+            }
+            ?>
             <div class="card">
                 <div class="card-header text-center"><h4>Welcome to BookMyRoom.</h4><h5>Your meeting room reservation
                         system.</h5></div>

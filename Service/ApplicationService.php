@@ -6,12 +6,22 @@ class ApplicationService
 {
     public function getReservationListHeader(): void
     {
-        header('Location: /View/reservations.php?msg=add');
+        header('Location: /View/reservations.php');
     }
 
     public function getRoomsListHeader(): void
     {
-        header('Location: /View/rooms.php?msg=add');
+        header('Location: /View/rooms.php');
+    }
+
+    public function getRegisterHeader(): void
+    {
+        header('location: ../Form/register.php');
+    }
+
+    public function getLoginHeader(): void
+    {
+        header('location: /Form/login.php');
     }
 
     public function getRows(): int

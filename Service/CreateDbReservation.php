@@ -21,5 +21,7 @@ class CreateDbReservation implements ReservationStrategy
         )
         "
         );
+        $sessionMsg = new Session();
+        $sessionMsg->sessionMessage('reservationCreated');
     }
 }
