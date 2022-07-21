@@ -17,13 +17,7 @@ class Authentificator
         if (count($_POST) > 0) {
             $nickname = $_POST['nickname'];
             $email = $_POST['email'];
-            try{
-                $validator = new Validator($email);
-                $validator->checkEmail($email);
-            }catch (Exception $exception){
-               $exception->getMessage();
-            }
-            if ($_POST['password'] == $_POST['password_confirmation']) {
+            if ($_POST['password'] == $_POST['password_confirmation'] && !isset($_SESSION['error_email'])) {
                 $password = md5($_POST['password']);
 
                 $insertQuery = "
@@ -38,12 +32,9 @@ class Authentificator
                 $dbConnection->query($insertQuery);
                 $session = Session::getInstance($nickname, $password);
                 $session->start($nickname, $password);
-
-            } else {
-                echo 'passwords differ';
+                header('Location: http://localwsl.com/src/View/reservations.php');
             }
         }
-        header('Location: http://localwsl.com/src/View/reservations.php');
     }
 
     public function login()

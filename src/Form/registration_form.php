@@ -1,5 +1,6 @@
 <?php
-
+session_start();
+var_dump($_SESSION);
 ?>
 
 <!DOCTYPE html>
@@ -29,6 +30,7 @@
                 <div class="text-center mb-5">
                     <h1 class="fw-bolder">Fill in this form to register </h1>
                 </div>
+
                 <div class="row gx-5 justify-content-center">
                     <div class="col-lg-8 col-xl-6">
                         <!-- * * * * * * * * * * * * * * *-->
@@ -42,6 +44,9 @@
                             <!-- Nickname input-->
                             <input type="hidden" name="authentication" value="registration">
                             <div class="form-floating mb-3">
+                                <?php if (isset($_SESSION['error_nickname'])) { ?>
+                                    <div class="alert-danger"><?php echo $_SESSION['error_nickname'] ?></div>
+                                <?php } ?>
                                 <input class="form-control" name="nickname" type="text" placeholder="Enter your nickname..."
                                        data-sb-validations="required"/>
                                 <label for="nickname">Nickname</label>
@@ -49,13 +54,20 @@
                             </div>
                             <!-- Email input-->
                             <div class="form-floating mb-3">
+                                <?php if (isset($_SESSION['error_email'])) { ?>
+                                    <div class="alert-danger"><?php echo $_SESSION['error_email'] ?></div>
+                                <?php } ?>
                                 <input class="form-control" name="email" type="text" placeholder="Enter your email..."
                                        data-sb-validations="required"/>
                                 <label for="email">Email</label>
                                 <div class="invalid-feedback" data-sb-feedback="name:required">An email is required.</div>
                             </div>
+
                             <!-- Password input-->
                             <div class="form-floating mb-3">
+                                <?php if (isset($_SESSION['error_password'])) { ?>
+                                    <div class="alert-danger"><?php echo $_SESSION['error_password'] ?></div>
+                                <?php } ?>
                                 <input class="form-control" name="password" type="text" placeholder="Enter your password..."
                                        data-sb-validations="required"/>
                                 <label for="password">Password</label>
