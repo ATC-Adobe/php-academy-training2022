@@ -7,11 +7,14 @@ use System\Database\Connection;
 
 class LogInRepository extends LogInModel {
     public string $session;
+    public string $nickname;
+    public string $password;
 //    public function __construct(){}
-    public function findUser() {
-        Connection::getInstance()
+    public static function findUser($nickname,$password) {
+
+        return Connection::getInstance()
             ->query("SELECT * FROM user
-                    WHERE nickname ='$this->nickname' AND password ='$this->password';"
+                    WHERE nickname ='$nickname' AND password ='$password';"
             );
 
 

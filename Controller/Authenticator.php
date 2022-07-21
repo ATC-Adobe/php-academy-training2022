@@ -31,30 +31,28 @@ class Authenticator {
 
     public static function logIn() : void
     {
-        $connection = Connection::getInstance();
             if (!empty($_POST)) {
                 $nickname = $_POST['nickname'];
                 $password = self::_Hash($_REQUEST['password'],$_REQUEST['nickname']);
-                $query = "SELECT* FROM user
-    WHERE nickname ='$nickname' AND password ='$password';
-";
-                $login = $connection->query($query)->fetch(PDO::FETCH_ASSOC);
+
+                $login = LogInRepository::findUser($nickname,$password)->fetch(PDO::FETCH_ASSOC);
                 $nicknameDb = $login['nickname'];
                 $passwordDb = $login['password'];
                 $userID = $login['user_id'];
 
                 if ($nicknameDb == $nickname && $passwordDb == $password) {
-                    $session = Session::getInstance($nickname, $password);
+                    $session = Session::getInstance();
                     $session->start($nickname, $password, $userID);
-                    header('location:reservationsList.php');
+                    header('location:index.php');
                 } else {
-                    echo 'you are NOT logged in';
+                    echo 'You are not logged in';
                 }
             }
         }
 
         public static function logOut(){
         Session::sessionDestroy();
+            header('location:index.php');
         }
 
 }

@@ -41,10 +41,10 @@ class Session
         return $this->password;
     }
 
-    public static function getInstance($nickname, $password)
+    public static function getInstance()
     {
         if (self::$instance === null) {
-            self::$instance = new Session($nickname, $password);
+            self::$instance = new Session();
         }
 
         return self::$instance;
