@@ -36,8 +36,8 @@ class Router {
     /**
      * sets new GET path
      *
-     * @param string $path  Request path
-     * @param callable $callback Action on request
+     * @param string $path Request path
+     * @param callable ...$callback Action on request
      * @return void
      */
     public function get(string $path, callable ...$callback) : void {
@@ -49,7 +49,7 @@ class Router {
      * Sets new POST path
      *
      * @param string $path Request path
-     * @param callable $callback Action on request
+     * @param callable ...$callback Action on request
      * @return void
      */
     public function post(string $path, callable ...$callback) : void {
@@ -60,7 +60,7 @@ class Router {
      * Sets new action on both GET & POST requests
      *
      * @param string $path Request path
-     * @param callable $callback Action on request
+     * @param callable ...$callback Action on request
      * @return void
      */
     public function use(string $path, callable ...$callback) : void {
@@ -111,7 +111,6 @@ class Router {
         }
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             if(isset($this->routesGet[$uri])) {
-
                 foreach ($this->routesGet[$uri] as $route) {
                     $route($this->response);
                 }

@@ -10,29 +10,33 @@ class ProfileEditorLeaf extends LeafNode {
 
         <script src="/layout/js/registrationValidator.js"></script>
 
-        <div class="float ltable">
+        <form method="post" action="/user/edit">
+            <div class="float ltable">
 
-            Name:<br>
-            Surname:<br>
-            Email:<br>
-            <br>
-            Nickname:<br>
-            <br>
-        </div>
-        <div class="float rtable">
-            <?php
-            $sess = \System\Util\Session::getInstance();
+                Name:<br>
+                Surname:<br>
+                Email:<br>
+                <br>
+                Nickname:<br>
+                <br>
+            </div>
+            <div class="float rtable">
+                <?php
+                $sess = \System\Util\Session::getInstance();
 
-            echo $sess->get('name').'<br>';
-            echo $sess->get('surname').'<br>';
-            echo $sess->get('email').'<br>';
-            echo '<br>';
-            echo $sess->get('username').'<br>';
-            echo '<br>';
-            ?>
+                echo '<input type="text" name="name" value="'.      $sess->get('name').'"><br>';
+                echo '<input type="text" name="surname" value="'.   $sess->get('surname').'"><br>';
+                echo '<input type="text" name="email" value="'.     $sess->get('email').'" id="emailInput"><br>';
+                echo '<span id="emailSpan"></span><br>';
+                echo '<input type="text" name="username" value="'.  $sess->get('username').'"><br>';
+                echo '<br>';
+                ?>
 
-        </div>
-        <div class="clear"></div>
+            </div>
+            <div class="clear"></div>
+
+            <input type="submit" value = "Save changes">
+        </form>
         <br>
         Password reset:<br>
         <form method="post" action="/user/password">

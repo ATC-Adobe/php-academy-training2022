@@ -175,4 +175,46 @@ class UserConcreteRepository {
 
         $stmt->execute();
     }
+
+    public function changePassword(
+        UserModel $user, string $newPassword, string $newSalt
+    ) : void {
+
+        $id = $user->getId();
+
+        $stmt = MySqlConnection::getInstance()->prepare(
+            "UPDATE Users SET password = :password, salt = :salt WHERE id = :id"
+        );
+
+
+        $stmt->bindParam(':id', $id);
+        $stmt->bindParam(':password', $newPassword);
+        $stmt->bindParam(':salt', $newSalt);
+
+        $stmt->execute();
+    }
+
+    public function changeAccuntDetails(
+        UserModel $user, string $name, string $surname, string $email, string $username
+    ) {
+
+        $id = $user->getId();
+
+        $stmt = MySqlConnection::getInstance()->prepare(
+            "UPDATE Users SET 
+                 name = :name, 
+                 surname = :surname,
+                 email = :email,
+                 nickname = :username
+             WHERE id = :id"
+        );
+
+        $stmt->bindParam(':id',         $id);
+        $stmt->bindParam(':name',       $name);
+        $stmt->bindParam(':surname',    $surname);
+        $stmt->bindParam(':email',      $email);
+        $stmt->bindParam(':username',   $username);
+
+        $stmt->execute();
+    }
 }

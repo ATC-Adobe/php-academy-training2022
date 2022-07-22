@@ -36,7 +36,7 @@ class AddRoomController {
 
         $room = new RoomModel(
             0,
-            $_POST['room_name'],
+            htmlentities($_POST['room_name']),
             intval($_POST['floor'])
         );
 

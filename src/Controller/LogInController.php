@@ -16,7 +16,10 @@ class LogInController {
      */
     public function makeRequest() : void {
         $res = (new Authenticator())
-            ->login($_POST['username'], $_POST['password']);
+            ->login(
+                $_POST['username'],
+                $_POST['password'],
+            );
 
         $resp = new Response();
 

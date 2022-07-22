@@ -25,7 +25,10 @@ class AddReservationController {
 
 
         [ $room_id, $from, $to, ]
-            = [ $_POST['room_id'],    $_POST['from'],     $_POST['to']];
+            = [ htmlentities($_POST['room_id']),
+                htmlentities($_POST['from']),
+                htmlentities($_POST['to'])
+            ];
 
         $auth = new Authenticator();
 

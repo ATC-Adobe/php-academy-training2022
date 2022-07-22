@@ -29,6 +29,10 @@ class Status {
 
     public const AUTH_LOGIN_REQUIRED = 17;
 
+    public const EDIT_PASS_REQ = 18;
+    public const EDIT_PASS_SUCCESS = 19;
+    public const EDIT_USER_OK = 20;
+
 
     // TODO: Comply with SRP => move this to different class
     public static function getString(int $status) : array {
@@ -91,6 +95,13 @@ class Status {
             self::AUTH_LOGIN_REQUIRED =>
                 ['error', 'To perform this action user must be logged in'],
 
+
+            self::EDIT_PASS_REQ =>
+                ['error', 'Invalid old password'],
+            self::EDIT_PASS_SUCCESS =>
+                ['success', 'Password updated successfully'],
+            self::EDIT_USER_OK =>
+                ['success', 'Data successfully edited'],
 
             default =>
                 ['info', 'Unknown code'],

@@ -47,12 +47,14 @@ $router->get('/edit', Authenticator::getLoginValidator(), function (Response $re
         ->render();
 });
 
+$router->post('/edit', Authenticator::getLoginValidator(), function (Response $res) {
+    (new \Controller\EditUserProfileController())
+        ->makeRequest();
+});
+
 $router->post('/password', Authenticator::getLoginValidator(), function (Response $res) {
     (new \Controller\ChangePasswordController())
         ->makeRequest();
 });
-
-
-
 
 $router->redirect();

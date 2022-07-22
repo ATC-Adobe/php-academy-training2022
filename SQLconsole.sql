@@ -78,3 +78,23 @@ DELETE FROM Rooms WHERE id > '11';
 
 INSERT INTO Rooms (name, floor) VALUES ('ATTACK', '70'); DELETE FROM Rooms WHERE id='1'; -- ', '3');
 INSERT INTO Rooms (name, floor) VALUES ('ATTACK', '70'); DELETE FROM Rooms WHERE id='19'; -- ', '80');
+
+UPDATE Users SET name = 'Marek', surname = 'Markowski' WHERE id = '5';
+SELECT * FROM Users;
+
+SELECT * FROM Rooms;
+
+DELETE FROM Reservations WHERE room_id = '30';
+DELETE FROM Rooms WHERE id = '30';
+
+
+
+
+
+
+
+
+
+
+
+

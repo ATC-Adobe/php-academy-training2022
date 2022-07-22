@@ -12,13 +12,13 @@ class ReservationEntry extends LeafNode {
             return;
         }
 
-        $id =                        $entry->getId();
-        $name =     htmlspecialchars($entry->getUser()->getName());
-        $email =    htmlspecialchars($entry->getUser()->getEmail());
-        $surname =  htmlspecialchars($entry->getUser()->getSurname());
-        $room =     htmlspecialchars($entry->getRoom()->getName());
-        $to =       htmlspecialchars($entry->getTo()->format("d/m/Y H:i:s"));
-        $from =     htmlspecialchars($entry->getFrom()->format("d/m/Y H:i:s"));
+        $id =        $entry->getId();
+        $name =     ($entry->getUser()->getName());
+        $email =    ($entry->getUser()->getEmail());
+        $surname =  ($entry->getUser()->getSurname());
+        $room =     ($entry->getRoom()->getName());
+        $to =       ($entry->getTo()->format("d/m/Y H:i:s"));
+        $from =     ($entry->getFrom()->format("d/m/Y H:i:s"));
 
         echo "<div class='row'>
                 <div class='float ltable' style = 'line-height: 1.2em;' >

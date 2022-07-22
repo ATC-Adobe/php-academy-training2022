@@ -19,14 +19,13 @@ $router->use('/', function(Response $res) {
 });
 
 $router->use('/test', function(Response $res) {
-    include 'DependencyInjection.php';
-    die();
+
+    $res = htmlentities("abcefg<>");
+
+    var_dump($res);
+
 });
 
-$router->use('/ds', function(Response $res) {
-    include 'YetAnotherMiniTest.php';
-    die();
-});
 
 $router->use('/phpinfo', function(Response $res) {
     phpinfo();

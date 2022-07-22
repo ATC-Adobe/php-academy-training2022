@@ -31,20 +31,23 @@ class Authenticator {
             $sess = Session::getInstance();
 
             $sess->set('valid',     true);
-
-            $sess->set('username',  $user->getNickname());
             $sess->set('id',        $user->getId());
-            $sess->set('password',  $user->getPassword());
-            $sess->set('salt',      $user->getSalt());
-            $sess->set('name',      $user->getName());
-            $sess->set('surname',   $user->getSurname());
-            $sess->set('email',     $user->getEmail());
+
+            $this->setSessionVariables($user->getId());
 
             return $user;
         }
 
         // password fail
         return null;
+    }
+
+    public function updateSession() : void {
+        if($this->isLogged()) {
+            $this->setSessionVariables(
+                intval(Session::getInstance()->get('id'))
+            );
+        }
     }
 
     public function register(
@@ -137,5 +140,38 @@ class Authenticator {
     private function generateSalt() : string {
 
         return substr(str_shuffle(MD5(microtime())), 0, self::__SALT_LENGTH);
+    }
+
+    public function validateLoggedUser(string $password) : bool {
+
+        $user = $this->getUser();
+
+        return $this->passwordVerify($password, $user->getSalt(), $user->getPassword());
+    }
+
+    public function updatePassword(string $password) : void {
+
+        $salt = $this->generateSalt();
+
+        $password = $this->passwordHash($password, $salt);
+
+        (new UserConcreteRepository())
+            ->changePassword($this->getUser(), $password, $salt);
+    }
+
+    private function setSessionVariables(int $id) : void {
+
+        $user = (new UserConcreteRepository())
+            ->getUserById($id);
+
+        $sess = Session::getInstance();
+
+        $sess->set('username',  $user->getNickname());
+        $sess->set('password',  $user->getPassword());
+        $sess->set('salt',      $user->getSalt());
+        $sess->set('name',      $user->getName());
+        $sess->set('surname',   $user->getSurname());
+        $sess->set('email',     $user->getEmail());
+
     }
 }

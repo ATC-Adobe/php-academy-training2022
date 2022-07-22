@@ -25,7 +25,7 @@ class RemoveReservationController {
             );
         }
 
-        $id = $_POST['id'];
+        $id = intval($_POST['id']);
         unset($_POST['id']);
 
         (new ReservationConcreteRepository())
