@@ -41,9 +41,9 @@ public static function getReservation(){
         ->query("SELECT reservations.reservation_id, reservations.room_id, user.username, user.surname, user.email, reservations.start_date, reservations.end_date, rooms.roomName from reservations inner join user
 on user.user_id=reservations.user_id inner join rooms on reservations.room_id = rooms.roomID ORDER BY reservation_id ASC ;");
 }
-public static function deleteReservation($id){
+public static function deleteReservation($id,$user_id){
     Connection::getInstance()
-        ->query("DELETE from reservations where reservation_id=$id");
+        ->query("DELETE from reservations where reservation_id=$id and user_id=$user_id");
 }
 
 public static function isReserved($id){

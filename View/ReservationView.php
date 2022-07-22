@@ -18,6 +18,7 @@ require 'autoloading.php';
 //$conn = Connection::getInstance();
 //$result = $conn->query("SELECT reservations.*, rooms.roomName from reservations inner join rooms
 //on reservations.room_id=rooms.roomID ORDER BY reservation_id ASC ;")->fetchAll();
+$userID=$_SESSION['userID'];
 $result = src\Reservation\Repository\ReservationRepository::getReservation()->fetchAll();
 foreach ($result as $row) {
     $from = date("d/m/y H:i:s",strtotime($row[5]));
@@ -35,6 +36,6 @@ foreach ($result as $row) {
             </tr>";
 }
 if(isset($_POST['delete'])){
-src\Reservation\Repository\ReservationRepository::deleteReservation($_POST['delete']);
+src\Reservation\Repository\ReservationRepository::deleteReservation($_POST['delete'],$userID);
     echo "<meta http-equiv='refresh' content='0'>";
 }

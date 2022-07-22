@@ -19,3 +19,7 @@ foreach ($result as $row) {
             <td><form method='post' action='reservationsList.php'><input type='hidden' name='delete' value=$row[0] /><input type='submit' value='Delete'></form>
             </tr>";
 }
+if(isset($_POST['delete'])) {
+    src\Reservation\Repository\ReservationRepository::deleteReservation($_POST['delete'], $userID);
+    echo "<meta http-equiv='refresh' content='0'>";
+}
