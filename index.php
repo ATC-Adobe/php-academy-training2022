@@ -34,6 +34,8 @@ $userController = new \App\Controller\UserController();
 $router->get("/user", [$userController, "show"]);
 $router->get("/user/edit", [$userController, "edit"]);
 $router->post("/user/edit", [$userController, "update"]);
+$router->get("/user/password", [$userController, "editPassword"]);
+$router->post("/user/password", [$userController, "updatePassword"]);
 
 
 $router->resolve();

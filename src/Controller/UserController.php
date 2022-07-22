@@ -7,11 +7,50 @@ use App\Model\User;
 use App\Repository\UserRepository;
 use App\Service\AuthenticatorService;
 use App\Service\ReservationService;
+use App\View\PasswordEdit;
 use App\View\ProfileEdit;
 use App\View\ProfilePage;
 
 class UserController
 {
+    public function editPassword(string $msg = "", ): void
+    {
+        $auth = new AuthenticatorService();
+        $auth->isNotAuthRedirect();
+
+        (new PasswordEdit())->render($msg,);
+    }
+    public function updatePassword(): void
+    {
+        $auth = new AuthenticatorService();
+        $repo = new UserRepository();
+        $password = htmlentities($_POST["password"]);
+        $repeat_password = htmlentities($_POST["repeat_password"]);
+        if($password !== $repeat_password) {
+            $this->editPassword("Passwords must be the same!");
+            return;
+        }
+        $user = $repo->findOne(Session::getInstance()->get("user_id"));
+        if(!$user) {
+            $this->show("Something went wrong!");
+            return;
+        }
+        //checking all credential( not just password), but they are valid
+        $user->password = $password;
+        $valid = $auth->validateCredentials($user);
+        if($valid !== true) {
+            $this->editPassword($valid["msg"]);
+            return;
+        }
+        $user->password = $auth->hash($password);
+
+        if(!$repo->updateOne($user)) {
+            (new ReservationController())->index("Something went wrong!");
+        }
+        $this->show("Successfully changed password", "success");
+
+
+    }
     public function show(string $alertMsg ="",  string $type="danger"): void
     {
         $auth = new AuthenticatorService();

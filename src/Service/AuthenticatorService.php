@@ -48,7 +48,7 @@ class AuthenticatorService
     {
         Session::getInstance()->delete();
     }
-    protected function hash(string $password): string
+    public function hash(string $password): string
     {
         return password_hash($password, PASSWORD_DEFAULT);
     }

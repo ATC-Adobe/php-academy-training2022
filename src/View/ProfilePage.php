@@ -36,7 +36,8 @@ class ProfilePage implements \Component
               <ul class=\"list-group list-group-flush\">
                 <li class=\"list-group-item\"><h5>Name: {$this->user->first_name} {$this->user->last_name} </h5></li>
                 <li class=\"list-group-item\"><h5>Email: {$this->user->email} </h5></li>
-                <li class=\"list-group-item\"><a href='/user/edit'><h5>Edit </h5></a></li>
+                <li class=\"list-group-item\"><a href='/user/edit'><h5>Edit User </h5></a></li>
+                <li class=\"list-group-item\"><a href='/user/password'><h5>Change password </h5></a></li>
                 <li class=\"list-group-item\"><h5>Total reservations: $this->reservationsCount </h5></li>
               </ul>
             </div>
