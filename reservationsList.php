@@ -319,7 +319,7 @@ include_once 'layout/navbar.php';
                 $roomNumber = $_POST['roomNumber'];
                 $result = src\Reservation\Repository\ReservationRepository::isReserved($roomNumber)->fetch(PDO::FETCH_ASSOC);
                 if(!empty($result)){
-                    if(($result['start_date']<=$_POST['datetimeFrom'] && $result['end_date']>=$_POST['datetimeFrom'])|| ($result['start_date']<=$_POST['datetimeTo'] && $result['end_date']>=$_POST['datetimeTo'])){
+                    if(($result['start_date']<=$_POST['datetimeFrom'] || $result['end_date']>=$_POST['datetimeFrom'])|| ($result['start_date']<=$_POST['datetimeTo'] || $result['end_date']>=$_POST['datetimeTo'])){
                         echo "Room is reserved, please choose another room";
                     }
                 elseif($_POST['datetimeTo']>$_POST['datetimeFrom']) {
