@@ -1,3 +1,10 @@
+## xdebug
+port: 9009 <br>
+ssh port: 12000 <br>
+xdebug tunnel: ssh -R 9009:127.0.0.1:9009 xdebug@<remote-address> -p 12000 <br>
+remote project files path /var/www/php <br>
+ssh xdebug password (for tunnel): xdebug <br>
+
 ### nginx configuration
 changed config to <br>
 location / { <br>
