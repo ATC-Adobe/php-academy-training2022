@@ -13,10 +13,10 @@ include_once 'layout/navbar.php';
     <title>Reservation Form</title>
 </head>
 <body>
-
 <div class="container">
 <form class="bg-dark text-light" method="post" action="reservationsList.php">
-    <?php $room = $_GET["room"];
+    <?php
+    $room = $_GET["room"];
     $roomNumber = substr($room, 5);
     echo "<input type='hidden' name='roomNumber' value='$roomNumber' /><h2>$room</h2>"?>
 <!--    <label for="name">Name:</label>-->
