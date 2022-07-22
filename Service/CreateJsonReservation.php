@@ -5,9 +5,9 @@ namespace Service;
 class CreateJsonReservation implements ReservationStrategy
 {
 
-    public function createReservation($roomId, $firstName, $lastName, $email, $startDate, $endDate)
+    public function createReservation($roomId, $userId, $firstName, $lastName, $email, $startDate, $endDate)
     {
-        $reservation = array($roomId, $firstName, $lastName, $email, $startDate, $endDate);
+        $reservation = array($roomId, $userId, $firstName, $lastName, $email, $startDate, $endDate);
         if (filesize((new ApplicationService())->getJsonReservationUrl()) === 0) {
             $newRecord = array($reservation);
             $saveReservation = $newRecord;

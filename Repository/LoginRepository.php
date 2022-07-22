@@ -48,8 +48,11 @@ class LoginRepository extends Connection
                 (new ApplicationService())->getLoginHeader();
             }
             $user = $statement->fetchAll(PDO::FETCH_ASSOC);
-            $_SESSION['userid'] = $user[0]['user_id'];
-            $_SESSION['userlogin'] = $user[0]['login'];
+            $_SESSION['userId'] = $user[0]['user_id'];
+            $_SESSION['userLogin'] = $user[0]['login'];
+            $_SESSION['userFirstName'] = $user[0]['firstname'];
+            $_SESSION['userLastName'] = $user[0]['lastname'];
+            $_SESSION['userEmail'] = $user[0]['email'];
             $statement = null;
             $sessionMsg->sessionMessage('loginSuccess');
             (new ApplicationService())->getReservationListHeader();

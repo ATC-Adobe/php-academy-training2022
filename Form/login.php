@@ -10,9 +10,7 @@ include "../autoloading.php";
 if (isset($_POST['submit'])) {
     $login = $_POST['login'];
     $password = $_POST['password'];
-
     (new LoginController($login, $password,))->loginUser();
-
     $login = new LoginController($login, $password);
     $login->loginUser();
 }

@@ -9,6 +9,7 @@ class ReservationFormValidation
     public function validated(
         string $error,
         mixed $roomId,
+        mixed $userId,
         mixed $firstName,
         mixed $lastName,
         mixed $email,
@@ -20,6 +21,11 @@ class ReservationFormValidation
             $error .= ROOM_REQUIRED . '<br>';
         } else {
             $roomId = $_POST['room_id'];
+        }
+        if (empty($_POST['userid'])) {
+            $error .= ROOM_REQUIRED . '<br>';
+        } else {
+            $userId = $_POST['userid'];
         }
         if (empty($_POST['firstname'])) {
             $error .= FIRSTNAME_REQUIRED_FIELD . '<br>';
@@ -61,6 +67,6 @@ class ReservationFormValidation
         } else {
             $endDate = $_POST['end_date'];
         }
-        return array($error, $roomId, $firstName, $lastName, $email, $startDate, $endDate);
+        return array($error, $roomId,$userId, $firstName, $lastName, $email, $startDate, $endDate);
     }
 }

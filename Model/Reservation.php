@@ -6,6 +6,7 @@ class Reservation
 {
     private $reservation_id;
     private $room_id;
+    private $userId;
     private string $firstname;
     private string $lastname;
     private string $email;
@@ -15,14 +16,16 @@ class Reservation
     public function __construct(
         $reservation_id,
         $room_id,
+        $userId,
         string $firstname,
         string $lastname,
         string $email,
         $start_date,
-         $end_date,
+        $end_date,
     ) {
         $this->reservation_id = $reservation_id;
         $this->room_id = $room_id;
+        $this->userId = $userId;
         $this->firstname = $firstname;
         $this->lastname = $lastname;
         $this->email = $email;
@@ -39,6 +42,11 @@ class Reservation
     public function getRoomId()
     {
         return $this->room_id;
+    }
+
+    public function getUserId()
+    {
+        return $this->userId;
     }
 
     public function getFirstName(): string

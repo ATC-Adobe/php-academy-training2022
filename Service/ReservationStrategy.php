@@ -6,6 +6,7 @@ interface ReservationStrategy
 {
     public function createReservation(
         $roomId,
+        $userId,
         $firstName,
         $lastName,
         $email,

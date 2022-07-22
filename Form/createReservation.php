@@ -3,26 +3,31 @@
 declare(strict_types=1);
 
 use Controller\CreateReservationController;
+use Service\Session;
+
+require_once "../autoloading.php";
 
 session_start();
 
-require_once "../autoloading.php";
+(new Session())->authorization();
+
 include_once "../Layout/head.php";
 include_once "../Layout/navbar.php";
 
 $error = '';
-$message = '';
 $roomId = '';
+$userId = '';
 $firstName = '';
 $lastName = '';
 $email = '';
 $startDate = '';
 $endDate = '';
 
-[$error, $roomId, $firstName, $lastName, $email, $startDate, $endDate] = (new CreateReservationController(
+[$error, $roomId, $userId, $firstName, $lastName, $email, $startDate, $endDate] = (new CreateReservationController(
 ))->createReservation(
     $error,
     $roomId,
+    $userId,
     $firstName,
     $lastName,
     $email,
@@ -56,16 +61,33 @@ $endDate = '';
                                    echo $name ?>">
                         </div>
                         <div class="form-group">
+                            <?php
+                            $userId = $_SESSION['userId'];
+                            ?>
+                            <label for="userid">User Id</label>
+                            <input type="text" class="form-control" name="userid" value="<?php
+                            echo $userId; ?>">
+                        </div>
+                        <div class="form-group">
+                            <?php
+                            $firstName = $_SESSION['userFirstName'];
+                            ?>
                             <label for="firstname">Firstname</label>
                             <input type="text" class="form-control" name="firstname" value="<?php
                             echo $firstName; ?>">
                         </div>
                         <div class="form-group">
+                            <?php
+                            $lastName = $_SESSION['userLastName'];
+                            ?>
                             <label for="lastname">Lastname</label>
-                            <input type="text" class="form-control" name="lastname" value="<?php
+                            <input type="text" class="form-control" name="lastname"  value="<?php
                             echo $lastName; ?>">
                         </div>
                         <div class="form-group">
+                            <?php
+                            $email = $_SESSION['userEmail'];
+                            ?>
                             <label for="email">Email</label>
                             <input type="text" class="form-control" name="email" value="<?php
                             echo $email; ?>">

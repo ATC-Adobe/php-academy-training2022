@@ -15,6 +15,13 @@ class ReservationRepository extends Reservation
         return $reservations;
     }
 
+    public function getAllReservationsById(Connection $dbConnection)
+    {
+        $userId = $_SESSION['userId'];
+        $reservations = $dbConnection->query("SELECT * FROM reservations WHERE id_user = '$userId'");
+        return $reservations;
+    }
+
     public function destroyReservation(Connection $dbConnection):void
     {
         $reservationId = $_GET['reservation_id'];

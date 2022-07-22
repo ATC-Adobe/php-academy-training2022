@@ -1,12 +1,15 @@
 <?php
 
 use Controller\DeleteRoomController;
+use Service\Session;
 use System\Database\Connection;
 use Repository\RoomRepository;
 
 require_once '../autoloading.php';
 
 session_start();
+
+(new Session())->authorization();
 
 require_once "../Layout/head.php";
 require_once "../Layout/navbar.php";

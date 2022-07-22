@@ -1,10 +1,13 @@
 <?php
 
 use Controller\CreateRoomController;
+use Service\Session;
 
 require_once '../autoloading.php';
 
 session_start();
+
+(new Session())->authorization();
 
 include_once "../Layout/head.php";
 include_once "../Layout/navbar.php";

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 session_start();
-
+var_dump($_SESSION);
 require_once 'autoloading.php';
 
 include "Layout/head.php";

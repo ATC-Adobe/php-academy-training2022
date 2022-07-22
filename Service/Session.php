@@ -6,8 +6,19 @@ class Session
 {
     public function checkSession()
     {
-        if (isset($_SESSION['userid'])) {
+        if (isset($_SESSION['userId'])) {
             return true;
+        }
+        return false;
+    }
+
+    public function authorization(): void
+    {
+        $sessionCheck = new Session();
+        if (!$sessionCheck->checkSession()) {
+            $sessionCheck->sessionMessage('needLogin');
+            (new ApplicationService())->getLoginHeader();
+            exit();
         }
     }
 
@@ -24,13 +35,13 @@ class Session
                 $_SESSION['error'] = 'User not found!';
                 break;
             case 'loginSuccess';
-                $_SESSION['success'] = 'You are logged in as: ' . $_SESSION['userlogin'];
+                $_SESSION['success'] = 'You are logged in as: ' . $_SESSION['userLogin'].' '.$_SESSION['userFirstName'].' '.$_SESSION['userLastName'];
                 break;
             case 'logoutSuccess';
                 $_SESSION['success'] = 'You are logged out';
                 break;
             case 'reservationCreated';
-                $_SESSION['success'] = $_SESSION['userlogin'] . ' New reservation is confirmed.';
+                $_SESSION['success'] = $_SESSION['userLogin'] . ' New reservation is confirmed.';
                 break;
             case 'reservationDeleted';
                 $_SESSION['warning'] = 'Reservation deleted.';
@@ -40,6 +51,9 @@ class Session
                 break;
             case 'roomDeleted';
                 $_SESSION['warning'] = 'Room deleted.';
+                break;
+            case 'needLogin';
+                $_SESSION['error'] = 'You have to login or signup to get acceess.';
                 break;
         }
     }

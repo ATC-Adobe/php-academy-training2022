@@ -23,8 +23,9 @@ $sessionExist = new Session();
                 <li class="nav-item row">
                     <a class="nav-link" href="/View/rooms.php">Rooms</a>
                     <a class="nav-link" href="/View/reservations.php">Reservations</a>
+                    <a class="nav-link" href="/View/myReservations.php">My (<?php echo $_SESSION['userLogin']?>) Reservations</a>
                     <a class="nav-link">Welcome <?php
-                        echo $_SESSION['userlogin'] ?></a>
+                        echo $_SESSION['userLogin'] ?></a>
                     <a class="nav-link" href="../View/logout.php">Logout</a>
                 </li>
             <?php

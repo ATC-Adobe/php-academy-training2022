@@ -6,6 +6,7 @@ class ReservationContext
 {
     private $strategy;
     private $roomId;
+    private $userId;
     private $firstName;
     private $lastName;
     private $email;
@@ -19,6 +20,7 @@ class ReservationContext
 
     public function createReservation(
         $roomId,
+        $userId,
         $firstName,
         $lastName,
         $email,
@@ -26,6 +28,7 @@ class ReservationContext
         $endDate
     ) {
         $this->roomId = $roomId;
+        $this->userId = $userId;
         $this->firstName = $firstName;
         $this->lastName = $lastName;
         $this->email = $email;
@@ -33,6 +36,7 @@ class ReservationContext
         $this->endDate = $endDate;
         $this->strategy->createReservation(
             $this->roomId,
+            $this->userId,
             $this->firstName,
             $this->lastName,
             $this->email,
