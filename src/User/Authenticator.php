@@ -4,18 +4,18 @@
     use User\Model\UserModel;
     use User\Repository\UserRepository;
     use System\Session\Session;
+    use System\StatusHandler\Status;
 
     class Authenticator {
 
         private const SALT_LENGTH = 32;
 
-        public function login (string $username, string $password) :bool {
-
+        public function login (string $username, string $password) :void {
+            $session = Session::getInstance();
             $repo = new UserRepository();
             $user = $repo->getUserByUsername($username);
 
             if ($this->verifyPassword($user->getSalt(), $password, $user->getPassword())) {
-                $session = Session::getInstance();
 
                 $session->set('user_id', $user->getId());
                 $session->set('username', $user->getUsername());
@@ -24,14 +24,20 @@
                 $session->set('email', $user->getEmail());
                 $session->set('salt', $user->getSalt());
                 $session->set('password', $user->getPassword());
-                return true;
+
+                $session->set('login', Status::LOGIN_OK);
+                header ('Location: ./index.php');
+                die();
             }
-            return false;
+            $session->set('login', Status::LOGIN_INVALID);
+            header ('Location: ./login.php');
+            die();
         }
 
         public function register (string $username, string $firstName, string $lastName,
-                                  string $email, string $password) :int {
+                                  string $email, string $password) :void {
 
+            $session = Session::getInstance();
             $repo           = new UserRepository();
             $check1         = filter_var($email, FILTER_VALIDATE_EMAIL);
             $check2         = $repo->getUserByUsername($username);
@@ -40,21 +46,30 @@
             $uppercase      = preg_match('@[A-Z]@', $password);
             $specialChars   = preg_match('@[^\w]@', $password);
             $number         = preg_match('@[0-9]@', $password);
+            $path = 'Location: ./register.php';
 
             if ($username === '' || $firstName === '' || $lastName === '' || $email === '' || $password === '' ) {
-                return 1;
+                $session->set('register', Status::REGISTER_EMPTY_FIELDS);
+                header ($path);
+                die();
             }
 
             if(!$check1) {
-                return 2;
+                $session->set('register', Status::REGISTER_WRONG_EMAIL);
+                header ($path);
+                die();
             }
 
             if($check2 !== null || $check3 !== null) {
-                return 3;
+                $session->set('register', Status::REGISTER_USER_OR_EMAIL_TAKEN);
+                header ($path);
+                die();
             }
 
             if(!$lowercase || !$uppercase || !$specialChars || !$number || strlen($password) < 8) {
-                return 4;
+                $session->set('register', Status::REGISTER_WEAK_PASSWORD);
+                header ($path);
+                die();
             }
 
             $id = 0;
@@ -62,13 +77,17 @@
             $hash = $this->hashPassword($salt, $password);
             $user = new UserModel($id, $username, $firstName, $lastName, $email, $salt, $hash);
             $repo->addUser($user);
-            return 5;
+
+            $session->set('register', Status::REGISTER_OK);
+            header ('Location: ./login.php');
+            die();
         }
 
-        public function logout () :bool {
+        public function logout () :void {
             $session = Session::getInstance();
             $session->destroy();
-            return true;
+            header ('Location: ./index.php');
+            die();
         }
 
         private function generateSalt () :string {

@@ -3,9 +3,16 @@
     require_once "./autoloading.php";
 
     use Controller\Room\AddRoomController;
+    use System\StatusHandler\Status;
 
-    if (isset($_POST['name']) && isset($_POST['floor'])) {
-        (new AddRoomController())->request();
+    if ($session->get('user_id')) {
+        if (isset($_POST['name']) && isset($_POST['floor'])) {
+            (new AddRoomController())->request();
+        }
+    } else {
+        $session->set('login', (string)Status::LOGIN_REQUIRED);
+        header ('Location: ./login.php');
+        die();
     }
 
     require_once "./src/layout/head.php";

@@ -3,9 +3,15 @@
     require_once "./autoloading.php";
 
     use Controller\Room\DeleteRoomController;
-    if ($session->get('user_id')) {
-        if (isset($_POST['id'])) {
+    use System\StatusHandler\Status;
+
+    if (isset($_POST['id'])) {
+        if ($session->get('user_id')) {
             (new DeleteRoomController())->request();
+        } else {
+            $session->set('login', (string)Status::LOGIN_REQUIRED);
+            header ('Location: ./login.php');
+            die();
         }
     }
 
