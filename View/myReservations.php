@@ -1,6 +1,7 @@
 <?php
 
 use Controllers\Reservation\DisplayReservations;
+use Controllers\User\LoginUser;
 
 require_once "../autoloader.php";
 
@@ -23,8 +24,14 @@ if (isset($_SESSION['message'])) : ?>
 endif; ?>
 
 <?php
+$nickName = $_SESSION['username'];
+$login = new LoginUser();
+$userId = array_unique($login->getUserId($nickName));
+$id = $userId['id'];
+
 $displayReservations = new DisplayReservations();
-$reservations = $displayReservations->displayMyReservations();
+$reservations = $displayReservations->displayMyReservations($id);
+
 ?>
 
 <table class="table">
@@ -46,7 +53,8 @@ $reservations = $displayReservations->displayMyReservations();
     <?php
     foreach ($reservations
 
-    as $i => $reservation) : ?>
+    as $i => $reservation) :
+    ?>
     <tr class="list-tbody">
         <th scope="row"><?php
             echo $i + 1 ?></th>
@@ -68,10 +76,10 @@ $reservations = $displayReservations->displayMyReservations();
             echo $reservation['endHour']; ?></td>
         <td>
             <a href="update.php?id=<?php
-            echo $reservation['id'] ?>" class="btn btn-sm btn-info">Edytuj</a>
+            echo $reservation[0] ?>" class="btn btn-sm btn-info">Edytuj</a>
             <form style="display: inline-block" method="POST" action="delete.php">
                 <input type="hidden" name="id" value="<?php
-                echo $reservation['id'] ?>">
+                echo $reservation[0] ?>">
                 <button type="submit" class="btn btn-sm btn-danger">Usuń</button>
             </form>
         </td>

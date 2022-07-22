@@ -29,7 +29,7 @@ class UserRepository
         $statement = $connection->prepare($selectQuery);
         $statement->bindValue(':nickName', $nickName);
         $statement->execute();
-        $userId = $statement->fetchAll();
+        $userId = $statement->fetch();
 
         return $userId;
     }
@@ -72,10 +72,10 @@ class UserRepository
     {
         $connection = MysqlConnection::getInstance();
 
-        $selectQuery = "SELECT password FROM user WHERE nickName = :nickName";
+        $selectQuery = "SELECT DISTINCT password FROM user WHERE nickName = :nickName";
         $statement = $connection->prepare($selectQuery);
         $statement->bindValue(':nickName', $nickName);
         $statement->execute();
-        return $statement->fetchAll();
+        return $statement->fetch();
     }
 }

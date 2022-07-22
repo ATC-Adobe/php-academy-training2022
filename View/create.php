@@ -1,7 +1,6 @@
 <?php
 
 use Controllers\Reservation\CreateReservation;
-use Session\Session;
 
 require_once "../autoloader.php";
 
@@ -13,8 +12,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $reservationController = new CreateReservation();
     $reservationController->getDataFromForm();
 
-    $session = new Session();
-    $session->set('reservationAdded');
     header('Location:myReservations.php');
     exit();
 }
@@ -24,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 require_once "../layout/header.html" ?>
 <?php
 require_once "../layout/navbar.php" ?>
-    <div id="room-name">
+    <div class="room-name">
         <?php
         // Printing Room Number from the previous file (index.php)
         if ($_SERVER['REQUEST_METHOD'] === "GET") {

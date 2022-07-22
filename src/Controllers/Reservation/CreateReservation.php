@@ -25,25 +25,38 @@ class CreateReservation
             'dataType' => $_POST['dataType']
         ];
 
+        $roomId = intval($_POST['roomId']);
         $startDay = date("Y-m-d", (strtotime($_POST['startDay'])));
+        $endDay = date("Y-m-d", (strtotime($_POST['endDay'])));
         $startHour = date("H:i", (strtotime($_POST['startHour'])));
-
+        $endHour = date("H:i", (strtotime($_POST['endHour'])));
         $dataType = $_POST['dataType'];
 
-        $repository = new ReservationRepository();
-        $reservatedRooms = $repository->checkReservatedRooms($startDay, $startHour);
+        $today = date("Y-m-d");
 
-        if ($reservatedRooms === 'true') {
-            $reservationsFactory = new ReservationsFactory($dataType);
-            $object = $reservationsFactory->getReservationType();
-
-            $reservationCommand = new ReservationCommand($dataReservation, $object);
-            $reservationCommand->makeReservation();
-        } else {
-            $value = 'roomsCollision';
+        if ($startDay < $today || $endDay < $today) {
+            $value = 'wrongDates';
             $session = new Session();
             $session->set($value);
-            header('Location:myReservations.php');
+        } elseif ($startHour === $endHour) {
+            $value = 'wrongHours';
+            $session = new Session();
+            $session->set($value);
+        } else {
+            $repository = new ReservationRepository();
+            $reservatedRooms = $repository->checkReservatedRooms($roomId, $startDay, $startHour, $endHour);
+
+            if ($reservatedRooms === 'true') {
+                $reservationsFactory = new ReservationsFactory($dataType);
+                $object = $reservationsFactory->getReservationType();
+
+                $reservationCommand = new ReservationCommand($dataReservation, $object);
+                $reservationCommand->makeReservation();
+            } else {
+                $value = 'roomsCollision';
+                $session = new Session();
+                $session->set($value);
+            }
         }
     }
 }

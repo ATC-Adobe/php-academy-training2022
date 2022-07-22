@@ -4,9 +4,10 @@ namespace Reservation;
 
 class ReservationModel
 {
-    protected int $id;
+    protected int $reservationId;
     protected int $userId;
     protected int $roomId;
+    protected int $roomNumber;
     protected string $firstName;
     protected string $lastName;
     protected string $email;
@@ -30,6 +31,7 @@ class ReservationModel
 
     public function sendUpdatedDataToModel(array $updateReservation): void
     {
+        $this->reservationId = $updateReservation['reservationId'];
         $this->roomId = $updateReservation['roomId'];
         $this->userId = $updateReservation['userId'];
         $this->roomNumber = $updateReservation['roomNumber'];
@@ -42,9 +44,21 @@ class ReservationModel
         $this->endHour = $updateReservation['endHour'];
     }
 
+    public function setReservationId(int $reservationId): int
+    {
+        $this->roomId = $reservationId;
+        return $this;
+    }
+
     public function setRoomId(int $roomId): int
     {
         $this->roomId = $roomId;
+        return $this;
+    }
+
+    public function setRoomNumber(int $roomNumber): int
+    {
+        $this->roomId = $roomNumber;
         return $this;
     }
 
@@ -96,6 +110,11 @@ class ReservationModel
         return $this;
     }
 
+    public function getReservationId(): int
+    {
+        return $this->reservationId;
+    }
+
     public function getUserId(): int
     {
         return $this->userId;
@@ -104,6 +123,11 @@ class ReservationModel
     public function getRoomId(): int
     {
         return $this->roomId;
+    }
+
+    public function getRoomNumber(): int
+    {
+        return $this->roomNumber;
     }
 
     public function getFirstName(): string

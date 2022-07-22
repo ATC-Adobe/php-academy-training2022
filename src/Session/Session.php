@@ -44,6 +44,12 @@ class Session
             case 'roomAdded':
                 $_SESSION['message'] = "Sala została dodana";
                 break;
+            case 'wrongDates':
+                $_SESSION['message'] = "Wybrane dni są nieprawidłowe";
+                break;
+            case 'wrongHours':
+                $_SESSION['message'] = "Wybrane godziny są nieprawidłowe";
+                break;
             default:
                 echo 'Nastąpił nieoczekiwany błąd. Proszę spróbować jeszcze raz';
                 break;

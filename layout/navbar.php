@@ -26,6 +26,6 @@ $session = new \Session\Session();
     </div>
 </nav>
 
-<div id="room-name">
+<div class="room-name">
     Biuro PHP
 </div>

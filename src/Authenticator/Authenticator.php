@@ -43,11 +43,9 @@ class Authenticator
     {
         $userRepository = new UserRepository();
         $userNick = $userRepository->getUserByNickName($nickName);
-        $userPassword = $userRepository->getUserPassword($nickName);
+        $userPassword = array_unique($userRepository->getUserPassword($nickName));
 
-        foreach ($userPassword as $userPass) {
-            $checkPass = password_verify($password, $userPass['password']);
-        }
+        $checkPass = password_verify($password, $userPassword['password']);
 
         if ($userNick === "true" && $checkPass == "true") {
             $value = 'correctLogin';

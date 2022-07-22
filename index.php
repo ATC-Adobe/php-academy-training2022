@@ -26,10 +26,12 @@ endif;
 $displayRooms = new DisplayRooms();
 $rooms = $displayRooms->displayRooms();
 
-$nickName = $_SESSION['username'] ?? null;
+if (isset($_SESSION['username'])){
+    $nickName = $_SESSION['username'];
 
-$login = new LoginUser();
-$userId = $login->getUserId($nickName);
+    $login = new LoginUser();
+    $userId = array_unique($login->getUserId($nickName));
+}
 ?>
 
 <table class="table">
@@ -58,16 +60,12 @@ $userId = $login->getUserId($nickName);
                 echo $room['floorNumber']; ?></td>
             <input type="hidden" name="roomId" value="<?php
             echo $room['id']; ?>">
+
             <input type="hidden" name="roomNumber" value="<?php
             echo $room['roomNumber']; ?>">
 
-            <?php
-            foreach ($userId as $id) : ?>
-                <input type="hidden" name="userId" value="<?php
-                echo $id['id']; ?>">
-            <?php
-            endforeach; ?>
-
+            <input type="hidden" name="userId" value="<?php
+            echo $userId['id']; ?>">
             <td>
                 <button type="submit" class="btn check">Zarezerwuj</button>
             </td>

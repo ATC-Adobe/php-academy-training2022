@@ -1,27 +1,35 @@
 <?php
 
+
+use Controllers\Reservation\UpdateReservation;
+
 require_once "../autoloader.php";
+
+session_start();
 
 $id = $_GET['id'] ?? null;
 
 if (!$id) {
-    header('Location:reservationsList.php');
+    header('Location:myReservations.php');
     exit;
 }
 
-$editRoom = new \Controllers\Reservation\UpdateReservation();
-$editRoom->editReservation();
+$getReservationData = new UpdateReservation();
+$editReservation = $getReservationData->editReservation($id);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $updatedReservation = new \Controllers\Reservation\UpdateReservation();
+    $updatedReservation = new UpdateReservation();
     $updatedReservation->updateReservation();
 
-    header('Location:reservationsList.php');
+    header('Location:myReservations.php');
 }
 
 ?>
-
-<?php require_once "../layout/header.html"; ?>
-<?php require_once "../layout/navbar.php"; ?>
-<?php require_once "../Form/reservationForm.php"; ?>
-<?php require_once "../layout/footer.html"; ?>
+<?php
+require_once "../layout/header.html"; ?>
+<?php
+require_once "../layout/navbar.php"; ?>
+<?php
+require_once "../Form/updateReservationForm.php"; ?>
+<?php
+require_once "../layout/footer.html"; ?>

@@ -12,9 +12,9 @@ class DisplayReservations
         return $displayReservations->getReservationsWithRooms();
     }
 
-    public function displayMyReservations(): bool|array
+    public function displayMyReservations($id): bool|array
     {
         $displayReservations = new ReservationRepository();
-        return $displayReservations->getMyReservations();
+        return $displayReservations->getMyReservations($id);
     }
 }

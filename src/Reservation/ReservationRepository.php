@@ -9,28 +9,33 @@ class ReservationRepository
     public function getReservationsWithRooms(): bool|array
     {
         $connection = MysqlConnection::getInstance();
-        $selectQuery = "SELECT reservations.id, roomId, firstName, lastName, email, startDay, endDay, startHour, endHour, roomNumber as roomNumber FROM reservations JOIN rooms ON rooms.id = roomId";
+        $selectQuery = "SELECT res.id, res.firstName, res.lastName, res.email, res.startDay, res.endDay, res.startHour, res.endHour, rooms.roomNumber FROM reservations AS res JOIN rooms AS rooms ON rooms.id = roomId";
 
         return $connection->query($selectQuery)->fetchAll();
     }
 
-    public function getMyReservations(): bool|array
+    public function getMyReservations($id): bool|array
     {
         $connection = MysqlConnection::getInstance();
-        $selectQuery = "SELECT reservations.id as id, reservations.startDay as startDay, reservations.endDay as endDay, reservations.startHour as startHour, reservations.endHour as endHour, rooms.id as roomId, rooms.roomNumber as roomNumber, user.id as userId, user.firstName as firstName, user.lastName as lastName, user.email as email FROM reservations JOIN rooms ON rooms.id = roomId JOIN user ON user.id = userId";
-
-        return $connection->query($selectQuery)->fetchAll();
-    }
-
-    public function checkReservatedRooms($startDay, $startHour)
-    {
-        $connection = MysqlConnection::getInstance();
-
-        $selectQuery = "SELECT roomId FROM reservations WHERE startDay = :startDay AND :startHour BETWEEN startHour AND endHour";
+        $selectQuery = "SELECT res.id, res.startDay, res.endDay, res.startHour, res.endHour, rooms.id, rooms.roomNumber, us.firstName, us.lastName, us.email FROM reservations AS res JOIN rooms AS rooms ON rooms.id = res.roomId JOIN user AS us ON us.id = res.userId WHERE us.id = :id";
 
         $statement = $connection->prepare($selectQuery);
+        $statement->bindValue(':id', $id);
+        $statement->execute();
+        return $statement->fetchAll();
+    }
+
+    public function checkReservatedRooms($roomId, $startDay, $startHour, $endHour)
+    {
+        $connection = MysqlConnection::getInstance();
+
+        $selectQuery = "SELECT DISTINCT roomId = :roomId FROM reservations WHERE startDay = :startDay AND ((:startHour BETWEEN startHour AND endHour) OR (:endHour BETWEEN startHour AND endHour))";
+
+        $statement = $connection->prepare($selectQuery);
+        $statement->bindValue(':roomId', $roomId);
         $statement->bindValue(':startDay', $startDay);
         $statement->bindValue(':startHour', $startHour);
+        $statement->bindValue(':endHour', $endHour);
         $statement->execute();
         $reservatedRooms = $statement->fetchAll();
 
@@ -61,28 +66,28 @@ class ReservationRepository
         $statement->execute();
     }
 
-    public function getReservationById(): void
+    public function getReservationById($id)
     {
-        $id = $_GET['id'] ?? null;
-
         $connection = MysqlConnection::getInstance();
-        $selectQuery = "SELECT * FROM reservations WHERE id = :id";
+
+        $selectQuery = "SELECT res.id, res.userId, res.firstName, res.lastName, res.email, res.startDay, res.endDay, res.startHour, res.endHour, rooms.id, rooms.roomNumber FROM reservations AS res JOIN rooms AS rooms ON rooms.id = res.roomId WHERE res.id = :id";
 
         $statement = $connection->prepare($selectQuery);
         $statement->bindValue(':id', $id);
         $statement->execute();
-        $statement->fetchAll();
+        return $statement->fetch();
     }
 
     public function updateReservation(ReservationModel $updatedModel)
     {
         $connection = MysqlConnection::getInstance();
 
-        $updateReservation = "UPDATE reservations SET roomId = :roomId, firstName = :firstName, lastName = :lastName, email = :email, startDay = :startDay, endDay = :endDay, startHour = :startHour, endHour = :endHour WHERE id = :id";
+        $updateReservation = "UPDATE reservations SET id = :reservationId, userId = :userId, roomId = :roomId, firstName = :firstName, lastName = :lastName, email = :email, startDay = :startDay, endDay = :endDay, startHour = :startHour, endHour = :endHour WHERE id = :reservationId";
 
         $statement = $connection->prepare($updateReservation);
 
-        $id = $_GET['id'] ?? null;
+        $statement->bindValue(':reservationId', $updatedModel->getReservationId());
+        $statement->bindValue(':userId', $updatedModel->getUserId());
         $statement->bindValue(':roomId', $updatedModel->getRoomId());
         $statement->bindValue(':firstName', $updatedModel->getFirstName());
         $statement->bindValue(':lastName', $updatedModel->getLastName());
@@ -91,7 +96,7 @@ class ReservationRepository
         $statement->bindValue(':endDay', $updatedModel->getEndDay());
         $statement->bindValue(':startHour', $updatedModel->getStartHour());
         $statement->bindValue(':endHour', $updatedModel->getEndHour());
-        $statement->bindValue(':id', $id);
+//        $statement->bindValue(':id', $id);
         $statement->execute();
     }
 

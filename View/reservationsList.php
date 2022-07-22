@@ -56,8 +56,6 @@ $reservations = $displayReservations->displayReservations();
         <td><?php
             echo $reservation['endHour']; ?></td>
         <td>
-            <a href="update.php?id=<?php
-            echo $reservation['id'] ?>" class="btn btn-sm btn-info">Edytuj</a>
             <form style="display: inline-block" method="POST" action="delete.php">
                 <input type="hidden" name="id" value="<?php
                 echo $reservation['id'] ?>">
