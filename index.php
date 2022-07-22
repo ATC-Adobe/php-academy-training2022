@@ -29,7 +29,11 @@ $loginController = new \App\Controller\LoginController();
 $router->get('/login', [$loginController, 'create']);
 $router->post('/login', [$loginController, 'store']);
 $router->get('/logout', [$loginController, 'logout']);
-$router->get("/user", [$loginController, "show"]);
+
+$userController = new \App\Controller\UserController();
+$router->get("/user", [$userController, "show"]);
+$router->get("/user/edit", [$userController, "edit"]);
+$router->post("/user/edit", [$userController, "update"]);
 
 
 $router->resolve();

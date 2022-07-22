@@ -70,4 +70,25 @@ class AuthenticatorService
             exit();
         }
     }
+
+    /**
+     * @param User $user
+     * @return bool|array [
+     *  "msg" => string,
+     *  "type" => string
+     * ]
+     */
+    public function validateCredentials(User $user): array|bool
+    {
+        if(!filter_var($user->email, FILTER_VALIDATE_EMAIL)) {
+            return ["msg" => "email is not valid",  "type" => "email"];
+        }
+        if(strlen($user->password) < 7) {
+            return ["msg" => "password must have at least 8 characters!", "type" =>  "password"];
+        }
+        if(strlen($user->nickname) < 5) {
+            return ["msg" => "nickname must have at least 6 characters", "type" =>  "nickname"];
+        }
+        return true;
+    }
 }

@@ -28,23 +28,16 @@ class RegisterController
             $this->create("passwords are different", "password");
             return;
         }
-        if(!filter_var($user->email, FILTER_VALIDATE_EMAIL)) {
-            $this->create("email is not valid", "email");
-            return;
-        }
-        if(strlen($user->password) < 7) {
-            $this->create("password must have at least 8 characters!", "password");
-            return;
-        }
-        if(strlen($user->nickname) < 5) {
-            $this->create("nickname must have at least 6 characters", "nickname");
-            return;
-        }
-
         $auth = new AuthenticatorService();
+        $valid = $auth->validateCredentials($user);
+        if($valid !== true) {
+            $this->create($valid["msg"], $valid["type"]);
+            return;
+        }
         $currentUser = $auth->register($user);
         if(!$currentUser) {
             $this->create("Something went wrong!", "email");
+            return;
         }
         if(isset($currentUser["error"])) {
             if(str_contains($currentUser["msg"], "nickname")) {

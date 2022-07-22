@@ -44,8 +44,6 @@ class ReservationController
             $reservation->user_id = Session::getInstance()->get("user_id");
             $this->formatDates($reservation);
 
-
-
         if (!$reservationService->checkEndIsAfterStart($reservation->start_date, $reservation->end_date)) {
                  $this->create("End date must be after the start date!");
                     return;

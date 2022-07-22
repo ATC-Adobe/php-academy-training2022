@@ -16,7 +16,7 @@ class ProfilePage implements \Component
 
     public function render(): void
     {
-        (new Header())->render(Session::getInstance()->get("nickname") . "profile");
+        (new Header())->render(Session::getInstance()->get("nickname") . " Profile");
         (new Navbar())->render();
 
         echo '<div class="container my-3 ">
@@ -25,18 +25,22 @@ class ProfilePage implements \Component
             (new Alert($this->alertMsg, $this->type))->render();
         }
         echo "
-        
-         <div class=\"card mx-auto mt-5\" style=\"width: 18rem;\">
-          <div class=\"card-header\">
-          <b>
-                      Hey {$this->user->nickname}!
-            </b>
-          </div>
-          <ul class=\"list-group list-group-flush\">
-            <li class=\"list-group-item\">Name: {$this->user->first_name} {$this->user->last_name}</li>
-            <li class=\"list-group-item\">Email: {$this->user->email}</li>
-            <li class=\"list-group-item\">Total reservations: $this->reservationsCount</li>
-          </ul>
+        <div class='row'>
+        <div class='col-1 col-lg-2 '></div>
+             <div class=\"card px-0 mt-5 text-center col-10 col-lg-8\" style=\"width: 18rem;\">
+              <div class=\"card-header\">
+              <h3>
+                          Hey {$this->user->nickname}!
+                </h3>
+              </div>
+              <ul class=\"list-group list-group-flush\">
+                <li class=\"list-group-item\"><h5>Name: {$this->user->first_name} {$this->user->last_name} </h5></li>
+                <li class=\"list-group-item\"><h5>Email: {$this->user->email} </h5></li>
+                <li class=\"list-group-item\"><a href='/user/edit'><h5>Edit </h5></a></li>
+                <li class=\"list-group-item\"><h5>Total reservations: $this->reservationsCount </h5></li>
+              </ul>
+            </div>
+        <div class='col-1 col-lg-2 '></div>
         </div>
         ";
         echo '</div>';

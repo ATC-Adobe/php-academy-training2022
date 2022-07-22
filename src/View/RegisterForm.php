@@ -12,7 +12,7 @@ class RegisterForm implements Component
 {
     public function render($msg = "", $type = ""): void
     {
-        (new Header())->render("Login page");
+        (new Header())->render("Register page");
         (new Navbar())->render();
         echo '
 <form class="container mt-4" method="post" action="/register">

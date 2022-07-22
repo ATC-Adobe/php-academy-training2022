@@ -40,4 +40,14 @@ class UserRepository extends BaseRepository
         $data = $statement->fetchAll(PDO::FETCH_ASSOC)[0];
         return (new User())->fromArray($data);
     }
+    public function updateOne(User $user): bool
+    {
+        $stm = $this->connection->prepare("
+            UPDATE user 
+            SET nickname = :nickname, first_name = :first_name, last_name = :last_name, email = :email, password = :password
+            WHERE id = :id;
+        ");
+        $values = $user->toArray();
+        return $stm->execute($values);
+    }
 }

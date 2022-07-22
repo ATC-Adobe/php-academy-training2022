@@ -2,10 +2,7 @@
 
 namespace App\Controller;
 
-use App\Model\Session;
 use App\Service\AuthenticatorService;
-use App\Service\ReservationService;
-use App\View\ProfilePage;
 
 class LoginController
 {
@@ -26,16 +23,7 @@ class LoginController
 
         (new RoomController())->index();
     }
-    public function show(): void {
-        $user = (new AuthenticatorService())->findOne(Session::getInstance()->get("user_id"));
-        if(!$user) {
-            (new ReservationController())->index("Something went wrong!");
-            return;
-        }
-        $data = (new ReservationService())->findUsersReservations($user->id);
-        $howMany = count($data);
-        (new ProfilePage($user, $howMany))->render();
-    }
+
     public function logout(): void
     {
         (new AuthenticatorService())->logout();
