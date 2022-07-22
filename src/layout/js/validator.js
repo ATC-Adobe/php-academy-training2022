@@ -102,3 +102,9 @@ if (startDate && endDate) {
     });
 }
 
+//
+
+function preventSubmit () {
+
+}
+

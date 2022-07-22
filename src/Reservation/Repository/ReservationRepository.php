@@ -7,8 +7,10 @@
     use User\Repository\UserRepository;
     use System\Database\MysqlConnection;
     use System\Session\Session;
+    use System\StatusHandler\Status;
 
     class ReservationRepository {
+
         public function addReservation (ReservationModel $reservation) :void {
 
             $session = Session::getInstance();
@@ -23,22 +25,23 @@
             $user       = $reservation->getUser()->getId();
 
             $currentDate = new DateTime("now", new \DateTimeZone('Europe/Warsaw'));
+            $path = 'Location: ./reservation.php?roomId='.$roomId.'&name='.$roomName;
 
             if ($startDate < $currentDate || $endDate < $currentDate) {
-                $session->set('reservationAddError', 'PAST_DATE');
-                header ('Location: ./reservation.php?roomId='.$roomId.'&name='.$roomName);
+                $session->set('reservation', Status::RESERVATION_PAST_DATE);
+                header ($path);
                 die();
             }
 
             if ($startDate >= $endDate) {
-                $session->set('reservationAddError', 'INCORRECT_DATE');
-                header ('Location: ./reservation.php?roomId='.$roomId.'&name='.$roomName);
+                $session->set('reservation', Status::RESERVATION_INCORRECT_DATE);
+                header ($path);
                 die();
             }
 
             if (!$this->checkRoomAvailability($roomId, $startDate, $endDate)) {
-                $session->set('reservationAddError', 'ROOM_NOT_AVAILABLE');
-                header ('Location: ./reservation.php?roomId='.$roomId.'&name='.$roomName);
+                $session->set('reservation', Status::RESERVATION_ROOM_NOT_AVAILABLE);
+                header ($path);
                 die();
             }
 
@@ -55,8 +58,13 @@
                        $user
                        );
                 ";
+
             $instance = MysqlConnection::getInstance();
             $instance->query($query);
+
+            $session->set('reservation', Status::RESERVATION_OK);
+            header ('Location: ./reservationList.php');
+            die();
         }
 
         public function getAllReservations() :array {
@@ -119,14 +127,18 @@
             return $array;
         }
 
-        public function deleteReservation (string $reservationId) :bool {
+        public function deleteReservation (string $reservationId) :void {
             $instance = MysqlConnection::getInstance();
+            $session = Session::getInstance();
+
             $query = "DELETE FROM reservations WHERE reservation_id=$reservationId";
             if ($instance->query($query)) {
-                return true;
+                $session->set('reservation', Status::RESERVATION_DELETE_OK);
             } else {
-                return false;
+                $session->set('reservation', Status::RESERVATION_DELETE_ERROR);
             }
+            header ('Location: ./reservationList.php');
+            die();
         }
 
         private function checkRoomAvailability (string $roomId, DateTime $startDate, DateTime $endDate) :bool {

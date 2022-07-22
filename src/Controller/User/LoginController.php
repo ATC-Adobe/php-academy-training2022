@@ -7,15 +7,10 @@
         public function request(): void {
             if (isset($_POST['username']) && isset($_POST['password'])) {
                 $authenticator = new Authenticator();
-                if ($authenticator->login(
+                $authenticator->login(
                     htmlspecialchars($_POST['username']),
                     htmlspecialchars($_POST['password'])
-                )) {
-                    header('Location: ./index.php?login=true');
-                    die();
-                }
-                header('Location: ./login.php?login=false');
-                die();
+                );
             }
         }
     }

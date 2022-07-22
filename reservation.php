@@ -3,6 +3,7 @@
     require_once "./autoloading.php";
 
     use Controller\Reservation\AddReservationController;
+    use System\StatusHandler\Status;
 
     if ($session->get('user_id')) {
         if (isset($_POST['roomId']) &&
@@ -15,7 +16,9 @@
             (new AddReservationController())->request();
         }
     } else {
+        $session->set('login', (string)Status::LOGIN_REQUIRED);
         header ('Location: ./login.php');
+        die();
     }
 
     require_once "./src/layout/head.php";
@@ -29,24 +32,6 @@
             <div class="container">
                 <?php
                     include_once "./src/View/notifications.php";
-
-                    if($session->get('reservationAddError')) {
-                        if ($session->get('reservationAddError') === 'PAST_DATE') {
-                            echo "<div class='alert alert-danger' role='alert'>
-                                <span>The start date cannot be earlier than the current time!</span>
-                            </div>";
-                        } else if ($session->get('reservationAddError') === 'INCORRECT_DATE') {
-                            echo "<div class='alert alert-danger' role='alert'>
-                                <span>The start date of the reservation cannot be older than the end date!</span>
-                            </div>";
-                        } else if ($session->get('reservationAddError') === 'ROOM_NOT_AVAILABLE') {
-                            echo "<div class='alert alert-danger' role='alert'>
-                                <span>Room is not available in this date. Try different date.</span>
-                            </div>";
-                        }
-                        $session->unset('reservationAddError');
-                    }
-
                     if (isset($_GET['roomId']) && isset($_GET['name'])) {
                         $roomId = $_GET['roomId'];
 

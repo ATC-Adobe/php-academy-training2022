@@ -8,10 +8,6 @@ class DeleteRoomController {
         if (isset($_POST['id'])) {
             $service = new RoomService();
             $service->deleteRoom();
-            header ("Location: ./index.php?roomDelete=true");
-            die();
         }
-        header ("Location: ./index.php?roomDelete=false");
-        die();
     }
 }

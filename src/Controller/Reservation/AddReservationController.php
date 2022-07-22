@@ -17,10 +17,6 @@ class AddReservationController {
         {
             $service = new ReservationService();
             $service->addReservation();
-            header ("Location: ./reservationList.php?reservationAdd=true");
-            die();
         }
-        header ("Location: ./reservationList.php?reservationAdd=false");
-        die();
     }
 }
