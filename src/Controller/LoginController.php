@@ -21,12 +21,12 @@ class LoginController
             return;
         }
 
-        (new RoomController())->index();
+        (new RoomController())->index(alertMsg: "You are logged in", type: "info");
     }
 
     public function logout(): void
     {
         (new AuthenticatorService())->logout();
-        (new RoomController())->index();
+        (new RoomController())->index(alertMsg: "You are logged out", type: "info");
     }
 }

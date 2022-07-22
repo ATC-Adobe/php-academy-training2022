@@ -10,10 +10,10 @@ use App\View\RoomList;
 
 class RoomController
 {
-    public function index(string $msg = ''): void
+    public function index(string $alertMsg = '', string $type = "danger"): void
     {
         $rooms = (new RoomService())->readRooms();
-        (new RoomList($rooms))->render($msg);
+        (new RoomList($rooms, $alertMsg, $type))->render();
     }
 
     public function store(): void
@@ -26,21 +26,27 @@ class RoomController
             $room->name = htmlentities($_POST["name"]);
             $room->floor = htmlentities($_POST["floor"]);
 
+            if(!is_numeric($room->floor)) {
+                $this->create("Floor must be a number");
+            }
+
             $ok = $roomService->addRoom($room);
             if (!$ok) {
-                $msg = '<div class="alert alert-danger text-center">Something went wrong. Try again!</div>';
+                $msg = 'Something went wrong. Try again!';
+                $type = "danger";
             } else {
-                $msg = '<div class="alert alert-success text-center">Successfully added room!</div>';
+                $msg = 'Successfully added room!';
+                $type = "success";
             }
-            $this->index($msg);
+            $this->index(alertMsg: $msg, type: $type);
         } else {
             echo "Unknown Method";
         }
     }
 
-    public function create(): void
+    public function create(string $msg = ""): void
     {
         (new AuthenticatorService())->isNotAuthRedirect();
-        (new RoomForm())->render();
+        (new RoomForm())->render($msg);
     }
 }
