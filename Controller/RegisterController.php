@@ -7,7 +7,6 @@ use Repository\RegisterRepository;
 
 class RegisterController extends RegisterRepository
 {
-    private $error;
     private $firstName;
     private $lastName;
     private $login;
@@ -25,12 +24,11 @@ class RegisterController extends RegisterRepository
         $this->passwordConfirm = $passwordConfirm;
     }
 
-
-    public function registerUser($error, $firstName, $lastName, $login, $email, $password, $passwordConfirm): void
+    public function registerUser($error, $firstName, $lastName, $login, $email, $password, $passwordConfirm): array
     {
         if (isset($_POST['submit'])) {
             [$error, $firstName, $lastName, $login, $email, $password, $passwordConfirm] = (new RegisterFormValidation(
-                $error, $firstName, $lastName, $login, $email, $password, $passwordConfirm
+                $firstName, $lastName, $login, $email, $password, $passwordConfirm
             ))->validated(
                 $error,
                 $firstName,
@@ -44,5 +42,6 @@ class RegisterController extends RegisterRepository
                 $this->setUser($this->firstName, $this->lastName, $this->login, $this->email, $this->password);
             }
         }
+        return array($error, $firstName, $lastName, $login, $email, $password, $passwordConfirm);
     }
 }

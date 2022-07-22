@@ -2,17 +2,29 @@
 
 namespace Repository;
 
-class RoomFormValidation
+use Controller\CreateRoomController;
+use Service\ValidationMessages;
+
+class RoomFormValidation extends CreateRoomController
 {
-    function validated(string $error, mixed $name, mixed $floor): array
+    public function validated(string $error, mixed $name, mixed $floor): array
     {
-        if (empty($_POST['name'] && strlen($_POST['name']) < 50)) {
-            $error .= '<p class="text-danger">Name is required.</p>';
+        (new ValidationMessages())->validationsMsg();
+        if (empty($_POST['name'])) {
+            $error .= ROOM_NAME_REQUIRED . '<br>';
+        } elseif (strlen($_POST['name']) > 50) {
+            $error .= ROOM_FIELD_50_CHARACTERS . '<br>';
+        } elseif (!preg_match("/^[a-zA-Z\d_ ]*$/", ($_POST['name']))) {
+            $error .= ROOM_CHARACTERS . '<br>';
         } else {
             $name = $_POST['name'];
         }
-        if (empty($_POST['floor'] && strlen($_POST['floor']) < 3)) {
-            $error .= '<p class="text-danger">Floor is required.</p>';
+        if (empty($_POST['floor'])) {
+            $error .= FLOOR_REQUIRED . '<br>';
+        } elseif (strlen($_POST['floor']) > 3) {
+            $error .= FLOOR_FIELD_3_CHARACTERS . '<br>';
+        } elseif (!preg_match("/^[\d ]*$/", ($_POST['floor']))) {
+            $error .= FLOOR_CHARACTERS . '<br>';
         } else {
             $floor = $_POST['floor'];
         }

@@ -28,10 +28,8 @@ $error = '';
                 <div class="card-header"><h4>Book a Room</h4></div>
                 <div class="card-body">
                     <form action="" method="post">
-                        <?php
-                        echo $error;
-                        ?>
-
+                        <p class="text-danger"><?php
+                            echo $error; ?></p>
                         <div class="form-group">
                             <label for="firstname">Room name</label>
                             <input type="text" class="form-control" name="name" value="<?php

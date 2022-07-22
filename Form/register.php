@@ -6,6 +6,7 @@ session_start();
 
 use Controller\RegisterController;
 use Repository\RegisterFormValidation;
+use Service\ValidationMessages;
 
 include_once "../autoloading.php";
 include_once "../Layout/head.php";
@@ -19,8 +20,6 @@ $login = '';
 $email = '';
 $password = '';
 $confirmPassword = '';
-
-(new RegisterFormValidation($firstName, $lastName, $login, $email, $password, $confirmPassword))->validationsMsg();
 
 if (isset($_POST['submit'])) {
     $firstName = $_POST['firstname'];

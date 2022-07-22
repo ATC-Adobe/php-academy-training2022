@@ -18,7 +18,6 @@ class LoginController extends LoginRepository
     public function loginUser()
     {
         if ($this->emptyInput() == false) {
-            //echo "Empty input"
             header("location: ../Form/login.php?error=emptyinput");
             exit();
         }

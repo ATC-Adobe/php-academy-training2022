@@ -24,14 +24,13 @@ class RegisterRepository extends Connection
         }
     }
 
-    protected function checkUser($email)
+    protected function checkLogin($login)
     {
-        $statement = self::getConnection()->prepare("SELECT login FROM users WHERE email = ?;");
+        $statement = self::getConnection()->prepare("SELECT login FROM users WHERE login = ?;");
         if ($statement->rowCount() > 0) {
             $resultCheck = false;
         } else {
             $resultCheck = true;
         }
-        return $resultCheck;
     }
 }

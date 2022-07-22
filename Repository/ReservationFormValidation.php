@@ -2,6 +2,8 @@
 
 namespace Repository;
 
+use Service\ValidationMessages;
+
 class ReservationFormValidation
 {
     public function validated(
@@ -13,43 +15,49 @@ class ReservationFormValidation
         mixed $startDate,
         mixed $endDate
     ): array {
-        if (empty($_POST['room_id'] && strlen($_POST['room_id']) < 5)) {
-            $error .= '<p class="text-danger">Room id is required.</p>';
+        (new ValidationMessages())->validationsMsg();
+        if (empty($_POST['room_id'])) {
+            $error .= ROOM_REQUIRED . '<br>';
         } else {
             $roomId = $_POST['room_id'];
         }
-        if (empty(
-            $_POST['firstname'] && strlen($_POST['firstname']) < 50 && preg_match(
-                "/^[a-zA-Z ]*$/",
-                $_POST['firstname']
-            )
-        )) {
-            $error .= '<p class="text-danger">Firstname is required. First name cannot be longer than 50 characters. Only letters and white spaces are allowed. </p>';
+        if (empty($_POST['firstname'])) {
+            $error .= FIRSTNAME_REQUIRED_FIELD . '<br>';
+        } elseif (strlen($_POST['firstname']) > 50) {
+            $error .= FIRSTNAME_FIELD_50_CHARACTERS . '<br>';
+        } elseif
+        (!preg_match("/^[a-zA-Z]*$/", ($_POST['firstname']))) {
+            $error .= FIRSTNAME_CHARACTERS . '<br>';
         } else {
             $firstName = $_POST['firstname'];
         }
-        if (empty(
-            $_POST['lastname'] && strlen($_POST['lastname']) < 50 && preg_match(
-                "/^[a-zA-Z ]*$/",
-                $_POST['lastname']
-            )
-        )) {
-            $error .= '<p class="text-danger">Last name is required. Last name cannot be longer than 50 characters. Only letters and white spaces are allowed.</p>';
+        if (empty($_POST['lastname'])) {
+            $error .= LASTNAME_REQUIRED_FIELD . '<br>';
+        } elseif
+        (strlen($_POST['lastname']) > 50) {
+            $error .= LASTNAME_FIELD_50_CHARACTERS . '<br>';
+        } elseif
+        (!preg_match("/^[a-zA-Z]*$/", ($_POST['lastname']))) {
+            $error .= LASTNAME_CHARACTERS . '<br>';
         } else {
             $lastName = $_POST["lastname"];
         }
-        if (empty($_POST['email'] && filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))) {
-            $error .= '<p class="text-danger">Email is required. Remember about email format: ex@example.com .</p>';
+        if (empty($_POST['email'])) {
+            $error .= EMAIL_REQUIRED_FIELD . '<br>';
+        } elseif (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+            $error .= EMAIL_FORMAT . '<br>';
+        } elseif (strlen($_POST['email']) > 50) {
+            $error .= EMAIL_FIELD_50_CHARACTERS . '<br>';
         } else {
             $email = $_POST['email'];
         }
         if (empty($_POST['start_date'])) {
-            $error .= '<p class="text-danger">Date from is required.</p>';
+            $error .= START_DATE_REQUIRED . '<br>';
         } else {
             $startDate = $_POST['start_date'];
         }
         if (empty($_POST['end_date'])) {
-            $error .= '<p class="text-danger">Date to is required.</p>';
+            $error .= END_DATE_REQUIRED . '<br>';
         } else {
             $endDate = $_POST['end_date'];
         }
