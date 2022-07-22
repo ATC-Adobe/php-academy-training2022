@@ -21,7 +21,7 @@ class UsersReservationListingView {
         $document = new DocumentRootNode([
             new MenuLeaf(),
             new DocumentBodyNode([
-                new ProfileLeaf(),
+                //new ProfileLeaf(),
                 new ReservationListLeaf($uid)
             ], 'Active Reservations'),
             new FooterLeaf()

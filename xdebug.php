@@ -15,3 +15,22 @@ $math = new math();
 $res = $math->sumArray([1, 2, 3, 4, 5, 6, 7, 8, 9, 0,]);
 
 echo $res;
+
+echo '<br>';
+
+$days = [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday",
+];
+
+foreach ($days as $day) {
+    echo $day.'<br>';
+}
+
+
+

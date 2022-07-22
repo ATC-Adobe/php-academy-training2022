@@ -20,12 +20,14 @@ class Status {
 
     public const RESERVATION_OK = 11;
     public const RESERVATION_COLLISION = 12;
-    public const RESERVATION_DATE_INVERSION = 13;
+    public const RESERVATION_DATE_INCORRECT = 13;
 
     public const RESERVATION_REMOVE_OK = 14;
     public const RESERVATION_REMOVE_ERROR = 15;
 
     public const PARAMETER_ERROR = 16;
+
+    public const AUTH_LOGIN_REQUIRED = 17;
 
 
     // TODO: Comply with SRP => move this to different class
@@ -69,8 +71,8 @@ class Status {
                 ['success', 'Room reserved successfully'],
             self::RESERVATION_COLLISION =>
                 ['error', 'Room is already reserved'],
-            self::RESERVATION_DATE_INVERSION =>
-                ['error', 'Reservation date inversion'],
+            self::RESERVATION_DATE_INCORRECT =>
+                ['error', 'Dates are incorrect'],
 
 
 
@@ -84,6 +86,10 @@ class Status {
             self::PARAMETER_ERROR  =>
                 ['error', 'Invalid parameters, try again'],
 
+
+
+            self::AUTH_LOGIN_REQUIRED =>
+                ['error', 'To perform this action user must be logged in'],
 
 
             default =>

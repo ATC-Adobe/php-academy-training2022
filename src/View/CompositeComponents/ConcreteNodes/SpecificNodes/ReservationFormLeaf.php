@@ -8,12 +8,15 @@ class ReservationFormLeaf extends LeafNode {
     public function draw() {
         ?>
 
+        <script src="/layout/js/reservationValidator.js"> </script>
+
         <form method='post' action='/reservation/add'>
             <div class="float ltable">
                 Room Id:<br>
                 <br>
                 From: <br>
                 To: <br>
+                <br>
                 <br>
                 Save to:<br>
             </div>
@@ -37,10 +40,10 @@ class ReservationFormLeaf extends LeafNode {
                 echo htmlspecialchars($id).'<br>';
                 ?>
                 <br>
-                <input type="datetime-local" name="from"><br>
-                <input type="datetime-local" name="to"><br>
+                <input id="timeFrom" type="datetime-local" name="from"><br>
+                <input id="timeTo"   type="datetime-local" name="to"><br>
+                <span id="message"></span><br>
                 <br>
-
 
                 <input type="radio" name="option" value="db" checked>
                 <label for="html">Database</label><br>

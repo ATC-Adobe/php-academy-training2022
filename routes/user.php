@@ -2,7 +2,7 @@
 
 use System\Router\Response;
 use System\Router\Router;
-
+use \System\Util\Authenticator;
 $router = new Router(
     '404.html'
 );
@@ -27,7 +27,7 @@ $router->post('/add', function(Response $res) {
         ->makeRequest();
 });
 
-$router->use('/logout', function(Response $res) {
+$router->use('/logout', Authenticator::getLoginValidator(), function(Response $res) {
     (new \Controller\LogOutController())
         ->makeRequest();
 });
@@ -37,7 +37,7 @@ $router->get('/info', function(Response $res) {
         ->render();
 });
 
-$router->post('/style', function(Response $res) {
+$router->post('/style', Authenticator::getLoginValidator(), function(Response $res) {
     (new \Controller\ChangeStyleController())
         ->makeRequest();
 });

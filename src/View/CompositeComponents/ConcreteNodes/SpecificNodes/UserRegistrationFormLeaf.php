@@ -8,6 +8,8 @@ class UserRegistrationFormLeaf extends LeafNode {
     public function draw() {
         ?>
 
+        <script src = "/layout/js/registrationValidator.js"></script>
+
         <form method="post" action="/user/add">
 
             <div class="float ltable">

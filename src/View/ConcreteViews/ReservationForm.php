@@ -36,7 +36,7 @@ use \System\Status;
                         '<div class="error">
                             Room is already occupied
                          </div>',
-                    Status::RESERVATION_DATE_INVERSION =>
+                    Status::RESERVATION_DATE_INCORRECT =>
                         '<div class="error">
                             Date inversion
                          </div>',

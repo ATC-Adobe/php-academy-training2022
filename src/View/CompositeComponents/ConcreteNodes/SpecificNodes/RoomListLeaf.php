@@ -4,6 +4,7 @@ namespace View\CompositeComponents\ConcreteNodes\SpecificNodes;
 
 use Model\Room\Model\RoomModel;
 use Model\Room\Repository\RoomConcreteRepository;
+use System\Util\Authenticator;
 use View\CompositeComponents\LeafNode;
 
 class RoomListLeaf extends LeafNode {
@@ -17,13 +18,15 @@ class RoomListLeaf extends LeafNode {
                     <th style="width:10%">ID</th>
                     <th style="width:40%">Name</th>
                     <th style="width:10%">Floor</th>
-                    <th> </th>
+                    <th> Action </th>
                 </tr>
                 <tr>&#8203;</tr>
 
             <?php
             $entries = (new RoomConcreteRepository())
                 ->getAllRooms();
+
+            $auth = new Authenticator();
 
             foreach($entries as $entry) {
 
@@ -41,7 +44,13 @@ class RoomListLeaf extends LeafNode {
                 echo "<td> $name </td>";
                 echo "<td> $floor </td>";
 
-                echo "<td><a href='/reservation/add?id=$id'> Reserve ></a></td>";
+                echo "<td>";
+
+                if($auth->isLogged()) {
+                    echo "<a href='/reservation/add?id=$id'> Reserve ></a>";
+                }
+
+                echo "</td>";
 
                 echo "</tr>";
             }

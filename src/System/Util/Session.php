@@ -10,11 +10,6 @@ class Session {
         session_write_close();
         session_start();
         session_regenerate_id(true);
-
-        // TODO: This should be here but I'll leave it for now
-        if(!isset($_SESSION['style'])) {
-            $_SESSION['style'] = '3';
-        }
     }
 
     public static function getInstance() : Session {

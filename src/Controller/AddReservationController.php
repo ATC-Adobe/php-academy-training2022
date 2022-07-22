@@ -38,12 +38,12 @@ class AddReservationController {
         $from   = new \DateTime($from);
         $to     = new \DateTime($to);
 
-        if($to <= $from) {
+        if($to <= $from || $from < new \DateTime()) {
             (new Response())
-                ->goTo('/room/add?id='
+                ->goTo('/reservation/add?id='
                     .$_POST['room_id']
                     .'&status='
-                    .Status::RESERVATION_DATE_INVERSION);
+                    .Status::RESERVATION_DATE_INCORRECT);
         }
 
         $res =
@@ -61,7 +61,7 @@ class AddReservationController {
         }
         else {
             (new Response())
-                ->goTo('/reservation/list?id='
+                ->goTo('/room/add?id='
                     .$_POST['room_id']
                     .'&status='
                     . Status::RESERVATION_COLLISION);

@@ -8,6 +8,7 @@ use View\CompositeComponents\ConcreteNodes\GeneralPurposeNodes\DocumentRootNode;
 use View\CompositeComponents\ConcreteNodes\GeneralPurposeNodes\FooterLeaf;
 use View\CompositeComponents\ConcreteNodes\GeneralPurposeNodes\MenuLeaf;
 use View\CompositeComponents\ConcreteNodes\GeneralPurposeNodes\StatusLeaf;
+use View\CompositeComponents\ConcreteNodes\SpecificNodes\FileReservationList;
 use View\CompositeComponents\ConcreteNodes\SpecificNodes\ReservationListLeaf;
 
 class ReservationListingView {
@@ -19,7 +20,8 @@ class ReservationListingView {
             new MenuLeaf(),
             new DocumentBodyNode([
                 new StatusLeaf(),
-                new ReservationListLeaf(0)
+                new ReservationListLeaf(0),
+                new FileReservationList(),
             ], 'Active Reservations'),
             new FooterLeaf()
         ]);

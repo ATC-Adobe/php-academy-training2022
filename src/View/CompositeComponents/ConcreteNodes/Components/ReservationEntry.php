@@ -41,4 +41,24 @@ class ReservationEntry extends LeafNode {
                 </div>";
     }
 
+    public function drawRaw(
+        $id, $name, $email, $surname, $room, $to, $from,
+        ) {
+        echo "<div class='row'>
+                <div class='float ltable' style = 'line-height: 1.2em;' >
+                    Room name: <br >
+                    Name: <br >
+                    E - mail: <br >
+                    Time span: <br >
+                </div >
+                <div class='float rtable' style = 'line-height: 1.2em;' >
+                    $room <br>
+                    $name $surname <br>
+                    $email <br>
+                    $from - $to <br>
+                </div >
+                <div class='clear' ></div >
+                </div>";
+    }
+
 }

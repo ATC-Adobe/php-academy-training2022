@@ -2,12 +2,13 @@
 
 use System\Router\Response;
 use System\Router\Router;
+use System\Util\Authenticator;
 
 $router = new Router(
     '404.html'
 );
 
-$router->get('/add', function(Response $res) {
+$router->get('/add', Authenticator::getLoginValidator(), function(Response $res) {
     (new \View\RoomFormView())
         ->render();
 });
@@ -17,7 +18,7 @@ $router->get('/list', function(Response $res) {
         ->render();
 });
 
-$router->post('/add', function(Response $res) {
+$router->post('/add', Authenticator::getLoginValidator(), function(Response $res) {
     (new \Controller\AddRoomController())
         ->makeRequest();
 });

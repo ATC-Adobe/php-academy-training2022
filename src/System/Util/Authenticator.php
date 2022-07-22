@@ -4,6 +4,7 @@ namespace System\Util;
 
 use Model\User\Model\UserModel;
 use Model\User\Repository\UserConcreteRepository;
+use System\Router\Response;
 use System\Status;
 
 class Authenticator {
@@ -91,6 +92,18 @@ class Authenticator {
         $sess = Session::getInstance();
 
         return $sess->get('valid') !== null;
+    }
+
+    public static function getLoginValidator() : callable {
+        return function (Response $res) {
+            $sess = Session::getInstance();
+
+            if ($sess->get('valid') === null) {
+                $res->goTo('/user/login?status='.Status::AUTH_LOGIN_REQUIRED);
+            }
+
+            return;
+        };
     }
 
     public function getUser() : ?UserModel {

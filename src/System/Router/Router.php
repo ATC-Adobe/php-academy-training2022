@@ -40,7 +40,7 @@ class Router {
      * @param callable $callback Action on request
      * @return void
      */
-    public function get(string $path, callable $callback) : void {
+    public function get(string $path, callable ...$callback) : void {
         $this->routesGet[$path] = $callback;
     }
 
@@ -52,7 +52,7 @@ class Router {
      * @param callable $callback Action on request
      * @return void
      */
-    public function post(string $path, callable $callback) : void {
+    public function post(string $path, callable ...$callback) : void {
         $this->routesPost[$path] = $callback;
     }
 
@@ -63,7 +63,7 @@ class Router {
      * @param callable $callback Action on request
      * @return void
      */
-    public function use(string $path, callable $callback) : void {
+    public function use(string $path, callable ...$callback) : void {
         $this->routesGet[$path]  = $callback;
         $this->routesPost[$path] = $callback;
     }
@@ -103,13 +103,18 @@ class Router {
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if(isset($this->routesPost[$uri])) {
-                $this->routesPost[$uri]($this->response);
+                foreach ($this->routesPost[$uri] as $route) {
+                    $route($this->response);
+                }
                 return;
             }
         }
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             if(isset($this->routesGet[$uri])) {
-                $this->routesGet[$uri]($this->response);
+
+                foreach ($this->routesGet[$uri] as $route) {
+                    $route($this->response);
+                }
                 return;
             }
         }

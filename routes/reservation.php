@@ -2,6 +2,7 @@
 
 use System\Router\Response;
 use System\Router\Router;
+use System\Util\Authenticator;
 
 $router = new Router(
     '404.html'
@@ -9,19 +10,19 @@ $router = new Router(
 
 // ============ POST =============
 
-$router->post('/delete', function(Response $res) {
+$router->post('/delete', Authenticator::getLoginValidator(), function(Response $res) {
     (new \Controller\RemoveReservationController())
         ->makeRequest();
 });
 
-$router->post('/add', function(Response $res) {
+$router->post('/add', Authenticator::getLoginValidator(), function(Response $res) {
     (new \Controller\AddReservationController())
         ->makeRequest();
 });
 
 // ============ GET =============
 
-$router->get('/add', function(Response $res) {
+$router->get('/add', Authenticator::getLoginValidator(), function(Response $res) {
     (new \View\ReservationFormView())
         ->render();
 });
@@ -31,7 +32,7 @@ $router->get('/list', function(Response $res) {
         ->render();
 });
 
-$router->get('/user', function(Response $res) {
+$router->get('/user', Authenticator::getLoginValidator(), function(Response $res) {
     (new \View\UsersReservationListingView())
         ->render();
 });
