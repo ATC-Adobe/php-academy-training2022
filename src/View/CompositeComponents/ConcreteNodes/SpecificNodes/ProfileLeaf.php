@@ -8,6 +8,8 @@ class ProfileLeaf extends LeafNode {
     public function draw() {
         ?>
 
+        <a href = "/user/edit"> Edit your profile </a><br>
+
         <div class="float ltable">
             ID:<br>
             <br>

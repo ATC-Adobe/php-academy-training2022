@@ -42,5 +42,17 @@ $router->post('/style', Authenticator::getLoginValidator(), function(Response $r
         ->makeRequest();
 });
 
+$router->get('/edit', Authenticator::getLoginValidator(), function (Response $res) {
+    (new \View\UserEditorView())
+        ->render();
+});
+
+$router->post('/password', Authenticator::getLoginValidator(), function (Response $res) {
+    (new \Controller\ChangePasswordController())
+        ->makeRequest();
+});
+
+
+
 
 $router->redirect();

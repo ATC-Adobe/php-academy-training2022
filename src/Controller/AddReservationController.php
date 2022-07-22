@@ -27,24 +27,18 @@ class AddReservationController {
         [ $room_id, $from, $to, ]
             = [ $_POST['room_id'],    $_POST['from'],     $_POST['to']];
 
-
         $auth = new Authenticator();
+
+        /* not needed anymore
+
 
         if(!$auth->isLogged()) {
             (new Response())
                 ->goTo('/');
-        }
+        }*/
 
         $from   = new \DateTime($from);
         $to     = new \DateTime($to);
-
-        if($to <= $from || $from < new \DateTime()) {
-            (new Response())
-                ->goTo('/reservation/add?id='
-                    .$_POST['room_id']
-                    .'&status='
-                    .Status::RESERVATION_DATE_INCORRECT);
-        }
 
         $res =
             (new ReservationAdder())->uploadData(
@@ -54,17 +48,17 @@ class AddReservationController {
         );
 
 
-        if($res) {
+        if($res == Status::RESERVATION_OK) {
             (new Response())
                 ->goTo('/reservation/list?status='
                     . Status::RESERVATION_OK);
         }
         else {
             (new Response())
-                ->goTo('/room/add?id='
+                ->goTo('/reservation/add?id='
                     .$_POST['room_id']
                     .'&status='
-                    . Status::RESERVATION_COLLISION);
+                    . $res);
         }
     }
 }

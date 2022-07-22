@@ -24,12 +24,13 @@ class AddRoomController {
                 ->goTo('/');
         }
 
+        /* Not needed anymore thanks to authenticator middleware in router
         $auth = new Authenticator();
 
         if(!$auth->isLogged()) {
             (new Response())
                 ->goTo('/');
-        }
+        }*/
 
         $roomRepository = new RoomConcreteRepository();
 

@@ -60,8 +60,9 @@ function validatePassword2() {
 }
 
 window.addEventListener('load', () => {
-    document.getElementById('emailInput')
-        .addEventListener('change', validateEmail);
+    e = document.getElementById('emailInput')
+    if(e !== null)
+        e.addEventListener('change', validateEmail);
 
     document.getElementById('pass1Input')
         .addEventListener('change', validatePassword1);
@@ -69,7 +70,8 @@ window.addEventListener('load', () => {
     document.getElementById('pass2Input')
         .addEventListener('change', validatePassword2);
 
-    validateEmail();
+    if(e !== null)
+        validateEmail();
     validatePassword1();
     validatePassword2();
 });

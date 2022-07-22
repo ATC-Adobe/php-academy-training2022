@@ -6,6 +6,8 @@ use Model\Reservation\Model\ReservationModel;
 use Model\Room\Repository\RoomConcreteRepository;
 use Model\User\Repository\UserConcreteRepository;
 use System\File\IFileWriter;
+use System\Router\Response;
+use System\Status;
 
 class ReservationAdder {
 
@@ -24,7 +26,11 @@ class ReservationAdder {
     public function uploadData(
         IFileWriter $strategy,
         string $roomId, string $userId,  \DateTime $from,    \DateTime $to
-    ) : bool {
+    ) : int {
+
+        if($to <= $from || $from < new \DateTime()) {
+            return Status::RESERVATION_DATE_INCORRECT;
+        }
 
         $roomNId = intval($roomId);
 
@@ -33,17 +39,17 @@ class ReservationAdder {
             ->getRoomById($roomNId);
 
         if($room === null) {
-            return false;
+            return Status::PARAMETER_ERROR;
         }
 
         $user = (new UserConcreteRepository())
             ->getUserById(intval($userId));
 
         if($user === null) {
-            return false;
+            return Status::PARAMETER_ERROR;
         }
 
-        return $strategy
+        $res = $strategy
             ->writeLine(
                 new ReservationModel(
                     0,
@@ -54,5 +60,12 @@ class ReservationAdder {
                 ),
 
             );
+
+        if($res) {
+            return Status::RESERVATION_OK;
+        }
+        else {
+            return Status::RESERVATION_COLLISION;
+        }
     }
 }
