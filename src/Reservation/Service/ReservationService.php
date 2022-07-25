@@ -2,7 +2,6 @@
 
     namespace Reservation\Service;
 
-    use DateTime;
     use Room\Model\RoomModel;
     use Room\Repository\RoomRepository;
     use Reservation\Model\ReservationModel;
@@ -11,20 +10,22 @@
     use System\Session\Session;
 
     class ReservationService {
-        public function __construct() {}
+        private Session $session;
+        public function __construct() {
+            $this->session = Session::getInstance();
+        }
 
-        public function addReservation () :void {
-            $session = Session::getInstance();
-
+        public function addReservation () :bool {
+            $repo = new ReservationRepository();
             $id         = 0;
             $roomId     = htmlspecialchars($_POST['roomId']);
             $firstName  = htmlspecialchars($_POST['firstName']);
             $lastName   = htmlspecialchars($_POST['lastName']);
             $email      = htmlspecialchars($_POST['email']);
-            $startDate  = DateTime::createFromFormat("Y-m-d\TH:i", htmlspecialchars($_POST['startDate']));
-            $endDate    = DateTime::createFromFormat("Y-m-d\TH:i", htmlspecialchars($_POST['endDate']));
+            $startDate  = $repo->createDate(htmlspecialchars($_POST['startDate']), true);
+            $endDate    = $repo->createDate(htmlspecialchars($_POST['endDate']), true);
+            $userId = $this->session->get('user_id');
 
-            $userId     = $session->get('user_id');
             $userRepo   = new UserRepository();
             $user       = $userRepo->getUserById($userId);
 
@@ -37,9 +38,10 @@
                 $email, $startDate, $endDate, $user
             );
 
-            $repo = new ReservationRepository();
-            $repo->addReservation($reservation);
-
+            if ($repo->addReservation($reservation)) {
+                return true;
+            }
+            return false;
         }
 
         public function deleteReservation () :void {

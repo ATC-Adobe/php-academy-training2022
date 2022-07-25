@@ -35,6 +35,12 @@
         public const RESERVATION_DELETE_OK = 45;
         public const RESERVATION_DELETE_ERROR = 46;
 
+        public const API_BAD_REQUEST = 400;
+        public const API_UNAUTHORIZED = 401;
+        public const API_NOT_FOUND = 404;
+        public const API_CONFLICT = 409;
+        public const API_SERVER_ERROR = 500;
+
         public static function getStatus(int $status) :array {
             $param = match($status) {
                 self::NONE
@@ -95,6 +101,17 @@
                     => ['success', 'Reservation removed succesfully!'],
                 self::RESERVATION_DELETE_ERROR
                     => ['danger', 'Something went wrong while removing reservation!'],
+
+                self::API_BAD_REQUEST
+                    => ['error', 'The server cannot or will not process the request.'],
+                self::API_UNAUTHORIZED
+                    => ['error', 'Unauthorized action, you need to login!'],
+                self::API_NOT_FOUND
+                    => ['error', 'The requested resource could not be found but may be available in the future!'],
+                self::API_CONFLICT
+                    => ['error', 'Request could not be processed because of conflict in the current state of the resource!'],
+                self::API_SERVER_ERROR
+                    => ['error', 'Something went wrong - internal server error!'],
 
                 default
                     => ['danger', 'Unhandled exception, contact with administrator!'],

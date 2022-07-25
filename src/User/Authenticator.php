@@ -10,7 +10,7 @@
 
         private const SALT_LENGTH = 32;
 
-        public function login (string $username, string $password) :void {
+        public function login (string $username, string $password) :UserModel|false {
             $session = Session::getInstance();
             $repo = new UserRepository();
             $user = $repo->getUserByUsername($username);
@@ -26,12 +26,10 @@
                 $session->set('password', $user->getPassword());
 
                 $session->set('login', Status::LOGIN_OK);
-                header ('Location: ./index.php');
-                die();
+                return $user;
             }
             $session->set('login', Status::LOGIN_INVALID);
-            header ('Location: ./login.php');
-            die();
+            return false;
         }
 
         public function register (string $username, string $firstName, string $lastName,

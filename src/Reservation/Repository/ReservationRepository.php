@@ -11,9 +11,15 @@
 
     class ReservationRepository {
 
-        public function addReservation (ReservationModel $reservation) :void {
+        private MysqlConnection $mysql;
+        private Session $session;
 
-            $session = Session::getInstance();
+        public function __construct () {
+            $this->mysql = MysqlConnection::getInstance();
+            $this->session  = Session::getInstance();
+         }
+
+        public function addReservation (ReservationModel $reservation) :bool {
 
             $roomId     = $reservation->getRoom()->getId();
             $roomName   = $reservation->getRoom()->getName();
@@ -24,25 +30,18 @@
             $endDate    = $reservation->getEndDate();
             $user       = $reservation->getUser()->getId();
 
-            $currentDate = new DateTime("now", new \DateTimeZone('Europe/Warsaw'));
-            $path = 'Location: ./reservation.php?roomId='.$roomId.'&name='.$roomName;
+            $currentDate = $this->getCurrentDate();
 
-            if ($startDate < $currentDate || $endDate < $currentDate) {
-                $session->set('reservation', Status::RESERVATION_PAST_DATE);
-                header ($path);
-                die();
+            if (!$this->isPastDate($startDate, $endDate, $currentDate)) {
+                return false;
             }
 
-            if ($startDate >= $endDate) {
-                $session->set('reservation', Status::RESERVATION_INCORRECT_DATE);
-                header ($path);
-                die();
+            if (!$this->isDateCorrect($startDate, $endDate)) {
+                return false;
             }
 
             if (!$this->checkRoomAvailability($roomId, $startDate, $endDate)) {
-                $session->set('reservation', Status::RESERVATION_ROOM_NOT_AVAILABLE);
-                header ($path);
-                die();
+                return false;
             }
 
             $startDate  = $startDate->format('d/m/y H:i:s');
@@ -59,12 +58,10 @@
                        );
                 ";
 
-            $instance = MysqlConnection::getInstance();
-            $instance->query($query);
+            $this->mysql->query($query);
 
-            $session->set('reservation', Status::RESERVATION_OK);
-            header ('Location: ./reservationList.php');
-            die();
+            $this->session->set('reservation', Status::RESERVATION_OK);
+            return true;
         }
 
         public function getAllReservations() :array {
@@ -74,7 +71,7 @@
                 reservations.email, reservations.start_date, reservations.end_date, reservations.user_id
                 FROM rooms LEFT JOIN reservations ON rooms.room_id = reservations.room_id 
                 WHERE rooms.room_id=reservations.room_id";
-            $result = MysqlConnection::getInstance()->query($query)->fetchAll();
+            $result = $this->mysql->query($query)->fetchAll();
 
             $array = [];
             foreach ($result as $r) {
@@ -88,8 +85,8 @@
                     $r['firstname'],
                     $r['lastname'],
                     $r['email'],
-                    DateTime::createFromFormat("Y-m-d H:i:s", $r['start_date']),
-                    DateTime::createFromFormat("Y-m-d H:i:s", $r['end_date']),
+                    $this->createDate($r['start_date'], false),
+                    $this->createDate($r['end_date'], false),
                     $user
                 );
             }
@@ -104,7 +101,7 @@
                 reservations.email, reservations.start_date, reservations.end_date, reservations.user_id
                 FROM rooms LEFT JOIN reservations ON rooms.room_id = reservations.room_id
                 WHERE rooms.room_id = reservations.room_id AND reservations.user_id = ".$userId.";";
-            $result = MysqlConnection::getInstance()->query($query)->fetchAll();
+            $result = $this->mysql->query($query)->fetchAll();
 
             $array = [];
             foreach ($result as $r) {
@@ -118,8 +115,8 @@
                     $r['firstname'],
                     $r['lastname'],
                     $r['email'],
-                    DateTime::createFromFormat("Y-m-d H:i:s", $r['start_date']),
-                    DateTime::createFromFormat("Y-m-d H:i:s", $r['end_date']),
+                    $this->createDate($r['start_date'], false),
+                    $this->createDate($r['end_date'], false),
                     $user
                 );
             }
@@ -128,20 +125,46 @@
         }
 
         public function deleteReservation (string $reservationId) :void {
-            $instance = MysqlConnection::getInstance();
-            $session = Session::getInstance();
 
             $query = "DELETE FROM reservations WHERE reservation_id=$reservationId";
-            if ($instance->query($query)) {
-                $session->set('reservation', Status::RESERVATION_DELETE_OK);
+            if ($this->mysql->query($query)) {
+                $this->session->set('reservation', Status::RESERVATION_DELETE_OK);
             } else {
-                $session->set('reservation', Status::RESERVATION_DELETE_ERROR);
+                $this->session->set('reservation', Status::RESERVATION_DELETE_ERROR);
             }
             header ('Location: ./reservationList.php');
             die();
         }
 
-        private function checkRoomAvailability (string $roomId, DateTime $startDate, DateTime $endDate) :bool {
+        public function isPastDate (DateTime $startDate, DateTime $endDate, Datetime $currentDate) :bool {
+            if ($startDate < $currentDate || $endDate < $currentDate) {
+                $this->session->set('reservation', Status::RESERVATION_PAST_DATE);
+                return false;
+            }
+            return true;
+        }
+
+        public function isDateCorrect (DateTime $startDate, DateTime $endDate) :bool {
+            if ($startDate >= $endDate) {
+                $this->session->set('reservation', Status::RESERVATION_INCORRECT_DATE);
+                return false;
+            }
+            return true;
+        }
+
+        public function createDate (string $date, bool $datetimeInput) :DateTime {
+            return match ($datetimeInput) {
+                true    => DateTime::createFromFormat('Y-m-d\TH:i', $date),
+                false   => DateTime::createFromFormat('Y-m-d H:i:s', $date),
+                default => $date,
+            };
+        }
+
+        public function getCurrentDate () :DateTime {
+            return new DateTime("now", new \DateTimeZone('Europe/Warsaw'));
+        }
+
+        public function checkRoomAvailability (string $roomId, DateTime $startDate, DateTime $endDate) :bool {
             $startDate2  = $startDate->format('Y-m-d H:i:s');
             $endDate2    = $endDate->format('Y-m-d H:i:s');
             $query  = "SELECT * FROM reservations 
@@ -149,11 +172,12 @@
                         AND ((start_date BETWEEN '$startDate2' AND '$endDate2') 
                                  OR (end_date BETWEEN '$startDate2' AND '$endDate2'))";
 
-            $result = MysqlConnection::getInstance()->query($query)->fetchAll();
+            $result = $this->mysql->query($query)->fetchAll();
 
             if (count($result) < 1) {
                 return true;
             }
+            $this->session->set('reservation', Status::RESERVATION_ROOM_NOT_AVAILABLE);
             return false;
         }
     }

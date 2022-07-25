@@ -43,7 +43,6 @@ function strengthChecker (PasswordParameter) {
 
 if (password) {
     password.addEventListener("input", () => {
-
         strengthBadge.style.display = 'block';
         clearTimeout(timeout);
 
@@ -84,21 +83,14 @@ function dateChecker (startDateParameter, endDateParameter) {
 
 if (startDate && endDate) {
     endDate.addEventListener("input", () => {
-
         dateBadge.style.display = 'block';
         clearTimeout(timeout);
-
         timeout = setTimeout(() => dateChecker(startDate.value, endDate.value), 500);
-
     });
-
     startDate.addEventListener("input", () => {
-
         dateBadge.style.display = 'block';
         clearTimeout(timeout);
-
         timeout = setTimeout(() => dateChecker(startDate.value, endDate.value), 500);
-
     });
 }
 
