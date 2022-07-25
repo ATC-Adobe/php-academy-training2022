@@ -9,15 +9,14 @@ session_start();
 
 (new Session())->authorization();
 
-include_once "../Layout/head.php";
-include_once "../Layout/navbar.php";
-
-
 $name = '';
 $floor = '';
 $error = '';
 
 [$error, $name, $floor] = (new CreateRoomController())->createRoom($error, $name, $floor);
+
+include_once "../Layout/head.php";
+include_once "../Layout/navbar.php";
 
 ?>
 
@@ -43,13 +42,15 @@ $error = '';
                             <input type="text" class="form-control" name="floor" value="<?php
                             echo $floor; ?>">
                         </div>
+
+                        <div class="modal-footer">
+                            <a type="button" href="/" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</a>
+                            <button type="submit" name="submit" class="btn btn-outline-success">Save</button>
+                        </div>
+                    </form>
                 </div>
             </div>
-            <div class="modal-footer">
-                <a type="button" href="/" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</a>
-                <button type="submit" name="submit" class="btn btn-outline-success">Save</button>
-            </div>
-            </form>
+
         </div>
     </div>
 </div>

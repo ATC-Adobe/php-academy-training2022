@@ -20,6 +20,8 @@ class RegisterFormValidation extends RegisterController
         (new ValidationMessages())->validationsMsg();
         if (empty($_POST['firstname'])) {
             $error .= FIRSTNAME_REQUIRED_FIELD . '<br>';
+        } elseif (htmlspecialchars(stripcslashes($_POST['firstname']))) {
+            $error .= RESTRICTED_CHARACTERS;
         } elseif (strlen($_POST['firstname']) > 50) {
             $error .= FIRSTNAME_FIELD_50_CHARACTERS . '<br>';
         } elseif
@@ -28,6 +30,8 @@ class RegisterFormValidation extends RegisterController
         }
         if (empty($_POST['lastname'])) {
             $error .= LASTNAME_REQUIRED_FIELD . '<br>';
+        } elseif (htmlspecialchars(stripcslashes($_POST['lastname']))) {
+            $error .= RESTRICTED_CHARACTERS;
         } elseif
         (strlen($_POST['lastname']) > 50) {
             $error .= LASTNAME_FIELD_50_CHARACTERS . '<br>';
@@ -37,6 +41,8 @@ class RegisterFormValidation extends RegisterController
         }
         if (empty($_POST['login'])) {
             $error .= LOGIN_REQUIRED_FIELD . '<br>';
+        } elseif (htmlspecialchars(stripcslashes($_POST['login']))) {
+            $error .= RESTRICTED_CHARACTERS;
         } elseif
         (strlen(($_POST['login'])) > 50) {
             $error .= LOGIN_FIELD_50_CHARACTERS . '<br>';
@@ -46,6 +52,8 @@ class RegisterFormValidation extends RegisterController
         }
         if (empty($_POST['email'])) {
             $error .= EMAIL_REQUIRED_FIELD . '<br>';
+        } elseif (htmlspecialchars(stripcslashes($_POST['email']))) {
+            $error .= RESTRICTED_CHARACTERS;
         } elseif (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
             $error .= EMAIL_FORMAT . '<br>';
         } elseif (strlen($_POST['email']) > 50) {

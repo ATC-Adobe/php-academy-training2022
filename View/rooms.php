@@ -5,11 +5,15 @@ use Service\Session;
 use System\Database\Connection;
 use Repository\RoomRepository;
 
-require_once '../autoloading.php';
-
 session_start();
 
+require_once '../autoloading.php';
+
 (new Session())->authorization();
+$dbConnection = Connection::getConnection();
+// TODO: sprawdzić przekazywany typ danych
+$rooms = (new RoomRepository('room_id', 'name', 'floor'))->getAllRooms($dbConnection);
+(new DeleteRoomController())->deleteRoom($dbConnection);
 
 require_once "../Layout/head.php";
 require_once "../Layout/navbar.php";
@@ -48,16 +52,6 @@ require_once "../Layout/navbar.php";
                 <div class="card-header"><h4>Rooms</h4><a href="../Form/createRoom.php"
                                                           class="btn btn-sm btn-outline-primary">Add</a></div>
                 <div class="card-body">
-
-                    <?php
-
-                    $dbConnection = Connection::getConnection();
-                    // TODO: sprawdzić przekazywany typ danych
-                    $rooms = (new RoomRepository('room_id', 'name', 'floor'))->getAllRooms($dbConnection);
-                    (new DeleteRoomController())->deleteRoom($dbConnection);
-
-                    ?>
-
                     <table class="table table-striped table-hover table-borderless">
                         <thead>
                         <tr>

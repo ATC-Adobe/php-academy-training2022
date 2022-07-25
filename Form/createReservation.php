@@ -11,9 +11,6 @@ session_start();
 
 (new Session())->authorization();
 
-include_once "../Layout/head.php";
-include_once "../Layout/navbar.php";
-
 $error = '';
 $roomId = '';
 $userId = '';
@@ -34,6 +31,9 @@ $endDate = '';
     $startDate,
     $endDate
 );
+
+include_once "../Layout/head.php";
+include_once "../Layout/navbar.php";
 
 ?>
 <body>
@@ -81,7 +81,7 @@ $endDate = '';
                             $lastName = $_SESSION['userLastName'];
                             ?>
                             <label for="lastname">Lastname</label>
-                            <input type="text" class="form-control" name="lastname"  value="<?php
+                            <input type="text" class="form-control" name="lastname" value="<?php
                             echo $lastName; ?>">
                         </div>
                         <div class="form-group">

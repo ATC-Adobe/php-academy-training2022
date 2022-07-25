@@ -35,8 +35,9 @@ class ValidationMessages
         define("FLOOR_FIELD_3_CHARACTERS", 'Floor is required.');
         define("FLOOR_CHARACTERS", 'Floor: only numbers are allowed.');
         define("START_DATE_REQUIRED", 'Date from is required.');
+        define("START_DATE_AFTER", 'Start date is after end date.');
+        define("START_DATE_PAST", 'Start date is from the past.');
         define("END_DATE_REQUIRED", 'Date to is required.');
-
-
+        define("RESTRICTED_CHARACTERS", 'An invalid string was entered');
     }
 }

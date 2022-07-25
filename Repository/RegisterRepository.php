@@ -33,4 +33,14 @@ class RegisterRepository extends Connection
             $resultCheck = true;
         }
     }
+
+    protected function checkEmail($email)
+    {
+        $statement = self::getConnection()->prepare("SELECT email FROM users WHERE email = ?;");
+        if ($statement->rowCount() > 0) {
+            $resultCheck = false;
+        } else {
+            $resultCheck = true;
+        }
+    }
 }

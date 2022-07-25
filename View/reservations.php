@@ -12,6 +12,18 @@ session_start();
 require_once '../autoloading.php';
 
 (new Session())->authorization();
+$dbConnection = Connection::getConnection();
+$reservations = (new ReservationRepository(
+    'reservation_id',
+    'room_id',
+    'id_user',
+    'firstname',
+    'lastname',
+    'email',
+    'start_date',
+    'end_date'
+))->getAllReservations($dbConnection);
+(new DeleteReservationController())->deleteReservation($dbConnection);
 
 include "../Layout/head.php";
 include "../Layout/navbar.php";
@@ -45,27 +57,11 @@ include "../Layout/navbar.php";
                 <?php
                 unset ($_SESSION['warning']);
             }
+// TODO: dodać odnośnik do rezerwacji
             ?>
             <div class="card">
                 <div class="card-header"><h4>Reservations</h4></div>
                 <div class="card-body">
-
-                    <?php
-                    $dbConnection = Connection::getConnection();
-                    $reservations = (new ReservationRepository(
-                        'reservation_id',
-                        'room_id',
-                        'id_user',
-                        'firstname',
-                        'lastname',
-                        'email',
-                        'start_date',
-                        'end_date'
-                    ))->getAllReservations($dbConnection);
-                    (new DeleteReservationController())->deleteReservation($dbConnection);
-
-                    ?>
-
                     <table class="table table-striped table-hover table-borderless">
                         <thead>
                         <tr>

@@ -14,7 +14,7 @@ class LoginController extends LoginRepository
         $this->login = $login;
         $this->password = $password;
     }
-
+// TODO: poniższy kod jest zdublowany w walidacji. Zastosować funkcje w formularzu walidacji.
     public function loginUser()
     {
         if ($this->emptyInput() == false) {

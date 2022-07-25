@@ -11,7 +11,11 @@ class ReservationRepository extends Reservation
 {
     public function getAllReservations(Connection $dbConnection)
     {
-        $reservations = $dbConnection->query("SELECT * FROM reservations ORDER BY reservation_id ASC")->fetchAll();
+        $reservations = $dbConnection->query(
+            "SELECT reservations.reservation_id, reservations.room_id, reservations.id_user, reservations.firstname,
+             reservations.lastname, reservations.email, reservations.start_date, reservations.end_date,
+             rooms.name FROM reservations AS reservations JOIN rooms ON rooms.room_id = reservations.room_id"
+        )->fetchAll();
         return $reservations;
     }
 
@@ -22,14 +26,12 @@ class ReservationRepository extends Reservation
         return $reservations;
     }
 
-    public function destroyReservation(Connection $dbConnection):void
+    public function destroyReservation(Connection $dbConnection): void
     {
         $reservationId = $_GET['reservation_id'];
         $dbConnection->query(
             "DELETE FROM reservations WHERE reservation_id='$reservationId'"
         );
-        $sessionMsg = new Session();
-        $sessionMsg->sessionMessage('reservationDeleted');
-        (new ApplicationService())->getReservationListHeader();
+
     }
 }
