@@ -1,6 +1,7 @@
 <?php
 require_once "./autoload.php";
 
+use App\Api\ApiControllerJson;
 use App\Model\Session;
 use App\Router;
 
@@ -36,6 +37,12 @@ $router->get("/user/edit", [$userController, "edit"]);
 $router->post("/user/edit", [$userController, "update"]);
 $router->get("/user/password", [$userController, "editPassword"]);
 $router->post("/user/password", [$userController, "updatePassword"]);
+
+$apiController = new ApiControllerJson();
+$router->get("/api/reservations", [$apiController, "listReservations"]);
+$router->get("/api/activeReservations", [$apiController, "listActiveReservations"]);
+$router->get("/api/usersReservations", [$apiController, "listUsersReservations"]);
+$router->post("/api/addReservation", [$apiController, "addReservation"]);
 
 
 $router->resolve();
