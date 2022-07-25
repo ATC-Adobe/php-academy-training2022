@@ -5,7 +5,7 @@
 ?>
     <form method="POST" action="./reservation.php">
         <?php
-            echo $input;
+            echo $inputs;
         ?>
         <div class="mb-3">
             <label for="firstName" class="form-label">First name</label>

@@ -16,7 +16,13 @@ class AddReservationController {
         )
         {
             $service = new ReservationService();
-            $service->addReservation();
+            if ($service->addReservation()) {
+                header ('Location: ./reservationList.php');
+            } else {
+                $path = 'Location: ./reservation.php?roomId='.$_POST['roomId'].'&name='.$_POST['roomName'];
+                header ($path);
+            }
+            die();
         }
     }
 }

@@ -34,9 +34,11 @@
                     include_once "./src/View/notifications.php";
                     if (isset($_GET['roomId']) && isset($_GET['name'])) {
                         $roomId = $_GET['roomId'];
+                        $roomName = $_GET['name'];
 
                         echo "<h2 class='text-center'>Reserve " . $_GET['name'] . "</h2>";
-                        $input = "<input type='hidden' name='roomId' value='".$roomId."'>";
+                        $inputs = "<input type='hidden' name='roomId' value='".$roomId."'>
+                                     <input type='hidden' name='roomName' value='".$roomName."'>";
                     } else {
                         header ("Location: ./index.php");
                         die();
