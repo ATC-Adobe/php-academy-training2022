@@ -9,7 +9,7 @@ class Session {
     private function __construct() {
         session_write_close();
         session_start();
-        session_regenerate_id(true);
+        //session_regenerate_id(true);
     }
 
     public static function getInstance() : Session {

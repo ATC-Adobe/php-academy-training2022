@@ -3,6 +3,11 @@
 use System\Router\Response;
 use System\Router\Router;
 use System\Util\Authenticator;
+use System\Util\Session;
+
+
+$sess = Session::getInstance();
+
 
 $router = new Router(
     '404.html'

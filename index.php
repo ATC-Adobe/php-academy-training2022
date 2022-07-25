@@ -7,8 +7,6 @@ use System\Util\Session;
 
 require_once 'autoloading.php';
 
-$sess = Session::getInstance();
-
 $router = new Router(
     '404.html'
 );
@@ -18,18 +16,14 @@ $router->use('/', function(Response $res) {
         ->render();
 });
 
-$router->use('/test', function(Response $res) {
-
-    $res = htmlentities("abcefg<>");
-
-    var_dump($res);
-
-});
-
-
 $router->use('/phpinfo', function(Response $res) {
     phpinfo();
 });
+
+$router->use('/test', function(Response $res) {
+    $res->render('test.php');
+});
+
 
 
 // experimental router segregation
@@ -37,5 +31,6 @@ $router->use('/phpinfo', function(Response $res) {
 $router->stage('/room',         'routes/room.php');
 $router->stage('/reservation',  'routes/reservation.php');
 $router->stage('/user',         'routes/user.php');
+$router->stage('/api',          'routes/api.php');
 
 $router->redirect();

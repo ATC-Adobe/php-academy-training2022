@@ -81,11 +81,23 @@ INSERT INTO Rooms (name, floor) VALUES ('ATTACK', '70'); DELETE FROM Rooms WHERE
 
 UPDATE Users SET name = 'Marek', surname = 'Markowski' WHERE id = '5';
 SELECT * FROM Users;
-
+SELECT * FROM Reservations
 SELECT * FROM Rooms;
 
 DELETE FROM Reservations WHERE room_id = '30';
 DELETE FROM Rooms WHERE id = '30';
+
+SELECT *,
+       Users.name AS name,
+       Reservations.id AS id,
+       Rooms.id AS room_id,
+       Rooms.name AS room_name,
+       Rooms.floor AS floor
+FROM Reservations
+         JOIN Rooms ON Rooms.id = Reservations.room_id
+         JOIN Users ON Users.id = Reservations.user_id
+        WHERE Reservations.id = '14'
+
 
 
 

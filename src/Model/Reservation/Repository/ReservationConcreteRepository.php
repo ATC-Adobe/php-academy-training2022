@@ -85,7 +85,7 @@ class ReservationConcreteRepository {
 
     public function getReservationById(int $id) : ?ReservationModel {
 
-        $res = $this->getAllReservationsWithConstraint("WHERE id = '$id'");
+        $res = $this->getAllReservationsWithConstraint("WHERE Reservations.id = '".$id."'");
 
         if(count($res) == 0) {
             return null;
@@ -138,7 +138,8 @@ class ReservationConcreteRepository {
     public function checkForTimeCollisions(
         int $roomId,
         \DateTime $from,
-        \DateTime $to
+        \DateTime $to,
+        int $reservationId = 0,
     ) : bool {
 
         $res =
@@ -146,7 +147,8 @@ class ReservationConcreteRepository {
             "SELECT * FROM Reservations 
                         WHERE room_id = '".$roomId."'
                         AND   time_from <= STR_TO_DATE('".$to->format('d/m/y H:i:s')."','%d/%m/%y %H:%i:%s')
-                        AND   time_to   >= STR_TO_DATE('".$from->format('d/m/y H:i:s')."','%d/%m/%y %H:%i:%s');
+                        AND   time_to   >= STR_TO_DATE('".$from->format('d/m/y H:i:s')."','%d/%m/%y %H:%i:%s')
+                        AND   id != '".$reservationId."';
                ")->fetchAll();
         return count( $res ) == 0;
     }

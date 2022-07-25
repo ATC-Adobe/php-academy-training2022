@@ -32,14 +32,6 @@ class AddReservationController {
 
         $auth = new Authenticator();
 
-        /* not needed anymore
-
-
-        if(!$auth->isLogged()) {
-            (new Response())
-                ->goTo('/');
-        }*/
-
         $from   = new \DateTime($from);
         $to     = new \DateTime($to);
 

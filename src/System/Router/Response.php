@@ -5,6 +5,10 @@ namespace System\Router;
 use JetBrains\PhpStorm\NoReturn;
 
 class Response {
+    public function setJsonContent() : void {
+        header('Content-Type: application/json; charset=utf-8');
+    }
+
     #[NoReturn]
     public function goTo(string $path) : void {
         header('Location: '.$path);

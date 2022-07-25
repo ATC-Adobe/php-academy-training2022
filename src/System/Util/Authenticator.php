@@ -97,8 +97,47 @@ class Authenticator {
         return $sess->get('valid') !== null;
     }
 
+    public static function verifyHTTPLogin(
+        string $login, string $password
+    ) : bool {
+
+        $repo = new UserConcreteRepository();
+        $user = $repo->getUserByUsername($login);
+
+        $res = Authenticator::passwordVerifyStatic(
+            $password, $user->getSalt(), $user->getPassword());
+
+        $_REQUEST['user_id'] = $user->getId();
+
+        return $res;
+    }
+
+    public static function getHTTPLoginValidator() : callable {
+
+        return function(Response $res) {
+
+            if (isset($_SERVER['PHP_AUTH_USER']) &&
+                isset($_SERVER['PHP_AUTH_PW'])) {
+
+                $res = Authenticator::verifyHTTPLogin(
+                    $_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']
+                );
+
+                if (!$res) {
+                    echo 'ERROR: invalid credentials';
+                    die();
+                }
+            }
+            else {
+                echo 'ERROR: missing login credentials';
+                die();
+            }
+        };
+    }
+
     public static function getLoginValidator() : callable {
         return function (Response $res) {
+
             $sess = Session::getInstance();
 
             if ($sess->get('valid') === null) {
@@ -106,6 +145,7 @@ class Authenticator {
             }
 
             return;
+
         };
     }
 
@@ -130,6 +170,10 @@ class Authenticator {
     private function passwordHash(string $password, string $salt) : string {
 
         return password_hash($salt . $password . $salt, PASSWORD_DEFAULT);
+    }
+
+    public static function passwordVerifyStatic(string $password, string $salt, string $hash) : bool {
+        return password_verify($salt . $password . $salt, $hash);
     }
 
     private function passwordVerify(string $password, string $salt, string $hash) : bool {

@@ -104,7 +104,7 @@ class Router {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if(isset($this->routesPost[$uri])) {
                 foreach ($this->routesPost[$uri] as $route) {
-                    $route($this->response);
+                    $route($this->response, $_REQUEST['iterator']);
                 }
                 return;
             }
@@ -112,7 +112,7 @@ class Router {
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             if(isset($this->routesGet[$uri])) {
                 foreach ($this->routesGet[$uri] as $route) {
-                    $route($this->response);
+                    $route($this->response, $_REQUEST['iterator']);
                 }
                 return;
             }
