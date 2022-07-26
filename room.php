@@ -1,9 +1,12 @@
 <?php
     declare(strict_types = 1);
-    require_once "./autoloading.php";
+    require './vendor/autoload.php';
 
     use Controller\Room\AddRoomController;
     use System\StatusHandler\Status;
+    use System\Session\Session;
+
+    $session = Session::getInstance();
 
     if ($session->get('user_id')) {
         if (isset($_POST['name']) && isset($_POST['floor'])) {

@@ -1,6 +1,6 @@
 <?php
     declare(strict_types = 1);
-    require_once "./autoloading.php";
+    require './vendor/autoload.php';
 
     use Controller\User\LogoutController;
 

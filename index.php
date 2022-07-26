@@ -1,9 +1,12 @@
 <?php
     declare(strict_types = 1);
-    require_once "./autoloading.php";
+    require './vendor/autoload.php';
 
     use Controller\Room\DeleteRoomController;
     use System\StatusHandler\Status;
+    use System\Session\Session;
+
+    $session = Session::getInstance();
 
     if (isset($_POST['id'])) {
         if ($session->get('user_id')) {

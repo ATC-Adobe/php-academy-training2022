@@ -1,10 +1,14 @@
 <?php
     declare(strict_types = 1);
-    require_once "./autoloading.php";
+    require './vendor/autoload.php';
 
     use Controller\User\LoginController;
+    use System\Session\Session;
 
-    if (isset($_POST['username']) &&
+    $session = Session::getInstance();
+
+
+if (isset($_POST['username']) &&
         isset($_POST['password'])
     ) {
         (new LoginController())->request();

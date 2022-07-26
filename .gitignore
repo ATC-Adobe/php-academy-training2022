@@ -1,4 +1,6 @@
 .idea
+.old
 lessons
 test.php
 sql.txt
+/vendor/

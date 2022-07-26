@@ -1,9 +1,12 @@
 <?php
     declare(strict_types = 1);
-    require_once "./autoloading.php";
+    require './vendor/autoload.php';
 
     use Controller\Reservation\AddReservationController;
     use System\StatusHandler\Status;
+    use System\Session\Session;
+
+    $session = Session::getInstance();
 
     if ($session->get('user_id')) {
         if (isset($_POST['roomId']) &&
