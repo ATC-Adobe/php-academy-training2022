@@ -19,22 +19,16 @@ class ReservationFormValidation
         (new ValidationMessages())->validationsMsg();
         if (empty($_POST['room_id'])) {
             $error .= ROOM_REQUIRED . '<br>';
-        } elseif (htmlspecialchars(stripcslashes($_POST['room_id']))) {
-            $error .= RESTRICTED_CHARACTERS;
         } else {
             $roomId = $_POST['room_id'];
         }
         if (empty($_POST['userid'])) {
             $error .= ROOM_REQUIRED . '<br>';
-        } elseif (htmlspecialchars(stripcslashes($_POST['userid']))) {
-            $error .= RESTRICTED_CHARACTERS;
         } else {
             $userId = $_POST['userid'];
         }
         if (empty($_POST['firstname'])) {
             $error .= FIRSTNAME_REQUIRED_FIELD . '<br>';
-        } elseif (htmlspecialchars(stripcslashes($_POST['firstname']))) {
-            $error .= RESTRICTED_CHARACTERS;
         } elseif (strlen($_POST['firstname']) > 50) {
             $error .= FIRSTNAME_FIELD_50_CHARACTERS . '<br>';
         } elseif
@@ -45,7 +39,6 @@ class ReservationFormValidation
         }
         if (empty($_POST['lastname'])) {
             $error .= LASTNAME_REQUIRED_FIELD . '<br>';
-        } elseif (htmlspecialchars(stripcslashes($_POST['lastname']))) {
             $error .= RESTRICTED_CHARACTERS;
         } elseif
         (strlen($_POST['lastname']) > 50) {
@@ -58,7 +51,6 @@ class ReservationFormValidation
         }
         if (empty($_POST['email'])) {
             $error .= EMAIL_REQUIRED_FIELD . '<br>';
-        } elseif (htmlspecialchars(stripcslashes($_POST['email']))) {
             $error .= RESTRICTED_CHARACTERS;
         } elseif (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
             $error .= EMAIL_FORMAT . '<br>';
@@ -69,7 +61,6 @@ class ReservationFormValidation
         }
         if (empty($_POST['start_date'])) {
             $error .= START_DATE_REQUIRED . '<br>';
-        } elseif (htmlspecialchars(stripcslashes($_POST['start_date']))) {
             $error .= RESTRICTED_CHARACTERS;
         } elseif ($_POST['start_date'] > $_POST['end_date']) {
             $error .= START_DATE_AFTER . '<br>';
@@ -80,7 +71,6 @@ class ReservationFormValidation
         }
         if (empty($_POST['end_date'])) {
             $error .= END_DATE_REQUIRED . '<br>';
-        } elseif (htmlspecialchars(stripcslashes($_POST['end_date']))) {
             $error .= RESTRICTED_CHARACTERS;
         } else {
             $endDate = $_POST['end_date'];

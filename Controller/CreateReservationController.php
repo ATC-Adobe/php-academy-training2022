@@ -47,9 +47,9 @@ class CreateReservationController
             if ($error == '') {
                 $context = new ReservationContext(new CreateDbReservation());
                 $context->createReservation($roomId, $userId, $firstName, $lastName, $email, $startDate, $endDate);
+                $sessionMsg->sessionMessage('reservationCreated');
+                (new ApplicationService())->getReservationListHeader();
             }
-            $sessionMsg->sessionMessage('reservationCreated');
-            (new ApplicationService())->getReservationListHeader();
         }
         if (isset($_POST['submit-csv'])) {
             [
@@ -74,9 +74,9 @@ class CreateReservationController
             if ($error == '') {
                 $context = new ReservationContext(new CreateCsvReservation());
                 $context->createReservation($roomId, $userId, $firstName, $lastName, $email, $startDate, $endDate);
+                $sessionMsg->sessionMessage('reservationCreated');
+                (new ApplicationService())->getReservationListHeader();
             }
-            $sessionMsg->sessionMessage('reservationCreated');
-            (new ApplicationService())->getReservationListHeader();
         }
         if (isset($_POST['submit-json'])) {
             [
@@ -101,9 +101,9 @@ class CreateReservationController
             if ($error == '') {
                 $context = new ReservationContext(new CreateJsonReservation());
                 $context->createReservation($roomId, $userId, $firstName, $lastName, $email, $startDate, $endDate);
+                $sessionMsg->sessionMessage('reservationCreated');
+                (new ApplicationService())->getReservationListHeader();
             }
-            $sessionMsg->sessionMessage('reservationCreated');
-            (new ApplicationService())->getReservationListHeader();
         }
         if (isset($_POST['submit-xml'])) {
             [$error, $roomId, $firstName, $lastName, $email, $startDate, $endDate] = (new ReservationFormValidation(
@@ -120,9 +120,9 @@ class CreateReservationController
             if ($error == '') {
                 $context = new ReservationContext(new CreateXmlReservation());
                 $context->createReservation($roomId, $userId, $firstName, $lastName, $email, $startDate, $endDate);
+                $sessionMsg->sessionMessage('reservationCreated');
+                (new ApplicationService())->getReservationListHeader();
             }
-            $sessionMsg->sessionMessage('reservationCreated');
-            (new ApplicationService())->getReservationListHeader();
         }
         return array($error, $roomId, $userId, $firstName, $lastName, $email, $startDate, $endDate);
     }

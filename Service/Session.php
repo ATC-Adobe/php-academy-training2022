@@ -55,6 +55,9 @@ class Session
             case 'needLogin';
                 $_SESSION['error'] = 'You have to login or signup to get acceess.';
                 break;
+            case 'accountCreated';
+                $_SESSION['success'] = 'New account has been created';
+                break;
         }
     }
 }

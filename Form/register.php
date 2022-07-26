@@ -9,9 +9,6 @@ use Repository\RegisterFormValidation;
 use Service\ValidationMessages;
 
 include_once "../autoloading.php";
-include_once "../Layout/head.php";
-include_once "../Layout/navbar.php";
-
 
 $error = '';
 $firstName = '';
@@ -41,6 +38,9 @@ if (isset($_POST['submit'])) {
         $confirmPassword
     );
 }
+
+include_once "../Layout/head.php";
+include_once "../Layout/navbar.php";
 
 ?>
 

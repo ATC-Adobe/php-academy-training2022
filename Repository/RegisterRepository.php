@@ -10,7 +10,7 @@ use System\Database\Connection;
 
 class RegisterRepository extends Connection
 {
-    public function setUser($firstname, $lastname, $login, $email, $password)
+    protected function setUser($firstname, $lastname, $login, $email, $password)
     {
         $statement = self::getConnection()->prepare(
             "INSERT INTO users (firstname, lastname, login, email, password) VALUES(?,?,?,?,?);"
@@ -19,8 +19,6 @@ class RegisterRepository extends Connection
 
         if (!$statement->execute(array($firstname, $lastname, $login, $email, $hashedPassword))) {
             $statement = null;
-            (new ApplicationService())->getRegisterHeader();
-            exit();
         }
     }
 

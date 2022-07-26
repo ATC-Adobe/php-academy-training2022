@@ -4,6 +4,8 @@ namespace Controller;
 
 use Repository\RegisterFormValidation;
 use Repository\RegisterRepository;
+use Service\ApplicationService;
+use Service\Session;
 
 class RegisterController extends RegisterRepository
 {
@@ -26,6 +28,7 @@ class RegisterController extends RegisterRepository
 
     public function registerUser($error, $firstName, $lastName, $login, $email, $password, $passwordConfirm): array
     {
+        $sessionMsg = new Session();
         if (isset($_POST['submit'])) {
             [$error, $firstName, $lastName, $login, $email, $password, $passwordConfirm] = (new RegisterFormValidation(
                 $firstName, $lastName, $login, $email, $password, $passwordConfirm
@@ -40,6 +43,9 @@ class RegisterController extends RegisterRepository
             );
             if ($error == '') {
                 $this->setUser($this->firstName, $this->lastName, $this->login, $this->email, $this->password);
+
+                (new ApplicationService())->getRegisterHeader();
+                exit();
             }
         }
         return array($error, $firstName, $lastName, $login, $email, $password, $passwordConfirm);
