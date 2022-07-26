@@ -8,6 +8,9 @@ use System\Util\Authenticator;
 
 $router = new Router('404.html');
 
+$router->get('/', function() {
+    (new \Api\GraphQLRequestHandler())->graphQL();
+});
 
 $router->get('/rooms', function (Response $res, ArrayIterator $arg) {
     (new \Controller\ApiController())

@@ -78,4 +78,12 @@ class RoomConcreteRepository {
 
         $stmt->execute();
     }
+
+    public function getRoomsRaw() : array {
+        $res = MySqlConnection::getInstance()
+            ->query("SELECT * FROM Rooms")
+            ->fetchAll();
+
+        return $res;
+    }
 }

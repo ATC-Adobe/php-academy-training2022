@@ -153,4 +153,23 @@ class ReservationConcreteRepository {
         return count( $res ) == 0;
     }
 
+    public function getActiveReservationsRaw() : array {
+        $res = MySqlConnection::getInstance()
+            ->query("SELECT * FROM Reservations WHERE time_from >= 
+                                 STR_TO_DATE('".
+                (new \DateTime())->format('d/m/y H:i:s')
+                ."', '%d/%m/%y %H:%i:%s');")
+            ->fetchAll();
+
+        return $res;
+    }
+
+    public function getUserReservationsRaw(int $id) : array {
+
+        $res = MySqlConnection::getInstance()
+            ->query("SELECT * FROM Reservations WHERE user_id = '".$id."';")
+            ->fetchAll();
+
+        return $res;
+    }
 }

@@ -2,14 +2,14 @@
 
 namespace Api;
 
+use Model\Reservation\Repository\ReservationConcreteRepository;
+use Model\Room\Repository\RoomConcreteRepository;
 use System\Database\MySqlConnection;
 
 class Api {
 
-    public function getRooms() {
-        $res = MySqlConnection::getInstance()
-            ->query("SELECT * FROM Rooms")
-            ->fetchAll();
+    public function getRooms() : array {
+        $res = (new RoomConcreteRepository())->getRoomsRaw();
 
         $entries = [];
 
@@ -29,12 +29,8 @@ class Api {
 
     public function getActiveReservations() : array {
 
-        $res = MySqlConnection::getInstance()
-            ->query("SELECT * FROM Reservations WHERE time_from >= 
-                                 STR_TO_DATE('".
-                                (new \DateTime())->format('d/m/y H:i:s')
-                                ."', '%d/%m/%y %H:%i:%s');")
-            ->fetchAll();
+        $res = (new ReservationConcreteRepository())
+            ->getActiveReservationsRaw();
 
         $entries = [];
 
@@ -56,9 +52,8 @@ class Api {
 
     public function getUserReservations(int $id) : array {
 
-        $res = MySqlConnection::getInstance()
-            ->query("SELECT * FROM Reservations WHERE user_id = '".$id."';")
-            ->fetchAll();
+        $res = (new ReservationConcreteRepository())
+            ->getUserReservationsRaw($id);
 
         $entries = [];
 
@@ -76,5 +71,4 @@ class Api {
 
         return $entries;
     }
-
 }

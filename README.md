@@ -5,37 +5,51 @@
 - xdebug tunnel: `ssh -R 9009:127.0.0.1:9009 xdebug@localwsl.com -p 12000`
 - ssh xdebug password (for tunnel): `xdebug`
 
-## Lesson 12
+## Lesson 13
 
 Materiały: 
-- REST API: 
-  - https://bykowski.pl/rest-api-efektywna-droga-do-zrozumienia/ 
-  - https://phpenthusiast.com/blog/what-is-rest-api
+- GraphQl: 
+  - https://bykowski.pl/nowy-nastepca-rest-poznaj-graphql/ 
+  - https://www.moesif.com/blog/technical/graphql/REST-vs-GraphQL-APIs-the-good-the-bad-the-ugly/ 
+- GraphQl API w PHP: 
+- https://webkul.com/blog/how-to-use-graphql-in-php/
 
-Postman:
-
-https://learning.postman.com/docs/getting-started/introduction/
-
-REST API w PHP:
-
-https://www.positronx.io/create-simple-php-crud-rest-api-with-mysql-php-pdo/#tc_9820_03
-https://dev.to/shahbaz17/build-a-simple-rest-api-in-php-2edl
-https://www.phpzag.com/how-to-create-simple-rest-api-in-php/
+  Instalacja Composera: 
+1. Przejdź do folderu cd ~ 
+2. Pobierz pakiet composera curl https://getcomposer.org/installer -o composer-setup.php 
+3. Zainstaluj Composer php composer-setup.php --install-dir = / usr / local / bin --filename = composer 
+4. Zaktualizuj Composer composer self-update 
+5. Przygotuj swój projekt: 
+   1. Uruchom komendę composer init 
+   2. Package name php/academy' 
+   3. Authorimie i nazwisko
+   4. Minimum stability -> Enter 
+   5. Package Type -> Enter 
+   6. License -> Enter 
+   7. Would you like to define your dependencies (require) interactively [yes]? -> No 
+   8. Would you like to define your dev dependencies (require-dev) interactively [yes]? -> No 
+   9. Add PSR-4 autoload mapping? Maps namespace "Php\Academy" to the entered relative path. [src/, n to skip] -> No 
+   10. Do you confirm generation [yes]? -> Yes 
+6. W pliku composer.json dodaj sekcję '"autoload": { "psr-0": { "": [ "src/" ] } }' 
+7. Uruchom komendę composer install' 
+8. Możesz usunąć swój plik autoloader.php i odwołania do niego. Od tej chwili będzie używany autoloader z composera.
 
 Zadania: 
-1. Instalacja Postman i pierwsze kroki 
-   - Pobierz program Postman ze strony https://www.postman.com/downloads/ i zainstaluj go. 
-   - Dodaj nowe zapytanie do Postmana. W miejsce URL wklej adres https://reqres.in/api/users?page=2, wybierz metodę GET i kliknij "Send". Przeanalizuj zwrócony wynik. 
-   - W kolejnym zapytaniu użyj URL https://reqres.in/api/users/2. Zastanów się jak pobrać dane dla innego usera o innym ID. 
-   - W następnym kroku pobierz dane usera o ID=15. Zobacz jakie dane zostały zwrócone. Zwróć uwagę na kod HTTP. 
-2. Zaimplementuj metody REST API, które wykonają poniższe rzeczy: 
-   - zwracanie listy wszystkich salek (id rezerwacji, id salki, id usera, daty) 
+1. Instalacja Composera. 
+2. W pliku composer.json należy dodać bibliotekę webonyx/graphql-php w najnowszej wersji. Pomyślcie jak sprawić, by composer pobrał tę bibliotekę. 
+3. Przygotować API, które będzie wykonywało podobne operacje do tych, które zostały utworzone przy pomocy REST API. 
+4. Lista akcji: 
+   - zwracanie listy wszystkich rezerwacji (id rezerwacji, id salki, id usera, daty) 
    - zwracanie listy rezerwacji, które są aktualne (późniejsze niż obecny czas) 
    - zwracanie rezerwacji danego usera 
-   - tworzenie nowej rezerwacji dla danego usera ( tak jak w Lekcji 9 
-     - sprawdzanie czy istnieje user i salka, sprawdzenie czy od < do, sprawdzanie czy od jest późnijsze niż teraz). W przypadku gdy dane są błędne, to zwrócić odpowiedni komunikat. Gdy rezerwacja się uda, to zwrócić id usera, id rezerwacji, id salki, czas rezerwacji 
-     - dodanie autentykacji do API, od teraz przy API do tworzenia nowej rezerwacji wymagane będzie podanie loginu i hasła usera (zastanówcie się jak ustawić taką autoryzację w Postmanie). W przypadku gdy dane są błędne zwrócić odpowiedź Brak dostępu do API. Całość musi opierać się o progamowanie obiektowe, a API ma zwracać dane w formacie JSON. Pamiętajcie o odpowiedniej strukturze katalogów.
+   - tworzenie nowej rezerwacji dla danego usera ( tak jak w Lekcji 9 - sprawdzanie czy istnieje user i salka, sprawdzenie czy od < do, sprawdzanie czy od jest późnijsze niż teraz)
 
+## Lesson 12
+
+Zadania:
+- [x] Instalacja Postman i pierwsze kroki
+- [x] Zaimplementuj metody REST API, które wykonają poniższe rzeczy: 
+  
 Ważne jest przygotowanie odpowiedniego routera (metody), który na podstawie metody REST API będzie przekierowywał akcję do odpowiednich metod.
 
 ## Lesson 9
