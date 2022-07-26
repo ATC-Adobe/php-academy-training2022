@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Api;
+use App\Controller\ReservationController;
 use App\Model\Reservation;
 use App\Service\AuthenticatorService;
 use App\Service\ReservationService;
@@ -71,7 +72,7 @@ class ApiControllerJson
         $reservation->start_date = htmlentities($_POST['start_date']);
         $reservation->end_date = htmlentities($_POST['end_date']);
         $reservation->user_id = $user->id;
-        $this->formatDates($reservation);
+        ReservationController::formatDates($reservation);
 
         if (!$reservationService->checkEndIsAfterStart($reservation->start_date, $reservation->end_date)) {
             http_response_code(400);
@@ -92,10 +93,4 @@ class ApiControllerJson
         }
         echo json_encode(["msg" => "success"]);
     }
-    public function formatDates(Reservation $reservation): void
-    {
-        $reservation->start_date = date("Y-m-d H:i:s", strtotime($reservation->start_date));
-        $reservation->end_date = date("Y-m-d H:i:s", strtotime($reservation->end_date));
-    }
-
 }

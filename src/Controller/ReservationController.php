@@ -42,7 +42,7 @@ class ReservationController
             $reservation->start_date = htmlentities($_POST['start_date']);
             $reservation->end_date = htmlentities($_POST['end_date']);
             $reservation->user_id = Session::getInstance()->get("user_id");
-            $this->formatDates($reservation);
+            self::formatDates($reservation);
 
         if (!$reservationService->checkEndIsAfterStart($reservation->start_date, $reservation->end_date)) {
                  $this->create("End date must be after the start date!");
@@ -117,7 +117,7 @@ class ReservationController
         $reservation->end_date = htmlentities($_POST["end_date"] ?? $reservation->end_date);
         $reservation->user_id = Session::getInstance()->get("user_id");
 
-        $this->formatDates($reservation);
+        self::formatDates($reservation);
 
         if (!$service->checkEndIsAfterStart($reservation->start_date, $reservation->end_date)) {
             $_GET["reservation_id"] = $_POST["reservation_id"];
@@ -146,7 +146,7 @@ class ReservationController
      * @param Reservation $reservation
      * @return void
      */
-    public function formatDates(Reservation $reservation): void
+    public static function formatDates(Reservation $reservation): void
     {
         $reservation->start_date = date("Y-m-d H:i:s", strtotime($reservation->start_date));
         $reservation->end_date = date("Y-m-d H:i:s", strtotime($reservation->end_date));

@@ -3,14 +3,19 @@
 namespace App\Api\Graphql;
 
 use App\Api\ApiControllerJson;
+use App\Controller\ReservationController;
+use App\Model\Reservation;
+use App\Service\AuthenticatorService;
 use App\Service\ReservationService;
 use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\Type;
 use GraphQL\GraphQL;
 
 
-class ApiControllerGraphql {
-    public function listAllReservations() {
+class ApiControllerGraphql
+{
+    public function graphql(): void
+    {
         $reservationType = new ObjectType([
             'name' => 'Reservation',
             'fields' => [
@@ -34,20 +39,22 @@ class ApiControllerGraphql {
 
         $queryType = new ObjectType([
             'name' => 'Query',
-            'fields'=> [
+            'fields' => [
                 'reservations' => [
                     'type' => Type::listOf($reservationType),
-                    'resolve' => function() {
+                    'resolve' => function () {
                         return (new ReservationService())->readReservations();
                     }
                 ],
                 "activeReservations" => [
-                    'type' =>Type::listOf($reservationType),
-                    'resolve' => function() {
+                    'type' => Type::listOf($reservationType),
+                    'resolve' => function () {
                         $reservations = (new ReservationService())->readReservations();
                         foreach ($reservations as $reservation) {
-                            if(strtotime($reservation->start_date) > time() || strtotime($reservation->end_date) > time()) {
-                                $results[]= $reservation;
+                            if (strtotime($reservation->start_date) > time() || strtotime(
+                                    $reservation->end_date
+                                ) > time()) {
+                                $results[] = $reservation;
                             }
                         }
                         return $results;
@@ -58,16 +65,67 @@ class ApiControllerGraphql {
                     'args' => [
                         'id' => ['type' => Type::nonNull(Type::int())],
                     ],
-                    'resolve' => function($rootValue, array $args) {
+                    'resolve' => function ($rootValue, array $args) {
                         $reservations = (new ReservationService())->findUsersReservations(intval($args['id']));
                         return $reservations;
                     }
                 ]
             ]
         ]);
+        $mutationType = new ObjectType([
+            'name' => 'Mutation',
+            'fields' => [
+                'createReservation' => [
+                    'type' => $reservationType,
+                    'args' => [
+                        'room_id' => Type::nonNull(Type::int()),
+                        'user_id' => Type::nonNull(Type::int()),
+                        'start_date' => Type::nonNull(Type::string()),
+                        'end_date' => Type::nonNull(Type::string()),
+                        'email' => Type::nonNull(Type::string()),
+                        'password' => Type::nonNull(Type::string()),
+
+                    ],
+                    'resolve' => function ($rootValue, array $args) {
+                        $reservation = new Reservation();
+                        $reservationService = new ReservationService();
+                        $reservation->user_id = $args["user_id"];
+                        $reservation->room_id = $args["room_id"];
+                        $reservation->start_date = $args["start_date"];
+                        $reservation->end_date = $args["end_date"];
+
+                        $auth = new AuthenticatorService();
+                        $user = $auth->login($args['email'], $args['password']);
+                        if (!$user) {
+                            http_response_code(401);
+                            return ["error" => "You are not logged in"];
+                        }
+                        ReservationController::formatDates($reservation);
+                        if (!$reservationService->checkEndIsAfterStart(
+                            $reservation->start_date,
+                            $reservation->end_date
+                        )) {
+                            http_response_code(400);
+                            return ["error" => "start date is after end date"];
+                        }
+
+                        if (!$reservationService->checkReservationCollision($reservation)) {
+                            http_response_code(409);
+                            return ["error" => "already occupied"];
+                        }
+                        if (!$reservationService->addReservation($reservation)) {
+                            http_response_code(500);
+                            return ["error" => "something went wrong!"];
+                        }
+                        return $reservation;
+                    }
+                ]
+            ]
+        ]);
 
         $schema = new \GraphQL\Schema([
-            'query' => $queryType
+            'query' => $queryType,
+            'mutation' => $mutationType
         ]);
 
         $rawInput = file_get_contents('php://input');

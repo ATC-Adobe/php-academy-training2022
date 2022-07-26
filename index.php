@@ -46,7 +46,7 @@ $router->get("/api/usersReservations", [$apiController, "listUsersReservations"]
 $router->post("/api/addReservation", [$apiController, "addReservation"]);
 
 $graphql = new ApiControllerGraphql();
-$router->get("/api/graphql", [$graphql, "listAllReservations"]);
+$router->get("/api/graphql", [$graphql, "graphql"]);
 
 
 $router->resolve();
