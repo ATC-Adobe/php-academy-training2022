@@ -1,7 +1,8 @@
 <?php
-require_once "./autoload.php";
-
+require_once 'vendor/autoload.php';
+require_once 'types.php';
 use App\Api\ApiControllerJson;
+use App\Api\Graphql\ApiControllerGraphql;
 use App\Model\Session;
 use App\Router;
 
@@ -43,6 +44,9 @@ $router->get("/api/reservations", [$apiController, "listReservations"]);
 $router->get("/api/activeReservations", [$apiController, "listActiveReservations"]);
 $router->get("/api/usersReservations", [$apiController, "listUsersReservations"]);
 $router->post("/api/addReservation", [$apiController, "addReservation"]);
+
+$graphql = new ApiControllerGraphql();
+$router->get("/api/graphql", [$graphql, "listAllReservations"]);
 
 
 $router->resolve();

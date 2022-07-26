@@ -2,10 +2,8 @@
 
 namespace App\Api;
 use App\Model\Reservation;
-use App\Model\Session;
 use App\Service\AuthenticatorService;
 use App\Service\ReservationService;
-use App\System\File\IOHandlerFactory;
 
 class ApiControllerJson
 {
