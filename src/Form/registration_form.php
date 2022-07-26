@@ -46,7 +46,8 @@ var_dump($_SESSION);
                             <div class="form-floating mb-3">
                                 <?php if (isset($_SESSION['error_nickname'])) { ?>
                                     <div class="alert-danger"><?php echo $_SESSION['error_nickname'] ?></div>
-                                <?php } ?>
+                                <?php unset($_SESSION['error_nickname']);
+                                } ?>
                                 <input class="form-control" name="nickname" type="text" placeholder="Enter your nickname..."
                                        data-sb-validations="required"/>
                                 <label for="nickname">Nickname</label>
@@ -56,7 +57,8 @@ var_dump($_SESSION);
                             <div class="form-floating mb-3">
                                 <?php if (isset($_SESSION['error_email'])) { ?>
                                     <div class="alert-danger"><?php echo $_SESSION['error_email'] ?></div>
-                                <?php } ?>
+                                <?php unset($_SESSION['error_email']);
+                                } ?>
                                 <input class="form-control" name="email" type="text" placeholder="Enter your email..."
                                        data-sb-validations="required"/>
                                 <label for="email">Email</label>
@@ -67,7 +69,8 @@ var_dump($_SESSION);
                             <div class="form-floating mb-3">
                                 <?php if (isset($_SESSION['error_password'])) { ?>
                                     <div class="alert-danger"><?php echo $_SESSION['error_password'] ?></div>
-                                <?php } ?>
+                                <?php unset($_SESSION['error_password']);
+                                } ?>
                                 <input class="form-control" name="password" type="text" placeholder="Enter your password..."
                                        data-sb-validations="required"/>
                                 <label for="password">Password</label>
@@ -75,9 +78,13 @@ var_dump($_SESSION);
                             </div>
                             <!-- Password confirmation input-->
                             <div class="form-floating mb-3">
+                                <?php if (isset($_SESSION['flash_message'])) { ?>
+                                    <div class="alert-danger"><?php echo $_SESSION['flash_message'] ?></div>
+                                <?php unset($_SESSION['flash_message']);
+                                } ?>
                                 <input class="form-control" name="password_confirmation" type="text" placeholder="Confirm your password..."
                                        data-sb-validations="required"/>
-                                <label for="password_confirmation">Password</label>
+                                <label for="password_confirmation">Password confirmation</label>
                                 <div class="invalid-feedback" data-sb-feedback="name:required">A password confirmation is required.</div>
                             </div>
                             <!-- Submit Button-->

@@ -15,10 +15,10 @@ class Authentificator
     {
         $dbConnection = Connection::getInstance();
         if (count($_POST) > 0) {
-            $nickname = $_POST['nickname'];
-            $email = $_POST['email'];
+            $nickname = htmlspecialchars($_POST['nickname']);
+            $email = htmlspecialchars($_POST['email']);
             if ($_POST['password'] == $_POST['password_confirmation'] && !isset($_SESSION['error_email'])) {
-                $password = md5($_POST['password']);
+                $password = htmlspecialchars(md5($_POST['password']));
 
                 $insertQuery = "
     INSERT INTO user (nickname, email, password, password_confirmation)
@@ -33,6 +33,10 @@ class Authentificator
                 $session = Session::getInstance($nickname, $password);
                 $session->start($nickname, $password);
                 header('Location: http://localwsl.com/src/View/reservations.php');
+            }else{
+                session_start();
+                $_SESSION['flash_message'] = 'Password does not match the password confirmation';
+                header('Location: http://localwsl.com/src/Form/registration_form.php');
             }
         }
     }

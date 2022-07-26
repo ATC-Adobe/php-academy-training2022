@@ -3,6 +3,9 @@ require_once '../../autoloading.php';
 session_start();
 var_dump($_SESSION);
 
+use Database\Connection;
+use Repository\Reservation;
+
 ?>
 <!DOCTYPE html>
 <html lang="en">

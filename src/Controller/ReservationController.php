@@ -1,6 +1,5 @@
 <?php
 
-use Database\Connection;
 use Repository\Reservation;
 
 require_once '../../autoloading.php';

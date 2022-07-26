@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Repository;
 
@@ -7,7 +7,6 @@ use SplFileObject;
 use SimpleXMLElement;
 use Exception;
 use PDO;
-
 
 require_once '../../autoloading.php';
 session_start();
@@ -143,16 +142,16 @@ class SaveToXml implements SaveToInterface
 
 class ReservationService
 {
-    private string $id;
+    //private string $id;
 
-    public function __construct($id)
+    public function __construct()
     {
-        $this->id = $id;
+       // $this->id = $id;
     }
 
     public function getReservationId()
     {
-        return $this->id;
+       // return $this->id;
     }
 
     public function createReservation()
@@ -200,7 +199,7 @@ class ReservationFactory
                 $save->saveTo($id);
                 break;
             default:
-                throw new RuntimeException('Unknown saving type');
+               // throw new RuntimeException('Unknown saving type');
         }
         return $save;
         //return new ReservationService($id);
@@ -222,3 +221,23 @@ echo '<hr>' . $reservId . '<hr>';
 var_dump($reservFac);
 
 echo '<hr>' . $email . '<hr>';
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    <title>Modern Business - Start Bootstrap Template</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico"/>
+    <!-- Bootstrap icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet"/>
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="src/layout/bootstrap-4.1.3-dist/css/bootstrap.css" rel="stylesheet"/>
+</head>
+<body class="d-flex flex-column h-100">
+hello world
+</body>
+</html>
