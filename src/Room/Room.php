@@ -4,18 +4,18 @@ namespace Room;
 
 class Room
 {
-    private int $roomId;
+    private string $room_name;
     #private string $name;
     private int $floor;
 
-    public function setRoomId($roomId)
+    public function setRoomName($room_name)
     {
-        $this->roomId = $roomId;
+        $this->room_name = $room_name;
     }
 
-    public function getRoomId()
+    public function getRoomName()
     {
-        return $this->roomId;
+        return $this->room_name;
     }
 
     #public function setname($name)

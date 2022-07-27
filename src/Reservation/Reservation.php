@@ -4,8 +4,9 @@ namespace Reservation;
 
 class Reservation
 {
-    private int $reservationId; #skad je wziac z tej tabeli??
+    private int $reservationId;
     private int $roomId;
+    private int $userId;
     private string $firstname;
     private string $lastname;
     private string $email;
@@ -24,12 +25,22 @@ class Reservation
 
     public function setRoomId($roomId)
     {
-        $this->roomId = $roomId;
+        $this->roomId = intval($roomId);
     }
 
     public function getRoomId()
     {
         return $this->roomId;
+    }
+
+    public function setUserId($userId)
+    {
+        $this->userId = ($userId);
+    }
+
+    public function getUserId()
+    {
+        return $this->userId;
     }
 
     public function setFirstname($firstname)

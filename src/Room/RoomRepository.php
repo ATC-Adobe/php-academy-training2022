@@ -3,11 +3,9 @@
 namespace Room;
 
 
-
-require_once('../../autoloading.php');
 use Room\Room;
 use SystemDatabase\MysqlConnection;
-
+use Reservation\ReservationService;
 
 class RoomRepository
 {
@@ -25,14 +23,34 @@ class RoomRepository
             $dbConnection = MysqlConnection::getInstance();
 
             $insert = "
-            INSERT INTO newSelectedRooms (roomId, floor)
+            INSERT INTO room (room_name, floor)
             VALUES(
-                   '".$objectRoom->getRoomId()."',
+                   '".$objectRoom->getRoomName()."',
                    '".$objectRoom->getFloor()."'
             );
             ";
 
             $dbConnection->query($insert);
         }
+    }
+
+    public function readRoom()
+    {
+        $dbConnection = MysqlConnection::getInstance();
+
+        $query = "SELECT * FROM room";
+        $result = $dbConnection->query($query)->fetchAll();
+
+        return $result;
+    }
+
+    public function roomNameById($id)
+    {
+        $dbConnection = MysqlConnection::getInstance();
+        $query = "SELECT room_name FROM room WHERE id = " . $id . ";";
+        $result = $dbConnection->query($query)->fetch();
+        $result = $result['room_name'];
+
+        return $result;
     }
 }

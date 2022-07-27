@@ -13,6 +13,7 @@ class ReservationService
         $newReserve = new Reservation;
         #$newReserve->setReservationId($_POST['reservation_id']);
         $newReserve->setRoomId($_POST['room_id']);
+        $newReserve->setUserId($_SESSION['user_id']);
         $newReserve->setFirstname($_POST['firstname']);
         $newReserve->setLastname($_POST['lastname']);
         $newReserve->setEmail($_POST['email']);

@@ -1,13 +1,25 @@
 <?php
 
-#include("autoloading.php");
-include("../../layout/navbar.html");
+include("../../autoloading.php");
+use User\Session;
+
+$session = Session::getInstance();
+$session->start();
+
+include("../../layout/navbar.php");
 include("../../layout/bootstrap.html");
+
+#use Room\ReservationService;
+use Reservation\ReservationRepository;
 
 #include("reservation_class.php");
 
-echo "<h1><strong>".$_GET['room_id']."</strong></h1>";
+echo "<h1><strong>".$_SESSION['room_name']."</strong></h1>";
 
+#$ourReservation = new ReservationService();
+#$ourReservation->createReservation();
+#$roomId = new ReservationRepository();
+#$roomId->takeRoomId();
 
 echo '
 <body>
@@ -36,8 +48,9 @@ echo '
     </div>
 	<div class="row">
 		<div class="col">
-			<input type="hidden" name="room_id" value="' .$_GET['room_id'].'">
-			<input type="hidden" name="floor" value="' .$_GET['floor'].'">
+		    <input type="hidden" name="room_id" value=' .$_SESSION['room_id'].'>
+			<input type="hidden" name="room_name" value="' .$_SESSION['room_name'].'">
+			<input type="hidden" name="floor" value="' .$_SESSION['floor'].'">
 			<input type="submit" value="zarezerwuj" class="btn btn-success btn-lg btn-block">
 		</div>
 	</div>

@@ -1,7 +1,26 @@
 <?php
 
+#session_start();
+#if(!empty($_SESSION['nickname']))
+#{
+    #echo 'ELOOO';
+    #echo($_SESSION['nickname']);
+#}
+
+
+
 include("autoloading.php");
-include("layout/navbar.html");
+use Room\RoomRepository;
+use Room\RoomService;
+use User\Session;
+
+$session = Session::getInstance();
+$session->start();
+
+#header('Access-Control-Allow-Origin: *');
+#header('Access-Control-Allow-Methods: POST, GET, DELETE, PUT');
+
+include("layout/navbar.php");
 include("layout/bootstrap.html");
 
 
@@ -15,57 +34,34 @@ echo '
         <th scope="col">floor</th>
         <th scope="col">zarezerwuj</th>
     </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <td>1</td>
-        <td>Room_1</td>
-        <td>1</td>
-        <td><form method="get" action="../src/Form/formularz.php"><input type="hidden" name="room_id" value="1"/><input type="submit" value="zarezerwuj" class="btn btn-outline-success"></form></td>
-    </tr>
-    <tr>
-        <td>2</td>
-        <td>Room_2</td>
-        <td>1</td>
-        <td><form method="get" action="../src/Form/formularz.php"><input type="hidden" name="room_id" value="2"/><input type="submit" value="zarezerwuj" class="btn btn-outline-success"></form></td>
-    </tr>
-    <tr>
-        <td>3</td>
-        <td>Room_3</td>
-        <td>2</td>
-        <td><form method="get" action="../src/Form/formularz.php"><input type="hidden" name="room_id" value="3"/><input type="submit" value="zarezerwuj" class="btn btn-outline-success"></form></td>
-    </tr>
-    <tr>
-        <td>4</td>
-        <td>Room_4</td>
-        <td>2</td>
-        <td><form method="get" action="../src/Form/formularz.php"><input type="hidden" name="room_id" value="4"/><input type="submit" value="zarezerwuj" class="btn btn-outline-success"></form></td>
-    </tr>
-    <tr>
-        <td>5</td>
-        <td>Room_5</td>
-        <td>2</td>
-        <td><form method="get" action="../src/Form/formularz.php"><input type="hidden" name="room_id" value="5"/><input type="submit" value="zarezerwuj" class="btn btn-outline-success"></form></td>
-    </tr>
-    <tr>
-        <td>6</td>
-        <td>Room_6</td>
-        <td>3</td>
-        <td><form method="get" action="../src/Form/formularz.php"><input type="hidden" name="room_id" value="6"/><input type="submit" value="zarezerwuj" class="btn btn-outline-success"></form></td>
-    </tr>
-    <tr>
-        <td>7</td>
-        <td>Room_7</td>
-        <td>3</td>
-        <td><form method="get" action="../src/Form/formularz.php"><input type="hidden" name="room_id" value="7"/><input type="submit" value="zarezerwuj" class="btn btn-outline-success"></form></td>
-    </tr>
-    <tr>
-        <td>8</td>
-        <td>Room_8</td>
-        <td>3</td>
-        <td><form method="get" action="../src/Form/formularz.php"><input type="hidden" name="room_id" value="8"/><input type="submit" value="zarezerwuj" class="btn btn-outline-success"></form></td>
-    </tr>
-    </tbody>
+    </thead>';
+
+
+$newRoom = new RoomService;
+$newRoom->createRoom();
+
+$tab = new RoomRepository;
+$tab = $tab->readRoom();
+
+
+echo '<tbody>';
+foreach($tab as $el)
+{
+    echo '<tr>';
+    echo "<td>". $el['id']."</td>
+    <td>".$el['room_name']."</td>
+    <td>".$el['floor']."</td>";
+
+    $roomNumber = $el['room_name'];
+    $roomNumber = substr($roomNumber, 5, 4);
+
+    echo '<td><form method="get" action="../src/Controller/read.php"><input type="hidden" name="room_id" value='.$el['id'].'/><input type="hidden" name="room_name" value="'.$el['room_name'].'"/><input type="hidden" name="floor" value="'.$el['floor'].'"/><input type="submit" value="zarezerwuj" class="btn btn-outline-success"></form></td>';
+    echo '</tr>';
+
+
+}
+
+echo "</tbody>
 </table>
 </body>
-</html>';
+</html>";

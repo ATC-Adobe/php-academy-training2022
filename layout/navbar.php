@@ -21,6 +21,13 @@
             <div class="navbar-nav">
                 <a class="nav-link active" aria-current="page" href="../../src/Form/formularzRoom.php">Add room</a>
                 <a class="nav-link active" aria-current="page" href="../../src/View/roomsReservation.php">All reservations</a>
+                <?php if(!isset($_SESSION['nickname'])){ ?>
+                <a class="nav-link active" aria-current="page" href="../../src/Form/loginForm.php">Login</a>
+                <a class="nav-link active" aria-current="page" href="../../src/Form/registrationForm.php">Register</a>
+                <?php } else { ?>
+                <a class="nav-link active" aria-current="page" href="../../src/Controller/logOut.php">Log out</a>
+                <a class="nav-link active" aria-current="page" href="../../src/View/myReservations.php">My reservations</a>
+                <?php } ?>
             </div>
         </div>
     </div>

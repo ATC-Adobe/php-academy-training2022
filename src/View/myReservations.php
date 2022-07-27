@@ -2,46 +2,17 @@
 
 include("../../autoloading.php");
 use User\Session;
+use Room\RoomRepository;
+use Reservation\ReservationRepository;
+
 
 $session = Session::getInstance();
 $session->start();
 
-use SystemDatabase\MysqlConnection;
-use Reservation\ReservationService;
-use Room\RoomRepository;
-use Reservation\ReservationRepository;
-
 include("../../layout/navbar.php");
 
-$dbConnection = MysqlConnection::getInstance();
-
-#$newRoom = new RoomService;
-#$newRoom->createRoom();
-
-if(isset($_POST['email']) || isset($_POST['firstname']) || isset($_POST['lastname']) || isset($_POST['startdate']) || isset($_POST['enddate']))
-{
-    $query = "SELECT * FROM reservation WHERE email='" . $_POST['email'] . "'";
-
-    if($dbConnection->query($query)->rowCount() > 0)
-    {
-        echo "refreshed page";
-    }
-    else
-    {
-        $bb = new ReservationService;
-        $bb->createResrvation();
-    }
-}
-else
-{
-    echo "all reservations";
-}
-
-$tab = new \Reservation\ReservationRepository();
-$tab = $tab->readReservation();
-
-
-include("../../layout/bootstrap.html");
+$tab = new ReservationRepository();
+$tab = $tab->showUserReservations($_SESSION['user_id']);
 
 echo '
 <body>';
@@ -86,7 +57,6 @@ foreach($tab as $el)
     }
 
     echo '</tr>';
-
 }
 
 
@@ -96,4 +66,3 @@ echo '</table>';
 echo ' </table>
 </body>
 </html>';
-

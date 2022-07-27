@@ -1,7 +1,12 @@
 <?php
 
+include("../../autoloading.php");
+use User\Session;
 
-include("../../layout/navbar.html"); ?>
+$session = Session::getInstance();
+$session->start();
+
+include("../../layout/navbar.php"); ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -18,11 +23,11 @@ include("../../layout/navbar.html"); ?>
 </head>
 <body>
 
-<form method="GET" action="formularz.php">
+<form method="POST" action="../../index.php">
 
     <div class="mb-3">
         <label for="exampleFormControlInput1" class="form-label">Room name</label>
-        <input type="text" name="room_id" class="form-control" id="exampleFormControlInput1" placeholder="Room_X (enter the number X)">
+        <input type="text" name="room_name" class="form-control" id="exampleFormControlInput1" placeholder="Room_X">
     </div>
 
     <div class="mb-3">
@@ -32,7 +37,7 @@ include("../../layout/navbar.html"); ?>
 
     <div class="row">
         <div class="col">
-            <input type="submit" value="zarezerwuj" class="btn btn-success btn-lg btn-block">
+            <input type="submit" value="dodaj" class="btn btn-success btn-lg btn-block">
         </div>
     </div>
 

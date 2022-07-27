@@ -37,9 +37,10 @@ class ReservationRepository
         $bb = $bb->format('m/d/Y H:i:s');
 
         $dbConnection = MysqlConnection::getInstance();
-        $insert = "INSERT INTO room (room_id, name, surname, email, start, end)
+        $insert = "INSERT INTO reservation (room_id, id_user, name, surname, email, start, end)
             VALUES (
                 ".$objectReservation->getRoomId().",
+                ".$objectReservation->getUserId().",
                 '" . $objectReservation->getFirstname() . "',
                 '" . $objectReservation->getLastname() . "',
                 '" . $objectReservation->getEmail() . "',
@@ -55,9 +56,37 @@ class ReservationRepository
     public function readReservation()
     {
         $dbConnection = MysqlConnection::getInstance();
-        $query = "SELECT * FROM room";
+        $query = "SELECT * FROM reservation";
         $result = $dbConnection->query($query)->fetchAll();
 
         return $result;
+    }
+
+    #public function takeRoomId(Reservation $reservationObject)
+    #{
+        #$dbConnection = MysqlConnection::getInstance();
+        #$query = "SELECT room_id FROM reservation WHERE id = '".$reservationObject->getReservationId()."';";
+        #$result = $dbConnection->query($query);
+
+        #return $result;
+    #}
+
+    public function deleteReservation($id)
+    {
+        $dbConnection = MysqlConnection::getInstance();
+        $query = "DELETE FROM reservation WHERE id = ".$id.";";
+        $dbConnection->query($query);
+
+        #return $result;
+    }
+
+    public function showUserReservations($userId)
+    {
+        $dbConnection = MysqlConnection::getInstance();
+        $query = "SELECT * FROM reservation WHERE id_user = ".$userId.";";
+        $result = $dbConnection->query($query)->fetchAll();
+
+        return $result;
+
     }
 }
