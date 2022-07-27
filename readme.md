@@ -1,8 +1,3 @@
-### changed wsl phpcli from 7.x to 8.1 
-### So somehow graphql can't be installed anymore(webonyx/graphql-php v0.7.2 requires php >=5.4,<8.0-DEV)
-### It is no longer in composer.json
-### ???
-
 ## xdebug
 port: 9009 <br>
 ssh port: 12000 <br>
