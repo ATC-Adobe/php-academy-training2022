@@ -8,6 +8,7 @@ use Model\User\Repository\UserConcreteRepository;
 use System\File\IFileWriter;
 use System\Router\Response;
 use System\Status;
+use System\Util\ReservationDateValidator;
 
 class ReservationAdder {
 
@@ -28,8 +29,10 @@ class ReservationAdder {
         string $roomId, string $userId,  \DateTime $from,    \DateTime $to
     ) : int {
 
-        if($to <= $from || $from < new \DateTime()) {
-            return Status::RESERVATION_DATE_INCORRECT;
+        $date = (new ReservationDateValidator())->validateDates($from, $to);
+
+        if($date != Status::OK) {
+            return $date;
         }
 
         $roomNId = intval($roomId);

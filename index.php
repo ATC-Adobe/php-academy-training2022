@@ -22,7 +22,8 @@ $router->use('/phpinfo', function(Response $res) {
 });
 
 $router->use('/test', function(Response $res) {
-    $res->render('test.php');
+    echo (new \Api\ApiJson(new \Test\Unit\Api\RoomRepoMock(), new \Test\Unit\Api\ReservationRepoMock()))
+        ->getUserReservations(20);
 });
 
 $router->get('/r', function(Response $res) {
