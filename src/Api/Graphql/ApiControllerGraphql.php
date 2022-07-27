@@ -2,7 +2,6 @@
 
 namespace App\Api\Graphql;
 
-use App\Api\ApiControllerJson;
 use App\Controller\ReservationController;
 use App\Model\Reservation;
 use App\Service\AuthenticatorService;
@@ -10,6 +9,7 @@ use App\Service\ReservationService;
 use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\Type;
 use GraphQL\GraphQL;
+use GraphQL\Type\Schema;
 
 
 class ApiControllerGraphql
@@ -49,6 +49,7 @@ class ApiControllerGraphql
                 "activeReservations" => [
                     'type' => Type::listOf($reservationType),
                     'resolve' => function () {
+                        $results = [];
                         $reservations = (new ReservationService())->readReservations();
                         foreach ($reservations as $reservation) {
                             if (strtotime($reservation->start_date) > time() || strtotime(
@@ -123,7 +124,7 @@ class ApiControllerGraphql
             ]
         ]);
 
-        $schema = new \GraphQL\Schema([
+        $schema = new Schema([
             'query' => $queryType,
             'mutation' => $mutationType
         ]);
@@ -135,7 +136,7 @@ class ApiControllerGraphql
         $rootValue = ['prefix' => 'You said: '];
 
         try {
-            $result = GraphQL::executeAndReturnResult($schema, $query, $rootValue, null, $variableValues);
+            $result = GraphQL::executeQuery($schema, $query, $rootValue, null, $variableValues);
             $output = $result->toArray();
         } catch (\Exception $e) {
             $output = [
@@ -146,6 +147,7 @@ class ApiControllerGraphql
                 ]
             ];
         }
+        header('Content-Type: application/json; charset=utf-8');
         echo json_encode($output);
     }
 }
