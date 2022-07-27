@@ -66,4 +66,3 @@ if (!isset($_SERVER['PHP_AUTH_USER'])) {
     } catch (JsonException $e) {
     }
 }
-

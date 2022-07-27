@@ -118,3 +118,4 @@ class ReservationApi
         return $reservations;
     }
 }
+//TODO: dodać kody odpowiedzi

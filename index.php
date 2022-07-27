@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 session_start();
-require_once 'autoloading.php';
+require_once 'vendor/autoload.php';
 
 include "Layout/head.php";
 include "Layout/navbar.php";

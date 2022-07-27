@@ -1,5 +1,7 @@
 <?php
 
+require_once 'autoloading.php';
+
 use Service\Session;
 
 $sessionExist = new Session();
