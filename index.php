@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
+require_once 'autoloading.php';
+
 session_start();
-require_once 'vendor/autoload.php';
 
 include "Layout/head.php";
 include "Layout/navbar.php";
