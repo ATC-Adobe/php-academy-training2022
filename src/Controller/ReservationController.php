@@ -120,6 +120,7 @@ class ReservationController
         self::formatDates($reservation);
 
         if (!$service->checkEndIsAfterStart($reservation->start_date, $reservation->end_date)) {
+            //data should be in query param
             $_GET["reservation_id"] = $_POST["reservation_id"];
             $this->edit("End date must be after the start date!");
             return;

@@ -1,9 +1,6 @@
 <?php
 
 namespace App\Api;
-use App\Controller\ReservationController;
-use App\Model\Reservation;
-use App\Service\AuthenticatorService;
 use App\Service\ReservationService;
 
 class ApiControllerJson
@@ -12,85 +9,29 @@ class ApiControllerJson
     {
 //        can't be here unless lazy router will be implemented
 //        header('Content-Type: application/json; charset=utf-8');
-
     }
-
-
     /**
      * echo reservations with associated users and rooms
-     * @return void
      */
-    public function listReservations(): void
+    public function listReservations($reservationService = new ReservationService()): void
     {
         header('Content-Type: application/json; charset=utf-8');
-        $reservations = (new ReservationService())->readReservations(true);
-        echo json_encode($reservations);
+        echo json_encode((new ApiExecJson())->listReservations($reservationService));
     }
     /**
      * echo reservations with associated users and rooms
-     * @return void
      */
-    public function listActiveReservations(): void {
+    public function listActiveReservations($reservationService = new ReservationService()): void {
         header('Content-Type: application/json; charset=utf-8');
-        $reservations = (new ReservationService())->readReservations(true);
-        $results = [];
-        foreach ($reservations as $reservation) {
-            if(strtotime($reservation->start_date) > time() || strtotime($reservation->end_date) > time()) {
-                $results[]= $reservation;
-            }
-        }
-        echo json_encode($results);
+        echo json_encode((new ApiExecJson())->listActiveReservations($reservationService));
     }
-    public function listUsersReservations(): void {
+    public function listUsersReservations($service = new ReservationService()): void {
         header('Content-Type: application/json; charset=utf-8');
-
-        $id = htmlentities($_GET["user_id"]);
-        if(!$id) {
-            http_response_code(400);
-            echo json_encode(["error" => "no user id specified"]);
-        }
-        $service = new ReservationService();
-        $reservation = $service->findUsersReservations($id);
-        echo json_encode($reservation);
+        $id = (int)htmlentities($_GET["user_id"]);
+        echo json_encode((new ApiExecJson())->listUsersReservations($id, $service));
     }
-    public function addReservation(): void {
+    public function addReservation($reservationService = new ReservationService()): void {
         header('Content-Type: application/json; charset=utf-8');
-        $reservationService = new ReservationService();
-        $reservation = new Reservation();
-        $password = htmlentities($_POST["password"]);
-        $email = htmlentities($_POST["email"]);
-
-        $auth = new AuthenticatorService();
-        $user = $auth->login($email, $password);
-        if(!$user) {
-            http_response_code(401);
-            echo json_encode(["error" => "You are not logged in"]);
-            return;
-        }
-
-        $reservation->room_id = htmlentities($_POST['room_id']);
-        $reservation->start_date = htmlentities($_POST['start_date']);
-        $reservation->end_date = htmlentities($_POST['end_date']);
-        $reservation->user_id = $user->id;
-        ReservationController::formatDates($reservation);
-
-        if (!$reservationService->checkEndIsAfterStart($reservation->start_date, $reservation->end_date)) {
-            http_response_code(400);
-            echo json_encode(["error" => "start date is after end date"]);
-            return;
-        }
-
-        if (!$reservationService->checkReservationCollision($reservation)) {
-            http_response_code(409);
-            echo json_encode(["error" => "already occupied"]);
-            return;
-        }
-
-        if (!$reservationService->addReservation($reservation)) {
-            http_response_code(500);
-            echo json_encode(["error" => "something went wrong!"]);
-            return;
-        }
-        echo json_encode(["msg" => "success"]);
+        echo json_encode((new ApiExecJson())->addReservation($reservationService));
     }
 }
