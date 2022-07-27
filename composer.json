@@ -1,0 +1,21 @@
+{
+  "name": "php/academy",
+  "authors": [
+    {
+      "name": "Pawel Mlynarczyk",
+      "email": "pawel.mlynarczyk@accenture.com"
+    }
+  ],
+  "autoload": {
+    "psr-0": {
+      "": [
+        "src/"
+      ]
+    }
+  },
+  "require": {
+    "webonyx/graphql-php": "^0.7.2",
+    "phpunit/phpunit": "^9.5",
+    "mockery/mockery": "^1.5"
+  }
+}

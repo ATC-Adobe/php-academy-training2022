@@ -56,6 +56,7 @@ class Authenticator
             $value = 'incorrectLogin';
             $session = new Session();
             $session->set($value);
+            return 'false';
         }
     }
 

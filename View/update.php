@@ -3,7 +3,7 @@
 
 use Controllers\Reservation\UpdateReservation;
 
-require_once "../autoloader.php";
+require_once "../vendor/autoload.php";
 
 session_start();
 

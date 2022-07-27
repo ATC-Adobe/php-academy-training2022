@@ -3,14 +3,9 @@
 use Controllers\Reservation\DeleteReservation;
 use Session\Session;
 
-require_once "../autoloader.php";
+require_once "../vendor/autoload.php";
 
 $id = $_POST['id'] ?? null;
-
-//echo '<pre>';
-//var_dump($id);
-//echo '</pre>';
-//die;
 
 if (!$id) {
     header('Location:myReservations.php');

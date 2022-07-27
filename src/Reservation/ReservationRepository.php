@@ -2,14 +2,41 @@
 
 namespace Reservation;
 
+date_default_timezone_set('Europe/Warsaw');
+
 use System\Database\MysqlConnection;
 
 class ReservationRepository
 {
+
+    public function getAllReservations(): bool|array
+    {
+        $connection = MysqlConnection::getInstance();
+        $selectQuery = "SELECT * FROM reservations";
+
+        return $connection->query($selectQuery)->fetchAll();
+    }
+
+    public function getCurrentlyAvailableReservations(): bool|array
+    {
+        $todayDate = date("Y-m-d");
+        $currentHour = date("H:i");
+
+        $connection = MysqlConnection::getInstance();
+
+        $selectQuery = "SELECT * FROM reservations WHERE startDay > :todayDate OR ((startDay = :todayDate) AND (startHour >= :currentHour))";
+
+        $statement = $connection->prepare($selectQuery);
+        $statement->bindValue(':todayDate', $todayDate);
+        $statement->bindValue(':currentHour', $currentHour);
+        $statement->execute();
+        return $statement->fetchAll();
+    }
+
     public function getReservationsWithRooms(): bool|array
     {
         $connection = MysqlConnection::getInstance();
-        $selectQuery = "SELECT res.id, res.firstName, res.lastName, res.email, res.startDay, res.endDay, res.startHour, res.endHour, rooms.roomNumber FROM reservations AS res JOIN rooms AS rooms ON rooms.id = roomId";
+        $selectQuery = "SELECT res . id, res . firstName, res . lastName, res . email, res . startDay, res . endDay, res . startHour, res . endHour, rooms . roomNumber FROM reservations as res JOIN rooms as rooms ON rooms . id = roomId";
 
         return $connection->query($selectQuery)->fetchAll();
     }
@@ -17,10 +44,22 @@ class ReservationRepository
     public function getMyReservations($id): bool|array
     {
         $connection = MysqlConnection::getInstance();
-        $selectQuery = "SELECT res.id, res.startDay, res.endDay, res.startHour, res.endHour, rooms.id, rooms.roomNumber, us.firstName, us.lastName, us.email FROM reservations AS res JOIN rooms AS rooms ON rooms.id = res.roomId JOIN user AS us ON us.id = res.userId WHERE us.id = :id";
+        $selectQuery = "SELECT res . id, res . startDay, res . endDay, res . startHour, res . endHour, rooms . id, rooms . roomNumber, us . id, us . firstName, us . lastName, us . email FROM reservations as res JOIN rooms as rooms ON rooms . id = res . roomId JOIN user as us ON us . id = res . userId WHERE us . id = :id";
 
         $statement = $connection->prepare($selectQuery);
         $statement->bindValue(':id', $id);
+        $statement->execute();
+        return $statement->fetchAll();
+    }
+
+    public function getTheNewestReservation($userId)
+    {
+        $connection = MysqlConnection::getInstance();
+
+        $selectQuery = "SELECT res . id, res . startDay, res . endDay, res . startHour, res . endHour, rooms . id, rooms . roomNumber, us . id FROM reservations as res JOIN rooms as rooms ON rooms . id = res . roomId JOIN user as us ON us . id = res . userId WHERE us . id = :id ORDER BY endDay DESC LIMIT 1";
+
+        $statement = $connection->prepare($selectQuery);
+        $statement->bindValue(':id', $userId);
         $statement->execute();
         return $statement->fetchAll();
     }
@@ -29,7 +68,7 @@ class ReservationRepository
     {
         $connection = MysqlConnection::getInstance();
 
-        $selectQuery = "SELECT DISTINCT roomId = :roomId FROM reservations WHERE startDay = :startDay AND ((:startHour BETWEEN startHour AND endHour) OR (:endHour BETWEEN startHour AND endHour))";
+        $selectQuery = "SELECT DISTINCT roomId = :roomId FROM reservations WHERE startDay = :startDay and ((:startHour BETWEEN startHour and endHour) or (:endHour BETWEEN startHour and endHour))";
 
         $statement = $connection->prepare($selectQuery);
         $statement->bindValue(':roomId', $roomId);
@@ -50,7 +89,17 @@ class ReservationRepository
     {
         $connection = MysqlConnection::getInstance();
 
-        $selectQuery = "INSERT INTO reservations (roomId, userId, firstName, lastName, email, startDay, endDay, startHour, endHour) VALUES (:roomId, :userId, :firstName, :lastName, :email, :startDay, :endDay, :startHour, :endHour)";
+        $selectQuery = "INSERT INTO reservations(
+        roomId,
+        userId,
+        firstName,
+        lastName,
+        email,
+        startDay,
+        endDay,
+        startHour,
+        endHour
+    ) VALUES(:roomId, :userId, :firstName, :lastName, :email, :startDay, :endDay, :startHour, :endHour)";
 
         $statement = $connection->prepare($selectQuery);
 
@@ -70,7 +119,7 @@ class ReservationRepository
     {
         $connection = MysqlConnection::getInstance();
 
-        $selectQuery = "SELECT res.id, res.userId, res.firstName, res.lastName, res.email, res.startDay, res.endDay, res.startHour, res.endHour, rooms.id, rooms.roomNumber FROM reservations AS res JOIN rooms AS rooms ON rooms.id = res.roomId WHERE res.id = :id";
+        $selectQuery = "SELECT res . id, res . userId, res . firstName, res . lastName, res . email, res . startDay, res . endDay, res . startHour, res . endHour, rooms . id, rooms . roomNumber FROM reservations as res JOIN rooms as rooms ON rooms . id = res . roomId WHERE res . id = :id";
 
         $statement = $connection->prepare($selectQuery);
         $statement->bindValue(':id', $id);
@@ -106,7 +155,7 @@ class ReservationRepository
 
         $connection = MysqlConnection::getInstance();
 
-        $deleteRoom = "DELETE FROM reservations WHERE id=:id";
+        $deleteRoom = "DELETE FROM reservations WHERE id =:id";
 
         $statement = $connection->prepare($deleteRoom);
         $statement->bindValue(':id', $id);

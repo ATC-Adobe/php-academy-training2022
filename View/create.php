@@ -1,19 +1,35 @@
 <?php
 
 use Controllers\Reservation\CreateReservation;
+use Session\Session;
+use Validations\DateAndTimeValidation;
 
-require_once "../autoloader.php";
+require_once "../vendor/autoload.php";
 
 session_start();
 
 require_once "../src/Constants/constants.php";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $reservationController = new CreateReservation();
-    $reservationController->getDataFromForm();
+    $startDay = date("Y-m-d", (strtotime($_POST['startDay'])));
+    $endDay = date("Y-m-d", (strtotime($_POST['endDay'])));
+    $startHour = date("H:i", (strtotime($_POST['startHour'])));
+    $endHour = date("H:i", (strtotime($_POST['endHour'])));
 
-    header('Location:myReservations.php');
-    exit();
+    $dateTime = new DateAndTimeValidation();
+    $checkDatesAndHours = $dateTime->checkDatesAndHours($startDay, $endDay, $startHour, $endHour);
+
+    if ($checkDatesAndHours === 'true') {
+        $reservationController = new CreateReservation();
+        $reservationController->getDataFromForm();
+
+        header('Location:myReservations.php');
+        exit();
+    } else {
+        $value = 'unexpectedError';
+        $session = new Session();
+        $session->set($value);
+    }
 }
 ?>
 

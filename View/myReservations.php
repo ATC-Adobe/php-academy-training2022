@@ -3,7 +3,7 @@
 use Controllers\Reservation\DisplayReservations;
 use Controllers\User\LoginUser;
 
-require_once "../autoloader.php";
+require_once "../vendor/autoload.php";
 
 session_start();
 
@@ -28,6 +28,8 @@ $nickName = $_SESSION['username'];
 $login = new LoginUser();
 $userId = array_unique($login->getUserId($nickName));
 $id = $userId['id'];
+
+
 
 $displayReservations = new DisplayReservations();
 $reservations = $displayReservations->displayMyReservations($id);

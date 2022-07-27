@@ -50,6 +50,9 @@ class Session
             case 'wrongHours':
                 $_SESSION['message'] = "Wybrane godziny są nieprawidłowe";
                 break;
+            case 'unexpectedError':
+                $_SESSION['message'] = "Nastąpił nieoczekiwany błąd. Proszę spróbować jeszcze raz";
+                break;
             default:
                 echo 'Nastąpił nieoczekiwany błąd. Proszę spróbować jeszcze raz';
                 break;

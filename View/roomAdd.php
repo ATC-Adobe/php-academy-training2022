@@ -3,7 +3,7 @@
 use Controllers\Room\CreateRoom;
 use Session\Session;
 
-require_once "../autoloader.php";
+require_once "../vendor/autoload.php";
 
 session_start();
 
