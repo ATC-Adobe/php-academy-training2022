@@ -5,6 +5,20 @@
 - xdebug tunnel: `ssh -R 9009:127.0.0.1:9009 xdebug@localwsl.com -p 12000`
 - ssh xdebug password (for tunnel): `xdebug`
 
+## Lesson 15
+
+Materiały 
+- RabbitMq 
+  - https://www.rabbitmq.com/tutorials/tutorial-one-php.html 
+  - http://blogs.quovantis.com/rabbit-mq-working/ 
+  - https://www.cloudamqp.com/blog/part1-rabbitmq-for-beginners-what-is-rabbitmq.html
+
+Zadania: 
+1. Do projektu dodać bibliotekę php-amqplib/php-amqplib i zmienić ustawienia, tak by projekt łączył się z kontenerem z RabbitMQ. 
+2. Wejść do panelu zarządzania kolejkami (poszukajcie jak; login i hasło: rabbitmq) i zobaczyć jakie są zakładki i funkcje. 
+3. Utworzyć nową kolejkę z poziomu kodu. Sprawdzić czy jest widoczna z poziomu panelu. 
+4. Zmieńcie REST API do tworzenia nowych rezerwacji salek, tak by od teraz korzystało z kolejki (nowe rezerwacje mają trafiać najpierw na kolejkę). Wiadomości z kolejki mają być pobierane i przetwarzane za pomocą klasy Consumer. Logi z działania Consumera mają być zapisywane w pliku queue.log.
+
 ## Lesson 14
 
 Materiały: 

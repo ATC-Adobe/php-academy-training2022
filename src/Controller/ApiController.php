@@ -2,8 +2,10 @@
 
 namespace Controller;
 
+use Api\ApiJson;
 use Model\Reservation\Service\ReservationAdder;
 use System\File\FileWriterFactory;
+use System\RabbitMQ\ReservationProducer;
 use System\Router\Response;
 
 class ApiController {
@@ -13,10 +15,7 @@ class ApiController {
 
         $res->setJsonContent();
 
-        $res->end(json_encode(
-            (new \Api\Api())
-                ->getRooms()
-        ));
+        $res->end((new ApiJson())->getRooms());
     }
 
     public function getActiveReservations() {
@@ -24,10 +23,7 @@ class ApiController {
 
         $res->setJsonContent();
 
-        $res->end(json_encode(
-            (new \Api\Api())
-                ->getActiveReservations()
-        ));
+        $res->end((new ApiJson())->getActiveReservations());
     }
 
     public function getUserReservations(\ArrayIterator $arg) {
@@ -42,10 +38,7 @@ class ApiController {
 
         $res->setJsonContent();
 
-        $res->end( json_encode(
-            (new \Api\Api())
-                ->getUserReservations($id)
-        ));
+        $res->end((new ApiJson())->getUserReservations($id));
     }
 
     public function addReservation() {
@@ -69,11 +62,17 @@ class ApiController {
         }
 
         $result =
+           intval((new ReservationProducer())
+                ->call($room_id, $id, $from, $to));
+
+        //echo $result;
+
+        /*
             (new ReservationAdder())->uploadData(
                 (new FileWriterFactory())
                     ->getInstance('db'),
                 $room_id, $id, $from, $to,
-            );
+            );*/
 
         if($result == \System\Status::RESERVATION_OK) {
             $res->end( "Reservation added successfully" );

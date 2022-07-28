@@ -3,9 +3,10 @@
 namespace Api;
 
 use GraphQL\GraphQL;
-use GraphQL\Schema;
+//use GraphQL\Schema;
 use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\Type;
+use GraphQL\Type\Schema;
 use Model\Reservation\Service\ReservationAdder;
 use System\File\FileWriterFactory;
 use System\Util\Authenticator;

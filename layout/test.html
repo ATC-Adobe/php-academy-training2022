@@ -1,0 +1,60 @@
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Mono&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            font-family: 'Noto Sans Mono', monospace;
+        }
+    </style>
+    <title></title>
+</head>
+
+
+<div id="stuffdiv" contenteditable>
+    user types here...
+</div>
+<input type="hidden" name="whateva" id="submittext">
+
+<script>
+    var sDiv=document.getElementById('stuffdiv');
+    sDiv.addEventListener('keypress', function(){
+        setTimeout(function(){
+            //the setTimeout is so the content is inserted before execution
+            document.getElementById('submittext').value=sDiv.textContent;
+            if(sDiv.innerHTML.indexOf('facebook')!==-1){
+                sDiv.innerHTML=sDiv.innerHTML.replace('facebook','<span style="color:blue">face<span></span>book</span>');
+            }
+        },50);
+    })
+</script>
+ <div id="out" style="height: 30px; position: relative; top: 30px; z-index: -100; color: red"></div>
+<input type="text" id="inp" style="height: 30px; z-index: 100; color: rgba(255, 0, 100, 0.1);"  contenteditable>
+
+
+<script>
+    $ = (id) => { return document.getElementById(id) }
+
+
+
+    window.addEventListener('load', function () {
+        let inputField = $('inp')
+        let outputField = $('out')
+
+        update = function () {
+            outputField.innerHTML = inputField.innerHTML
+        }
+
+        inputField.addEventListener('keyup', update)
+        //inputField.addEventListener('keydown', update)
+        inputField.addEventListener('keypress', update)
+
+    })
+
+
+    document.getElementById('inp').addEventListener('keyup', e => {
+        console.log('Caret at: ', e.target.selectionStart)
+    })
+
+</script>
