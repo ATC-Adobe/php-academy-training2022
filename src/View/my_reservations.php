@@ -2,7 +2,7 @@
 require_once '../../autoloading.php';
 session_start();
 var_dump($_SESSION);
-
+phpinfo();
 use Database\Connection;
 use Repository\Reservation;
 

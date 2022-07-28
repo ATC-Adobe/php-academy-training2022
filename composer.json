@@ -1,0 +1,27 @@
+{
+  "name": "vendor_name/php_php",
+  "description": "description",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "oleksandra.romanova",
+      "email": "email@example.com"
+    }
+  ],
+  "require": {
+    "webonyx/graphql-php": "14.10.0",
+    "phpunit/phpunit": "^9.5",
+    "czukowski/phpunit-mock-db": "^9.0",
+    "ext-json": "*"
+  },
+
+  "autoload":{
+    "psr-0": {
+      "": [
+        "src/"
+      ]
+    }
+  }
+
+}
