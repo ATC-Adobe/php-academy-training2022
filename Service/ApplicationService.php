@@ -57,4 +57,12 @@ class ApplicationService
     {
         return '../System/File/reservations.json';
     }
+
+    public function checkStartEndDateLogic($startDate, $endDate)
+    {
+        if ($startDate < $endDate) {
+            return 'true';
+        }
+        return 'false';
+    }
 }
