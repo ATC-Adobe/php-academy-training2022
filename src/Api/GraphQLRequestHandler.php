@@ -41,6 +41,19 @@ class GraphQLRequestHandler {
                 ]
             ]);
 
+            // === My own exercise ===
+
+            $diceType = new ObjectType([
+               'name' => 'Dice',
+               'fields' => [
+                    'tries'     => [ 'type' => Type::int() ],
+                    'sum'       => [ 'type' => Type::int() ],
+                    'ssq'       => [ 'type' => Type::int() ],
+                    'exp'       => [ 'type' => Type::float() ],
+                    'var'       => [ 'type' => Type::float() ],
+               ]
+            ]);
+
             // queries
             $queryType = new ObjectType([
                 'name' => 'Query',
@@ -68,6 +81,46 @@ class GraphQLRequestHandler {
                                 intval($args['id'])));
                         }
                     ],
+                    'dice' => [
+                        'type' => $diceType,
+                        'args' => [
+                            'count'     => ['type' => Type::nonNull(Type::int())],
+                            'dice'      => ['type' => Type::nonNull(Type::listOf(Type::int()))],
+                            'include'   => ['type' => Type::nonNull(Type::listOf(Type::int()))],
+                        ],
+                        'resolve' => function($root, $args) {
+
+                            $count = 0;
+                            $sum = 0;
+                            $ssq = 0;
+
+                            for($i = 1; $i <= $args['dice'][0]; $i++) {
+                                for($j = 1; $j <= $args['dice'][1]; $j++) {
+                                    for($k = 1; $k <= $args['dice'][2]; $k++) {
+
+                                        $arr = [$i, $j, $k];
+
+                                        $s = 0;
+
+                                        sort($arr);
+
+                                        foreach ($args['include'] as $pos) {
+                                            $s += $arr[$pos];
+                                        }
+
+                                        $sum += $s;
+                                        $ssq += $s * $s;
+                                        $count++;
+                                    }
+                                }
+                            }
+
+                            $exp = $sum / $count;
+                            $var = $ssq / $count - $exp * $exp;
+
+                            return ['tries' => $count, 'ssq' => $ssq, 'sum' => $sum, 'exp' => $exp, 'var' => $var ];
+                        }
+                    ]
                 ],
             ]);
 

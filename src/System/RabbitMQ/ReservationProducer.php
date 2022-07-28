@@ -2,28 +2,33 @@
 
 namespace System\RabbitMQ;
 
+use PhpAmqpLib\Channel\AMQPChannel;
+use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
 
 class ReservationProducer {
-    private $connection;
-    private $channel;
-    private $callback_queue;
-    private $response;
-    private $corr_id;
+    private AMQPStreamConnection $connection;
+    private AMQPChannel $channel;
+    private string $callbackQueue;
+    private ?string $response = null;
+    private string $corrId;
 
-    public function __construct()
-    {
+    public function __construct() {
+
+        // connection establishment
         $this->connection = RabbitMQConnection::constructClientConnection();
         $this->channel = $this->connection->channel();
-        list($this->callback_queue, ,) = $this->channel->queue_declare(
+        list($this->callbackQueue, ,) = $this->channel->queue_declare(
             "",
             false,
             false,
             true,
             false
         );
+
+        // awaiting response
         $this->channel->basic_consume(
-            $this->callback_queue,
+            $this->callbackQueue,
             '',
             false,
             true,
@@ -36,18 +41,21 @@ class ReservationProducer {
         );
     }
 
-    public function onResponse($rep)
-    {
-        if ($rep->get('correlation_id') == $this->corr_id) {
+    // response callback
+    public function onResponse($rep) : void {
+
+        if ($rep->get('correlation_id') == $this->corrId) {
             $this->response = $rep->body;
         }
     }
 
-    public function call($room_id, $id, $from, $to)
-    {
-        $this->response = null;
-        $this->corr_id = uniqid();
+    // make request
+    public function call($room_id, $id, $from, $to) : int {
 
+        $this->response = null;
+        $this->corrId = uniqid();
+
+        // send message
         $msg = new AMQPMessage(
             json_encode([
                 'room_id' => $room_id,
@@ -56,14 +64,18 @@ class ReservationProducer {
                 'to' => $to->format('Y-m-d H:i:s'),
             ]),
             array(
-                'correlation_id' => $this->corr_id,
-                'reply_to' => $this->callback_queue
+                'correlation_id' => $this->corrId,
+                'reply_to' => $this->callbackQueue
             )
         );
+
+        // await response
         $this->channel->basic_publish($msg, '', 'rpc_queue');
         while (!$this->response) {
             $this->channel->wait();
         }
+
+        // return response
         return intval($this->response);
     }
 }

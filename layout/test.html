@@ -16,7 +16,7 @@
     user types here...
 </div>
 <input type="hidden" name="whateva" id="submittext">
-
+<p id="paragraph">Here are few words</p>
 <script>
     var sDiv=document.getElementById('stuffdiv');
     sDiv.addEventListener('keypress', function(){
@@ -28,10 +28,26 @@
             }
         },50);
     })
-</script>
- <div id="out" style="height: 30px; position: relative; top: 30px; z-index: -100; color: red"></div>
-<input type="text" id="inp" style="height: 30px; z-index: 100; color: rgba(255, 0, 100, 0.1);"  contenteditable>
 
+    var paragrapgh = document.getElementById("paragraph");
+    var words = paragrapgh.innerText.split(" "); // here I am spliting words by space i.e tokenizing it
+    var colors = ["red","green","blue","pink", "gold", "yellow", "blueviolet"];
+    var spans = [];
+
+    for(var x = 0; x < words.length; x++){
+        var color = colors[Math.floor(Math.random()*colors.length)] // geting random color from array;
+        var span = "<span style='background-color: " + color + ";'>" + words[x] + "</span>"
+
+        spans.push(span);
+    }
+
+    // setting colored spans as paragraph HTML
+    paragrapgh.innerHTML = spans.join(" ");
+
+</script>
+ <div id="out" style="height: 30px; position: relative; top: 30px; z-index: -100; font-style: normal; color: red"></div>
+<div type="text" id="inp" style="height: 30px; z-index: 100; color: rgba(0, 0, 0, 0.1);"  contenteditable>
+</div>
 
 <script>
     $ = (id) => { return document.getElementById(id) }
@@ -54,7 +70,50 @@
 
 
     document.getElementById('inp').addEventListener('keyup', e => {
-        console.log('Caret at: ', e.target.selectionStart)
+        //console.log('Caret at: ', e.target.selectionStart)
     })
+
+</script>
+
+
+<div id="editable" contenteditable="true">
+    <br/>text text text text text text
+    <br/>text text text text text text
+    <br/>text text text text text text
+    <br/>
+    <br/>
+</div>
+<fieldset>
+    <button id="btn">focus</button>
+    <input type="button" class="fontStyle" onclick="document.execCommand('italic',false,null);" value="I" title="Italicize Highlighted Text">
+    <input type="button" class="fontStyle" onclick="document.execCommand('foreColor',false,'red');" value="B" title="Bold Highlighted Text">
+    <input id="ln" placeholder="Line#" />
+    <input id="cl" placeholder="Column#" />
+</fieldset>
+
+
+
+<script>
+    function setCaret(line, col) {
+        var ele = document.getElementById("editable");
+        var rng = document.createRange();
+        var sel = window.getSelection();
+        rng.setStart(ele.childNodes[line], col);
+        rng.collapse(true);
+        sel.removeAllRanges();
+        sel.addRange(rng);
+        ele.focus();
+    }
+
+    //https://stackoverflow.com/a/6249440/2813224
+
+    var line = document.getElementById('ln').value;
+    var col = document.getElementById('cl').value;
+    var btn = document.getElementById('btn');
+    btn.addEventListener('click', function(event) {
+        var lineSet = parseInt(line, 10);
+        var colSet = parseInt(col, 10);
+        setCaret(lineSet, colSet);
+    }, true);
 
 </script>
