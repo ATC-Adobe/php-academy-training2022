@@ -9,7 +9,7 @@ use System\Database\MysqlConnection;
 class ReservationRepository
 {
 
-    public function getAllReservations(): bool|array
+    public function getAllReservations()
     {
         $connection = MysqlConnection::getInstance();
         $selectQuery = "SELECT * FROM reservations";
@@ -17,7 +17,7 @@ class ReservationRepository
         return $connection->query($selectQuery)->fetchAll();
     }
 
-    public function getCurrentlyAvailableReservations(): bool|array
+    public function getCurrentlyAvailableReservations()
     {
         $todayDate = date("Y-m-d");
         $currentHour = date("H:i");
@@ -33,7 +33,7 @@ class ReservationRepository
         return $statement->fetchAll();
     }
 
-    public function getReservationsWithRooms(): bool|array
+    public function getReservationsWithRooms()
     {
         $connection = MysqlConnection::getInstance();
         $selectQuery = "SELECT res . id, res . firstName, res . lastName, res . email, res . startDay, res . endDay, res . startHour, res . endHour, rooms . roomNumber FROM reservations as res JOIN rooms as rooms ON rooms . id = roomId";
@@ -41,7 +41,7 @@ class ReservationRepository
         return $connection->query($selectQuery)->fetchAll();
     }
 
-    public function getMyReservations($id): bool|array
+    public function getMyReservations($id)
     {
         $connection = MysqlConnection::getInstance();
         $selectQuery = "SELECT res . id, res . startDay, res . endDay, res . startHour, res . endHour, rooms . id, rooms . roomNumber, us . id, us . firstName, us . lastName, us . email FROM reservations as res JOIN rooms as rooms ON rooms . id = res . roomId JOIN user as us ON us . id = res . userId WHERE us . id = :id";
@@ -86,7 +86,7 @@ class ReservationRepository
         }
     }
 
-    public function addReservation(ReservationModel $reservationModel): void
+    public function addReservation(ReservationModel $reservationModel)
     {
         $connection = MysqlConnection::getInstance();
 
@@ -150,7 +150,7 @@ class ReservationRepository
         $statement->execute();
     }
 
-    public function deleteReservation(): void
+    public function deleteReservation()
     {
         $id = $_POST['id'] ?? null;
 

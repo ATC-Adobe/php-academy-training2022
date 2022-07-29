@@ -6,7 +6,7 @@ use Reservation\ReservationRepository;
 
 class RoomApi
 {
-    public function getAllReservations(): bool|array
+    public function getAllReservations()
     {
         try {
             $repo = new ReservationRepository();
@@ -34,7 +34,7 @@ class RoomApi
     }
 
     public
-    function getCurrentlyAvailableReservations(): bool|array
+    function getCurrentlyAvailableReservations()
     {
         try {
             $repo = new ReservationRepository();

@@ -1,0 +1,11 @@
+1. W terminalu przejść do dockera:
+    cd docker
+
+2. Następnie wpisać:
+    ssh/php
+
+3. Przejść do pliku z konsumentem:
+    php src/RabbitMQ/consumer.php
+
+4. Wpisy z logów są w pliku queue.log:
+    php cat queue.log

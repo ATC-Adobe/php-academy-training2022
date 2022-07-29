@@ -8,17 +8,41 @@ class RoomApiTest extends TestCase
 {
     public function testGetAllReservations_Pass()
     {
-        $repository = Mockery::mock("ReservationRepository");
-        $repository->shouldReceive("getAllReservations")
-            ->once()
-            ->andReturn();
+        $mock = $this->createMock(ReservationRepository::class);
+
+        $mock->method("getAllReservations")->willReturn([
+            [
+                'id' => 154,
+                'userId' => 28,
+                'roomId' => 31,
+                'firstName' => 'Angelika',
+                'lastName' => 'Mlynarczyk',
+                'email' => 'angelikam@wp.pl',
+                'startDay' => '2022-07-27',
+                'endDay' => '2022-07-27',
+                'startHour' => '15:00:00',
+                'endHour' => '16:00:00'
+            ]
+        ]);
+
         $roomApi = new RoomApi();
-        $roomApi->getAllReservations($repository);
+        $expectedResult = $roomApi->getAllReservations($mock);
 
-    }
-
-    public function tearDown(): void
-    {
-        Mockery::close();
+        $this->assertEquals(
+            '[{
+        "reservationId": 154,
+        "userId": 28,
+        "roomId": 31,
+        "firstName": "Angelika",
+        "lastName": "Mlynarczyk",
+        "email": "angelikam@wp.pl",
+        "startDay": "2022-07-27",
+        "endDay": "2022-07-27",
+        "startHour": "15:00:00",
+        "endHour": "16:00:00"
+    }    
+    ]',
+            $expectedResult
+        );
     }
 }

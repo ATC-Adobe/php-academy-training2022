@@ -5,7 +5,7 @@ require_once "../../vendor/autoload.php";
 use PhpAmqpLib\Message\AMQPMessage;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 
-//Autentykacja użytkownika
+// Autentykacja użytkownika
 if (!isset($_SERVER['PHP_AUTH_USER'])) {
     header("WWW-Authenticate: Basic realm=\"Private Area\"");
     header("HTTP/1.0 401 Unauthorized");
@@ -14,7 +14,6 @@ if (!isset($_SERVER['PHP_AUTH_USER'])) {
     } catch (JsonException $e) {
     }
 } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
     $dataReservation = [
         'roomId' => intval($_POST['roomId']),
         'roomNumber' => intval($_POST['roomNumber']),
@@ -33,42 +32,19 @@ if (!isset($_SERVER['PHP_AUTH_USER'])) {
         $connection = new AMQPStreamConnection('localwsl.com', 5672, 'rabbitmq', 'rabbitmq');
         $channel = $connection->channel();
 
+        // stworzenie kolejki
         $channel->queue_declare('addReservation', false, false, false, false);
 
-
-
+        // zakodowanie danych do formatu json
         $msg = new AMQPMessage(json_encode($dataReservation));
 
         // basic_publish publikuje dane do kolejki
         $channel->basic_publish($msg, '', 'addReservation');
 
-        echo " [x] Dodawanie przez Rabita '\n";
+        echo " [x] Data was sucsessfuly uploaded by RabbitMQ \n";
 
         $channel->close();
         $connection->close();
     } catch (JsonException $e) {
     }
 }
-
-
-
-//if (!isset($_SERVER['PHP_AUTH_USER'])) {
-//    header("WWW-Authenticate: Basic realm=\"Private Area\"");
-//    header("HTTP/1.0 401 Unauthorized");
-//    try {
-//        echo json_encode(['message' => "Unauthorized access"], JSON_THROW_ON_ERROR);
-//    } catch (JsonException $e) {
-//    }
-//} elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && array_key_exists('addReservation', $_REQUEST)) {
-//    $api = new ReservationApi();
-//    $reservationRoom = $api->addReservation();
-//
-//    header("Content-Type: application/json");
-//    try {
-//        $msg = new AMQPMessage($reservationRoom);
-//
-//        $producer = new ApiReservationProducer();
-//        $producer->addReservation($msg);
-//    } catch (JsonException $e) {
-//    }
-//}

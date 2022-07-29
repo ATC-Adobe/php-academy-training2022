@@ -32,14 +32,18 @@ $reservationType = new ObjectType([
 $queryType = new ObjectType([
     'name' => 'Query',
     'fields' => [
+
         // nazwa zapytania
         'multiply' => [
+
             // jaki jest zwracany typ danych
             'type' => Type::int(),
+
             // jakie argumenty są przyjmowane (nonNull - musi być jakiś wpisany argument)
             'args' => [
                 'number' => ["type" => Type::nonNull(Type::int())],
             ],
+
             //resolve to coś, co przygotowuje dane. W tym wypadku to funkcja na podnoszenie do potęgi, ale może być np repozytorium. Tu wpisuję funkcję
             'resolve' => function ($root, $args) {
                 $multiply = $args['number'];
@@ -49,6 +53,7 @@ $queryType = new ObjectType([
 
         'reservations' => [
             'type' => Type::listOf($reservationType),
+
             // dane potrzebne do zapytania w POSTMANie - chodzi o id użytkownika
             'args' => [
                 'user_id' => ["type" => Type::int()]
@@ -94,10 +99,13 @@ $queryType = new ObjectType([
 $mutationType = new ObjectType([
         'name' => 'Mutation',
         'fields' => [
+
             // nazwa zapytania
             'addReservation' => [
+
                 // jaki zwracany typ danych
                 'type' => Type::string(),
+
                 // jakie argumenty są przyjmowane
                 'args' => [
                     'userId' => ["type" => Type::nonNull(Type::int())],
