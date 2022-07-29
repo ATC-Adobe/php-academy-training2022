@@ -1,10 +1,11 @@
 <?php
 
     namespace Reservation\Repository;
-    use DateTime;
     use Room\Model\RoomModel;
     use Reservation\Model\ReservationModel;
     use User\Repository\UserRepository;
+    use DateTime;
+    use Utils\DateManager;
     use System\Database\MysqlConnection;
     use System\Session\Session;
     use System\StatusHandler\Status;
@@ -13,16 +14,17 @@
 
         private MysqlConnection $mysql;
         private Session $session;
+        public DateManager $dateManager;
 
         public function __construct () {
             $this->mysql = MysqlConnection::getInstance();
             $this->session  = Session::getInstance();
+            $this->dateManager = DateManager::getInstance();
          }
 
         public function addReservation (ReservationModel $reservation) :bool {
 
             $roomId     = $reservation->getRoom()->getId();
-            $roomName   = $reservation->getRoom()->getName();
             $firstName  = $reservation->getFirstName();
             $lastName   = $reservation->getLastName();
             $email      = $reservation->getEmail();
@@ -30,13 +32,13 @@
             $endDate    = $reservation->getEndDate();
             $user       = $reservation->getUser()->getId();
 
-            $currentDate = $this->getCurrentDate();
-
-            if (!$this->isPastDate($startDate, $endDate, $currentDate)) {
+            if (!$this->dateManager->isPastDate($startDate, $endDate)) {
+                $this->session->set('reservation', Status::RESERVATION_PAST_DATE);
                 return false;
             }
 
-            if (!$this->isDateCorrect($startDate, $endDate)) {
+            if (!$this->dateManager->isDateCorrect($startDate, $endDate)) {
+                $this->session->set('reservation', Status::RESERVATION_INCORRECT_DATE);
                 return false;
             }
 
@@ -85,8 +87,8 @@
                     $r['firstname'],
                     $r['lastname'],
                     $r['email'],
-                    $this->createDate($r['start_date'], false),
-                    $this->createDate($r['end_date'], false),
+                    $this->dateManager->createDate($r['start_date'], false),
+                    $this->dateManager->createDate($r['end_date'], false),
                     $user
                 );
             }
@@ -115,8 +117,8 @@
                     $r['firstname'],
                     $r['lastname'],
                     $r['email'],
-                    $this->createDate($r['start_date'], false),
-                    $this->createDate($r['end_date'], false),
+                    $this->dateManager->createDate($r['start_date'], false),
+                    $this->dateManager->createDate($r['end_date'], false),
                     $user
                 );
             }
@@ -134,34 +136,6 @@
             }
             header ('Location: ./reservationList.php');
             die();
-        }
-
-        public function isPastDate (DateTime $startDate, DateTime $endDate, Datetime $currentDate) :bool {
-            if ($startDate < $currentDate || $endDate < $currentDate) {
-                $this->session->set('reservation', Status::RESERVATION_PAST_DATE);
-                return false;
-            }
-            return true;
-        }
-
-        public function isDateCorrect (DateTime $startDate, DateTime $endDate) :bool {
-            if ($startDate >= $endDate) {
-                $this->session->set('reservation', Status::RESERVATION_INCORRECT_DATE);
-                return false;
-            }
-            return true;
-        }
-
-        public function createDate (string $date, bool $datetimeInput) :DateTime {
-            return match ($datetimeInput) {
-                true    => DateTime::createFromFormat('Y-m-d\TH:i', $date),
-                false   => DateTime::createFromFormat('Y-m-d H:i:s', $date),
-                default => $date,
-            };
-        }
-
-        public function getCurrentDate () :DateTime {
-            return new DateTime("now", new \DateTimeZone('Europe/Warsaw'));
         }
 
         public function checkRoomAvailability (string $roomId, DateTime $startDate, DateTime $endDate) :bool {

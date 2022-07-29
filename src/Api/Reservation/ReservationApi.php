@@ -2,6 +2,7 @@
 
     namespace Api\Reservation;
 
+    use DateTime;
     use Exception;
     use Reservation\Repository\ReservationRepository;
     use Reservation\Service\ReservationService;
@@ -28,7 +29,7 @@
         }
 
         public function getCurrentReservations () :array {
-            $date = (new \DateTime())->format('Y-m-d H:i:s');
+            $date = (new DateTime())->format('Y-m-d H:i:s');
             $query = "SELECT * FROM reservations WHERE start_date > '".$date."'";
 
             return $this->getReservations($query);
@@ -88,11 +89,10 @@
                 $service = new ReservationService();
 
                 $roomId     = htmlspecialchars($_POST['roomId']);
-                $startDate  = $repo->createDate(htmlspecialchars($_POST['startDate']), true);
-                $endDate    = $repo->createDate(htmlspecialchars($_POST['endDate']), true);
-                $currentDate = $repo->getCurrentDate();
+                $startDate  = $repo->dateManager->createDate(htmlspecialchars($_POST['startDate']), true);
+                $endDate    = $repo->dateManager->createDate(htmlspecialchars($_POST['endDate']), true);
 
-                if (!$repo->isPastDate($startDate, $endDate, $currentDate) || !$repo->isDateCorrect($startDate, $endDate)) {
+                if (!$repo->dateManager->isPastDate($startDate, $endDate) || !$repo->dateManager->isDateCorrect($startDate, $endDate)) {
                     http_response_code(Status::API_BAD_REQUEST);
                     throw new Exception(Status::getStatus(Status::API_BAD_REQUEST)['msg']);
                 }

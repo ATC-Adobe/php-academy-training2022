@@ -13,7 +13,7 @@
             }
         }
 
-        public static function getInstance (): Session {
+        public static function getInstance () :Session {
             return self::$instance ??= new Session();
         }
 

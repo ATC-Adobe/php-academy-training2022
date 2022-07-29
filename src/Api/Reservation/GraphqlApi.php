@@ -1,17 +1,16 @@
 <?php
 
-    namespace Api;
-
-    use Api\Reservation\ReservationApi;
+    namespace Api\Reservation;
 
     use GraphQL\Type\Definition\ObjectType;
     use GraphQL\Type\Definition\Type;
     use GraphQL\GraphQL;
-    use GraphQL\Schema;
+    use GraphQL\Type\Schema;
     use Exception;
+    use Reservation\Service\ReservationService;
 
     class GraphqlApi {
-        public function getAllReservations() {
+        public function reservations () :void {
             $reservation = new ObjectType([
                 'name' => 'reservations',
                 'fields' => [
@@ -71,24 +70,48 @@
                 ]
             ]);
 
-            $schema = new Schema([
-                'query' => $queryType
+            $mutationType = new ObjectType([
+                'name' => 'Mutation',
+                'fields' => [
+                    'addReservation' => [
+                        'type' => Type::string(),
+                        'args' => [
+                            'room_id' => ["type" => Type::nonNull(Type::int())],
+                            'firstname' => ["type" => Type::nonNull(Type::string())],
+                            'lastname' => ["type" => Type::nonNull(Type::string())],
+                            'email' => ["type" => Type::nonNull(Type::string())],
+                            'start_date' => ["type" => Type::nonNull(Type::string())],
+                            'end_date' => ["type" => Type::nonNull(Type::string())],
+                            'user_id' => ["type" => Type::nonNull(Type::int())]
+                        ],
+                        'resolve' => function ($rootValue, array $args) {
+                            $service = new ReservationService();
+                            $service->addReservation();
+                            return "Success";
+                        }
+                    ]
+                ]
             ]);
 
-            $rawInput = file_get_contents('php://input');
-            $input = json_decode($rawInput, true);
-            $query = $input['query'];
-            $values = $input['variables'] ?? null;
-            $root = ['prefix' => 'Data: '];
+            $schema = new Schema([
+                'query' => $queryType,
+                'mutation' => $mutationType
+            ]);
 
             try {
-                $result = GraphQL::executeAndReturnResult($schema, $query, $root, null, $values);
+                $rawInput = file_get_contents('php://input');
+                $input = json_decode($rawInput, true);
+                $query = $input['query'];
+                $values = $input['variables'] ?? null;
+                $root = ['prefix' => 'Data: '];
+
+                $result = GraphQL::executeQuery($schema, $query, $root, null, $values);
                 $data = $result->toArray();
             } catch (Exception $e) {
                 $data = [
                     'errors' => [
                         [
-                            'message' => $e->getMessage()
+                            'message' => $e->getMessage(),
                         ]
                     ]
                 ];

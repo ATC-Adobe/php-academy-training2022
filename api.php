@@ -10,32 +10,32 @@
     //TODO:: API ROUTER CLASS
     //NOW ONLY FOR TESTING
 
-    if ($_SERVER['REQUEST_METHOD'] === 'GET' && array_key_exists('action', $_REQUEST)) {
-        $api = new Api();
-        $api->get($_GET['action']);
-    }
-
-    class Api {
-        protected ReservationApi $api;
-
-        public function __construct () {
-            $this->api = new ReservationApi();
-        }
-
-        public function get (string $action) :void {
-            $res = match ($action) {
-                'getAllReservations' => $this->encode($action),
-                'getCurrentReservations' => $this->encode($action),
-                default => json_encode([]),
-            };
-                header ('Content-Type: application/json');
-                echo $res;
-        }
-
-        private function encode (string $action) :string {
-            return json_encode($this->api->{$action}());
-        }
-    }
+//    if ($_SERVER['REQUEST_METHOD'] === 'GET' && array_key_exists('action', $_REQUEST)) {
+//        $api = new Api();
+//        $api->get($_GET['action']);
+//    }
+//
+//    class Api {
+//        protected ReservationApi $api;
+//
+//        public function __construct () {
+//            $this->api = new ReservationApi();
+//        }
+//
+//        public function get (string $action) :void {
+//            $res = match ($action) {
+//                'getAllReservations' => $this->encode($action),
+//                'getCurrentReservations' => $this->encode($action),
+//                default => json_encode([]),
+//            };
+//                header ('Content-Type: application/json');
+//                echo $res;
+//        }
+//
+//        private function encode (string $action) :string {
+//            return json_encode($this->api->{$action}());
+//        }
+//    }
 
 
     if ($_SERVER['REQUEST_METHOD'] === 'GET' && array_key_exists('getAllReservations', $_REQUEST)) {
@@ -62,9 +62,8 @@
     }
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && array_key_exists('addReservation', $_REQUEST)) {
-        $api = new ReservationApi();
-
-
+        //$api = new ReservationApi();
+        $controller = new Controller\Reservation\ApiAddReservationController;
+        $controller->addReservation();
         header ('Content-Type: application/json');
-        echo json_encode($api->addReservation());
     }

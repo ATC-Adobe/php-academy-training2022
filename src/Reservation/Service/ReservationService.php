@@ -22,9 +22,9 @@
             $firstName  = htmlspecialchars($_POST['firstName']);
             $lastName   = htmlspecialchars($_POST['lastName']);
             $email      = htmlspecialchars($_POST['email']);
-            $startDate  = $repo->createDate(htmlspecialchars($_POST['startDate']), true);
-            $endDate    = $repo->createDate(htmlspecialchars($_POST['endDate']), true);
-            $userId = $this->session->get('user_id');
+            $startDate  = $repo->dateManager->createDate(htmlspecialchars($_POST['startDate']), true);
+            $endDate    = $repo->dateManager->createDate(htmlspecialchars($_POST['endDate']), true);
+            $userId     = $this->session->get('user_id');
 
             $userRepo   = new UserRepository();
             $user       = $userRepo->getUserById($userId);

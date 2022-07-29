@@ -21,8 +21,6 @@
             );
         }
 
-        protected function __clone () { }
-
         public static function getInstance (): MysqlConnection {
             if (self::$instance === null) {
                 self::$instance = new MysqlConnection();
