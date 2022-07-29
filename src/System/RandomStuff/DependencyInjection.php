@@ -34,6 +34,22 @@ class DependencyInjection {
         $this->typeAssoc = [];
     }
 
+
+    public function registerInstance(string $name, object $obj) : void {
+
+        $this->typeAssoc[$name] = ['singleton', $obj];
+    }
+
+    public function registerRule(string $from, string $to) : void {
+
+        $this->typeAssoc[$from] = ['rule', $to];
+    }
+
+    public function registerSingleton(string $from) : void {
+
+        $this->typeAssoc[$from] = [$from, null];
+    }
+
     private function getConstructor(string $type) : ?ReflectionMethod {
 
         try {
@@ -52,59 +68,75 @@ class DependencyInjection {
      * @throws ClassNotExistsException
      */
     public function constructRec(string $type, array $typeMap) : ?object {
+
+        // if type contains the requested $type, it means there's cycle, and it cannot be resolved
         if(isset($typeMap[$type])) {
             throw new DependencyCycleException();
         }
 
+        // if rules for given type doesn't exist, try to do it automatically
         if(!isset($this->typeAssoc[$type])) {
 
-            try {
-                $refl = new ReflectionClass($type);
-            }
-            catch(ReflectionException $e) {
+            // if type is not a class, nothing to be done here
+            if(!class_exists($type)) {
                 $e = new ClassNotExistsException();
                 $e->type = $type;
                 throw $e;
             }
 
+            $refl = new ReflectionClass($type);
 
+            // if class is abstract or is an interface, same story
             if($refl->isAbstract() || $refl->isInterface()) {
                 $e = new AbstractOrInterfaceException();
                 $e->type = $type;
                 throw $e;
             }
 
+            // get constructor
             $ctr = $this->getConstructor($type);
 
-
+            // constructor does not exist, try calling default one
             if($ctr === null) {
                 try {
                     return $refl->newInstance();
                 }
                 catch(ReflectionException $e) {
+                    // if not successful, throw error
                     $e = new NotConstructableException();
                     $e->type = $type;
                     throw $e;
                 }
             }
 
+            // if constructor is not available, nothing can be done
             if($ctr->isPrivate() || $ctr->isProtected()) {
                 $e = new NotConstructableException();
                 $e->type = $type;
                 throw $e;
             }
 
+            // use found constructor
+
             $params = $ctr->getParameters();
 
             $args = [];
 
+            // save the current type in the map
             $typeMap[$type] = true;
 
+
+            // build each argument
             foreach($params as $param) {
+
+                // if is nullable, easy
                 if($param->allowsNull()) {
                     $args[] = null;
+                    continue;
                 }
-                elseif($param instanceof ReflectionUnionType) {
+
+                // if union , return first successful instance
+                if($param instanceof ReflectionUnionType) {
 
                     $res = null;
 
@@ -132,6 +164,7 @@ class DependencyInjection {
 
             unset($typeMap[$type]);
 
+            // once arguments are collected, try building object
             try {
                 return $refl->newInstance(...$args);
             }
@@ -140,6 +173,36 @@ class DependencyInjection {
                 $e->type = $type;
                 throw $e;
             }
+        }
+
+        // what if resolve rule is specified
+
+        $rule = $this->typeAssoc[$type];
+
+        if($rule[0] == 'rule') {
+
+            $typeMap[$type] = true;
+
+            $res = $this->constructRec($rule[1], $typeMap);
+
+            unset($typeMap[$type]);
+
+            return $res;
+        }
+
+        if($rule[0] == 'singleton') {
+
+            if($rule[1] !== null) {
+                return $rule[1];
+            }
+
+            unset($typeMap[$type]);
+
+            $res = $this->constructRec($type, $typeMap);
+
+            $this->typeAssoc[$type] = ['singleton', $res];
+
+            return $res;
         }
 
         return null;
