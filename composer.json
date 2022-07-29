@@ -16,6 +16,7 @@
   "require": {
     "webonyx/graphql-php": "^0.7.2",
     "phpunit/phpunit": "^9.5",
-    "mockery/mockery": "^1.5"
+    "mockery/mockery": "^1.5",
+    "php-amqplib/php-amqplib": "^3.2"
   }
 }

@@ -29,8 +29,6 @@ $login = new LoginUser();
 $userId = array_unique($login->getUserId($nickName));
 $id = $userId['id'];
 
-
-
 $displayReservations = new DisplayReservations();
 $reservations = $displayReservations->displayMyReservations($id);
 

@@ -5,7 +5,7 @@ declare(strict_types=1);
 use Controllers\Room\DisplayRooms;
 use Controllers\User\LoginUser;
 
-require './vendor/autoload.php';
+require "./vendor/autoload.php";
 
 session_start();
 

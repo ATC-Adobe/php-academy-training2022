@@ -49,6 +49,7 @@ class ReservationRepository
         $statement = $connection->prepare($selectQuery);
         $statement->bindValue(':id', $id);
         $statement->execute();
+//        var_dump($statement->fetchAll());die;
         return $statement->fetchAll();
     }
 
