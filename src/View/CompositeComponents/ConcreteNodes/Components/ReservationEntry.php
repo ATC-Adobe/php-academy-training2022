@@ -2,6 +2,7 @@
 
 namespace View\CompositeComponents\ConcreteNodes\Components;
 
+use Model\DateTimeFormatter;
 use Model\Reservation\Model\ReservationModel;
 use View\CompositeComponents\LeafNode;
 
@@ -17,8 +18,8 @@ class ReservationEntry extends LeafNode {
         $email =    ($entry->getUser()->getEmail());
         $surname =  ($entry->getUser()->getSurname());
         $room =     ($entry->getRoom()->getName());
-        $to =       ($entry->getTo()->format("d/m/Y H:i:s"));
-        $from =     ($entry->getFrom()->format("d/m/Y H:i:s"));
+        $to =       DateTimeFormatter::toString($entry->getTo());
+        $from =     DateTimeFormatter::toString($entry->getFrom());
 
 
         echo "<div class='row'>

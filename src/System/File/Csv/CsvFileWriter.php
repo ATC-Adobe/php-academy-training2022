@@ -2,6 +2,7 @@
 
 namespace System\File\Csv;
 
+use Model\DateTimeFormatter;
 use Model\Reservation\Model\ReservationModel;
 use System\File\IFileWriter;
 
@@ -26,8 +27,8 @@ class CsvFileWriter implements IFileWriter {
         $email =    $reservation->getUser()->getEmail();
         $name =     $reservation->getUser()->getName();
         $roomId =   $reservation->getRoom()->getId();
-        $from =     $reservation->getFrom()->format('d/m/y H:i:s');
-        $to =       $reservation->getTo()->format(  'd/m/y H:i:s');
+        $from =     DateTimeFormatter::toSql($reservation->getFrom());
+        $to =       DateTimeFormatter::toSql($reservation->getTo());
 
         $this->spl->fputcsv([
             $id,

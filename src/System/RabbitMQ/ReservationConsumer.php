@@ -2,6 +2,7 @@
 
 namespace System\RabbitMQ;
 
+use Model\DateTimeFormatter;
 use Model\Reservation\Service\ReservationAdder;
 use PhpAmqpLib\Message\AMQPMessage;
 use System\File\FileWriterFactory;
@@ -71,7 +72,7 @@ class ReservationConsumer {
 
         // append new log entry with shell command `echo 'message' >> file`
         shell_exec('echo "['
-            .(new \DateTime())->format('Y-m-d H:i:s')
+            .DateTimeFormatter::toString(new \DateTime())
             .' Request: {UID: '.$id.' RoomID: '.$roomId.' From: '.$dec['from'].' To: '.$dec['to'].'} ended with status code: '.
             $status.' ('.Status::getString($status)[1].')]" >> reservations/queue.log');
 

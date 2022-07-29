@@ -12,6 +12,7 @@ class ApiJsonTest extends TestCase {
     public function testRoomsGet() {
 
         $mock = $this->createMock(RoomConcreteRepository::class);
+
         $mock->method('getRoomsRaw')->willReturn([
             ['id' => 20, 'floor' => 1, 'name' => 'Room', 'some' => 'garbage'],
             ['id' => '2', 'floor' => 1, 'name' => 'Room'],

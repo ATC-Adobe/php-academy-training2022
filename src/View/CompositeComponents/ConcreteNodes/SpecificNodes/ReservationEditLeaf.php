@@ -2,6 +2,7 @@
 
 namespace View\CompositeComponents\ConcreteNodes\SpecificNodes;
 
+use Model\DateTimeFormatter;
 use Model\Reservation\Repository\ReservationConcreteRepository;
 use System\Util\Authenticator;
 use View\CompositeComponents\LeafNode;
@@ -36,10 +37,10 @@ class ReservationEditLeaf extends LeafNode {
                     <input type="hidden" name="room_id" value="<?php echo $roomId; ?>"><br>
                     <br>
                     <input type="datetime-local" value="<?php
-                        echo $reservation->getFrom()->format('Y-m-d\TH:i');
+                        echo DateTimeFormatter::toHtml($reservation->getFrom());
                     ?>"><br>
                     <input type="datetime-local" value="<?php
-                        echo $reservation->getTo()->format('Y-m-d\TH:i');
+                        echo DateTimeFormatter::toHtml($reservation->getTo());
                     ?>"><br>
                 </div>
                 <div class="clear"></div>

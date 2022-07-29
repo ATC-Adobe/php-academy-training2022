@@ -2,6 +2,7 @@
 
 namespace Model\Reservation\Repository;
 
+use Model\DateTimeFormatter;
 use Model\Reservation\Model\ReservationModel;
 use Model\Room\Model\RoomModel;
 use Model\User\Model\UserModel;
@@ -68,8 +69,8 @@ class ReservationConcreteRepository {
 
             $arr[] = new ReservationModel(
                 $entry['id'],
-                \DateTime::createFromFormat("Y-m-d H:i:s", $entry['time_from']),
-                \DateTime::createFromFormat("Y-m-d H:i:s", $entry['time_to']),
+                DateTimeFormatter::fromString($entry['time_from']),
+                DateTimeFormatter::fromString($entry['time_to']),
                 $user,
                 $room,
             );
@@ -110,8 +111,8 @@ class ReservationConcreteRepository {
     ) : void {
         $userId =   $reservation->getUser()->getId();
         $roomId =   $reservation->getRoom()->getId();
-        $from =     $reservation->getFrom()->format('d/m/y H:i:s');
-        $to =       $reservation->getTo()->format(  'd/m/y H:i:s');
+        $from =     DateTimeFormatter::toSql($reservation->getFrom());
+        $to =       DateTimeFormatter::toSql($reservation->getTo());
 
         $stmt = MySqlConnection::getInstance()
             ->query("INSERT INTO Reservations 
@@ -146,8 +147,8 @@ class ReservationConcreteRepository {
             MySqlConnection::getInstance()->query(
             "SELECT * FROM Reservations 
                         WHERE room_id = '".$roomId."'
-                        AND   time_from <= STR_TO_DATE('".$to->format('d/m/y H:i:s')."','%d/%m/%y %H:%i:%s')
-                        AND   time_to   >= STR_TO_DATE('".$from->format('d/m/y H:i:s')."','%d/%m/%y %H:%i:%s')
+                        AND   time_from <= STR_TO_DATE('".DateTimeFormatter::toSql($to)."','%d/%m/%y %H:%i:%s')
+                        AND   time_to   >= STR_TO_DATE('".DateTimeFormatter::toSql($from)."','%d/%m/%y %H:%i:%s')
                         AND   id != '".$reservationId."';
                ")->fetchAll();
         return count( $res ) == 0;
@@ -157,7 +158,7 @@ class ReservationConcreteRepository {
         $res = MySqlConnection::getInstance()
             ->query("SELECT * FROM Reservations WHERE time_from >= 
                                  STR_TO_DATE('".
-                (new \DateTime())->format('d/m/y H:i:s')
+                DateTimeFormatter::toSql(new \DateTime())
                 ."', '%d/%m/%y %H:%i:%s');")
             ->fetchAll();
 

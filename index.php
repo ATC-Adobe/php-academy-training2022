@@ -1,6 +1,7 @@
 <?php
 declare(strict_types = 1);
 
+use Model\DateTimeFormatter;
 use System\Router\Response;
 use System\Router\Router;
 use System\Util\Session;
@@ -24,7 +25,11 @@ $router->use('/phpinfo', function(Response $res) {
 });
 
 $router->use('/test', function(Response $res) {
-    include "layout/test.html";
+
+    $date = DateTimeFormatter::fromHtml('2022-05-05T22:00:00');
+
+    var_dump($date);
+
 });
 
 // experimental router segregation

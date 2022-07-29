@@ -2,6 +2,7 @@
 
 namespace System\RabbitMQ;
 
+use Model\DateTimeFormatter;
 use PhpAmqpLib\Channel\AMQPChannel;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
@@ -59,9 +60,9 @@ class ReservationProducer {
         $msg = new AMQPMessage(
             json_encode([
                 'room_id' => $room_id,
-                'id' => $id,
-                'from' => $from->format('Y-m-d H:i:s'),
-                'to' => $to->format('Y-m-d H:i:s'),
+                'id'    => $id,
+                'from'  => DateTimeFormatter::toString($from),
+                'to'    => DateTimeFormatter::toString($to),
             ]),
             array(
                 'correlation_id' => $this->corrId,
