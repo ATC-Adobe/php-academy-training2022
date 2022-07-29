@@ -2,14 +2,10 @@
 
 require_once "../../vendor/autoload.php";
 
-require_once "../Api/Rest/Reservation/ReservationApi.php";
-require_once "../RabbitMQ/ApiReservationProducer.php";
-
-use RabbitMq\ApiReservationProducer;
 use PhpAmqpLib\Message\AMQPMessage;
-use Api\Reservation\ReservationApi;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 
+//Autentykacja użytkownika
 if (!isset($_SERVER['PHP_AUTH_USER'])) {
     header("WWW-Authenticate: Basic realm=\"Private Area\"");
     header("HTTP/1.0 401 Unauthorized");
@@ -17,8 +13,7 @@ if (!isset($_SERVER['PHP_AUTH_USER'])) {
         echo json_encode(['message' => "Unauthorized access"], JSON_THROW_ON_ERROR);
     } catch (JsonException $e) {
     }
-} elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && array_key_exists('addReservation', $_REQUEST)) {
-    $api = new ReservationApi();
+} elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $dataReservation = [
         'roomId' => intval($_POST['roomId']),
@@ -35,15 +30,17 @@ if (!isset($_SERVER['PHP_AUTH_USER'])) {
 
     header('Content-Type: application/json');
     try {
-        $connection = new AMQPStreamConnection('localhost', 5672, 'rabbitmq', 'rabbitmq');
+        $connection = new AMQPStreamConnection('localwsl.com', 5672, 'rabbitmq', 'rabbitmq');
         $channel = $connection->channel();
 
         $channel->queue_declare('addReservation', false, false, false, false);
 
-        $dataReservation = $api->addReservation($dataReservation);
 
-        $msg = new AMQPMessage($dataReservation);
-        $channel->basic_publish($msg, '', 'hello');
+
+        $msg = new AMQPMessage(json_encode($dataReservation));
+
+        // basic_publish publikuje dane do kolejki
+        $channel->basic_publish($msg, '', 'addReservation');
 
         echo " [x] Dodawanie przez Rabita '\n";
 
@@ -52,6 +49,7 @@ if (!isset($_SERVER['PHP_AUTH_USER'])) {
     } catch (JsonException $e) {
     }
 }
+
 
 
 //if (!isset($_SERVER['PHP_AUTH_USER'])) {

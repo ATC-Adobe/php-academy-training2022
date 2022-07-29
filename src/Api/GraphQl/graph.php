@@ -111,10 +111,9 @@ $mutationType = new ObjectType([
                     'endHour' => ["type" => Type::nonNull(Type::string())]
                 ],
 
-                //coś co przygotowuje dane: funkcja na podnoszenie do potęgi lub np. repozytorium
                 'resolve' => function ($root, $args) {
                     $repo = new ReservationService();
-                    $repo->createReservation($args); // $args?
+                    $repo->createReservation($args);
                     return "Success";
                     // TODO:dodać walidację do dodowania do bazy danych
                 }
