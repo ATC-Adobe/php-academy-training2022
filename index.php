@@ -7,6 +7,7 @@ use System\Router\Router;
 use System\Util\Session;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
+use Test\Unit\System\RandomStuff\DependencyInjection\TestClasses\SampleA;
 
 require_once 'vendor/autoload.php';
 
@@ -25,11 +26,11 @@ $router->use('/phpinfo', function(Response $res) {
 });
 
 $router->use('/test', function(Response $res) {
-
-    $date = DateTimeFormatter::fromHtml('2022-05-05T22:00:00');
-
-    var_dump($date);
-
+    $di = new System\RandomStuff\DependencyInjection\DependencyInjection();
+    $type = SampleA::class;
+    echo class_exists($type);
+    var_dump($type);
+    var_dump($di->construct($type));
 });
 
 // experimental router segregation

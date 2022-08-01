@@ -5,6 +5,26 @@
 - xdebug tunnel: `ssh -R 9009:127.0.0.1:9009 xdebug@localwsl.com -p 12000`
 - ssh xdebug password (for tunnel): `xdebug`
 
+# Spryker
+
+### Krok 0
+Materiały: 
+- https://docs.spryker.com/docs/scos/dev/architecture/conceptual-overview.html#application-separation 
+- struktura aplikacji 
+  - https://docs.spryker.com/docs/scos/dev/architecture/programming-concepts.html
+
+Zadania:
+
+Instalacja Spryker Demo Shop na maszynie wirtualnej. (szczegółowa instrukcja instalacji)
+Podpięcie projektu w PhpStorm, połączenie bazy danych, xdebug w PhpStorm
+Zapoznanie się z serwisami udostępnianymi przez Sprykera (http://spryker.local/):
+- MailHog (mail_catcher)
+- RabbitMq (broker)
+- Swagger UI
+- Redis Commander
+- Jenkins (scheduler)
+- Log Viewer
+
 ## Lesson 15
 
 Materiały 

@@ -2,29 +2,12 @@
 declare(strict_types = 1);
 /* Dependency Injection */
 
-echo "Dependency Injection <br>";
+namespace System\RandomStuff\DependencyInjection;
 
-
-class DependencyCycleException extends Exception {
-    public string $type;
-    public function __toString() : string { return "Dependency {resolved from $this->type} forms a cycle"; }
-}
-
-class NotConstructableException extends Exception {
-    public string $type;
-    public function __toString() : string { return "$this->type cannot be constructed"; }
-}
-
-class AbstractOrInterfaceException extends Exception {
-    public string $type;
-    public function __toString() : string { return "$this->type is an Abstract class or an Interface and cannot be created"; }
-}
-
-class ClassNotExistsException extends Exception {
-    public string $type;
-    public function __toString() : string { return "$this->type doesn't exist"; }
-}
-
+use System\RandomStuff\DependencyInjection\Exceptions\AbstractOrInterfaceException;
+use System\RandomStuff\DependencyInjection\Exceptions\ClassNotExistsException;
+use System\RandomStuff\DependencyInjection\Exceptions\DependencyCycleException;
+use System\RandomStuff\DependencyInjection\Exceptions\NotConstructableException;
 
 class DependencyInjection {
 
@@ -33,7 +16,6 @@ class DependencyInjection {
     public function __construct() {
         $this->typeAssoc = [];
     }
-
 
     public function registerInstance(string $name, object $obj) : void {
 
@@ -50,10 +32,10 @@ class DependencyInjection {
         $this->typeAssoc[$from] = [$from, null];
     }
 
-    private function getConstructor(string $type) : ?ReflectionMethod {
+    private function getConstructor(string $type) : ?\ReflectionMethod {
 
         try {
-            return new ReflectionMethod($type, '__construct');
+            return new \ReflectionMethod($type, '__construct');
         }
         catch(\Throwable $e) {
             return null;
@@ -79,18 +61,14 @@ class DependencyInjection {
 
             // if type is not a class, nothing to be done here
             if(!class_exists($type)) {
-                $e = new ClassNotExistsException();
-                $e->type = $type;
-                throw $e;
+                throw new ClassNotExistsException($type);
             }
 
-            $refl = new ReflectionClass($type);
+            $refl = new \ReflectionClass($type);
 
             // if class is abstract or is an interface, same story
             if($refl->isAbstract() || $refl->isInterface()) {
-                $e = new AbstractOrInterfaceException();
-                $e->type = $type;
-                throw $e;
+                throw new AbstractOrInterfaceException($type);
             }
 
             // get constructor
@@ -101,30 +79,24 @@ class DependencyInjection {
                 try {
                     return $refl->newInstance();
                 }
-                catch(ReflectionException $e) {
+                catch(\ReflectionException $e) {
                     // if not successful, throw error
-                    $e = new NotConstructableException();
-                    $e->type = $type;
-                    throw $e;
+                    throw new NotConstructableException($type);
                 }
             }
 
             // if constructor is not available, nothing can be done
             if($ctr->isPrivate() || $ctr->isProtected()) {
-                $e = new NotConstructableException();
-                $e->type = $type;
-                throw $e;
+                throw new NotConstructableException($type);
             }
 
             // use found constructor
-
             $params = $ctr->getParameters();
 
             $args = [];
 
             // save the current type in the map
             $typeMap[$type] = true;
-
 
             // build each argument
             foreach($params as $param) {
@@ -136,7 +108,7 @@ class DependencyInjection {
                 }
 
                 // if union , return first successful instance
-                if($param instanceof ReflectionUnionType) {
+                if($param instanceof \ReflectionUnionType) {
 
                     $res = null;
 
@@ -146,13 +118,13 @@ class DependencyInjection {
                             $res = $this->constructRec(strval($t->getType()), $typeMap);
                             break;
                         }
-                        catch(Exception $e) {
+                        catch(\Exception $e) {
                             continue;
                         }
                     }
 
                     if($res === null) {
-                        throw new NotConstructableException();
+                        throw new NotConstructableException($type);
                     }
 
                     $args[] = $res;
@@ -168,10 +140,8 @@ class DependencyInjection {
             try {
                 return $refl->newInstance(...$args);
             }
-            catch(ReflectionException $e) {
-                $e = new NotConstructableException();
-                $e->type = $type;
-                throw $e;
+            catch(\ReflectionException $e) {
+                throw new NotConstructableException($type);
             }
         }
 
@@ -218,142 +188,3 @@ class DependencyInjection {
         return $this->constructRec($type, []);
     }
 }
-
-$di = new DependencyInjection();
-
-//echo $di->construct('A').'<br><br>';
-//echo $di->construct('B').'<br><br>';
-//echo $di->construct('C').'<br><br>';
-
-echo "Unit Tests<br>";
-
-class A { public function __toString() : string { return 'A'; } }
-class B {
-    public function __construct() {}
-    public function __toString() : string { return 'B'; }
-}
-class C {
-    public ?A $a = null;
-    public ?B $b = null;
-    public function __construct(A $a, B $b) {
-        $this->a = $a;
-        $this->b = $b;
-    }
-    public function __toString() : string { return 'C'; }
-}
-
-(function() use ($di) {
-    $a = $di->construct('A');
-    assert($a instanceof A);
-
-    echo "Test Passed<br>";
-})();
-
-
-(function() use ($di) {
-    $c = $di->construct('C');
-    assert($c instanceof C);
-    assert($c->a instanceof A);
-    assert($c->b instanceof B);
-
-    echo "Test Passed<br>";
-})();
-
-class D {
-    public function __construct(E $e) {}
-}
-
-
-class E {
-    public function __construct(D $e) {}
-}
-
-
-(function() use ($di) {
-    $e = null;
-    try {
-        $d = $di->construct('D');
-    }
-    catch(Exception $ex) {
-        $e = $ex;
-    }
-
-    assert($e instanceof DependencyCycleException);
-    echo "Test Passed<br>";
-})();
-
-interface IFoo {}
-abstract class Bar {}
-
-(function() use ($di) {
-
-    $e = null;
-    try {
-        $d = $di->construct('IFoo');
-    }
-    catch(Exception $ex) {
-        $e = $ex;
-    }
-
-    assert($e instanceof AbstractOrInterfaceException);
-
-    try {
-        $d = $di->construct('Bar');
-    }
-    catch(Exception $ex) {
-        $e = $ex;
-    }
-
-    assert($e instanceof AbstractOrInterfaceException);
-
-    echo "Test Passed<br>";
-})();
-
-
-(function() use ($di) {
-    $ex = null;
-    try {
-        $e = $di->construct('SomeNonExistentClass');
-    }
-    catch(ClassNotExistsException $er) {
-        $ex = $er;
-    }
-    assert($ex instanceof ClassNotExistsException);
-    echo "Test Passed<br>";
-})();
-
-
-class F { private function __construct() {}}
-
-(function() use ($di) {
-    $ex = null;
-    try {
-        $e = $di->construct('F');
-    }
-    catch(NotConstructableException $e) {
-        $ex = $e;
-    }
-
-    assert($ex instanceof NotConstructableException);
-    echo "Test Passed<br>";
-})();
-
-(function() use ($di) {
-    $ex = null;
-    try {
-        $e = $di->construct('int');
-    }
-    catch(ClassNotExistsException $e) {
-        $ex = $e;
-    }
-
-    assert($ex instanceof ClassNotExistsException);
-    echo "Test Passed<br>";
-})();
-
-var_dump (new ReflectionNamedType('A|B'));
-
-class N {
-    private IFoo&A $val;
-}
-
